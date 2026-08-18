@@ -9,6 +9,8 @@ All notable changes to this project are documented here. The format follows
 ### Added
 - The installable distribution is named `binspect-regression` while retaining the
   concise `binspect` import package, avoiding a collision with an existing PyPI project.
+- A release workflow builds and validates artifacts separately from its narrowly
+  permissioned PyPI Trusted Publishing job.
 - Quantile, equal-width and custom binning with a documented tie convention
   (ties go to the lower bin).
 - Per-bin means, within-bin SDs, standard errors and t-intervals, with weight support.

@@ -91,6 +91,8 @@ For contributing, release checks, and development conventions, see
 [CONTRIBUTING.md](CONTRIBUTING.md). Please report vulnerabilities privately as
 described in [SECURITY.md](SECURITY.md).
 
+Maintainer release instructions are in [RELEASING.md](RELEASING.md).
+
 ## License
 
 MIT.
