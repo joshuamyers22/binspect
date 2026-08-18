@@ -1,0 +1,35 @@
+name: Bug report
+description: Report incorrect behavior or a statistical discrepancy
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Please provide a minimal, reproducible example without sensitive data.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Include what you expected and what occurred instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      render: python
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: binspect version
+      placeholder: 0.1.0.dev0
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Python and operating system
+    validations:
+      required: true

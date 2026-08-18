@@ -1,0 +1,111 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "binspect-regression"
+dynamic = ["version"]
+description = "Binned scatterplots that audit the regression behind them"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Josh Myers" }]
+keywords = ["binscatter", "regression", "diagnostics", "visualization", "econometrics"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dpi = ["binsreg>=1.0"]
+dev = [
+  "build",
+  "pytest>=8.0",
+  "pytest-cov",
+  "pytest-mpl",
+  "hypothesis",
+  "ruff",
+  "mypy",
+  "pandas-stubs",
+  "import-linter",
+  "pre-commit",
+]
+docs = ["mkdocs-material", "mkdocstrings[python]"]
+
+[project.urls]
+Homepage = "https://github.com/joshuamyers22/binspect"
+Repository = "https://github.com/joshuamyers22/binspect"
+Issues = "https://github.com/joshuamyers22/binspect/issues"
+Changelog = "https://github.com/joshuamyers22/binspect/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "src/binspect/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/binspect"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "NPY", "PD", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+
+[tool.mypy]
+strict = true
+files = ["src/binspect"]
+plugins = []
+
+[[tool.mypy.overrides]]
+module = ["scipy.*", "binsreg.*", "matplotlib.*", "pandas.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"
+testpaths = ["tests"]
+markers = [
+  "external: cross-checks against binsreg; excluded from the CI gate",
+]
+
+[tool.coverage.run]
+source = ["src/binspect"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 85
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:"]
+
+[tool.importlinter]
+root_package = "binspect"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "core never imports matplotlib"
+type = "forbidden"
+source_modules = ["binspect.core"]
+forbidden_modules = ["matplotlib", "binspect.viz"]
+
+# viz legitimately reaches BinscatterResult (and, transitively, the core types it is
+# built from) -- that is the whole point of the result object. What viz must not do
+# is reach back into the entry point, which would make the import graph cyclic.
+[[tool.importlinter.contracts]]
+name = "viz never imports the entry point"
+type = "forbidden"
+source_modules = ["binspect.viz"]
+forbidden_modules = ["binspect.api"]

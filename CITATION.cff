@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: >-
+  If you use binspect in published work, please also cite Cattaneo, Crump, Farrell
+  and Feng (2024), whose methodology this package builds on.
+title: "binspect: binned scatterplots that audit the regression behind them"
+type: software
+version: 0.1.0.dev0
+license: MIT
+repository-code: "https://github.com/joshuamyers22/binspect"
+authors:
+  - family-names: Myers
+    given-names: Josh
+references:
+  - type: article
+    title: "On Binscatter"
+    authors:
+      - family-names: Cattaneo
+        given-names: Matias D.
+      - family-names: Crump
+        given-names: Richard K.
+      - family-names: Farrell
+        given-names: Max H.
+      - family-names: Feng
+        given-names: Yingjie
+    journal: "American Economic Review"
+    volume: 114
+    issue: 5
+    start: 1488
+    end: 1514
+    year: 2024
