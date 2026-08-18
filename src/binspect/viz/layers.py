@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 from matplotlib.collections import LineCollection
 
+from ..types import FloatArray
 from .theme import Theme, get_theme
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -142,7 +143,7 @@ def rug_layer(
     return ax
 
 
-def _span(result: BinscatterResult, span: str) -> np.ndarray:
+def _span(result: BinscatterResult, span: str) -> FloatArray:
     """The x-interval a line is drawn across.
 
     ``"bins"`` (default) spans the bin means. ``"data"`` spans every observation,
@@ -309,7 +310,7 @@ def smooth_layer(
     return ax
 
 
-def _smooth(x: np.ndarray, y: np.ndarray, frac: float = 0.6) -> np.ndarray:
+def _smooth(x: FloatArray, y: FloatArray, frac: float = 0.6) -> FloatArray:
     """Tricube-weighted local linear smoother over the bin means.
 
     Local rather than global so it can follow a bend, and dependency-free so the

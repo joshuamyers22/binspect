@@ -6,7 +6,7 @@ Nothing in here imports matplotlib. Nothing in here computes a statistic.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Literal, Union
+from typing import Literal, TypeAlias
 
 import numpy as np
 from numpy.typing import NDArray
@@ -27,7 +27,9 @@ FloatArray = NDArray[np.float64]
 IntArray = NDArray[np.int64]
 
 BinningMethod = Literal["quantile", "equal_width", "custom"]
-BinRule = Union[int, Literal["auto", "sturges", "iqr", "dpi"], "np.ndarray"]
+BinRule: TypeAlias = (
+    int | Literal["auto", "sturges", "iqr", "dpi"] | NDArray[np.float64]
+)
 
 Layer = Literal["raw", "deviation", "rug", "fit", "sd_line", "ci", "bins", "smooth"]
 AnnotateLevel = Literal["minimal", "audit"]

@@ -78,11 +78,11 @@ def _quantile_edges(x: FloatArray, n_bins: int) -> FloatArray:
     edges = np.quantile(x, probs)
     edges[0] = float(np.min(x))
     edges[-1] = float(np.max(x))
-    return edges
+    return edges.astype(np.float64, copy=False)
 
 
 def _equal_width_edges(x: FloatArray, n_bins: int) -> FloatArray:
-    return np.linspace(float(np.min(x)), float(np.max(x)), n_bins + 1)
+    return np.linspace(float(np.min(x)), float(np.max(x)), n_bins + 1, dtype=np.float64)
 
 
 def compute_binning(
