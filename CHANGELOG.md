@@ -11,6 +11,12 @@ All notable changes to this project are documented here. The format follows
   concise `binspect` import package, avoiding a collision with an existing PyPI project.
 - A release workflow builds and validates artifacts separately from its narrowly
   permissioned PyPI Trusted Publishing job.
+
+### Changed
+- Public docstrings now follow statsmodels-style numpydoc conventions and terminology.
+- The text summary uses regression-results labels and numbered assumption notes.
+- README prose now distinguishes descriptive diagnostics from formal inference more
+  consistently. Plot annotations and layer labels are unchanged.
 - Quantile, equal-width and custom binning with a documented tie convention
   (ties go to the lower bin).
 - Per-bin means, within-bin SDs, standard errors and t-intervals, with weight support.

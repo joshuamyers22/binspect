@@ -1,10 +1,4 @@
-"""Per-bin summaries.
-
-The identity that anchors this module: the bin means computed here are exactly the
-fitted values of ``OLS(y ~ C(bin))`` --- the saturated dummy regression. Every
-downstream claim about auditing a linear model rests on that, so it is asserted as
-an equality test rather than described in a docstring alone.
-"""
+"""Estimation of within-bin summary statistics."""
 
 from __future__ import annotations
 
@@ -20,7 +14,25 @@ __all__ = ["BinEstimates", "estimate_bins"]
 
 @dataclass(frozen=True, slots=True)
 class BinEstimates:
-    """Per-bin summary statistics, all arrays of length ``n_bins``."""
+    """Within-bin summary statistics.
+
+    Parameters
+    ----------
+    x_mean, y_mean : ndarray
+        Weighted means of the exogenous and endogenous variables.
+    y_sd : ndarray
+        Weighted standard deviation of the endogenous variable.
+    n : ndarray
+        Unweighted observation counts.
+    sum_w : ndarray
+        Sum of weights.
+    se : ndarray
+        Standard errors of the endogenous-variable means.
+    ci_lo, ci_hi : ndarray
+        Lower and upper confidence limits.
+    ci_level : float or None
+        Confidence level, or None when intervals were not estimated.
+    """
 
     x_mean: FloatArray
     y_mean: FloatArray
@@ -50,24 +62,25 @@ def estimate_bins(
     weights: FloatArray | None = None,
     ci: float | None = 0.95,
 ) -> BinEstimates:
-    """Compute per-bin means, dispersion and standard errors.
+    """Estimate means, dispersion, and standard errors by bin.
 
     Parameters
     ----------
-    x, y:
-        Finite arrays of equal length.
-    assignment:
+    x, y : array_like
+        Finite exogenous and endogenous variables of equal length.
+    assignment : array_like
         Integer bin index per observation, as produced by ``compute_binning``.
-    n_bins:
+    n_bins : int
         Number of bins.
-    weights:
-        Non-negative reliability weights. ``None`` means equal weights.
-    ci:
-        Two-sided confidence level for the per-bin mean, or ``None`` to skip.
+    weights : array_like, optional
+        Nonnegative reliability weights. Equal weights are used if omitted.
+    ci : float or None, default 0.95
+        Two-sided confidence level for the bin means. Set to None to omit intervals.
 
     Returns
     -------
     BinEstimates
+        Per-bin estimates.
 
     Notes
     -----

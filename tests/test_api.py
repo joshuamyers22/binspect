@@ -58,6 +58,16 @@ def test_summary_mentions_the_verdict(concave):
     assert "Eta-squared" in text
 
 
+def test_summary_uses_regression_results_conventions(linear):
+    text = binspect.binscatter(linear, y="y", x="x", bins=20).summary()
+    assert "Binscatter Results" in text
+    assert "Dep. Variable:" in text
+    assert "No. Observations:" in text
+    assert "coef" in text and "std err" in text
+    assert "Notes:" in text
+    assert max(map(len, text.splitlines())) <= 68
+
+
 def test_results_are_permutation_invariant(linear):
     order = np.random.default_rng(1).permutation(len(linear))
     a = binspect.binscatter(linear, y="y", x="x", bins=15)

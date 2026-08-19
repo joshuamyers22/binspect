@@ -1,7 +1,4 @@
-"""Partition rules: turn ``x`` into bin edges and an integer assignment.
-
-This module knows nothing about ``y``. That separation is deliberate --- it is what
-lets the binning be property-tested on its own.
+"""Binning methods and partition results.
 
 Tie convention
 --------------
@@ -30,21 +27,21 @@ SPARSE_BIN_THRESHOLD = 10
 
 @dataclass(frozen=True, slots=True)
 class Binning:
-    """The result of partitioning ``x``.
+    """Results from partitioning an exogenous variable.
 
     Attributes
     ----------
-    edges:
+    edges : ndarray
         Bin boundaries, length ``n_bins + 1``, strictly increasing.
-    assignment:
+    assignment : ndarray
         Integer bin index in ``[0, n_bins)`` for every observation, same order and
         length as the input ``x``.
-    n_bins:
+    n_bins : int
         Number of bins actually produced, which may be fewer than requested when
         ``x`` has too few distinct values.
-    method:
+    method : {"quantile", "equal_width", "custom"}
         The partition rule that produced this binning.
-    requested_bins:
+    requested_bins : int
         What the caller asked for, retained so the result can explain a reduction.
     """
 
@@ -56,11 +53,11 @@ class Binning:
 
     @property
     def was_reduced(self) -> bool:
-        """True when fewer bins were produced than requested."""
+        """Return whether fewer bins were produced than requested."""
         return self.n_bins < self.requested_bins
 
     def counts(self) -> IntArray:
-        """Number of observations falling in each bin."""
+        """Return the number of observations in each bin."""
         return np.bincount(self.assignment, minlength=self.n_bins).astype(np.int64)
 
 
@@ -92,23 +89,25 @@ def compute_binning(
     method: BinningMethod = "quantile",
     edges: FloatArray | None = None,
 ) -> Binning:
-    """Partition ``x`` into bins.
+    """Partition an exogenous variable into bins.
 
     Parameters
     ----------
-    x:
-        Finite, one-dimensional array of the binning variable.
-    n_bins:
-        Requested number of bins. Ignored when ``edges`` is given.
-    method:
+    x : array_like
+        Finite, one-dimensional exogenous variable.
+    n_bins : int, optional
+        Requested number of bins. Ignored when ``edges`` is provided.
+    method : {"quantile", "equal_width", "custom"}, default "quantile"
         ``"quantile"`` for equal-count bins, ``"equal_width"`` for equal-span bins,
-        ``"custom"`` when supplying ``edges`` directly.
-    edges:
-        Explicit, strictly increasing bin boundaries. Required for ``"custom"``.
+        or ``"custom"`` when supplying ``edges`` directly.
+    edges : array_like, optional
+        Explicit, strictly increasing bin boundaries that cover ``x``. Required for
+        custom binning.
 
     Returns
     -------
     Binning
+        Partition results.
 
     Raises
     ------

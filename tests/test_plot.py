@@ -70,7 +70,8 @@ def test_unknown_layer_is_refused(result):
 
 def test_annotate_levels(result):
     assert len(result.plot(annotate=None).texts) == 0
-    assert len(result.plot(annotate="minimal").texts) == 1
+    minimal = result.plot(annotate="minimal").texts[0].get_text()
+    assert minimal == f"n = {result.n_obs:,}   ·   {result.n_bins} bins"
     audit = result.plot(annotate="audit").texts[0].get_text()
     assert "η²" in audit and result.verdict in audit
 

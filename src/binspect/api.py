@@ -1,9 +1,4 @@
-"""The public entry point.
-
-This module validates and orchestrates. It contains no statistical formulas --- every
-number it returns comes from :mod:`binspect.core`. Keeping it that way is what makes
-the identity tests meaningful: they exercise the same code path the user gets.
-"""
+"""Public functions for estimating binned scatterplots."""
 
 from __future__ import annotations
 
@@ -30,7 +25,7 @@ def _column(
     value: Any,
     label: str,
 ) -> tuple[FloatArray, str]:
-    """Resolve a column name or array-like to a float array plus a display name."""
+    """Return a data column as a one-dimensional floating-point array."""
     if value is None:
         raise ValueError(f"{label} is required.")
 
@@ -66,33 +61,38 @@ def binscatter(
     ci: float | None = 0.95,
     dropna: bool = True,
 ) -> BinscatterResult:
-    """Bin ``x``, summarise ``y`` within each bin, and audit the linear fit.
+    """Estimate a binned scatterplot and linear specification diagnostic.
 
     Parameters
     ----------
-    data:
-        A DataFrame or mapping. Optional if ``x`` and ``y`` are passed as arrays.
-    y, x:
-        Column names in ``data``, or array-likes.
-    bins:
-        Bin count as an integer; a rule (``"auto"``, ``"sturges"``, ``"iqr"``,
-        ``"dpi"``); or an explicit array of edges, which also sets
-        ``binning="custom"``.
-    binning:
-        ``"quantile"`` (equal counts) or ``"equal_width"`` (equal spans).
-    weights:
-        Column name or array of non-negative reliability weights.
-    ci:
-        Two-sided confidence level for each bin mean, or ``None`` to skip.
-    dropna:
-        Drop rows where any of x, y or weights is non-finite. When ``False``, such
-        rows raise instead.
+    data : pandas.DataFrame or Mapping, optional
+        Data containing the variables. Not required when ``x``, ``y``, and
+        ``weights`` are array-like.
+    y : str or array_like
+        Endogenous (response) variable. A string is interpreted as a column in
+        ``data``.
+    x : str or array_like
+        Exogenous (regressor) variable used for binning. A string is interpreted as
+        a column in ``data``.
+    bins : int, {"auto", "sturges", "iqr", "dpi"}, or array_like, default "auto"
+        Number of bins, bin-selection rule, or custom bin edges. Custom edges must
+        be strictly increasing and cover the observed range of ``x``.
+    binning : {"quantile", "equal_width"}, default "quantile"
+        Partition method. Ignored when custom edges are supplied in ``bins``.
+    weights : str or array_like, optional
+        Nonnegative reliability weights. At least one weight, and the total weight
+        in each bin, must be positive.
+    ci : float or None, default 0.95
+        Two-sided confidence level for bin means. Set to ``None`` to omit confidence
+        intervals.
+    dropna : bool, default True
+        If True, remove observations with nonfinite values in any input. If False,
+        raise a ``ValueError`` when nonfinite values are present.
 
     Returns
     -------
     BinscatterResult
-        Call ``.table`` for the per-bin frame, ``.summary()`` for the text block,
-        ``.plot()`` for the figure.
+        Estimation results and plotting methods.
 
     Examples
     --------
@@ -106,9 +106,17 @@ def binscatter(
 
     Notes
     -----
-    The bin means this returns are exactly the fitted values of ``OLS(y ~ C(bin))``.
-    Everything the result claims about auditing a linear model follows from that
-    equivalence, which the test suite asserts to floating-point tolerance.
+    The bin means are the fitted values from a saturated indicator regression,
+    ``OLS(y ~ C(bin))``. The reported lack-of-fit measure is descriptive. It is not
+    a hypothesis test for linearity.
+
+    Confidence intervals use within-bin standard errors and assume independent
+    observations. They are not heteroskedasticity- or cluster-robust.
+
+    See Also
+    --------
+    binspect.results.BinscatterResult
+        Results container returned by this function.
     """
     y_arr, y_name = _column(data, y, "y")
     x_arr, x_name = _column(data, x, "x")

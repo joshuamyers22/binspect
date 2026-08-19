@@ -1,4 +1,4 @@
-"""The audit arithmetic.
+"""Variance decomposition and linear lack-of-fit measures.
 
 Total variation in ``y`` splits into a between-bin and a within-bin part::
 
@@ -56,7 +56,25 @@ MIN_BIN_FOR_VERDICT = 30
 
 @dataclass(frozen=True, slots=True)
 class Decomposition:
-    """Variance split, lack of fit, and the diagnostics that fall out of them."""
+    """Variance decomposition and diagnostic results.
+
+    Parameters
+    ----------
+    ss_between, ss_within, ss_total : float
+        Between-bin, within-bin, and total weighted sums of squares.
+    ss_lof : float
+        Weighted sum of squared bin-mean deviations from the linear fit.
+    eta_sq : float
+        Share of total variation explained by bin indicators.
+    r_sq_linear : float
+        Coefficient of determination from the linear fit.
+    gap : float
+        Lack of fit normalized by total variation.
+    verdict : {"linear", "curvature", "underpowered bins"}
+        Heuristic interpretation of ``gap`` and the minimum bin size.
+    min_bin_n : int
+        Smallest unweighted bin count.
+    """
 
     ss_between: float
     ss_within: float
@@ -100,27 +118,27 @@ def decompose(
     *,
     weights: FloatArray | None = None,
 ) -> Decomposition:
-    """Split the variation in ``y`` and measure the line's lack of fit.
+    """Compute the variance decomposition and linear lack of fit.
 
     Parameters
     ----------
-    y, x:
-        Outcome and binning variable.
-    assignment:
+    y, x : array_like
+        Endogenous and exogenous variables.
+    assignment : array_like
         Integer bin index per observation.
-    n_bins:
+    n_bins : int
         Number of bins.
-    fit:
-        The fitted line, supplied by :mod:`binspect.core.lines` so this module never
-        has to estimate anything itself.
-    r_sq_linear:
-        R-squared of that line, likewise supplied rather than recomputed.
-    weights:
-        Non-negative reliability weights.
+    fit : Line
+        Fitted linear model.
+    r_sq_linear : float
+        Coefficient of determination from ``fit``.
+    weights : array_like, optional
+        Nonnegative reliability weights. Equal weights are used if omitted.
 
     Returns
     -------
     Decomposition
+        Variance decomposition and diagnostic measures.
 
     Notes
     -----

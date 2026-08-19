@@ -1,9 +1,9 @@
-"""binspect --- binned scatterplots that audit the regression behind them.
+"""Binned scatterplots for linear specification diagnostics.
 
-Bin ``x``, average ``y`` within each bin, and you have the fitted values of the
-saturated model ``OLS(y ~ C(bin))``. The weighted distance between those bin means
-and a straight-line fit exposes structure the linear specification may be discarding.
-binspect draws that lack of fit instead of leaving it implicit.
+``binspect`` estimates within-bin means and compares them with a linear fit to the
+underlying observations. The bin means are the fitted values of the saturated model
+``OLS(y ~ C(bin))``. Their weighted deviations from the line provide a descriptive
+measure of linear lack of fit.
 
 Quick start
 -----------

@@ -1,9 +1,4 @@
-"""Composition.
-
-The contract, tested rather than described: pass an axes, get *that* axes back. A
-figure is created only when none is supplied. This is what lets a binscatter drop
-into somebody's existing multi-panel layout instead of hijacking it.
-"""
+"""Binned scatterplot composition functions."""
 
 from __future__ import annotations
 
@@ -62,33 +57,33 @@ def plot(
     title: str | None = None,
     layer_kwargs: dict[str, dict[str, Any]] | None = None,
 ) -> Axes:
-    """Draw a binscatter.
+    """Plot binned scatterplot results.
 
     Parameters
     ----------
-    result:
-        A :class:`~binspect.results.BinscatterResult`.
-    ax:
-        Existing axes to draw on. When ``None``, a themed figure is created.
-    theme:
-        ``"notebook"``, ``"paper"``, ``"deck"``, or a :class:`Theme`.
-    show:
-        Layer names to draw. Defaults to ``DEFAULT_LAYERS``. Order is ignored ---
+    result : BinscatterResult
+        Estimation results.
+    ax : matplotlib.axes.Axes, optional
+        Axes on which to draw. A new figure and axes are created if omitted.
+    theme : {"notebook", "paper", "deck"} or Theme, default "notebook"
+        Visual theme.
+    show : sequence of str, optional
+        Layer names to draw. Defaults to ``DEFAULT_LAYERS``. Order is ignored;
         layers always draw in ``LAYER_ORDER``.
-    annotate:
-        ``None``, ``"minimal"`` (default) or ``"audit"``.
-    legend:
-        Draw a legend. Off by default; with three layers it costs more space than it
-        explains.
-    title:
-        Axes title. ``None`` leaves it unset.
-    layer_kwargs:
-        Per-layer keyword overrides, e.g. ``{"bins": {"size_by_n": True}}``.
+    annotate : {"minimal", "audit"} or None, default "minimal"
+        Plot annotation level. Set to None to omit annotations.
+    legend : bool, default False
+        If True, draw a legend.
+    title : str, optional
+        Axes title.
+    layer_kwargs : dict, optional
+        Keyword arguments by layer, for example
+        ``{"bins": {"size_by_n": True}}``.
 
     Returns
     -------
     Axes
-        The axes that was drawn on --- the same object passed in, when one was.
+        Axes containing the plot. If ``ax`` is provided, the same object is returned.
     """
     import matplotlib.pyplot as plt
 

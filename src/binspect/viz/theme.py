@@ -1,11 +1,4 @@
-"""Themes.
-
-Importing binspect must leave ``matplotlib.rcParams`` byte-identical --- a library
-that restyles someone's whole notebook on import gets uninstalled. So themes are
-applied through :func:`matplotlib.rc_context`, scoped to a single ``with`` block or
-a single ``plot()`` call, and always restored, including when an exception unwinds.
-That property is asserted in the test suite rather than promised here.
-"""
+"""Scoped Matplotlib themes."""
 
 from __future__ import annotations
 
@@ -23,7 +16,7 @@ __all__ = ["THEMES", "Theme", "get_theme", "theme"]
 
 @dataclass(frozen=True, slots=True)
 class Theme:
-    """A named look: rcParams plus the geometry of each layer."""
+    """Matplotlib parameters and layer settings for a visual theme."""
 
     name: str
     palette: Palette
@@ -130,7 +123,7 @@ THEMES: dict[str, Theme] = {
 
 
 def get_theme(name: str | Theme) -> Theme:
-    """Resolve a theme name (or pass a ``Theme`` straight through)."""
+    """Return a theme from its name or an existing ``Theme`` instance."""
     if isinstance(name, Theme):
         return name
     try:
@@ -141,7 +134,19 @@ def get_theme(name: str | Theme) -> Theme:
 
 @contextmanager
 def theme(name: str | Theme, **overrides: Any) -> Iterator[Theme]:
-    """Apply a theme's rcParams for the duration of a block.
+    """Apply a Matplotlib theme within a context.
+
+    Parameters
+    ----------
+    name : {"notebook", "paper", "deck"} or Theme
+        Theme name or instance.
+    **overrides
+        Matplotlib ``rcParams`` that override the selected theme.
+
+    Yields
+    ------
+    Theme
+        Selected theme.
 
     Examples
     --------
@@ -149,8 +154,10 @@ def theme(name: str | Theme, **overrides: Any) -> Iterator[Theme]:
     >>> with binspect.theme("paper"):          # doctest: +SKIP
     ...     result.plot()
 
-    Any extra keyword arguments are treated as rcParams overrides layered on top of
-    the theme. Everything is restored on exit.
+    Notes
+    -----
+    Matplotlib settings are restored when the context exits, including when an
+    exception is raised.
     """
     resolved = get_theme(name)
     rc = {**resolved.rc, **overrides}

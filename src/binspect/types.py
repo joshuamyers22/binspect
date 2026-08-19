@@ -1,7 +1,4 @@
-"""Shared types and small immutable containers.
-
-Nothing in here imports matplotlib. Nothing in here computes a statistic.
-"""
+"""Type definitions and linear-result containers."""
 
 from __future__ import annotations
 
@@ -38,19 +35,54 @@ Verdict = Literal["linear", "curvature", "underpowered bins"]
 
 @dataclass(frozen=True, slots=True)
 class Line:
-    """A straight line in the (x, y) plane, parameterised by slope and intercept."""
+    """Linear function represented by a slope and intercept.
+
+    Parameters
+    ----------
+    slope : float
+        Slope coefficient.
+    intercept : float
+        Constant term.
+    """
 
     slope: float
     intercept: float
 
     def predict(self, x: FloatArray | float) -> FloatArray | float:
-        """Evaluate the line at ``x``."""
+        """Return fitted values at ``x``.
+
+        Parameters
+        ----------
+        x : array_like or float
+            Values of the exogenous variable.
+
+        Returns
+        -------
+        ndarray or float
+            Fitted values.
+        """
         return self.intercept + self.slope * np.asarray(x, dtype=float)
 
 
 @dataclass(frozen=True, slots=True)
 class LineFit(Line):
-    """An estimated regression line, with the fit diagnostics that come with it."""
+    """Results from fitting a linear model.
+
+    Parameters
+    ----------
+    slope : float
+        Slope coefficient.
+    intercept : float
+        Constant term.
+    se_slope : float
+        Standard error of the slope coefficient.
+    r : float
+        Correlation coefficient.
+    r_sq : float
+        Coefficient of determination.
+    n_obs : int
+        Number of observations.
+    """
 
     se_slope: float
     r: float

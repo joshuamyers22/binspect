@@ -1,13 +1,11 @@
 # binspect
 
-**Binned scatterplots that audit the regression behind them.**
+**Binned scatterplots for linear specification diagnostics.**
 
-`binspect` — *bin* + *inspect* — treats a binned scatterplot as a diagnostic, not a
-chart type. Bin `x`, average `y` within each bin, and you have the fitted values of
-the saturated model `OLS(y ~ C(bin))`. How far those bin means sit from your fitted
-line is how much structure the linear specification is discarding. `binspect` draws
-that distance instead of leaving it implicit, in a figure that is already
-presentation-ready.
+`binspect` estimates binned conditional means and compares them with a linear fit to
+the underlying observations. The bin means are the fitted values from the saturated
+model `OLS(y ~ C(bin))`. Their weighted deviations from the line provide a descriptive
+linear specification diagnostic.
 
 ![binspect](docs/hero.png)
 
@@ -21,22 +19,22 @@ print(bs.summary())
 bs.plot(theme="paper")
 ```
 
-## Why another one
+## Related packages
 
 | | `binsreg` | `binscatter` | `binspect` |
 |---|---|---|---|
 | Inference (uniform bands, shape tests) | ✅ authoritative | ✗ | ✗ |
 | Publication-ready figure out of the box | ✗ | ✅ | ✅ |
-| Tells you whether your linear model fits | ✗ | ✗ | ✅ |
+| Descriptive linear specification diagnostic | ✗ | ✗ | ✅ |
 
-`binsreg` (Cattaneo, Crump, Farrell and Feng) owns the inference theory, and
-`binspect` delegates optimal bin selection to it rather than reimplementing it. Use
-`binsreg` when you need uniform confidence bands or a formal shape-restriction test.
+`binsreg` (Cattaneo, Crump, Farrell, and Feng) provides formal binscatter inference.
+`binspect` delegates optimal bin selection to it when requested. Use `binsreg` when
+uniform confidence bands or formal shape-restriction tests are required.
 
 ## What it draws
 
-Every audit quantity has a visual form. If a diagnostic can only be communicated as a
-number in a corner, it does not go in the default plot.
+The default plot presents the estimates, uncertainty, linear fit, lack of fit, and
+distribution of the exogenous variable as separate layers.
 
 | Layer | What it shows | Default |
 |---|---|---|
@@ -49,23 +47,22 @@ number in a corner, it does not go in the default plot.
 | `smooth` | Local-linear smoother through the bin means | off |
 | `raw` | Underlying observations at low alpha | off |
 
-Three themes: `notebook` (default), `paper` (thin, serif, greyscale-safe),
-`deck` (heavy marks, legible from the back of a room). All colourblind-safe. Themes
-are scoped — importing `binspect` never touches your `rcParams`.
+Three themes are included: `notebook` (default), `paper` (thin, serif, grayscale-safe),
+and `deck` (larger marks and type). Themes are colorblind-safe and scoped; importing
+`binspect` does not modify global `rcParams`.
 
 ## One thing to know about η²
 
-A common claim is that η² (the bin model's R²) upper-bounds the linear R², so their
-difference measures curvature. **That is false**, and there's a test in the suite that
-proves it: a step function does not nest a straight line, so with coarse bins η² can
-sit well *below* R². `binspect` therefore reports lack of fit,
+The bin-indicator model does not nest the linear model. Consequently, η² can be below
+the linear R² when bins are coarse, and their difference is not a valid curvature
+measure. `binspect` reports normalized lack of fit,
 
 ```
 SS_lof = Σⱼ nⱼ (ȳⱼ − ŷ(x̄ⱼ))²      gap = SS_lof / SS_total
 ```
 
-which is non-negative by construction and is exactly the ink in the deviation layer.
-η² is still reported; it just can't be differenced against R².
+which is nonnegative by construction and corresponds to the deviations shown in the
+plot. This quantity is descriptive and is not a formal test of linearity.
 
 ## Status
 
@@ -74,7 +71,7 @@ distribution name is `binspect-regression`; the import remains `binspect`.
 
 **Not yet implemented:** covariate adjustment via FWL residualization, cluster-robust
 standard errors, uniform confidence bands, and quantile regression. Standard errors are
-currently `sd/√n` within bin — correct under independence, wrong for clustered data.
+currently `sd/√n` within bin and assume independent observations.
 
 ## Install
 

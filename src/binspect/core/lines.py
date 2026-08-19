@@ -1,10 +1,4 @@
-"""The two straight lines drawn over a binscatter.
-
-The OLS line has slope ``r * sd_y / sd_x``. The SD line has slope ``sign(r) * sd_y /
-sd_x``. The regression line is therefore the SD line flattened by ``r`` --- the
-regression-to-the-mean effect, visible directly on the plot. That relationship is
-asserted as an exact test.
-"""
+"""Linear fit and standard-deviation reference estimators."""
 
 from __future__ import annotations
 
@@ -36,12 +30,19 @@ def _weights(y: FloatArray, weights: FloatArray | None) -> FloatArray:
 def fit_ols(
     x: FloatArray, y: FloatArray, *, weights: FloatArray | None = None
 ) -> LineFit:
-    """Fit ``y ~ x`` by (weighted) least squares.
+    """Fit a linear model by weighted least squares.
+
+    Parameters
+    ----------
+    x, y : array_like
+        Exogenous and endogenous variables.
+    weights : array_like, optional
+        Nonnegative reliability weights. Equal weights are used if omitted.
 
     Returns
     -------
     LineFit
-        Slope, intercept, slope standard error, correlation and R-squared.
+        Parameter estimates and fit statistics.
     """
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
@@ -75,11 +76,27 @@ def fit_ols(
 def fit_sd_line(
     x: FloatArray, y: FloatArray, *, weights: FloatArray | None = None
 ) -> Line:
-    """The SD line: slope ``sign(r) * sd_y / sd_x`` through the point of averages.
+    """Estimate the standard-deviation reference line.
 
-    This is the line the eye draws through an elliptical cloud, and it is always at
-    least as steep as the OLS line. It is also the geometric mean of the ``y on x``
-    and ``x on y`` regression slopes.
+    Parameters
+    ----------
+    x, y : array_like
+        Exogenous and endogenous variables.
+    weights : array_like, optional
+        Nonnegative reliability weights. Equal weights are used if omitted.
+
+    Returns
+    -------
+    Line
+        Standard-deviation reference line.
+
+    Notes
+    -----
+    The slope is ``sign(r) * sd_y / sd_x`` and the line passes through the weighted
+    means of ``x`` and ``y``. The weighted least-squares slope equals this slope
+    multiplied by the correlation coefficient.
+
+    The reference is descriptive and is not an additional fitted model.
     """
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)

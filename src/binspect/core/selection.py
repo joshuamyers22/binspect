@@ -1,9 +1,4 @@
-"""Choosing how many bins to use.
-
-The IMSE-optimal ``"dpi"`` selector belongs to ``binsreg`` (Cattaneo, Crump, Farrell
-and Feng); we delegate to it when it is installed rather than reimplement it. The
-rules here are the pragmatic defaults for the exploratory path.
-"""
+"""Bin-count selection methods."""
 
 from __future__ import annotations
 
@@ -33,22 +28,22 @@ def select_n_bins(
     *,
     y: FloatArray | None = None,
 ) -> int:
-    """Resolve a bin-count request to a concrete integer.
+    """Select the number of bins.
 
     Parameters
     ----------
-    x:
-        The binning variable.
-    rule:
+    x : array_like
+        Exogenous variable used for binning.
+    rule : int or {"auto", "sturges", "iqr", "dpi"}, default "auto"
         An explicit integer, or one of ``"auto"``, ``"sturges"``, ``"iqr"``,
         ``"dpi"``.
-    y:
-        Outcome variable, required only by ``"dpi"``.
+    y : array_like, optional
+        Endogenous variable. Required when ``rule="dpi"``.
 
     Returns
     -------
     int
-        A bin count, clipped to a sane range for the sample size.
+        Selected bin count.
     """
     x = np.asarray(x, dtype=float)
     n_obs = int(x.size)
