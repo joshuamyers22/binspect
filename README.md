@@ -21,11 +21,6 @@ bs.plot(theme="paper")
 
 ## Related packages
 
-| | `binsreg` | `binscatter` | `binspect` |
-|---|---|---|---|
-| Inference (uniform bands, shape tests) | ✅ authoritative | ✗ | ✗ |
-| Publication-ready figure out of the box | ✗ | ✅ | ✅ |
-| Descriptive linear specification diagnostic | ✗ | ✗ | ✅ |
 
 `binsreg` (Cattaneo, Crump, Farrell, and Feng) provides formal binscatter inference.
 `binspect` delegates optimal bin selection to it when requested. Use `binsreg` when
