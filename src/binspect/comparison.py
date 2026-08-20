@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike
 
-from .api import _column, binscatter
+from .api import _column, _control_frame, binscatter
 from .exceptions import InsufficientDataError
 from .results import BinscatterResult, _json_value
 from .types import BinningMethod, FloatArray
@@ -223,6 +223,7 @@ def compare(
     bins: int | str | ArrayLike = "auto",
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
+    controls: str | Sequence[str] | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
     common_bins: bool = True,
@@ -246,6 +247,9 @@ def compare(
         Partition method.
     weights : str or array_like, optional
         Nonnegative reliability weights.
+    controls : str, sequence of str, or array_like, optional
+        Variables partialled out of ``x`` and ``y`` within the pooled sample and
+        each group. String values select columns from ``data``.
     ci : float or None, default 0.95
         Two-sided confidence level for bin means. Set to None to omit intervals.
     dropna : bool, default True
@@ -284,6 +288,10 @@ def compare(
         if weight_values.shape != y_values.shape:
             raise ValueError("weights must have the same shape as x, y, and group.")
 
+    control_frame: pd.DataFrame | None = None
+    if controls is not None:
+        control_frame, _ = _control_frame(data, controls, y_values.size)
+
     group_ok = np.asarray(pd.notna(group_values), dtype=bool)
     if not group_ok.any():
         raise InsufficientDataError("group has no nonmissing values.")
@@ -294,6 +302,7 @@ def compare(
         bins=bins,
         binning=binning,
         weights=None if weight_values is None else weight_values[group_ok],
+        controls=None if control_frame is None else control_frame.loc[group_ok],
         ci=ci,
         dropna=dropna,
     )
@@ -314,6 +323,9 @@ def compare(
                 bins=group_bins,
                 binning=binning,
                 weights=(None if weight_values is None else weight_values[selected]),
+                controls=(
+                    None if control_frame is None else control_frame.loc[selected]
+                ),
                 ci=ci,
                 dropna=dropna,
             )

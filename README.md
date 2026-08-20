@@ -22,6 +22,24 @@ bs.plot(theme="paper")
 bs.audit(theme="paper")  # plot plus marginal distributions and residuals
 ```
 
+Adjust both variables for numeric or categorical controls with FWL residualization:
+
+```python
+adjusted = binspect.binscatter(
+    df,
+    y="sales",
+    x="age",
+    controls=["region", "tenure"],
+    bins=20,
+)
+adjusted.fit.slope  # age coefficient from OLS(sales ~ age + region + tenure)
+adjusted.plot()  # axes are explicitly labelled as adjusted
+```
+
+Residualized variables retain their original means, keeping the plot on a familiar
+scale. Categorical controls are indicator-encoded and a constant is included
+automatically. With `weights=`, the projection uses the same reliability weights.
+
 For comparisons across groups, pooled bin edges are used by default so facets refer
 to the same intervals of `x`:
 
@@ -93,9 +111,9 @@ plot. This quantity is descriptive and is not a formal test of linearity.
 Pre-release (`0.1.0.dev0`). Both APIs may change before the first stable release. The
 distribution name is `binspect-regression`; the import remains `binspect`.
 
-**Not yet implemented:** covariate adjustment via FWL residualization, cluster-robust
-standard errors, uniform confidence bands, and quantile regression. Standard errors are
-currently `sd/√n` within bin and assume independent observations.
+**Not yet implemented:** cluster-robust standard errors, uniform confidence bands,
+and quantile regression. Standard errors are currently `sd/√n` within bin and
+assume independent observations.
 
 ## Install
 

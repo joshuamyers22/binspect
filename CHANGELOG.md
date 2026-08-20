@@ -17,6 +17,8 @@ All notable changes to this project are documented here. The format follows
   results.
 - `BinscatterResult.audit()` for a composed binscatter, marginal-distribution, and
   residual diagnostic figure.
+- Numeric and categorical `controls=` using weighted Frisch--Waugh--Lovell
+  residualization in single and grouped estimates.
 
 ### Changed
 - Public docstrings now follow statsmodels-style numpydoc conventions and terminology.

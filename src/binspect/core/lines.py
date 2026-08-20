@@ -28,7 +28,11 @@ def _weights(y: FloatArray, weights: FloatArray | None) -> FloatArray:
 
 
 def fit_ols(
-    x: FloatArray, y: FloatArray, *, weights: FloatArray | None = None
+    x: FloatArray,
+    y: FloatArray,
+    *,
+    weights: FloatArray | None = None,
+    dof_resid: int | None = None,
 ) -> LineFit:
     """Fit a linear model by weighted least squares.
 
@@ -38,6 +42,9 @@ def fit_ols(
         Exogenous and endogenous variables.
     weights : array_like, optional
         Nonnegative reliability weights. Equal weights are used if omitted.
+    dof_resid : int, optional
+        Residual degrees of freedom. Defaults to ``n_obs - 2``. Adjusted models
+        supply the degrees of freedom from the full design matrix.
 
     Returns
     -------
@@ -59,7 +66,9 @@ def fit_ols(
 
     n = int(y.size)
     resid = y - (intercept + slope * x)
-    dof = max(n - 2, 1)
+    dof = max(n - 2, 1) if dof_resid is None else dof_resid
+    if dof < 1:
+        raise ValueError("dof_resid must be positive.")
     sigma_sq = float(np.sum(w * resid**2) / (np.sum(w) / n) / dof) / n
     se_slope = float(np.sqrt(sigma_sq / var_x)) if var_x > 0 else np.nan
 

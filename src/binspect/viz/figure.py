@@ -112,8 +112,8 @@ def plot(
                 ax, result, theme=th, level=annotate, **layer_kwargs.get("annotate", {})
             )
 
-        ax.set_xlabel(result.x_name)
-        ax.set_ylabel(result.y_name)
+        ax.set_xlabel(result.x_label)
+        ax.set_ylabel(result.y_label)
         if title is not None:
             ax.set_title(title)
         if legend:

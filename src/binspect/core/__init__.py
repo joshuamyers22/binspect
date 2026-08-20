@@ -11,6 +11,7 @@ from .binning import Binning, compute_binning
 from .decompose import Decomposition, decompose
 from .estimate import BinEstimates, estimate_bins
 from .lines import fit_ols, fit_sd_line
+from .residualize import residualize
 from .selection import select_n_bins
 
 __all__ = [
@@ -22,5 +23,6 @@ __all__ = [
     "estimate_bins",
     "fit_ols",
     "fit_sd_line",
+    "residualize",
     "select_n_bins",
 ]

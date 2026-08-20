@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 import numpy as np
@@ -13,6 +13,7 @@ from .core.binning import compute_binning
 from .core.decompose import decompose
 from .core.estimate import estimate_bins
 from .core.lines import fit_ols, fit_sd_line
+from .core.residualize import residualize
 from .core.selection import select_n_bins
 from .exceptions import InsufficientDataError
 from .results import BinscatterResult
@@ -51,6 +52,81 @@ def _column(
     return array, str(name)
 
 
+def _control_frame(
+    source: Mapping[str, Any] | pd.DataFrame | None,
+    controls: str | Sequence[str] | ArrayLike,
+    n_obs: int,
+) -> tuple[pd.DataFrame, tuple[str, ...]]:
+    """Return controls as an unencoded DataFrame and their display names."""
+    if (
+        isinstance(controls, Sequence)
+        and not isinstance(controls, (str, bytes))
+        and len(controls) == 0
+    ):
+        raise ValueError("controls must contain at least one variable.")
+    names: tuple[str, ...]
+    if isinstance(controls, str):
+        names = (controls,)
+    elif (
+        source is not None
+        and isinstance(controls, Sequence)
+        and not isinstance(controls, (np.ndarray, pd.Series, pd.DataFrame))
+        and all(isinstance(value, str) for value in controls)
+    ):
+        names = tuple(str(value) for value in controls)
+    else:
+        names = ()
+
+    if names:
+        if source is None:
+            raise ValueError("named controls require data=.")
+        if len(set(names)) != len(names):
+            raise ValueError("control column names must be unique.")
+        try:
+            frame = pd.DataFrame({name: source[name] for name in names})
+        except KeyError as exc:
+            available = list(getattr(source, "columns", source.keys()))
+            raise KeyError(
+                f"control column {exc.args[0]!r} not found; available: {available}"
+            ) from None
+    elif isinstance(controls, pd.DataFrame):
+        frame = controls.copy()
+        names = tuple(str(name) for name in frame.columns)
+    else:
+        array = np.asarray(controls)
+        if array.ndim == 1:
+            frame = pd.DataFrame(
+                {str(getattr(controls, "name", None) or "control"): array}
+            )
+        elif array.ndim == 2:
+            frame = pd.DataFrame(
+                array, columns=[f"control_{index}" for index in range(array.shape[1])]
+            )
+        else:
+            raise ValueError(
+                f"controls must be one- or two-dimensional, got shape {array.shape}."
+            )
+        names = tuple(str(name) for name in frame.columns)
+
+    if frame.shape[1] == 0:
+        raise ValueError("controls must contain at least one variable.")
+    if not frame.columns.is_unique:
+        raise ValueError("control column names must be unique.")
+    if len(frame) != n_obs:
+        raise ValueError("controls must have the same number of rows as x and y.")
+    return frame.reset_index(drop=True), names
+
+
+def _encode_controls(frame: pd.DataFrame) -> FloatArray:
+    """Encode numeric and categorical controls as a full-rank projection matrix."""
+    encoded = pd.get_dummies(frame, drop_first=True, dtype=float)
+    try:
+        values = encoded.to_numpy(dtype=float)
+    except (TypeError, ValueError):
+        raise ValueError("controls must be numeric, boolean, or categorical.") from None
+    return np.column_stack((np.ones(len(frame), dtype=float), values))
+
+
 def binscatter(
     data: pd.DataFrame | Mapping[str, Any] | None = None,
     y: str | ArrayLike | None = None,
@@ -59,6 +135,7 @@ def binscatter(
     bins: int | str | ArrayLike = "auto",
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
+    controls: str | Sequence[str] | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
 ) -> BinscatterResult:
@@ -83,6 +160,10 @@ def binscatter(
     weights : str or array_like, optional
         Nonnegative reliability weights. At least one weight, and the total weight
         in each bin, must be positive.
+    controls : str, sequence of str, or array_like, optional
+        Variables partialled out of both ``x`` and ``y`` using Frisch--Waugh--Lovell
+        residualization. String values select columns from ``data``. Categorical
+        controls are indicator-encoded. A constant is included automatically.
     ci : float or None, default 0.95
         Two-sided confidence level for bin means. Set to ``None`` to omit confidence
         intervals.
@@ -111,6 +192,11 @@ def binscatter(
     ``OLS(y ~ C(bin))``. The reported lack-of-fit measure is descriptive. It is not
     a hypothesis test for linearity.
 
+    When controls are supplied, ``x`` and ``y`` are residualized on a constant and
+    the encoded control matrix, then shifted back to their original weighted means.
+    The reported slope equals the coefficient on ``x`` from the corresponding full
+    least-squares model.
+
     Confidence intervals use within-bin standard errors and assume independent
     observations. They are not heteroskedasticity- or cluster-robust.
 
@@ -136,9 +222,19 @@ def binscatter(
         if np.any(w_arr < 0):
             raise ValueError("weights must be non-negative.")
 
+    control_frame: pd.DataFrame | None = None
+    control_names: tuple[str, ...] = ()
+    if controls is not None:
+        control_frame, control_names = _control_frame(data, controls, y_arr.size)
+
     finite = np.isfinite(x_arr) & np.isfinite(y_arr)
     if w_arr is not None:
         finite &= np.isfinite(w_arr)
+    if control_frame is not None:
+        finite &= ~control_frame.isna().any(axis=1).to_numpy()
+        numeric_controls = control_frame.select_dtypes(include="number")
+        if numeric_controls.shape[1]:
+            finite &= np.isfinite(numeric_controls.to_numpy(dtype=float)).all(axis=1)
 
     if not finite.all():
         if not dropna:
@@ -149,6 +245,8 @@ def binscatter(
         x_arr, y_arr = x_arr[finite], y_arr[finite]
         if w_arr is not None:
             w_arr = w_arr[finite]
+        if control_frame is not None:
+            control_frame = control_frame.loc[finite].reset_index(drop=True)
 
     if y_arr.size < 4:
         raise InsufficientDataError(
@@ -157,6 +255,22 @@ def binscatter(
 
     if w_arr is not None and not np.any(w_arr > 0):
         raise ValueError("weights must contain at least one positive value.")
+
+    dof_resid: int | None = None
+    if control_frame is not None:
+        control_matrix = _encode_controls(control_frame)
+        if not np.isfinite(control_matrix).all():
+            raise ValueError("controls contain non-finite numeric values.")
+        full_design = np.column_stack((control_matrix, x_arr))
+        if w_arr is not None:
+            full_design = full_design * np.sqrt(w_arr)[:, None]
+        dof_resid = y_arr.size - int(np.linalg.matrix_rank(full_design))
+        if dof_resid < 1:
+            raise InsufficientDataError(
+                "controls leave no residual degrees of freedom."
+            )
+        x_arr = residualize(x_arr, control_matrix, weights=w_arr)
+        y_arr = residualize(y_arr, control_matrix, weights=w_arr)
 
     if isinstance(bins, (str, int, np.integer)):
         bin_rule = int(bins) if isinstance(bins, np.integer) else bins
@@ -175,7 +289,7 @@ def binscatter(
         weights=w_arr,
         ci=ci,
     )
-    fit = fit_ols(x_arr, y_arr, weights=w_arr)
+    fit = fit_ols(x_arr, y_arr, weights=w_arr, dof_resid=dof_resid)
     sd_line = fit_sd_line(x_arr, y_arr, weights=w_arr)
     decomposition = decompose(
         y_arr,
@@ -198,4 +312,5 @@ def binscatter(
         weights=w_arr,
         x_name=x_name,
         y_name=y_name,
+        controls=control_names,
     )

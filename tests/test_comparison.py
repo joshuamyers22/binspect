@@ -123,3 +123,18 @@ def test_invalid_facet_layout_is_refused(grouped_frame):
     result = binspect.compare(grouped_frame, x="x", y="y", group="arm", bins=12)
     with pytest.raises(ValueError, match="layout must be"):
         result.plot(layout="overlay")
+
+
+def test_compare_applies_controls_to_pooled_and_group_results(grouped_frame):
+    frame = grouped_frame.assign(control=np.sin(grouped_frame["x"]))
+    result = binspect.compare(
+        frame,
+        x="x",
+        y="y",
+        group="arm",
+        controls="control",
+        bins=10,
+        common_bins=False,
+    )
+    assert result.pooled.controls == ("control",)
+    assert all(item.controls == ("control",) for item in result.results.values())

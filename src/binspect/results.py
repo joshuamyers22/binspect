@@ -40,11 +40,15 @@ class BinscatterResult:
     decomposition : Decomposition
         Variance decomposition and lack-of-fit diagnostic.
     x, y : ndarray
-        Observations retained after missing-value handling.
+        Observations retained after missing-value handling. When controls are
+        present, these are the mean-shifted residualized variables used in estimation.
     weights : ndarray or None
         Reliability weights, or None for an unweighted estimate.
     x_name, y_name : str
         Display names for the exogenous and endogenous variables.
+    controls : tuple of str
+        Variables partialled out of ``x`` and ``y``. Empty for an unadjusted
+        estimate.
 
     Attributes
     ----------
@@ -70,6 +74,7 @@ class BinscatterResult:
     weights: FloatArray | None
     x_name: str
     y_name: str
+    controls: tuple[str, ...] = ()
 
     # -- convenience accessors -------------------------------------------------
 
@@ -84,6 +89,21 @@ class BinscatterResult:
     @property
     def verdict(self) -> str:
         return self.decomposition.verdict
+
+    @property
+    def adjusted(self) -> bool:
+        """Whether the estimate is adjusted for control variables."""
+        return bool(self.controls)
+
+    @property
+    def x_label(self) -> str:
+        """Return the display label for the exogenous variable."""
+        return f"{self.x_name} (adjusted)" if self.adjusted else self.x_name
+
+    @property
+    def y_label(self) -> str:
+        """Return the display label for the endogenous variable."""
+        return f"{self.y_name} (adjusted)" if self.adjusted else self.y_name
 
     @property
     def table(self) -> pd.DataFrame:
@@ -118,6 +138,7 @@ class BinscatterResult:
                 {
                     "x": self.x_name,
                     "y": self.y_name,
+                    "controls": ", ".join(self.controls) or None,
                     "n_obs": self.n_obs,
                     "n_bins": self.n_bins,
                     "binning": self.binning.method,
@@ -139,6 +160,7 @@ class BinscatterResult:
         return {
             "x": self.x_name,
             "y": self.y_name,
+            "controls": list(self.controls),
             "n_obs": self.n_obs,
             "binning": {
                 "method": self.binning.method,
@@ -200,6 +222,11 @@ class BinscatterResult:
             f"{'Exog:':<20}{self.x_name:>14}{'No. Bins:':>22}{self.n_bins:>12}",
             f"{'Binning:':<20}{self.binning.method:>14}"
             f"{'Min. Bin Size:':>22}{d.min_bin_n:>12,}",
+            *(
+                [f"{'Controls:':<20}{_controls_label(self.controls):>48}"]
+                if self.controls
+                else []
+            ),
             thin,
             f"{'':<18}{'coef':>13}{'std err':>13}",
             thin,
@@ -213,7 +240,7 @@ class BinscatterResult:
             f"{'Correlation:':<20}{f.r:>14.4f}{'Verdict:':>22}{d.verdict:>12}",
             rule,
             "Notes:",
-            *_summary_notes(d, width),
+            *_summary_notes(d, width, self.controls),
             rule,
         ]
         return "\n".join(lines)
@@ -324,12 +351,24 @@ def _verdict_note(d: Decomposition) -> str:
     return "The bin means do not show substantial departure from the fitted line."
 
 
-def _summary_notes(d: Decomposition, width: int) -> list[str]:
+def _controls_label(controls: tuple[str, ...]) -> str:
+    label = ", ".join(controls)
+    return f"{label[:45]}..." if len(label) > 48 else label
+
+
+def _summary_notes(
+    d: Decomposition, width: int, controls: tuple[str, ...]
+) -> list[str]:
     notes = [
         "Confidence intervals assume independent observations.",
         "Lack of fit is descriptive; the verdict is not a formal test.",
         _verdict_note(d),
     ]
+    if controls:
+        notes.append(
+            "The displayed variables were residualized on the listed controls "
+            "using Frisch-Waugh-Lovell projection."
+        )
     lines: list[str] = []
     for index, note in enumerate(notes, start=1):
         prefix = f"[{index}] "
