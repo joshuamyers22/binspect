@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
+from collections.abc import Mapping
 from typing import Any
 
 import numpy as np
 import pandas as pd
+from numpy.typing import ArrayLike
 
 from .core.binning import compute_binning
 from .core.decompose import decompose
@@ -52,12 +53,12 @@ def _column(
 
 def binscatter(
     data: pd.DataFrame | Mapping[str, Any] | None = None,
-    y: str | Sequence[float] | None = None,
-    x: str | Sequence[float] | None = None,
+    y: str | ArrayLike | None = None,
+    x: str | ArrayLike | None = None,
     *,
-    bins: int | str | Sequence[float] = "auto",
+    bins: int | str | ArrayLike = "auto",
     binning: BinningMethod = "quantile",
-    weights: str | Sequence[float] | None = None,
+    weights: str | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
 ) -> BinscatterResult:
@@ -158,7 +159,8 @@ def binscatter(
         raise ValueError("weights must contain at least one positive value.")
 
     if isinstance(bins, (str, int, np.integer)):
-        n_bins = select_n_bins(x_arr, bins, y=y_arr)
+        bin_rule = int(bins) if isinstance(bins, np.integer) else bins
+        n_bins = select_n_bins(x_arr, bin_rule, y=y_arr)
         binning_obj = compute_binning(x_arr, n_bins, method=binning)
     else:
         binning_obj = compute_binning(

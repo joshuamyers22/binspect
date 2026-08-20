@@ -105,10 +105,31 @@ bs.sd_line          # slope, intercept of the SD line (r-shrinkage reference)
 bs.n_obs, bs.n_bins, bs.bin_rule
 
 bs.summary()        # statsmodels-flavored text block
+bs.summary_frame()  # one-row DataFrame of model and diagnostic statistics
+bs.to_dict()        # JSON-compatible structured results
 bs.verdict          # "linear" | "curvature" | "underpowered bins"
 
 bs.plot(ax=None, theme="notebook", show=(...), annotate="minimal") -> Axes
 bs.audit(theme="notebook") -> Figure       # multi-panel, v0.4
+```
+
+### Grouped comparison
+
+```python
+comparison = binspect.compare(
+    data=df,
+    y="sales",
+    x="age",
+    group="region",
+    bins=20,
+    common_bins=True,
+)
+
+comparison.results  # mapping of group label -> BinscatterResult
+comparison.pooled  # pooled BinscatterResult
+comparison.table  # group-by-bin DataFrame
+comparison.summary_frame()  # one row per group
+comparison.plot()  # faceted Figure with shared axes by default
 ```
 
 ### Plot layers

@@ -15,9 +15,31 @@ import binspect
 bs = binspect.binscatter(df, y="sales", x="age", bins=20)
 
 bs.table  # per-bin means, SDs, standard errors, intervals
+bs.summary_frame()  # one-row model and diagnostic table
+bs.to_dict()  # JSON-compatible structured results
 print(bs.summary())
 bs.plot(theme="paper")
 ```
+
+For comparisons across groups, pooled bin edges are used by default so facets refer
+to the same intervals of `x`:
+
+```python
+comparison = binspect.compare(
+    df,
+    y="sales",
+    x="age",
+    group="region",
+    bins=20,
+)
+
+comparison.table  # one row per group and bin
+comparison.summary_frame()  # one row per group
+comparison.plot(sharex=True, sharey=True)
+```
+
+Pass `common_bins=False` to select bins separately within each group. The pooled
+estimate remains available as `comparison.pooled`.
 
 ## Related packages
 

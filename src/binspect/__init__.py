@@ -19,6 +19,7 @@ Quick start
 from __future__ import annotations
 
 from .api import binscatter
+from .comparison import BinscatterCollection, compare
 from .exceptions import (
     BinCountWarning,
     BinspectError,
@@ -33,11 +34,13 @@ __version__ = "0.1.0.dev0"
 __all__ = [
     "THEMES",
     "BinCountWarning",
+    "BinscatterCollection",
     "BinscatterResult",
     "BinspectError",
     "InsufficientDataError",
     "InvalidBinningError",
     "__version__",
     "binscatter",
+    "compare",
     "theme",
 ]

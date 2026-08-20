@@ -51,6 +51,12 @@ def test_decomposition_table_is_one_row(concave):
     assert d.loc[0, "eta_sq"] >= d.loc[0, "r_sq_linear"]
 
 
+def test_summary_frame_is_one_row(linear):
+    summary = binspect.binscatter(linear, y="y", x="x", bins=20).summary_frame()
+    assert len(summary) == 1
+    assert {"slope", "slope_se", "lack_of_fit", "verdict"} <= set(summary.columns)
+
+
 def test_summary_mentions_the_verdict(concave):
     bs = binspect.binscatter(concave, y="y", x="x", bins=20)
     text = bs.summary()

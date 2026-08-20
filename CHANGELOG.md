@@ -11,6 +11,10 @@ All notable changes to this project are documented here. The format follows
   concise `binspect` import package, avoiding a collision with an existing PyPI project.
 - A release workflow builds and validates artifacts separately from its narrowly
   permissioned PyPI Trusted Publishing job.
+- `compare()` and `BinscatterCollection` for grouped estimation, tidy combined tables,
+  pooled results, and faceted plots with common bin edges by default.
+- `summary_frame()` and JSON-compatible `to_dict()` exports for single and grouped
+  results.
 
 ### Changed
 - Public docstrings now follow statsmodels-style numpydoc conventions and terminology.
