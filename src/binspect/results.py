@@ -18,6 +18,7 @@ from .types import FloatArray, Line, LineFit
 
 if TYPE_CHECKING:  # pragma: no cover
     from matplotlib.axes import Axes
+    from matplotlib.figure import Figure
 
 __all__ = ["BinscatterResult"]
 
@@ -259,6 +260,54 @@ class BinscatterResult:
         from .viz.figure import plot as _plot
 
         return _plot(self, ax=ax, theme=theme, show=show, annotate=annotate, **kwargs)
+
+    def audit(
+        self,
+        *,
+        theme: str = "notebook",
+        show: Sequence[str] | None = None,
+        annotate: str | None = "audit",
+        marginals: bool = True,
+        residuals: bool = True,
+        hist_bins: int = 30,
+        **kwargs: Any,
+    ) -> Figure:
+        """Plot the estimate with marginal and residual diagnostics.
+
+        Parameters
+        ----------
+        theme : {"notebook", "paper", "deck"}, default "notebook"
+            Visual theme.
+        show : sequence of str, optional
+            Layers to draw in the central binned scatterplot.
+        annotate : {"minimal", "audit"} or None, default "audit"
+            Annotation level for the central plot.
+        marginals : bool, default True
+            If True, include marginal histograms for ``x`` and ``y``.
+        residuals : bool, default True
+            If True, include raw residuals against fitted values.
+        hist_bins : int, default 30
+            Number of bins in each marginal histogram.
+        **kwargs
+            Additional keyword arguments passed to :func:`binspect.viz.audit.audit`.
+
+        Returns
+        -------
+        matplotlib.figure.Figure
+            Figure containing the requested diagnostic panels.
+        """
+        from .viz.audit import audit as _audit
+
+        return _audit(
+            self,
+            theme=theme,
+            show=show,
+            annotate=annotate,
+            marginals=marginals,
+            residuals=residuals,
+            hist_bins=hist_bins,
+            **kwargs,
+        )
 
 
 def _verdict_note(d: Decomposition) -> str:

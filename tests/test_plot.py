@@ -168,6 +168,44 @@ def test_plotting_does_not_leak_theme(result):
     assert dict(mpl.rcParams) == before
 
 
+def test_audit_draws_main_marginal_and_residual_panels(result):
+    audit = result.audit()
+    assert len(audit.axes) == 4
+    assert {axis.get_ylabel() for axis in audit.axes} >= {
+        "y",
+        "Count",
+        "Residuals",
+    }
+    assert any(axis.get_xlabel() == "Fitted values" for axis in audit.axes)
+    main = next(axis for axis in audit.axes if axis.get_ylabel() == "y")
+    assert "η²" in main.texts[0].get_text()
+
+
+def test_audit_panels_can_be_disabled(result):
+    audit = result.audit(marginals=False, residuals=False, annotate=None)
+    assert len(audit.axes) == 1
+    assert audit.axes[0].get_xlabel() == "x"
+
+
+def test_audit_marginals_respect_weights(weighted):
+    result = binspect.binscatter(weighted, y="y", x="x", weights="w")
+    audit = result.audit(residuals=False)
+    assert any(axis.get_ylabel() == "Weighted count" for axis in audit.axes)
+    assert any(axis.get_xlabel() == "Weighted count" for axis in audit.axes)
+
+
+@pytest.mark.parametrize("hist_bins", [0, -1, 2.5, True])
+def test_audit_requires_positive_integer_histogram_bins(result, hist_bins):
+    with pytest.raises(ValueError, match="positive integer"):
+        result.audit(hist_bins=hist_bins)
+
+
+def test_audit_does_not_leak_theme(result):
+    before = copy.deepcopy(dict(mpl.rcParams))
+    result.audit(theme="deck")
+    assert dict(mpl.rcParams) == before
+
+
 def test_theme_overrides_are_scoped():
     before = mpl.rcParams["font.size"]
     with theme_fn("notebook", **{"font.size": 42.0}):

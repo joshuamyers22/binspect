@@ -19,6 +19,7 @@ bs.summary_frame()  # one-row model and diagnostic table
 bs.to_dict()  # JSON-compatible structured results
 print(bs.summary())
 bs.plot(theme="paper")
+bs.audit(theme="paper")  # plot plus marginal distributions and residuals
 ```
 
 For comparisons across groups, pooled bin edges are used by default so facets refer
@@ -67,6 +68,12 @@ distribution of the exogenous variable as separate layers.
 Three themes are included: `notebook` (default), `paper` (thin, serif, grayscale-safe),
 and `deck` (larger marks and type). Themes are colorblind-safe and scoped; importing
 `binspect` does not modify global `rcParams`.
+
+Use `bs.audit()` for a composed diagnostic figure with the unchanged binscatter in
+the central panel, marginal histograms, and OLS residuals against fitted values.
+Either companion view can be omitted with `marginals=False` or `residuals=False`.
+These panels describe the stored estimate; they do not add a formal specification
+test.
 
 ## One thing to know about η²
 

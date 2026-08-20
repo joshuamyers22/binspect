@@ -7,6 +7,7 @@ Nothing in this subpackage computes a statistic; it consumes a
 from __future__ import annotations
 
 from .annotate import annotate_layer, caption_text
+from .audit import audit
 from .figure import DEFAULT_LAYERS, LAYER_ORDER, plot
 from .layers import (
     bins_layer,
@@ -29,6 +30,7 @@ __all__ = [
     "Palette",
     "Theme",
     "annotate_layer",
+    "audit",
     "bins_layer",
     "caption_text",
     "ci_layer",

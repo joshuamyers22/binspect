@@ -15,6 +15,8 @@ All notable changes to this project are documented here. The format follows
   pooled results, and faceted plots with common bin edges by default.
 - `summary_frame()` and JSON-compatible `to_dict()` exports for single and grouped
   results.
+- `BinscatterResult.audit()` for a composed binscatter, marginal-distribution, and
+  residual diagnostic figure.
 
 ### Changed
 - Public docstrings now follow statsmodels-style numpydoc conventions and terminology.
