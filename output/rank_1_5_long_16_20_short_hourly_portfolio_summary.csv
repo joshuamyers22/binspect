@@ -1,0 +1,2 @@
+start_utc,end_utc,observations,elapsed_hours,coverage,cumulative_return,annualized_return,annualized_volatility,annualized_sharpe,maximum_drawdown,positive_hour_rate,mean_hourly_return
+2021-01-12T00:00:00+00:00,2026-08-22T18:00:00+00:00,48121,49171,0.978645949848488,3906.1233253397754,3.3685896056573084,0.915286308355434,2.0857842125672805,-0.897634120869123,0.5068473223748468,0.00021778345105484282
