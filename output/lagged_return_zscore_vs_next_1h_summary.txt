@@ -2,7 +2,7 @@ Observations: 981,440
 Pearson correlation: -0.01131239
 
 ====================================================================
-                         Binscatter Results                         
+                         Binscatter Results
 ====================================================================
 Dep. Variable:      next_1h_return     No. Observations:     981,440
 Exog:               lagged_return_zscore             No. Bins:          20
