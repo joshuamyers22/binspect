@@ -1,0 +1,27 @@
+Observations: 981,440
+Pearson correlation: -0.01131239
+
+====================================================================
+                         Binscatter Results                         
+====================================================================
+Dep. Variable:      next_1h_return     No. Observations:     981,440
+Exog:               lagged_return_zscore             No. Bins:          20
+Binning:                  quantile        Min. Bin Size:      49,072
+--------------------------------------------------------------------
+                           coef      std err
+--------------------------------------------------------------------
+const              -5.46079e-06           --
+lagged_return_zscore  -0.00017405  1.55296e-05
+--------------------------------------------------------------------
+R-squared:                  0.0001          Eta-squared:      0.0002
+Lack of fit:                0.0001        SD line slope:  -0.0153858
+Correlation:               -0.0113              Verdict:      linear
+====================================================================
+Notes:
+[1] Confidence intervals assume independent observations.
+[2] Lack of fit is descriptive; the verdict is not a formal test.
+[3] The bin means do not show substantial departure from the fitted
+    line.
+====================================================================
+
+Intervals are omitted because hourly and cross-sectional observations are dependent; binspect's current intervals assume independence.
