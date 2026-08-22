@@ -1,4 +1,4 @@
-"""Backtest the hourly lagged-return rank 1-5 long / 16-20 short portfolio."""
+"""Backtest an hourly long-short portfolio formed from lagged-return ranks."""
 
 from __future__ import annotations
 
@@ -25,18 +25,27 @@ WITH ranked_returns AS (
     JOIN hourly_bars future
       ON future.symbol = rankings.symbol
      AND future.open_time = rankings.factor_time + 3600000
-    WHERE rankings.rank BETWEEN 1 AND 20
+    WHERE (
+        rankings.rank BETWEEN %(long_start)s AND %(long_end)s
+        OR rankings.rank BETWEEN %(short_start)s AND %(short_end)s
+    )
       AND current.close IS NOT NULL
       AND current.close <> 0
       AND future.close IS NOT NULL
 ), portfolio_returns AS (
     SELECT factor_time,
-           AVG(next_1h_return) FILTER (WHERE rank BETWEEN 1 AND 5)
-             AS long_return,
-           AVG(next_1h_return) FILTER (WHERE rank BETWEEN 16 AND 20)
-             AS short_asset_return,
-           COUNT(*) FILTER (WHERE rank BETWEEN 1 AND 5) AS long_count,
-           COUNT(*) FILTER (WHERE rank BETWEEN 16 AND 20) AS short_count
+           AVG(next_1h_return) FILTER (
+               WHERE rank BETWEEN %(long_start)s AND %(long_end)s
+           ) AS long_return,
+           AVG(next_1h_return) FILTER (
+               WHERE rank BETWEEN %(short_start)s AND %(short_end)s
+           ) AS short_asset_return,
+           COUNT(*) FILTER (
+               WHERE rank BETWEEN %(long_start)s AND %(long_end)s
+           ) AS long_count,
+           COUNT(*) FILTER (
+               WHERE rank BETWEEN %(short_start)s AND %(short_end)s
+           ) AS short_count
     FROM ranked_returns
     GROUP BY factor_time
 )
@@ -45,12 +54,18 @@ SELECT factor_time,
        short_asset_return,
        long_return - short_asset_return AS portfolio_return
 FROM portfolio_returns
-WHERE long_count = 5 AND short_count = 5
+WHERE long_count = %(long_count)s AND short_count = %(short_count)s
 ORDER BY factor_time
 """
 
 
-def load_returns(database_url: str) -> pd.DataFrame:
+def load_returns(
+    database_url: str,
+    long_start: int,
+    long_end: int,
+    short_start: int,
+    short_end: int,
+) -> pd.DataFrame:
     rows: list[tuple[int, float, float, float]] = []
     with (
         psycopg.connect(
@@ -58,7 +73,17 @@ def load_returns(database_url: str) -> pd.DataFrame:
         ) as conn,
         conn.cursor(name="rank_portfolio_backtest") as cursor,
     ):
-        cursor.execute(QUERY)
+        cursor.execute(
+            QUERY,
+            {
+                "long_start": long_start,
+                "long_end": long_end,
+                "short_start": short_start,
+                "short_end": short_end,
+                "long_count": long_end - long_start + 1,
+                "short_count": short_end - short_start + 1,
+            },
+        )
         while batch := cursor.fetchmany(100_000):
             rows.extend(
                 (int(time), float(long), float(short), float(portfolio))
@@ -108,11 +133,27 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--db", required=True)
     parser.add_argument("--output-dir", type=Path, default=Path("output"))
+    parser.add_argument("--long-start", type=int, default=1)
+    parser.add_argument("--long-end", type=int, default=5)
+    parser.add_argument("--short-start", type=int, default=16)
+    parser.add_argument("--short-end", type=int, default=20)
     args = parser.parse_args()
+    if not (1 <= args.long_start <= args.long_end <= 20):
+        parser.error("long ranks must satisfy 1 <= start <= end <= 20")
+    if not (1 <= args.short_start <= args.short_end <= 20):
+        parser.error("short ranks must satisfy 1 <= start <= end <= 20")
+    if args.long_end >= args.short_start:
+        parser.error("long and short rank ranges must not overlap")
 
-    data = load_returns(args.db)
+    data = load_returns(
+        args.db,
+        args.long_start,
+        args.long_end,
+        args.short_start,
+        args.short_end,
+    )
     if data.empty:
-        raise RuntimeError("No hours contain all five long and all five short ranks.")
+        raise RuntimeError("No hours contain every requested long and short rank.")
     data["factor_time"] = pd.to_datetime(
         data.pop("factor_time_ms"), unit="ms", utc=True
     )
@@ -136,7 +177,10 @@ def main() -> int:
     )
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    stem = "rank_1_5_long_16_20_short_hourly_portfolio"
+    stem = (
+        f"rank_{args.long_start}_{args.long_end}_long_"
+        f"{args.short_start}_{args.short_end}_short_hourly_portfolio"
+    )
     returns_path = args.output_dir / f"{stem}_returns.csv"
     summary_path = args.output_dir / f"{stem}_summary.csv"
     yearly_path = args.output_dir / f"{stem}_yearly.csv"
@@ -150,7 +194,8 @@ def main() -> int:
     equity_axis.set_yscale("log")
     equity_axis.set_ylabel("Portfolio equity (log scale)")
     equity_axis.set_title(
-        "Hourly rank portfolio: long 1-5, short 16-20 (equal-weighted legs)"
+        f"Hourly rank portfolio: long {args.long_start}-{args.long_end}, "
+        f"short {args.short_start}-{args.short_end} (equal-weighted legs)"
     )
     equity_axis.grid(alpha=0.25)
 
