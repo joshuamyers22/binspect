@@ -100,30 +100,46 @@ def load_returns(
     )
 
 
-def performance_summary(returns: pd.Series) -> dict[str, float | int | str]:
-    wealth = (1 + returns).cumprod()
+def performance_summary(
+    returns: pd.Series, capital_mode: str
+) -> dict[str, float | int | str | None]:
     elapsed_hours = (
         int((returns.index.max() - returns.index.min()) / pd.Timedelta(hours=1)) + 1
     )
-    annualized_return = (
-        wealth.iloc[-1] ** (HOURS_PER_YEAR / elapsed_hours) - 1
-        if wealth.iloc[-1] > 0
-        else np.nan
+    equity = (
+        (1 + returns).cumprod()
+        if capital_mode == "compounding"
+        else 1 + returns.cumsum()
     )
+    if capital_mode == "compounding":
+        annualized_return = (
+            equity.iloc[-1] ** (HOURS_PER_YEAR / elapsed_hours) - 1
+            if equity.iloc[-1] > 0
+            else np.nan
+        )
+    else:
+        annualized_return = returns.sum() * HOURS_PER_YEAR / elapsed_hours
     annualized_volatility = returns.std(ddof=1) * np.sqrt(HOURS_PER_YEAR)
+    nonpositive = equity.loc[equity <= 0]
     return {
         "start_utc": returns.index.min().isoformat(),
         "end_utc": returns.index.max().isoformat(),
         "observations": len(returns),
         "elapsed_hours": elapsed_hours,
         "coverage": len(returns) / elapsed_hours,
-        "cumulative_return": wealth.iloc[-1] - 1,
+        "capital_mode": capital_mode,
+        "ending_capital": equity.iloc[-1],
+        "minimum_capital": equity.min(),
+        "first_nonpositive_utc": (
+            nonpositive.index[0].isoformat() if not nonpositive.empty else None
+        ),
+        "cumulative_return": equity.iloc[-1] - 1,
         "annualized_return": annualized_return,
         "annualized_volatility": annualized_volatility,
         "annualized_sharpe": (
             returns.mean() / returns.std(ddof=1) * np.sqrt(HOURS_PER_YEAR)
         ),
-        "maximum_drawdown": (wealth / wealth.cummax() - 1).min(),
+        "maximum_drawdown": (equity / equity.cummax() - 1).min(),
         "positive_hour_rate": (returns > 0).mean(),
         "mean_hourly_return": returns.mean(),
     }
@@ -137,6 +153,11 @@ def main() -> int:
     parser.add_argument("--long-end", type=int, default=5)
     parser.add_argument("--short-start", type=int, default=16)
     parser.add_argument("--short-end", type=int, default=20)
+    parser.add_argument(
+        "--capital-mode",
+        choices=("compounding", "static"),
+        default="compounding",
+    )
     args = parser.parse_args()
     if not (1 <= args.long_start <= args.long_end <= 20):
         parser.error("long ranks must satisfy 1 <= start <= end <= 20")
@@ -164,14 +185,24 @@ def main() -> int:
         )
 
     data["short_return"] = -data["short_asset_return"]
-    data["equity"] = (1 + data["portfolio_return"]).cumprod()
+    data["equity"] = (
+        (1 + data["portfolio_return"]).cumprod()
+        if args.capital_mode == "compounding"
+        else 1 + data["portfolio_return"].cumsum()
+    )
     data["drawdown"] = data["equity"] / data["equity"].cummax() - 1
     data["year"] = data.index.year
 
-    summary = pd.DataFrame([performance_summary(data["portfolio_return"])])
+    summary = pd.DataFrame(
+        [performance_summary(data["portfolio_return"], args.capital_mode)]
+    )
+    yearly_groups = data.groupby("year", sort=True)["portfolio_return"]
     yearly = (
-        data.groupby("year", sort=True)["portfolio_return"]
-        .apply(lambda values: (1 + values).prod() - 1)
+        (
+            yearly_groups.apply(lambda values: (1 + values).prod() - 1)
+            if args.capital_mode == "compounding"
+            else yearly_groups.sum()
+        )
         .rename("portfolio_return")
         .reset_index()
     )
@@ -181,6 +212,8 @@ def main() -> int:
         f"rank_{args.long_start}_{args.long_end}_long_"
         f"{args.short_start}_{args.short_end}_short_hourly_portfolio"
     )
+    if args.capital_mode == "static":
+        stem += "_static_capital"
     returns_path = args.output_dir / f"{stem}_returns.csv"
     summary_path = args.output_dir / f"{stem}_summary.csv"
     yearly_path = args.output_dir / f"{stem}_yearly.csv"
@@ -191,11 +224,14 @@ def main() -> int:
 
     figure, (equity_axis, yearly_axis) = plt.subplots(2, 1, figsize=(11, 8))
     equity_axis.plot(data.index, data["equity"], color="#1f1f1f", linewidth=1.2)
-    equity_axis.set_yscale("log")
-    equity_axis.set_ylabel("Portfolio equity (log scale)")
+    if args.capital_mode == "compounding":
+        equity_axis.set_yscale("log")
+        equity_axis.set_ylabel("Portfolio equity (log scale)")
+    else:
+        equity_axis.set_ylabel("Static-base capital (initial capital = 1)")
     equity_axis.set_title(
         f"Hourly rank portfolio: long {args.long_start}-{args.long_end}, "
-        f"short {args.short_start}-{args.short_end} (equal-weighted legs)"
+        f"short {args.short_start}-{args.short_end} ({args.capital_mode} capital)"
     )
     equity_axis.grid(alpha=0.25)
 
@@ -206,7 +242,11 @@ def main() -> int:
     yearly_axis.axhline(0, color="#555555", linewidth=0.8)
     yearly_axis.set_yscale("symlog", linthresh=0.5)
     yearly_axis.yaxis.set_major_formatter(PercentFormatter(xmax=1.0))
-    yearly_axis.set_ylabel("Compounded return")
+    yearly_axis.set_ylabel(
+        "Compounded return"
+        if args.capital_mode == "compounding"
+        else "P&L on initial capital"
+    )
     yearly_axis.set_xlabel("Calendar year")
     yearly_axis.grid(axis="y", alpha=0.25)
     figure.tight_layout()
@@ -214,7 +254,11 @@ def main() -> int:
     plt.close(figure)
 
     print(summary.to_string(index=False))
-    print("\nYearly compounded returns")
+    print(
+        "\nYearly compounded returns"
+        if args.capital_mode == "compounding"
+        else "\nYearly P&L on initial capital"
+    )
     print(yearly.to_string(index=False))
     print(f"wrote {plot_path}")
     print(f"wrote {returns_path}")

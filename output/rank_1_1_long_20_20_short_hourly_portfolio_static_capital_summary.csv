@@ -1,0 +1,2 @@
+start_utc,end_utc,observations,elapsed_hours,coverage,capital_mode,ending_capital,minimum_capital,first_nonpositive_utc,cumulative_return,annualized_return,annualized_volatility,annualized_sharpe,maximum_drawdown,positive_hour_rate,mean_hourly_return
+2021-01-12T00:00:00+00:00,2026-08-22T20:00:00+00:00,48152,49173,0.9792365729160312,static,38.90533467006842,-0.3889836265452449,2021-02-01T15:00:00+00:00,37.90533467006842,6.757329504358456,2.87999033087046,2.3960531183314417,-1.2796163851410818,0.5070609735836518,0.0007872016670142103
