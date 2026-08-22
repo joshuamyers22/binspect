@@ -99,10 +99,11 @@ def main() -> int:
     figure.savefig(plot_path, dpi=180, bbox_inches="tight")
     result.table.to_csv(table_path, index=False)
     correlation = data.corr().iloc[0, 1]
+    clean_summary = "\n".join(line.rstrip() for line in result.summary().splitlines())
     summary_path.write_text(
         f"Observations: {len(data):,}\n"
         f"Pearson correlation: {correlation:.8f}\n\n"
-        f"{result.summary()}\n\n"
+        f"{clean_summary}\n\n"
         "Intervals are omitted because hourly and cross-sectional observations are "
         "dependent; binspect's current intervals assume independence.\n",
         encoding="utf-8",
