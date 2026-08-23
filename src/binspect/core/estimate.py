@@ -49,8 +49,13 @@ class BinEstimates:
         return int(self.y_mean.size)
 
 
-def _group_sum(values: FloatArray, assignment: IntArray, n_bins: int) -> FloatArray:
-    return np.bincount(assignment, weights=values, minlength=n_bins).astype(float)
+def _group_sum(
+    values: FloatArray | IntArray, assignment: IntArray, n_bins: int
+) -> FloatArray:
+    """Sum numeric values by bin and normalize the result to floating point."""
+    numeric_values = np.asarray(values, dtype=float)
+    totals = np.bincount(assignment, weights=numeric_values, minlength=n_bins)
+    return totals.astype(float)
 
 
 def estimate_bins(
