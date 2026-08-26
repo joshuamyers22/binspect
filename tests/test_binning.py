@@ -98,6 +98,31 @@ def test_custom_edges_are_preserved_and_must_cover_data():
         compute_binning(x, method="custom", edges=np.array([0.1, 0.5, 1.0]))
 
 
+@pytest.mark.parametrize(
+    ("x", "edges", "expected_edges"),
+    [
+        ([1.5, 1.6, 2.5, 2.6], [0.0, 1.0, 2.0, 3.0], [0.0, 2.0, 3.0]),
+        ([0.5, 0.6, 1.5, 1.6], [0.0, 1.0, 2.0, 3.0], [0.0, 1.0, 3.0]),
+        ([0.5, 0.6, 2.5, 2.6], [0.0, 1.0, 2.0, 3.0], [0.0, 2.0, 3.0]),
+        (
+            [0.5, 0.6, 3.5, 3.6],
+            [0.0, 1.0, 2.0, 3.0, 4.0],
+            [0.0, 3.0, 4.0],
+        ),
+    ],
+    ids=["leading", "trailing", "interior", "consecutive-interior"],
+)
+def test_custom_edges_rebuild_around_occupied_bins(x, edges, expected_edges):
+    values = np.asarray(x)
+    with pytest.warns(BinCountWarning) as warnings:
+        result = compute_binning(values, method="custom", edges=np.asarray(edges))
+    assert any("merged" in str(item.message) for item in warnings)
+    np.testing.assert_array_equal(result.edges, expected_edges)
+    assert result.edges.size == result.n_bins + 1
+    expected_assignment = np.searchsorted(result.edges[1:-1], values, side="left")
+    np.testing.assert_array_equal(result.assignment, expected_assignment)
+
+
 def test_too_few_bins_is_refused(linear):
     with pytest.raises(InvalidBinningError, match="at least 2"):
         compute_binning(linear["x"].to_numpy(), 1)

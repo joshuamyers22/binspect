@@ -17,6 +17,9 @@ All notable changes to this project are documented here. The format follows
 ### Fixed
 - Classical and CR1 slope degrees-of-freedom corrections now exclude zero-weight
   observations, including estimates adjusted for controls.
+- Custom partitions with empty leading, trailing, or interior intervals now rebuild
+  their retained boundaries so ``len(edges) == n_bins + 1`` and result tables remain
+  constructible.
 
 ## [0.1.0] - 2026-08-25
 

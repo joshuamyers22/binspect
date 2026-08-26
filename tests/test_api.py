@@ -7,7 +7,7 @@ import pandas as pd
 import pytest
 
 import binspect
-from binspect.exceptions import InsufficientDataError
+from binspect.exceptions import BinCountWarning, InsufficientDataError
 
 EXPECTED_COLUMNS = [
     "bin",
@@ -258,6 +258,18 @@ def test_custom_edges_are_honoured(linear):
     bs = binspect.binscatter(linear, y="y", x="x", bins=edges)
     assert bs.n_bins == 4
     assert bs.binning.method == "custom"
+
+
+def test_table_survives_empty_outer_custom_bin():
+    with pytest.warns(BinCountWarning):
+        result = binspect.binscatter(
+            x=np.array([1.5, 1.6, 2.5, 2.6]),
+            y=np.arange(4.0),
+            bins=[0.0, 1.0, 2.0, 3.0],
+        )
+    assert result.n_bins == 2
+    assert result.binning.edges.size == result.n_bins + 1
+    assert len(result.table) == result.n_bins
 
 
 def test_nan_rows_are_dropped(linear):

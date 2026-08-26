@@ -164,6 +164,15 @@ def compute_binning(
     interior = np.unique(all_edges[1:-1])
     interior = interior[(interior > all_edges[0]) & (interior < all_edges[-1])]
 
+    outer_edges = (
+        (float(all_edges[0]), float(all_edges[-1]))
+        if method == "custom"
+        else (float(np.min(x)), float(np.max(x)))
+    )
+    partition_edges = np.concatenate(
+        [[outer_edges[0]], interior, [outer_edges[1]]]
+    ).astype(float)
+
     assignment = _assign(x, interior)
     n_bins_actual = int(interior.size + 1)
 
@@ -174,18 +183,12 @@ def compute_binning(
         remap = np.full(n_bins_actual, -1, dtype=np.int64)
         remap[occupied] = np.arange(occupied.size, dtype=np.int64)
         assignment = remap[assignment]
-        keep = set(occupied.tolist())
-        interior = np.array(
-            [e for k, e in enumerate(interior) if (k + 1) in keep],
-            dtype=float,
-        )
+        # Preserve one boundary before every occupied bin after the first. This
+        # folds empty leading/trailing intervals into the nearest occupied bin and
+        # spans empty interior intervals without changing any observation's group.
+        interior = partition_edges[occupied[1:]].astype(float, copy=True)
         n_bins_actual = int(occupied.size)
 
-    outer_edges = (
-        (float(all_edges[0]), float(all_edges[-1]))
-        if method == "custom"
-        else (float(np.min(x)), float(np.max(x)))
-    )
     final_edges = np.concatenate([[outer_edges[0]], interior, [outer_edges[1]]]).astype(
         float
     )
