@@ -14,7 +14,7 @@ import pandas as pd
 from .core.binning import Binning
 from .core.decompose import Decomposition
 from .core.estimate import BinEstimates
-from .types import FloatArray, Line, LineFit
+from .types import FloatArray, Line, LineFit, ZeroWeightPolicy
 
 if TYPE_CHECKING:  # pragma: no cover
     from matplotlib.axes import Axes
@@ -52,6 +52,8 @@ class BinscatterResult:
     cluster : str or None
         Cluster variable display name, or None for independent-observation standard
         errors.
+    zero_weight : {"retain", "drop"}
+        Policy applied to zero-weight observations.
 
     Attributes
     ----------
@@ -79,6 +81,7 @@ class BinscatterResult:
     y_name: str
     controls: tuple[str, ...] = ()
     cluster: str | None = None
+    zero_weight: ZeroWeightPolicy = "retain"
 
     # -- convenience accessors -------------------------------------------------
 
@@ -147,6 +150,7 @@ class BinscatterResult:
                     "cluster": self.cluster,
                     "se_type": self.estimates.se_type,
                     "n_clusters": self.fit.n_clusters,
+                    "zero_weight": self.zero_weight,
                     "n_obs": self.n_obs,
                     "n_bins": self.n_bins,
                     "binning": self.binning.method,
@@ -172,6 +176,7 @@ class BinscatterResult:
             "cluster": self.cluster,
             "se_type": self.estimates.se_type,
             "n_clusters": self.fit.n_clusters,
+            "zero_weight": self.zero_weight,
             "n_obs": self.n_obs,
             "binning": {
                 "method": self.binning.method,

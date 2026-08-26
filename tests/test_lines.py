@@ -104,3 +104,26 @@ def test_clustered_slope_requires_two_clusters(linear):
             linear["y"].to_numpy(),
             clusters=np.zeros(len(linear)),
         )
+
+
+def test_zero_weight_rows_do_not_change_classical_slope_se():
+    rng = np.random.default_rng(101)
+    x = rng.normal(size=30)
+    y = 2.0 * x + rng.normal(size=30)
+    weights = np.r_[np.ones(24), np.zeros(6)]
+    weighted = fit_ols(x, y, weights=weights)
+    dropped = fit_ols(x[:24], y[:24])
+    assert weighted.slope == pytest.approx(dropped.slope, rel=1e-12)
+    assert weighted.se_slope == pytest.approx(dropped.se_slope, rel=1e-12)
+
+
+def test_zero_weight_rows_do_not_change_clustered_slope_se():
+    rng = np.random.default_rng(102)
+    x = rng.normal(size=30)
+    y = 2.0 * x + rng.normal(size=30)
+    weights = np.r_[np.ones(24), np.zeros(6)]
+    clusters = np.arange(30) // 3
+    weighted = fit_ols(x, y, weights=weights, clusters=clusters)
+    dropped = fit_ols(x[:24], y[:24], clusters=clusters[:24])
+    assert weighted.slope == pytest.approx(dropped.slope, rel=1e-12)
+    assert weighted.se_slope == pytest.approx(dropped.se_slope, rel=1e-12)

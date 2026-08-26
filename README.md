@@ -40,6 +40,17 @@ Residualized variables retain their original means, keeping the plot on a famili
 scale. Categorical controls are indicator-encoded and a constant is included
 automatically. With `weights=`, the projection uses the same reliability weights.
 
+Zero-weight observations are retained by default: they can affect bin boundaries,
+unweighted bin counts, and stored descriptive arrays, but never point estimates or
+degrees-of-freedom corrections. To make them fully equivalent to omitted rows, set
+`zero_weight="drop"`:
+
+```python
+trimmed = binspect.binscatter(
+    df, y="sales", x="age", weights="sample_weight", zero_weight="drop"
+)
+```
+
 For comparisons across groups, pooled bin edges are used by default so facets refer
 to the same intervals of `x`:
 

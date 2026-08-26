@@ -71,8 +71,9 @@ def fit_ols(
     r_sq = float(r**2)
 
     n = int(y.size)
+    effective_n = n if weights is None else int(np.count_nonzero(w > 0))
     resid = y - (intercept + slope * x)
-    dof = max(n - 2, 1) if dof_resid is None else dof_resid
+    dof = max(effective_n - 2, 1) if dof_resid is None else dof_resid
     if dof < 1:
         raise ValueError("dof_resid must be positive.")
     n_clusters: int | None = None
@@ -100,7 +101,7 @@ def fit_ols(
             minlength=n_clusters,
         )
         bread = float(np.sum(w * centered_x**2))
-        correction = (n_clusters / (n_clusters - 1.0)) * ((n - 1.0) / dof)
+        correction = (n_clusters / (n_clusters - 1.0)) * ((effective_n - 1.0) / dof)
         se_slope = float(np.sqrt(correction * np.sum(cluster_scores**2) / bread**2))
         se_type = "cluster"
 

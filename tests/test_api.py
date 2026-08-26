@@ -175,6 +175,78 @@ def test_zero_weight_clusters_do_not_count(linear):
         )
 
 
+def test_zero_weight_drop_is_equivalent_to_omitting_rows(linear):
+    frame = linear.iloc[:100].copy().assign(weight=1.0)
+    frame.loc[frame.index[-20:], "weight"] = 0.0
+    dropped = binspect.binscatter(
+        frame,
+        x="x",
+        y="y",
+        weights="weight",
+        zero_weight="drop",
+        bins=8,
+    )
+    omitted_frame = frame.loc[frame["weight"] > 0]
+    omitted = binspect.binscatter(omitted_frame, x="x", y="y", weights="weight", bins=8)
+    assert dropped.n_obs == len(omitted_frame)
+    assert dropped.zero_weight == "drop"
+    np.testing.assert_allclose(dropped.table, omitted.table, rtol=1e-12)
+    assert dropped.fit.se_slope == pytest.approx(omitted.fit.se_slope, rel=1e-12)
+
+
+def test_zero_weight_retain_keeps_descriptive_rows(linear):
+    frame = linear.iloc[:100].copy().assign(weight=1.0)
+    frame.loc[frame.index[-20:], "weight"] = 0.0
+    result = binspect.binscatter(
+        frame,
+        x="x",
+        y="y",
+        weights="weight",
+        zero_weight="retain",
+        bins=8,
+    )
+    assert result.n_obs == len(frame)
+    assert result.table["n"].sum() == len(frame)
+    assert result.summary_frame().loc[0, "zero_weight"] == "retain"
+    assert result.to_dict()["zero_weight"] == "retain"
+
+
+def test_invalid_zero_weight_policy_is_refused(linear):
+    with pytest.raises(ValueError, match="zero_weight must be"):
+        binspect.binscatter(
+            linear,
+            x="x",
+            y="y",
+            weights=np.ones(len(linear)),
+            zero_weight="ignore",  # type: ignore[arg-type]
+        )
+
+
+def test_zero_weight_controlled_se_matches_omitted_rows():
+    rng = np.random.default_rng(103)
+    n = 120
+    control = rng.normal(size=n)
+    x = control + rng.normal(size=n)
+    y = 2.0 * x - control + rng.normal(size=n)
+    weights = np.r_[np.ones(100), np.zeros(20)]
+    weighted = binspect.binscatter(
+        x=x,
+        y=y,
+        controls=control,
+        weights=weights,
+        zero_weight="retain",
+        bins=8,
+    )
+    omitted = binspect.binscatter(
+        x=x[:100],
+        y=y[:100],
+        controls=control[:100],
+        weights=weights[:100],
+        bins=8,
+    )
+    assert weighted.fit.se_slope == pytest.approx(omitted.fit.se_slope, rel=1e-12)
+
+
 def test_bin_rules_resolve_to_sensible_counts(linear):
     for rule in ("auto", "sturges", "iqr"):
         bs = binspect.binscatter(linear, y="y", x="x", bins=rule)

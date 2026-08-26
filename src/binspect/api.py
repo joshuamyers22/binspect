@@ -17,7 +17,7 @@ from .core.residualize import residualize
 from .core.selection import select_n_bins
 from .exceptions import InsufficientDataError
 from .results import BinscatterResult
-from .types import BinningMethod, FloatArray
+from .types import BinningMethod, FloatArray, ZeroWeightPolicy
 
 __all__ = ["binscatter"]
 
@@ -163,6 +163,7 @@ def binscatter(
     bins: int | str | ArrayLike = "auto",
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
+    zero_weight: ZeroWeightPolicy = "retain",
     controls: str | Sequence[str] | ArrayLike | None = None,
     cluster: str | ArrayLike | None = None,
     ci: float | None = 0.95,
@@ -189,6 +190,11 @@ def binscatter(
     weights : str or array_like, optional
         Nonnegative reliability weights. At least one weight, and the total weight
         in each bin, must be positive.
+    zero_weight : {"retain", "drop"}, default "retain"
+        Treatment of zero-weight observations. ``"retain"`` keeps them in bin
+        selection, unweighted counts, and descriptive arrays while excluding them
+        from estimation and inference. ``"drop"`` removes them before binning, making
+        them equivalent to omitted rows. This option has no effect without weights.
     controls : str, sequence of str, or array_like, optional
         Variables partialled out of both ``x`` and ``y`` using Frisch--Waugh--Lovell
         residualization. String values select columns from ``data``. Categorical
@@ -241,6 +247,11 @@ def binscatter(
     y_arr, y_name = _column(data, y, "y")
     x_arr, x_name = _column(data, x, "x")
 
+    if zero_weight not in ("retain", "drop"):
+        raise ValueError(
+            f"zero_weight must be either 'retain' or 'drop', got {zero_weight!r}."
+        )
+
     if x_arr.shape != y_arr.shape:
         raise ValueError(
             f"x and y must have the same shape, got {x_arr.shape} and {y_arr.shape}."
@@ -292,13 +303,21 @@ def binscatter(
         if cluster_arr is not None:
             cluster_arr = cluster_arr[finite]
 
+    if w_arr is not None and not np.any(w_arr > 0):
+        raise ValueError("weights must contain at least one positive value.")
+    if w_arr is not None and zero_weight == "drop":
+        positive = w_arr > 0
+        x_arr, y_arr, w_arr = x_arr[positive], y_arr[positive], w_arr[positive]
+        if control_frame is not None:
+            control_frame = control_frame.loc[positive].reset_index(drop=True)
+        if cluster_arr is not None:
+            cluster_arr = cluster_arr[positive]
+
     if y_arr.size < 4:
         raise InsufficientDataError(
             f"need at least 4 usable observations, got {y_arr.size}."
         )
 
-    if w_arr is not None and not np.any(w_arr > 0):
-        raise ValueError("weights must contain at least one positive value.")
     cluster_active = np.ones(y_arr.size, dtype=bool) if w_arr is None else w_arr > 0
     if cluster_arr is not None and pd.unique(cluster_arr[cluster_active]).size < 2:
         raise InsufficientDataError(
@@ -313,7 +332,8 @@ def binscatter(
         full_design = np.column_stack((control_matrix, x_arr))
         if w_arr is not None:
             full_design = full_design * np.sqrt(w_arr)[:, None]
-        dof_resid = y_arr.size - int(np.linalg.matrix_rank(full_design))
+        effective_n = y_arr.size if w_arr is None else int(np.count_nonzero(w_arr > 0))
+        dof_resid = effective_n - int(np.linalg.matrix_rank(full_design))
         if dof_resid < 1:
             raise InsufficientDataError(
                 "controls leave no residual degrees of freedom."
@@ -370,4 +390,5 @@ def binscatter(
         y_name=y_name,
         controls=control_names,
         cluster=cluster_name,
+        zero_weight=zero_weight,
     )

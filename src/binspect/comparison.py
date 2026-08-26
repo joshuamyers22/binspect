@@ -14,7 +14,7 @@ from numpy.typing import ArrayLike
 from .api import _column, _control_frame, _labels, binscatter
 from .exceptions import InsufficientDataError
 from .results import BinscatterResult, _json_value
-from .types import BinningMethod, FloatArray
+from .types import BinningMethod, FloatArray, ZeroWeightPolicy
 
 if TYPE_CHECKING:  # pragma: no cover
     from matplotlib.figure import Figure
@@ -223,6 +223,7 @@ def compare(
     bins: int | str | ArrayLike = "auto",
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
+    zero_weight: ZeroWeightPolicy = "retain",
     controls: str | Sequence[str] | ArrayLike | None = None,
     cluster: str | ArrayLike | None = None,
     ci: float | None = 0.95,
@@ -248,6 +249,9 @@ def compare(
         Partition method.
     weights : str or array_like, optional
         Nonnegative reliability weights.
+    zero_weight : {"retain", "drop"}, default "retain"
+        Whether zero-weight observations remain in binning and descriptive counts or
+        are removed before estimation. Passed to every pooled and grouped estimate.
     controls : str, sequence of str, or array_like, optional
         Variables partialled out of ``x`` and ``y`` within the pooled sample and
         each group. String values select columns from ``data``.
@@ -313,6 +317,7 @@ def compare(
         bins=bins,
         binning=binning,
         weights=None if weight_values is None else weight_values[group_ok],
+        zero_weight=zero_weight,
         controls=None if control_frame is None else control_frame.loc[group_ok],
         cluster=None if cluster_values is None else cluster_values[group_ok],
         ci=ci,
@@ -335,6 +340,7 @@ def compare(
                 bins=group_bins,
                 binning=binning,
                 weights=(None if weight_values is None else weight_values[selected]),
+                zero_weight=zero_weight,
                 controls=(
                     None if control_frame is None else control_frame.loc[selected]
                 ),

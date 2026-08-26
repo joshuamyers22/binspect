@@ -10,6 +10,13 @@ All notable changes to this project are documented here. The format follows
 - `cluster=` support in `binscatter()` and `compare()`, with CR1 cluster-robust
   standard errors for bin means and fitted slopes, cluster-based t intervals, and
   inference metadata in result exports and summaries.
+- `zero_weight="retain" | "drop"` in both public estimators, allowing callers to
+  choose whether zero-weight observations remain in binning and descriptive counts or
+  are treated as omitted rows.
+
+### Fixed
+- Classical and CR1 slope degrees-of-freedom corrections now exclude zero-weight
+  observations, including estimates adjusted for controls.
 
 ## [0.1.0] - 2026-08-25
 

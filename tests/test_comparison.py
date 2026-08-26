@@ -153,3 +153,20 @@ def test_compare_applies_clusters_to_pooled_and_group_results(grouped_frame):
     assert result.pooled.cluster == "firm"
     assert result.pooled.fit.se_type == "cluster"
     assert all(item.cluster == "firm" for item in result.results.values())
+
+
+def test_compare_propagates_zero_weight_policy(grouped_frame):
+    frame = grouped_frame.assign(weight=1.0)
+    frame.loc[frame.index[:20], "weight"] = 0.0
+    result = binspect.compare(
+        frame,
+        x="x",
+        y="y",
+        group="arm",
+        weights="weight",
+        zero_weight="drop",
+        bins=10,
+    )
+    assert result.pooled.zero_weight == "drop"
+    assert result.pooled.n_obs == len(frame) - 20
+    assert all(item.zero_weight == "drop" for item in result.results.values())

@@ -18,6 +18,7 @@ __all__ = [
     "Line",
     "LineFit",
     "Verdict",
+    "ZeroWeightPolicy",
 ]
 
 FloatArray = NDArray[np.float64]
@@ -31,6 +32,7 @@ BinRule: TypeAlias = (
 Layer = Literal["raw", "deviation", "rug", "fit", "sd_line", "ci", "bins", "smooth"]
 AnnotateLevel = Literal["minimal", "audit"]
 Verdict = Literal["linear", "curvature", "underpowered bins"]
+ZeroWeightPolicy = Literal["retain", "drop"]
 
 
 @dataclass(frozen=True, slots=True)
