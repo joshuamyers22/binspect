@@ -4,7 +4,8 @@ message: >-
   and Feng (2024), whose methodology this package builds on.
 title: "binspect: binned scatterplots that audit the regression behind them"
 type: software
-version: 0.1.0.dev0
+version: 0.1.0
+date-released: 2026-08-25
 license: MIT
 repository-code: "https://github.com/joshuamyers22/binspect"
 authors:

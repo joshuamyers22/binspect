@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-08-25
+
 ### Added
 - The installable distribution is named `binspect-regression` while retaining the
   concise `binspect` import package, avoiding a collision with an existing PyPI project.

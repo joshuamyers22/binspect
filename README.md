@@ -108,8 +108,8 @@ plot. This quantity is descriptive and is not a formal test of linearity.
 
 ## Status
 
-Pre-release (`0.1.0.dev0`). Both APIs may change before the first stable release. The
-distribution name is `binspect-regression`; the import remains `binspect`.
+Initial alpha release (`0.1.0`). The API may continue to evolve during the `0.x`
+series. The distribution name is `binspect-regression`; the import remains `binspect`.
 
 **Not yet implemented:** cluster-robust standard errors, uniform confidence bands,
 and quantile regression. Standard errors are currently `sd/√n` within bin and
@@ -123,8 +123,8 @@ pip install -e ".[dev]"
 pytest
 ```
 
-Once published, users will install the package with
-`pip install binspect-regression` and continue to write `import binspect`.
+Install the published package with `pip install binspect-regression` and continue to
+write `import binspect`.
 
 For contributing, release checks, and development conventions, see
 [CONTRIBUTING.md](CONTRIBUTING.md). Please report vulnerabilities privately as

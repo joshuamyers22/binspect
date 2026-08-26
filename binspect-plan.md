@@ -1,6 +1,7 @@
 # binspect — project plan
 
-*Name settled. See [Naming](#0-naming) for what still needs reserving.*
+*Name settled. The implementation has reached the original v0.4 scope; the roadmap
+below is retained as a record of the project's initial sequencing.*
 
 > This is a living roadmap, not a statement that every listed module or feature is
 > implemented. The README is the source of truth for current behavior.
@@ -21,7 +22,7 @@ Do before the first commit:
 
 - [x] Verify `binspect` on PyPI (taken); select `binspect-regression` as the
   distribution name
-- [ ] Claim the GitHub repo (and the org/user namespace if you want one)
+- [x] Claim the GitHub repo (and the org/user namespace if you want one)
 - [ ] Check the readthedocs slug even if docs go to GH Pages, to keep it from being squatted
 
 Known friction to live with: it reads at a glance as a typo of Python's stdlib
@@ -508,6 +509,11 @@ forbidden_modules = ["matplotlib"]
 ---
 
 ## 10. Roadmap
+
+The original v0.1-v0.4 implementation scope is complete as of the `0.1.0` package
+release. Version labels below describe the order in which capabilities were built,
+not the final package versions in which they shipped. Cluster-robust standard errors,
+uniform confidence bands, and quantile regression remain future work.
 
 ### v0.1 — it exists and it looks right
 Quantile binning, bin means and SDs, `.table`, `notebook` theme, layers `bins` + `fit`
