@@ -49,6 +49,9 @@ class BinscatterResult:
     controls : tuple of str
         Variables partialled out of ``x`` and ``y``. Empty for an unadjusted
         estimate.
+    cluster : str or None
+        Cluster variable display name, or None for independent-observation standard
+        errors.
 
     Attributes
     ----------
@@ -75,6 +78,7 @@ class BinscatterResult:
     x_name: str
     y_name: str
     controls: tuple[str, ...] = ()
+    cluster: str | None = None
 
     # -- convenience accessors -------------------------------------------------
 
@@ -110,20 +114,21 @@ class BinscatterResult:
         """Return per-bin estimates as a DataFrame."""
         e = self.estimates
         edges = self.binning.edges
-        return pd.DataFrame(
-            {
-                "bin": np.arange(self.n_bins, dtype=int),
-                "n": e.n,
-                "x_lo": edges[:-1],
-                "x_hi": edges[1:],
-                "x_mean": e.x_mean,
-                "y_mean": e.y_mean,
-                "y_sd": e.y_sd,
-                "se": e.se,
-                "ci_lo": e.ci_lo,
-                "ci_hi": e.ci_hi,
-            }
-        )
+        columns: dict[str, Any] = {
+            "bin": np.arange(self.n_bins, dtype=int),
+            "n": e.n,
+            "x_lo": edges[:-1],
+            "x_hi": edges[1:],
+            "x_mean": e.x_mean,
+            "y_mean": e.y_mean,
+            "y_sd": e.y_sd,
+            "se": e.se,
+            "ci_lo": e.ci_lo,
+            "ci_hi": e.ci_hi,
+        }
+        if e.n_clusters is not None:
+            columns["n_clusters"] = e.n_clusters
+        return pd.DataFrame(columns)
 
     @property
     def decomposition_table(self) -> pd.DataFrame:
@@ -139,6 +144,9 @@ class BinscatterResult:
                     "x": self.x_name,
                     "y": self.y_name,
                     "controls": ", ".join(self.controls) or None,
+                    "cluster": self.cluster,
+                    "se_type": self.estimates.se_type,
+                    "n_clusters": self.fit.n_clusters,
                     "n_obs": self.n_obs,
                     "n_bins": self.n_bins,
                     "binning": self.binning.method,
@@ -161,6 +169,9 @@ class BinscatterResult:
             "x": self.x_name,
             "y": self.y_name,
             "controls": list(self.controls),
+            "cluster": self.cluster,
+            "se_type": self.estimates.se_type,
+            "n_clusters": self.fit.n_clusters,
             "n_obs": self.n_obs,
             "binning": {
                 "method": self.binning.method,
@@ -227,6 +238,11 @@ class BinscatterResult:
                 if self.controls
                 else []
             ),
+            *(
+                [f"{'Cluster:':<20}{self.cluster!s:>48}"]
+                if self.cluster is not None
+                else []
+            ),
             thin,
             f"{'':<18}{'coef':>13}{'std err':>13}",
             thin,
@@ -240,7 +256,7 @@ class BinscatterResult:
             f"{'Correlation:':<20}{f.r:>14.4f}{'Verdict:':>22}{d.verdict:>12}",
             rule,
             "Notes:",
-            *_summary_notes(d, width, self.controls),
+            *_summary_notes(d, width, self.controls, self.cluster),
             rule,
         ]
         return "\n".join(lines)
@@ -357,10 +373,18 @@ def _controls_label(controls: tuple[str, ...]) -> str:
 
 
 def _summary_notes(
-    d: Decomposition, width: int, controls: tuple[str, ...]
+    d: Decomposition,
+    width: int,
+    controls: tuple[str, ...],
+    cluster: str | None,
 ) -> list[str]:
+    uncertainty_note = (
+        "Standard errors and confidence intervals use CR1 cluster-robust inference."
+        if cluster is not None
+        else "Confidence intervals assume independent observations."
+    )
     notes = [
-        "Confidence intervals assume independent observations.",
+        uncertainty_note,
         "Lack of fit is descriptive; the verdict is not a formal test.",
         _verdict_note(d),
     ]

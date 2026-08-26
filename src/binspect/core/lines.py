@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any, Literal
+
 import numpy as np
 
 from ..types import FloatArray, Line, LineFit
@@ -33,6 +35,7 @@ def fit_ols(
     *,
     weights: FloatArray | None = None,
     dof_resid: int | None = None,
+    clusters: np.ndarray[Any, np.dtype[Any]] | None = None,
 ) -> LineFit:
     """Fit a linear model by weighted least squares.
 
@@ -45,6 +48,9 @@ def fit_ols(
     dof_resid : int, optional
         Residual degrees of freedom. Defaults to ``n_obs - 2``. Adjusted models
         supply the degrees of freedom from the full design matrix.
+    clusters : array_like, optional
+        Cluster label per observation. When supplied, the slope standard error uses
+        a CR1 cluster-robust sandwich estimator.
 
     Returns
     -------
@@ -69,8 +75,34 @@ def fit_ols(
     dof = max(n - 2, 1) if dof_resid is None else dof_resid
     if dof < 1:
         raise ValueError("dof_resid must be positive.")
-    sigma_sq = float(np.sum(w * resid**2) / (np.sum(w) / n) / dof) / n
-    se_slope = float(np.sqrt(sigma_sq / var_x)) if var_x > 0 else np.nan
+    n_clusters: int | None = None
+    se_type: Literal["classical", "cluster"] = "classical"
+    if clusters is None:
+        sigma_sq = float(np.sum(w * resid**2) / (np.sum(w) / n) / dof) / n
+        se_slope = float(np.sqrt(sigma_sq / var_x))
+    else:
+        cluster_values = np.asarray(clusters, dtype=object)
+        if cluster_values.ndim != 1 or cluster_values.shape != y.shape:
+            raise ValueError("clusters must be one-dimensional and match x and y.")
+        import pandas as pd
+
+        active = w > 0
+        codes, uniques = pd.factorize(cluster_values[active], sort=False)
+        if np.any(codes < 0):
+            raise ValueError("clusters must not contain missing values.")
+        n_clusters = int(uniques.size)
+        if n_clusters < 2:
+            raise ValueError("cluster-robust inference requires at least 2 clusters.")
+        centered_x = x - x_bar
+        cluster_scores = np.bincount(
+            codes,
+            weights=w[active] * centered_x[active] * resid[active],
+            minlength=n_clusters,
+        )
+        bread = float(np.sum(w * centered_x**2))
+        correction = (n_clusters / (n_clusters - 1.0)) * ((n - 1.0) / dof)
+        se_slope = float(np.sqrt(correction * np.sum(cluster_scores**2) / bread**2))
+        se_type = "cluster"
 
     return LineFit(
         slope=float(slope),
@@ -79,6 +111,8 @@ def fit_ols(
         r=float(r),
         r_sq=r_sq,
         n_obs=n,
+        se_type=se_type,
+        n_clusters=n_clusters,
     )
 
 

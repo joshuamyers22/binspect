@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike
 
-from .api import _column, _control_frame, binscatter
+from .api import _column, _control_frame, _labels, binscatter
 from .exceptions import InsufficientDataError
 from .results import BinscatterResult, _json_value
 from .types import BinningMethod, FloatArray
@@ -224,6 +224,7 @@ def compare(
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
     controls: str | Sequence[str] | ArrayLike | None = None,
+    cluster: str | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
     common_bins: bool = True,
@@ -250,6 +251,9 @@ def compare(
     controls : str, sequence of str, or array_like, optional
         Variables partialled out of ``x`` and ``y`` within the pooled sample and
         each group. String values select columns from ``data``.
+    cluster : str or array_like, optional
+        Cluster identifier used for CR1 cluster-robust uncertainty in the pooled and
+        group-specific estimates.
     ci : float or None, default 0.95
         Two-sided confidence level for bin means. Set to None to omit intervals.
     dropna : bool, default True
@@ -292,6 +296,13 @@ def compare(
     if controls is not None:
         control_frame, _ = _control_frame(data, controls, y_values.size)
 
+    cluster_values: np.ndarray[Any, np.dtype[Any]] | None = None
+    cluster_name: str | None = None
+    if cluster is not None:
+        cluster_values, cluster_name = _labels(data, cluster, "cluster")
+        if cluster_values.shape != y_values.shape:
+            raise ValueError("cluster must have the same shape as x, y, and group.")
+
     group_ok = np.asarray(pd.notna(group_values), dtype=bool)
     if not group_ok.any():
         raise InsufficientDataError("group has no nonmissing values.")
@@ -303,10 +314,11 @@ def compare(
         binning=binning,
         weights=None if weight_values is None else weight_values[group_ok],
         controls=None if control_frame is None else control_frame.loc[group_ok],
+        cluster=None if cluster_values is None else cluster_values[group_ok],
         ci=ci,
         dropna=dropna,
     )
-    pooled = replace(pooled, x_name=x_name, y_name=y_name)
+    pooled = replace(pooled, x_name=x_name, y_name=y_name, cluster=cluster_name)
     group_bins: int | str | ArrayLike
     group_bins = pooled.binning.edges if common_bins else bins
 
@@ -326,12 +338,15 @@ def compare(
                 controls=(
                     None if control_frame is None else control_frame.loc[selected]
                 ),
+                cluster=(None if cluster_values is None else cluster_values[selected]),
                 ci=ci,
                 dropna=dropna,
             )
         except InsufficientDataError as exc:
             raise InsufficientDataError(f"group {label!r}: {exc}") from exc
-        results[label] = replace(result, x_name=x_name, y_name=y_name)
+        results[label] = replace(
+            result, x_name=x_name, y_name=y_name, cluster=cluster_name
+        )
 
     return BinscatterCollection(
         results=results,

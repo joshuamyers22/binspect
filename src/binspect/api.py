@@ -52,6 +52,34 @@ def _column(
     return array, str(name)
 
 
+def _labels(
+    source: Mapping[str, Any] | pd.DataFrame | None,
+    value: Any,
+    label: str,
+) -> tuple[np.ndarray[Any, np.dtype[Any]], str]:
+    """Return a nonnumeric one-dimensional label array."""
+    if isinstance(value, str):
+        if source is None:
+            raise ValueError(
+                f"{label}={value!r} is a column name, but no data= was given."
+            )
+        try:
+            values = source[value]
+        except KeyError:
+            available = list(getattr(source, "columns", source.keys()))
+            raise KeyError(
+                f"column {value!r} not found; available: {available}"
+            ) from None
+        name = value
+    else:
+        values = value
+        name = str(getattr(value, "name", None) or label)
+    array = np.asarray(values, dtype=object)
+    if array.ndim != 1:
+        raise ValueError(f"{label} must be one-dimensional, got shape {array.shape}.")
+    return array, name
+
+
 def _control_frame(
     source: Mapping[str, Any] | pd.DataFrame | None,
     controls: str | Sequence[str] | ArrayLike,
@@ -136,6 +164,7 @@ def binscatter(
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
     controls: str | Sequence[str] | ArrayLike | None = None,
+    cluster: str | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
 ) -> BinscatterResult:
@@ -164,6 +193,9 @@ def binscatter(
         Variables partialled out of both ``x`` and ``y`` using Frisch--Waugh--Lovell
         residualization. String values select columns from ``data``. Categorical
         controls are indicator-encoded. A constant is included automatically.
+    cluster : str or array_like, optional
+        Cluster identifier used for CR1 cluster-robust bin-mean intervals and slope
+        standard errors. At least two nonmissing clusters are required.
     ci : float or None, default 0.95
         Two-sided confidence level for bin means. Set to ``None`` to omit confidence
         intervals.
@@ -197,8 +229,9 @@ def binscatter(
     The reported slope equals the coefficient on ``x`` from the corresponding full
     least-squares model.
 
-    Confidence intervals use within-bin standard errors and assume independent
-    observations. They are not heteroskedasticity- or cluster-robust.
+    Confidence intervals assume independent observations unless ``cluster`` is
+    supplied. Clustered inference uses cluster-level score sums, a CR1 finite-sample
+    correction, and t critical values based on the clusters represented in each bin.
 
     See Also
     --------
@@ -227,6 +260,13 @@ def binscatter(
     if controls is not None:
         control_frame, control_names = _control_frame(data, controls, y_arr.size)
 
+    cluster_arr: np.ndarray[Any, np.dtype[Any]] | None = None
+    cluster_name: str | None = None
+    if cluster is not None:
+        cluster_arr, cluster_name = _labels(data, cluster, "cluster")
+        if cluster_arr.shape != y_arr.shape:
+            raise ValueError("cluster must have the same shape as x and y.")
+
     finite = np.isfinite(x_arr) & np.isfinite(y_arr)
     if w_arr is not None:
         finite &= np.isfinite(w_arr)
@@ -235,6 +275,8 @@ def binscatter(
         numeric_controls = control_frame.select_dtypes(include="number")
         if numeric_controls.shape[1]:
             finite &= np.isfinite(numeric_controls.to_numpy(dtype=float)).all(axis=1)
+    if cluster_arr is not None:
+        finite &= np.asarray(pd.notna(cluster_arr), dtype=bool)
 
     if not finite.all():
         if not dropna:
@@ -247,6 +289,8 @@ def binscatter(
             w_arr = w_arr[finite]
         if control_frame is not None:
             control_frame = control_frame.loc[finite].reset_index(drop=True)
+        if cluster_arr is not None:
+            cluster_arr = cluster_arr[finite]
 
     if y_arr.size < 4:
         raise InsufficientDataError(
@@ -255,6 +299,11 @@ def binscatter(
 
     if w_arr is not None and not np.any(w_arr > 0):
         raise ValueError("weights must contain at least one positive value.")
+    cluster_active = np.ones(y_arr.size, dtype=bool) if w_arr is None else w_arr > 0
+    if cluster_arr is not None and pd.unique(cluster_arr[cluster_active]).size < 2:
+        raise InsufficientDataError(
+            "cluster-robust inference requires at least 2 positive-weight clusters."
+        )
 
     dof_resid: int | None = None
     if control_frame is not None:
@@ -287,9 +336,16 @@ def binscatter(
         binning_obj.assignment,
         binning_obj.n_bins,
         weights=w_arr,
+        clusters=cluster_arr,
         ci=ci,
     )
-    fit = fit_ols(x_arr, y_arr, weights=w_arr, dof_resid=dof_resid)
+    fit = fit_ols(
+        x_arr,
+        y_arr,
+        weights=w_arr,
+        dof_resid=dof_resid,
+        clusters=cluster_arr,
+    )
     sd_line = fit_sd_line(x_arr, y_arr, weights=w_arr)
     decomposition = decompose(
         y_arr,
@@ -313,4 +369,5 @@ def binscatter(
         x_name=x_name,
         y_name=y_name,
         controls=control_names,
+        cluster=cluster_name,
     )

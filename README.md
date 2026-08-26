@@ -60,6 +60,25 @@ comparison.plot(sharex=True, sharey=True)
 Pass `common_bins=False` to select bins separately within each group. The pooled
 estimate remains available as `comparison.pooled`.
 
+Use `cluster=` when observations share shocks within a firm, person, location, or
+other sampling unit:
+
+```python
+clustered = binspect.binscatter(
+    df,
+    y="sales",
+    x="age",
+    controls=["region", "tenure"],
+    cluster="firm_id",
+    bins=20,
+)
+```
+
+This applies CR1 cluster-robust standard errors to both the fitted slope and bin
+means. Bin-mean intervals use a t reference distribution based on the number of
+clusters represented in each bin. Bins containing fewer than two positive-weight
+clusters have undefined intervals.
+
 ## Related packages
 
 
@@ -111,9 +130,9 @@ plot. This quantity is descriptive and is not a formal test of linearity.
 Initial alpha release (`0.1.0`). The API may continue to evolve during the `0.x`
 series. The distribution name is `binspect-regression`; the import remains `binspect`.
 
-**Not yet implemented:** cluster-robust standard errors, uniform confidence bands,
-and quantile regression. Standard errors are currently `sd/√n` within bin and
-assume independent observations.
+**Not yet implemented:** uniform confidence bands and quantile regression. Without
+`cluster=`, standard errors are `sd/√n` within bin and assume independent
+observations.
 
 ## Install
 

@@ -138,3 +138,18 @@ def test_compare_applies_controls_to_pooled_and_group_results(grouped_frame):
     )
     assert result.pooled.controls == ("control",)
     assert all(item.controls == ("control",) for item in result.results.values())
+
+
+def test_compare_applies_clusters_to_pooled_and_group_results(grouped_frame):
+    frame = grouped_frame.assign(firm=np.arange(len(grouped_frame)) // 5)
+    result = binspect.compare(
+        frame,
+        x="x",
+        y="y",
+        group="arm",
+        cluster="firm",
+        bins=10,
+    )
+    assert result.pooled.cluster == "firm"
+    assert result.pooled.fit.se_type == "cluster"
+    assert all(item.cluster == "firm" for item in result.results.values())

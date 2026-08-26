@@ -73,3 +73,34 @@ def test_affine_equivariance(linear):
 def test_zero_variance_x_is_refused():
     with pytest.raises(ValueError, match="zero variance"):
         fit_ols(np.ones(50), np.arange(50.0))
+
+
+def test_clustered_slope_se_matches_matrix_sandwich(linear):
+    x, y = linear["x"].to_numpy(), linear["y"].to_numpy()
+    clusters = np.arange(y.size) // 10
+    fit = fit_ols(x, y, clusters=clusters)
+
+    design = np.column_stack((np.ones_like(x), x))
+    beta = np.linalg.lstsq(design, y, rcond=None)[0]
+    residual = y - design @ beta
+    bread = np.linalg.inv(design.T @ design)
+    meat = np.zeros((2, 2))
+    for label in np.unique(clusters):
+        score = design[clusters == label].T @ residual[clusters == label]
+        meat += np.outer(score, score)
+    count = np.unique(clusters).size
+    correction = (count / (count - 1.0)) * ((y.size - 1.0) / (y.size - 2.0))
+    covariance = correction * bread @ meat @ bread
+
+    assert fit.se_slope == pytest.approx(np.sqrt(covariance[1, 1]), rel=1e-12)
+    assert fit.se_type == "cluster"
+    assert fit.n_clusters == count
+
+
+def test_clustered_slope_requires_two_clusters(linear):
+    with pytest.raises(ValueError, match="at least 2 clusters"):
+        fit_ols(
+            linear["x"].to_numpy(),
+            linear["y"].to_numpy(),
+            clusters=np.zeros(len(linear)),
+        )

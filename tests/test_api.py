@@ -113,6 +113,68 @@ def test_constant_weights_match_unweighted(linear):
     np.testing.assert_allclose(plain.table["y_mean"], wtd.table["y_mean"], rtol=1e-12)
 
 
+def test_clustered_inference_is_exposed_in_results(linear):
+    frame = linear.assign(firm=np.arange(len(linear)) // 10)
+    result = binspect.binscatter(frame, y="y", x="x", bins=10, cluster="firm")
+    assert result.cluster == "firm"
+    assert result.fit.se_type == "cluster"
+    assert result.fit.n_clusters == frame["firm"].nunique()
+    assert result.estimates.se_type == "cluster"
+    assert "n_clusters" in result.table
+    assert result.summary_frame().loc[0, "se_type"] == "cluster"
+    assert result.to_dict()["cluster"] == "firm"
+    assert "CR1 cluster-robust" in result.summary()
+
+
+def test_missing_cluster_rows_follow_dropna_policy(linear):
+    cluster = pd.Series(np.arange(len(linear)) // 5, dtype="Int64")
+    cluster.iloc[:7] = pd.NA
+    result = binspect.binscatter(linear, x="x", y="y", cluster=cluster, bins=10)
+    assert result.n_obs == len(linear) - 7
+    with pytest.raises(ValueError, match="non-finite"):
+        binspect.binscatter(linear, x="x", y="y", cluster=cluster, dropna=False)
+
+
+def test_clustered_slope_with_controls_matches_full_model_sandwich():
+    rng = np.random.default_rng(8128)
+    n = 1_200
+    clusters = np.arange(n) // 6
+    control = rng.normal(size=n)
+    x = control + rng.normal(size=n)
+    cluster_shock = rng.normal(size=clusters.max() + 1)[clusters]
+    y = 2.0 * x - control + cluster_shock + rng.normal(scale=0.3, size=n)
+    result = binspect.binscatter(x=x, y=y, controls=control, cluster=clusters, bins=12)
+
+    design = np.column_stack((np.ones(n), control, x))
+    beta = np.linalg.lstsq(design, y, rcond=None)[0]
+    residual = y - design @ beta
+    bread = np.linalg.inv(design.T @ design)
+    meat = np.zeros((3, 3))
+    for label in np.unique(clusters):
+        score = design[clusters == label].T @ residual[clusters == label]
+        meat += np.outer(score, score)
+    count = np.unique(clusters).size
+    correction = (count / (count - 1.0)) * ((n - 1.0) / (n - design.shape[1]))
+    covariance = correction * bread @ meat @ bread
+    assert result.fit.se_slope == pytest.approx(np.sqrt(covariance[2, 2]), rel=1e-12)
+
+
+def test_zero_weight_clusters_do_not_count(linear):
+    clusters = np.zeros(len(linear), dtype=int)
+    clusters[-10:] = 1
+    weights = np.ones(len(linear))
+    weights[-10:] = 0.0
+    with pytest.raises(InsufficientDataError, match="positive-weight clusters"):
+        binspect.binscatter(
+            linear,
+            x="x",
+            y="y",
+            weights=weights,
+            cluster=clusters,
+            bins=10,
+        )
+
+
 def test_bin_rules_resolve_to_sensible_counts(linear):
     for rule in ("auto", "sturges", "iqr"):
         bs = binspect.binscatter(linear, y="y", x="x", bins=rule)

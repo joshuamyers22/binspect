@@ -82,9 +82,15 @@ class LineFit(Line):
         Coefficient of determination.
     n_obs : int
         Number of observations.
+    se_type : {"classical", "cluster"}
+        Covariance estimator used for ``se_slope``.
+    n_clusters : int or None
+        Number of clusters used by cluster-robust inference.
     """
 
     se_slope: float
     r: float
     r_sq: float
     n_obs: int
+    se_type: Literal["classical", "cluster"] = "classical"
+    n_clusters: int | None = None

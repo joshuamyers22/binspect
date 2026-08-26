@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any, Literal
 
 import numpy as np
 from scipy import stats
@@ -32,6 +33,10 @@ class BinEstimates:
         Lower and upper confidence limits.
     ci_level : float or None
         Confidence level, or None when intervals were not estimated.
+    se_type : {"independent", "cluster"}
+        Standard-error estimator used for bin means.
+    n_clusters : ndarray or None
+        Number of positive-weight clusters represented in each bin.
     """
 
     x_mean: FloatArray
@@ -43,6 +48,8 @@ class BinEstimates:
     ci_lo: FloatArray
     ci_hi: FloatArray
     ci_level: float | None
+    se_type: Literal["independent", "cluster"] = "independent"
+    n_clusters: IntArray | None = None
 
     @property
     def n_bins(self) -> int:
@@ -65,6 +72,7 @@ def estimate_bins(
     n_bins: int,
     *,
     weights: FloatArray | None = None,
+    clusters: np.ndarray[Any, np.dtype[Any]] | None = None,
     ci: float | None = 0.95,
 ) -> BinEstimates:
     """Estimate means, dispersion, and standard errors by bin.
@@ -79,6 +87,9 @@ def estimate_bins(
         Number of bins.
     weights : array_like, optional
         Nonnegative reliability weights. Equal weights are used if omitted.
+    clusters : array_like, optional
+        Cluster label per observation. When supplied, standard errors use a CR1
+        cluster-robust sandwich estimator within each bin.
     ci : float or None, default 0.95
         Two-sided confidence level for the bin means. Set to None to omit intervals.
 
@@ -90,9 +101,11 @@ def estimate_bins(
     Notes
     -----
     The within-bin SD uses a denominator of ``n - 1`` (``NaN`` for singleton bins).
-    Standard errors are the within-bin ``sd / sqrt(n)``: correct under independence,
-    and *not* cluster-robust. Clustered variance arrives in a later release; until
-    then, treat these intervals as descriptive when the data are grouped.
+    Without ``clusters``, standard errors are the within-bin ``sd / sqrt(n)``.
+    Clustered standard errors aggregate weighted score contributions by cluster and
+    apply the ``G / (G - 1)`` CR1 correction, where ``G`` is the number of clusters
+    represented in a bin. A bin with fewer than two positive-weight clusters has an
+    undefined standard error and confidence interval.
     """
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
@@ -129,7 +142,35 @@ def estimate_bins(
 
     with np.errstate(invalid="ignore", divide="ignore"):
         eff_n = np.where(sum_w2 > 0, sum_w**2 / sum_w2, np.nan)
+
+    n_clusters: IntArray | None = None
+    se_type: Literal["independent", "cluster"] = "independent"
+    if clusters is None:
         se = y_sd / np.sqrt(eff_n)
+        interval_df = np.maximum(eff_n - 1.0, 1.0)
+    else:
+        cluster_values = np.asarray(clusters, dtype=object)
+        if cluster_values.ndim != 1 or cluster_values.shape != y.shape:
+            raise ValueError("clusters must be one-dimensional and match x and y.")
+        codes, uniques = _factorize_clusters(cluster_values)
+        active = w > 0
+        n_cluster_values = int(uniques.size)
+        composite = assignment[active] * n_cluster_values + codes[active]
+        scores = np.bincount(
+            composite,
+            weights=w[active] * (y[active] - y_mean[assignment[active]]),
+            minlength=n_bins * n_cluster_values,
+        ).reshape(n_bins, n_cluster_values)
+        represented = np.bincount(
+            composite, minlength=n_bins * n_cluster_values
+        ).reshape(n_bins, n_cluster_values)
+        n_clusters = np.count_nonzero(represented, axis=1).astype(np.int64)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            correction = n_clusters / (n_clusters - 1.0)
+            variance_mean = correction * np.sum(scores**2, axis=1) / sum_w**2
+        se = np.where(n_clusters > 1, np.sqrt(variance_mean), np.nan)
+        interval_df = np.maximum(n_clusters - 1, 1)
+        se_type = "cluster"
 
     if ci is None:
         ci_lo = np.full(n_bins, np.nan)
@@ -137,8 +178,7 @@ def estimate_bins(
     else:
         if not 0.0 < ci < 1.0:
             raise ValueError(f"ci must lie strictly between 0 and 1, got {ci}.")
-        df = np.maximum(eff_n - 1.0, 1.0)
-        crit = stats.t.ppf(0.5 + ci / 2.0, df)
+        crit = stats.t.ppf(0.5 + ci / 2.0, interval_df)
         ci_lo = y_mean - crit * se
         ci_hi = y_mean + crit * se
 
@@ -152,4 +192,18 @@ def estimate_bins(
         ci_lo=ci_lo,
         ci_hi=ci_hi,
         ci_level=ci,
+        se_type=se_type,
+        n_clusters=n_clusters,
     )
+
+
+def _factorize_clusters(
+    clusters: np.ndarray[Any, np.dtype[Any]],
+) -> tuple[IntArray, np.ndarray[Any, np.dtype[Any]]]:
+    """Factorize nonmissing cluster labels without imposing sortability."""
+    import pandas as pd
+
+    codes, uniques = pd.factorize(clusters, sort=False)
+    if np.any(codes < 0):
+        raise ValueError("clusters must not contain missing values.")
+    return codes.astype(np.int64), np.asarray(uniques, dtype=object)

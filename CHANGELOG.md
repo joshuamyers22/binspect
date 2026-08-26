@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- `cluster=` support in `binscatter()` and `compare()`, with CR1 cluster-robust
+  standard errors for bin means and fitted slopes, cluster-based t intervals, and
+  inference metadata in result exports and summaries.
+
 ## [0.1.0] - 2026-08-25
 
 ### Added

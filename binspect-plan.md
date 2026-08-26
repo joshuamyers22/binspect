@@ -512,8 +512,8 @@ forbidden_modules = ["matplotlib"]
 
 The original v0.1-v0.4 implementation scope is complete as of the `0.1.0` package
 release. Version labels below describe the order in which capabilities were built,
-not the final package versions in which they shipped. Cluster-robust standard errors,
-uniform confidence bands, and quantile regression remain future work.
+not the final package versions in which they shipped. Uniform confidence bands and
+quantile regression remain future work.
 
 ### v0.1 — it exists and it looks right
 Quantile binning, bin means and SDs, `.table`, `notebook` theme, layers `bins` + `fit`

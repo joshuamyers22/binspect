@@ -59,6 +59,44 @@ def test_standard_error_is_sd_over_root_n(linear):
     np.testing.assert_allclose(e.se, e.y_sd / np.sqrt(e.n), rtol=1e-12)
 
 
+def test_clustered_bin_standard_errors_match_score_formula(linear):
+    x, y = linear["x"].to_numpy(), linear["y"].to_numpy()
+    clusters = np.arange(y.size) // 8
+    b = compute_binning(x, 10)
+    e = estimate_bins(x, y, b.assignment, b.n_bins, clusters=clusters)
+
+    expected = []
+    expected_counts = []
+    for bin_index in range(b.n_bins):
+        selected = b.assignment == bin_index
+        labels = np.unique(clusters[selected])
+        scores = np.array(
+            [
+                np.sum(y[selected & (clusters == label)] - e.y_mean[bin_index])
+                for label in labels
+            ]
+        )
+        count = labels.size
+        expected_counts.append(count)
+        expected.append(
+            np.sqrt((count / (count - 1.0)) * np.sum(scores**2) / selected.sum() ** 2)
+        )
+
+    np.testing.assert_allclose(e.se, expected, rtol=1e-12)
+    np.testing.assert_array_equal(e.n_clusters, expected_counts)
+    assert e.se_type == "cluster"
+
+
+def test_clustered_bin_with_one_cluster_has_undefined_interval():
+    x = np.arange(8.0)
+    y = x + np.array([0.0, 1.0, -1.0, 0.0, 0.5, -0.5, 1.0, -1.0])
+    assignment = np.repeat([0, 1], 4)
+    clusters = np.array(["a"] * 4 + ["b", "c", "b", "c"])
+    result = estimate_bins(x, y, assignment, 2, clusters=clusters)
+    assert np.isnan(result.se[0]) and np.isnan(result.ci_lo[0])
+    assert np.isfinite(result.se[1])
+
+
 def test_confidence_interval_brackets_the_mean(linear):
     x, y = linear["x"].to_numpy(), linear["y"].to_numpy()
     b = compute_binning(x, 10)
