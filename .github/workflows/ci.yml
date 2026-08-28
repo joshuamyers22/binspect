@@ -29,15 +29,15 @@ jobs:
         with:
           enable-cache: true
       - name: Install
-        run: uv pip install --system -e ".[dev]"
+        run: uv sync --frozen --all-extras
       - name: Lint
-        run: ruff check . && ruff format --check .
+        run: uv run ruff check . && uv run ruff format --check .
       - name: Types
-        run: mypy
+        run: uv run mypy
       - name: Import boundaries
-        run: lint-imports
+        run: uv run lint-imports
       - name: Test
-        run: pytest --cov --cov-report=term-missing -m "not external"
+        run: uv run pytest --cov --cov-report=term-missing -m "not external"
       - name: Build distributions
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
-        run: python -m build
+        run: uv build
