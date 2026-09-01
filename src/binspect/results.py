@@ -5,7 +5,6 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date, datetime
-from textwrap import wrap
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -14,6 +13,7 @@ import pandas as pd
 from .core.binning import Binning
 from .core.decompose import Decomposition
 from .core.estimate import BinEstimates
+from .result_summary import summarize
 from .types import FloatArray, Line, LineFit, ZeroWeightPolicy
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -224,47 +224,7 @@ class BinscatterResult:
         ``Lack of fit`` is a descriptive measure and ``Verdict`` is a heuristic.
         Neither is a formal specification test.
         """
-        d = self.decomposition
-        f = self.fit
-        width = 68
-        rule = "=" * width
-        thin = "-" * width
-        lines = [
-            rule,
-            "Binscatter Results".center(width),
-            rule,
-            f"{'Dep. Variable:':<20}{self.y_name:>14}"
-            f"{'No. Observations:':>22}{self.n_obs:>12,}",
-            f"{'Exog:':<20}{self.x_name:>14}{'No. Bins:':>22}{self.n_bins:>12}",
-            f"{'Binning:':<20}{self.binning.method:>14}"
-            f"{'Min. Bin Size:':>22}{d.min_bin_n:>12,}",
-            *(
-                [f"{'Controls:':<20}{_controls_label(self.controls):>48}"]
-                if self.controls
-                else []
-            ),
-            *(
-                [f"{'Cluster:':<20}{self.cluster!s:>48}"]
-                if self.cluster is not None
-                else []
-            ),
-            thin,
-            f"{'':<18}{'coef':>13}{'std err':>13}",
-            thin,
-            f"{'const':<18}{f.intercept:>13.6g}{'--':>13}",
-            f"{self.x_name:<18}{f.slope:>13.6g}{f.se_slope:>13.6g}",
-            thin,
-            f"{'R-squared:':<20}{d.r_sq_linear:>14.4f}"
-            f"{'Eta-squared:':>22}{d.eta_sq:>12.4f}",
-            f"{'Lack of fit:':<20}{d.gap:>14.4f}"
-            f"{'SD line slope:':>22}{self.sd_line.slope:>12.6g}",
-            f"{'Correlation:':<20}{f.r:>14.4f}{'Verdict:':>22}{d.verdict:>12}",
-            rule,
-            "Notes:",
-            *_summary_notes(d, width, self.controls, self.cluster),
-            rule,
-        ]
-        return "\n".join(lines)
+        return summarize(self)
 
     def __repr__(self) -> str:  # pragma: no cover - cosmetic
         return (
@@ -356,60 +316,6 @@ class BinscatterResult:
             hist_bins=hist_bins,
             **kwargs,
         )
-
-
-def _verdict_note(d: Decomposition) -> str:
-    if d.verdict == "underpowered bins":
-        return (
-            f"The smallest bin has {d.min_bin_n} observations; sampling variation "
-            "may dominate the lack-of-fit measure."
-        )
-    if d.verdict == "curvature":
-        return (
-            f"Bin-mean deviations account for {d.gap:.1%} of total variation, "
-            "which may indicate a nonlinear conditional mean."
-        )
-    return "The bin means do not show substantial departure from the fitted line."
-
-
-def _controls_label(controls: tuple[str, ...]) -> str:
-    label = ", ".join(controls)
-    return f"{label[:45]}..." if len(label) > 48 else label
-
-
-def _summary_notes(
-    d: Decomposition,
-    width: int,
-    controls: tuple[str, ...],
-    cluster: str | None,
-) -> list[str]:
-    uncertainty_note = (
-        "Standard errors and confidence intervals use CR1 cluster-robust inference."
-        if cluster is not None
-        else "Confidence intervals assume independent observations."
-    )
-    notes = [
-        uncertainty_note,
-        "Lack of fit is descriptive; the verdict is not a formal test.",
-        _verdict_note(d),
-    ]
-    if controls:
-        notes.append(
-            "The displayed variables were residualized on the listed controls "
-            "using Frisch-Waugh-Lovell projection."
-        )
-    lines: list[str] = []
-    for index, note in enumerate(notes, start=1):
-        prefix = f"[{index}] "
-        lines.extend(
-            wrap(
-                note,
-                width=width,
-                initial_indent=prefix,
-                subsequent_indent=" " * len(prefix),
-            )
-        )
-    return lines
 
 
 def _json_value(value: Any) -> Any:
