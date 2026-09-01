@@ -11,8 +11,11 @@ import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike
 
-from .api import _column, _control_frame, _labels, binscatter
+from .api import binscatter
 from .exceptions import InsufficientDataError
+from .input_data import column as _column
+from .input_data import control_frame as _control_frame
+from .input_data import labels as _labels
 from .result_serialization import json_value
 from .results import BinscatterResult
 from .types import BinningMethod, FloatArray, ZeroWeightPolicy
