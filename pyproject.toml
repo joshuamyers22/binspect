@@ -101,6 +101,12 @@ type = "forbidden"
 source_modules = ["binspect.core"]
 forbidden_modules = ["matplotlib", "binspect.viz"]
 
+[[tool.importlinter.contracts]]
+name = "numerical core is independent of delivery frameworks"
+type = "forbidden"
+source_modules = ["binspect.core"]
+forbidden_modules = ["argparse", "requests", "httpx", "typer", "fastapi"]
+
 # viz legitimately reaches BinscatterResult (and, transitively, the core types it is
 # built from) -- that is the whole point of the result object. What viz must not do
 # is reach back into the entry point, which would make the import graph cyclic.
