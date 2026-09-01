@@ -13,7 +13,8 @@ from numpy.typing import ArrayLike
 
 from .api import _column, _control_frame, _labels, binscatter
 from .exceptions import InsufficientDataError
-from .results import BinscatterResult, _json_value
+from .result_serialization import json_value
+from .results import BinscatterResult
 from .types import BinningMethod, FloatArray, ZeroWeightPolicy
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -95,7 +96,7 @@ class BinscatterCollection:
             "common_bins": self.common_bins,
             "pooled": self.pooled.to_dict(),
             "groups": [
-                {"value": _json_value(group), "result": result.to_dict()}
+                {"value": json_value(group), "result": result.to_dict()}
                 for group, result in self.results.items()
             ],
         }

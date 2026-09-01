@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from datetime import date, datetime
 from typing import TYPE_CHECKING, Any
 
 import numpy as np
@@ -13,6 +12,7 @@ import pandas as pd
 from .core.binning import Binning
 from .core.decompose import Decomposition
 from .core.estimate import BinEstimates
+from .result_serialization import serialize_result
 from .result_summary import summarize
 from .types import FloatArray, Line, LineFit, ZeroWeightPolicy
 
@@ -169,41 +169,7 @@ class BinscatterResult:
 
     def to_dict(self) -> dict[str, Any]:
         """Return estimation results using JSON-compatible Python values."""
-        return {
-            "x": self.x_name,
-            "y": self.y_name,
-            "controls": list(self.controls),
-            "cluster": self.cluster,
-            "se_type": self.estimates.se_type,
-            "n_clusters": self.fit.n_clusters,
-            "zero_weight": self.zero_weight,
-            "n_obs": self.n_obs,
-            "binning": {
-                "method": self.binning.method,
-                "requested_bins": self.binning.requested_bins,
-                "n_bins": self.n_bins,
-                "edges": [_json_value(value) for value in self.binning.edges],
-            },
-            "fit": {
-                "slope": _json_value(self.fit.slope),
-                "intercept": _json_value(self.fit.intercept),
-                "slope_se": _json_value(self.fit.se_slope),
-                "correlation": _json_value(self.fit.r),
-                "r_squared": _json_value(self.fit.r_sq),
-            },
-            "sd_line": {
-                "slope": _json_value(self.sd_line.slope),
-                "intercept": _json_value(self.sd_line.intercept),
-            },
-            "decomposition": {
-                key: _json_value(value)
-                for key, value in self.decomposition.as_dict().items()
-            },
-            "bins": [
-                {key: _json_value(value) for key, value in row.items()}
-                for row in self.table.to_dict(orient="records")
-            ],
-        }
+        return serialize_result(self)
 
     def residuals_from_fit(self) -> FloatArray:
         """Return deviations of the bin means from the fitted linear model."""
@@ -316,16 +282,3 @@ class BinscatterResult:
             hist_bins=hist_bins,
             **kwargs,
         )
-
-
-def _json_value(value: Any) -> Any:
-    """Convert NumPy and nonfinite scalar values to JSON-compatible values."""
-    if isinstance(value, np.generic):
-        value = value.item()
-    if isinstance(value, float) and not np.isfinite(value):
-        return None
-    if isinstance(value, (date, datetime)):
-        return value.isoformat()
-    if value is None or isinstance(value, (str, int, float, bool)):
-        return value
-    return str(value)
