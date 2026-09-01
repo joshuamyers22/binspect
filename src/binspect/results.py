@@ -6,7 +6,6 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-import numpy as np
 import pandas as pd
 
 from .core.binning import Binning
@@ -14,6 +13,7 @@ from .core.decompose import Decomposition
 from .core.estimate import BinEstimates
 from .result_serialization import serialize_result
 from .result_summary import summarize
+from .result_tables import bin_table, decomposition_table, summary_frame
 from .types import FloatArray, Line, LineFit, ZeroWeightPolicy
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -115,57 +115,16 @@ class BinscatterResult:
     @property
     def table(self) -> pd.DataFrame:
         """Return per-bin estimates as a DataFrame."""
-        e = self.estimates
-        edges = self.binning.edges
-        columns: dict[str, Any] = {
-            "bin": np.arange(self.n_bins, dtype=int),
-            "n": e.n,
-            "x_lo": edges[:-1],
-            "x_hi": edges[1:],
-            "x_mean": e.x_mean,
-            "y_mean": e.y_mean,
-            "y_sd": e.y_sd,
-            "se": e.se,
-            "ci_lo": e.ci_lo,
-            "ci_hi": e.ci_hi,
-        }
-        if e.n_clusters is not None:
-            columns["n_clusters"] = e.n_clusters
-        return pd.DataFrame(columns)
+        return bin_table(self)
 
     @property
     def decomposition_table(self) -> pd.DataFrame:
         """Return the variance decomposition as a one-row DataFrame."""
-        return pd.DataFrame([self.decomposition.as_dict()])
+        return decomposition_table(self)
 
     def summary_frame(self) -> pd.DataFrame:
         """Return model and diagnostic statistics as a one-row DataFrame."""
-        d = self.decomposition
-        return pd.DataFrame(
-            [
-                {
-                    "x": self.x_name,
-                    "y": self.y_name,
-                    "controls": ", ".join(self.controls) or None,
-                    "cluster": self.cluster,
-                    "se_type": self.estimates.se_type,
-                    "n_clusters": self.fit.n_clusters,
-                    "zero_weight": self.zero_weight,
-                    "n_obs": self.n_obs,
-                    "n_bins": self.n_bins,
-                    "binning": self.binning.method,
-                    "slope": self.fit.slope,
-                    "slope_se": self.fit.se_slope,
-                    "intercept": self.fit.intercept,
-                    "correlation": self.fit.r,
-                    "r_squared": d.r_sq_linear,
-                    "eta_squared": d.eta_sq,
-                    "lack_of_fit": d.gap,
-                    "min_bin_n": d.min_bin_n,
-                    "verdict": d.verdict,
-                }
-            ]
-        )
+        return summary_frame(self)
 
     def to_dict(self) -> dict[str, Any]:
         """Return estimation results using JSON-compatible Python values."""
