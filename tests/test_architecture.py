@@ -20,6 +20,16 @@ def test_input_normalization_does_not_depend_on_estimation_or_presentation() -> 
     assert modules.isdisjoint({"api", "comparison", "results", "viz"})
 
 
+def test_prepared_data_does_not_depend_on_estimation_or_presentation_facades() -> None:
+    tree = ast.parse(Path("src/binspect/prepared_data.py").read_text())
+    modules = {
+        node.module or "" for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)
+    }
+    assert modules.isdisjoint(
+        {"api", "comparison", "results", "viz", "core.binning", "core.estimate"}
+    )
+
+
 def test_comparison_result_model_does_not_depend_on_api_entrypoint() -> None:
     tree = ast.parse(Path("src/binspect/comparison_results.py").read_text())
     modules = {

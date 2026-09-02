@@ -13,15 +13,10 @@ from .core.binning import compute_binning
 from .core.decompose import decompose
 from .core.estimate import estimate_bins
 from .core.lines import fit_ols, fit_sd_line
-from .core.residualize import residualize
 from .core.selection import select_n_bins
-from .exceptions import InsufficientDataError
-from .input_data import column as _column
-from .input_data import control_frame as _control_frame
-from .input_data import encode_controls as _encode_controls
-from .input_data import labels as _labels
+from .prepared_data import prepare_data
 from .results import BinscatterResult
-from .types import BinningMethod, FloatArray, ZeroWeightPolicy
+from .types import BinningMethod, ZeroWeightPolicy
 
 __all__ = ["binscatter"]
 
@@ -115,102 +110,20 @@ def binscatter(
     binspect.results.BinscatterResult
         Results container returned by this function.
     """
-    y_arr, y_name = _column(data, y, "y")
-    x_arr, x_name = _column(data, x, "x")
-
-    if zero_weight not in ("retain", "drop"):
-        raise ValueError(
-            f"zero_weight must be either 'retain' or 'drop', got {zero_weight!r}."
-        )
-
-    if x_arr.shape != y_arr.shape:
-        raise ValueError(
-            f"x and y must have the same shape, got {x_arr.shape} and {y_arr.shape}."
-        )
-
-    if weights is None:
-        w_arr: FloatArray | None = None
-    else:
-        w_arr, _ = _column(data, weights, "weights")
-        if w_arr.shape != y_arr.shape:
-            raise ValueError("weights must have the same shape as x and y.")
-        if np.any(w_arr < 0):
-            raise ValueError("weights must be non-negative.")
-
-    control_frame: pd.DataFrame | None = None
-    control_names: tuple[str, ...] = ()
-    if controls is not None:
-        control_frame, control_names = _control_frame(data, controls, y_arr.size)
-
-    cluster_arr: np.ndarray[Any, np.dtype[Any]] | None = None
-    cluster_name: str | None = None
-    if cluster is not None:
-        cluster_arr, cluster_name = _labels(data, cluster, "cluster")
-        if cluster_arr.shape != y_arr.shape:
-            raise ValueError("cluster must have the same shape as x and y.")
-
-    finite = np.isfinite(x_arr) & np.isfinite(y_arr)
-    if w_arr is not None:
-        finite &= np.isfinite(w_arr)
-    if control_frame is not None:
-        finite &= ~control_frame.isna().any(axis=1).to_numpy()
-        numeric_controls = control_frame.select_dtypes(include="number")
-        if numeric_controls.shape[1]:
-            finite &= np.isfinite(numeric_controls.to_numpy(dtype=float)).all(axis=1)
-    if cluster_arr is not None:
-        finite &= np.asarray(pd.notna(cluster_arr), dtype=bool)
-
-    if not finite.all():
-        if not dropna:
-            raise ValueError(
-                f"{int((~finite).sum())} row(s) contain non-finite values; "
-                "pass dropna=True to drop them."
-            )
-        x_arr, y_arr = x_arr[finite], y_arr[finite]
-        if w_arr is not None:
-            w_arr = w_arr[finite]
-        if control_frame is not None:
-            control_frame = control_frame.loc[finite].reset_index(drop=True)
-        if cluster_arr is not None:
-            cluster_arr = cluster_arr[finite]
-
-    if w_arr is not None and not np.any(w_arr > 0):
-        raise ValueError("weights must contain at least one positive value.")
-    if w_arr is not None and zero_weight == "drop":
-        positive = w_arr > 0
-        x_arr, y_arr, w_arr = x_arr[positive], y_arr[positive], w_arr[positive]
-        if control_frame is not None:
-            control_frame = control_frame.loc[positive].reset_index(drop=True)
-        if cluster_arr is not None:
-            cluster_arr = cluster_arr[positive]
-
-    if y_arr.size < 4:
-        raise InsufficientDataError(
-            f"need at least 4 usable observations, got {y_arr.size}."
-        )
-
-    cluster_active = np.ones(y_arr.size, dtype=bool) if w_arr is None else w_arr > 0
-    if cluster_arr is not None and pd.unique(cluster_arr[cluster_active]).size < 2:
-        raise InsufficientDataError(
-            "cluster-robust inference requires at least 2 positive-weight clusters."
-        )
-
-    dof_resid: int | None = None
-    if control_frame is not None:
-        control_matrix = _encode_controls(control_frame)
-        if not np.isfinite(control_matrix).all():
-            raise ValueError("controls contain non-finite numeric values.")
-        full_design = np.column_stack((control_matrix, x_arr))
-        if w_arr is not None:
-            full_design = full_design * np.sqrt(w_arr)[:, None]
-        effective_n = y_arr.size if w_arr is None else int(np.count_nonzero(w_arr > 0))
-        dof_resid = effective_n - int(np.linalg.matrix_rank(full_design))
-        if dof_resid < 1:
-            raise InsufficientDataError(
-                "controls leave no residual degrees of freedom."
-            )
-        x_arr = residualize(x_arr, control_matrix, weights=w_arr)
-        y_arr = residualize(y_arr, control_matrix, weights=w_arr)
+    prepared = prepare_data(
+        data,
+        y,
+        x,
+        weights=weights,
+        zero_weight=zero_weight,
+        controls=controls,
+        cluster=cluster,
+        dropna=dropna,
+    )
+    x_arr = prepared.x
+    y_arr = prepared.y
+    w_arr = prepared.weights
+    cluster_arr = prepared.clusters
 
     if isinstance(bins, (str, int, np.integer)):
         bin_rule = int(bins) if isinstance(bins, np.integer) else bins
@@ -234,7 +147,7 @@ def binscatter(
         x_arr,
         y_arr,
         weights=w_arr,
-        dof_resid=dof_resid,
+        dof_resid=prepared.dof_resid,
         clusters=cluster_arr,
     )
     sd_line = fit_sd_line(x_arr, y_arr, weights=w_arr)
@@ -257,9 +170,9 @@ def binscatter(
         x=x_arr,
         y=y_arr,
         weights=w_arr,
-        x_name=x_name,
-        y_name=y_name,
-        controls=control_names,
-        cluster=cluster_name,
+        x_name=prepared.x_name,
+        y_name=prepared.y_name,
+        controls=prepared.controls,
+        cluster=prepared.cluster_name,
         zero_weight=zero_weight,
     )
