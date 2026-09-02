@@ -1,8 +1,35 @@
 """Deterministic numerical policy for visualization layers."""
 
+from collections.abc import Callable
+
 import numpy as np
 
 from ..types import FloatArray, IntArray
+
+
+def deviation_baseline(
+    x: FloatArray,
+    y: FloatArray,
+    target: str,
+    predict_fit: Callable[[FloatArray], FloatArray | float],
+) -> FloatArray:
+    """Return the comparison baseline for deviation rendering."""
+    if target == "fit":
+        return np.asarray(predict_fit(x), dtype=float)
+    if target == "smooth":
+        return smooth(x, y)
+    raise ValueError(f"target must be 'fit' or 'smooth', got {target!r}.")
+
+
+def rug_positions(
+    observations: FloatArray, max_ticks: int, *, seed: int = 0
+) -> FloatArray:
+    """Return a deterministic bounded sample of rug positions."""
+    x = np.asarray(observations, dtype=float)
+    if x.size <= max_ticks:
+        return x
+    rng = np.random.default_rng(seed)
+    return np.asarray(rng.choice(x, size=max_ticks, replace=False), dtype=float)
 
 
 def line_span(bin_means: FloatArray, observations: FloatArray, span: str) -> FloatArray:

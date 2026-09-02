@@ -33,3 +33,9 @@ def test_visual_layer_policy_does_not_depend_on_rendering_adapters() -> None:
     assert "matplotlib" not in source
     assert "from .layers" not in source
     assert "from .theme" not in source
+
+
+def test_visual_renderer_does_not_own_sampling_or_baseline_policy() -> None:
+    source = Path("src/binspect/viz/layers.py").read_text()
+    assert "default_rng" not in source
+    assert "target ==" not in source

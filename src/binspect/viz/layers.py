@@ -16,8 +16,10 @@ import numpy as np
 from matplotlib.collections import LineCollection
 
 from ..types import FloatArray
+from .layer_policy import deviation_baseline as _deviation_baseline
 from .layer_policy import line_span as _line_span
 from .layer_policy import marker_sizes as _marker_sizes
+from .layer_policy import rug_positions as _rug_positions
 from .layer_policy import smooth as _smooth
 from .theme import Theme, get_theme
 
@@ -92,12 +94,7 @@ def deviation_layer(
     x = result.estimates.x_mean
     y = result.estimates.y_mean
 
-    if target == "fit":
-        base = np.asarray(result.fit.predict(x), dtype=float)
-    elif target == "smooth":
-        base = _smooth(x, y)
-    else:
-        raise ValueError(f"target must be 'fit' or 'smooth', got {target!r}.")
+    base = _deviation_baseline(x, y, target, result.fit.predict)
 
     opts: dict[str, Any] = {
         "colors": th.palette.deviation,
@@ -124,10 +121,7 @@ def rug_layer(
     bins in sparse regions look identical to narrow ones. The rug puts that back.
     """
     th = _theme(theme)
-    x = np.asarray(result.x, dtype=float)
-    if x.size > max_ticks:
-        rng = np.random.default_rng(0)
-        x = rng.choice(x, size=max_ticks, replace=False)
+    x = _rug_positions(result.x, max_ticks)
 
     opts: dict[str, Any] = {
         "colors": th.palette.neutral,
