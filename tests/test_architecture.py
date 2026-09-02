@@ -26,3 +26,10 @@ def test_comparison_result_model_does_not_depend_on_api_entrypoint() -> None:
         node.module or "" for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)
     }
     assert "api" not in modules
+
+
+def test_visual_layer_policy_does_not_depend_on_rendering_adapters() -> None:
+    source = Path("src/binspect/viz/layer_policy.py").read_text()
+    assert "matplotlib" not in source
+    assert "from .layers" not in source
+    assert "from .theme" not in source

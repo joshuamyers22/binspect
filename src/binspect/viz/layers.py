@@ -16,6 +16,9 @@ import numpy as np
 from matplotlib.collections import LineCollection
 
 from ..types import FloatArray
+from .layer_policy import line_span as _line_span
+from .layer_policy import marker_sizes as _marker_sizes
+from .layer_policy import smooth as _smooth
 from .theme import Theme, get_theme
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -150,14 +153,7 @@ def _span(result: BinscatterResult, span: str) -> FloatArray:
     which on a normal-ish x means a handful of tail points stretch the axes far past
     where any bin mean lives --- honest about the fit's domain, useless as a picture.
     """
-    if span == "bins":
-        lo = float(np.min(result.estimates.x_mean))
-        hi = float(np.max(result.estimates.x_mean))
-        pad = 0.04 * (hi - lo)
-        return np.array([lo - pad, hi + pad])
-    if span == "data":
-        return np.array([float(np.min(result.x)), float(np.max(result.x))])
-    raise ValueError(f"span must be 'bins' or 'data', got {span!r}.")
+    return _line_span(result.estimates.x_mean, result.x, span)
 
 
 def fit_layer(
@@ -264,12 +260,7 @@ def bins_layer(
     """
     th = _theme(theme)
     e = result.estimates
-    if size_by_n:
-        n = e.n.astype(float)
-        scale = n / n.max() if n.max() > 0 else np.ones_like(n)
-        size = th.marker_size * (0.45 + 0.9 * scale)
-    else:
-        size = th.marker_size
+    size = _marker_sizes(e.n, th.marker_size) if size_by_n else th.marker_size
 
     opts: dict[str, Any] = {
         "s": size,
@@ -308,37 +299,3 @@ def smooth_layer(
     opts.update(kwargs)
     ax.plot(e.x_mean, _smooth(e.x_mean, e.y_mean), **opts)
     return ax
-
-
-def _smooth(x: FloatArray, y: FloatArray, frac: float = 0.6) -> FloatArray:
-    """Tricube-weighted local linear smoother over the bin means.
-
-    Local rather than global so it can follow a bend, and dependency-free so the
-    core install stays at four packages.
-    """
-    x = np.asarray(x, dtype=float)
-    y = np.asarray(y, dtype=float)
-    n = x.size
-    if n < 3:
-        return y.copy()
-
-    span = max(int(np.ceil(frac * n)), 3)
-    out = np.empty(n, dtype=float)
-    for i in range(n):
-        dist = np.abs(x - x[i])
-        cutoff = np.sort(dist)[span - 1]
-        if cutoff <= 0:
-            out[i] = y[i]
-            continue
-        w = np.clip(1.0 - (dist / cutoff) ** 3, 0.0, None) ** 3
-        sw = w.sum()
-        if sw <= 0:
-            out[i] = y[i]
-            continue
-        xm = np.sum(w * x) / sw
-        ym = np.sum(w * y) / sw
-        var = np.sum(w * (x - xm) ** 2)
-        cov = np.sum(w * (x - xm) * (y - ym))
-        slope = cov / var if var > 0 else 0.0
-        out[i] = ym + slope * (x[i] - xm)
-    return out
