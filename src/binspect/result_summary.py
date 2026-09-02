@@ -11,6 +11,20 @@ if TYPE_CHECKING:  # pragma: no cover
     from .results import BinscatterResult
 
 
+def plot_caption(result: BinscatterResult, level: str = "minimal") -> str:
+    """Build the compact result caption used by visualization adapters."""
+    if level == "minimal":
+        return f"n = {result.n_obs:,}   ·   {result.n_bins} bins"
+    if level == "audit":
+        decomposition = result.decomposition
+        return (
+            f"R² {decomposition.r_sq_linear:.2f}   ·   η² {decomposition.eta_sq:.2f}\n"
+            f"lack of fit {decomposition.gap:.2f}, {decomposition.verdict}\n"
+            f"n = {result.n_obs:,}   ·   {result.n_bins} bins"
+        )
+    raise ValueError(f"annotate must be None, 'minimal' or 'audit', got {level!r}.")
+
+
 def summarize(result: BinscatterResult) -> str:
     """Render a stable, plain-text model and diagnostics report."""
     decomposition = result.decomposition

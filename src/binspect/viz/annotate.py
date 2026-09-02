@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
+from ..result_summary import plot_caption as caption_text
 from .theme import Theme, get_theme
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -25,20 +26,6 @@ _CORNERS = {
     "lower left": (0.025, 0.025, "left", "bottom"),
     "lower right": (0.975, 0.025, "right", "bottom"),
 }
-
-
-def caption_text(result: BinscatterResult, level: str = "minimal") -> str:
-    """Build the caption string for a given verbosity level."""
-    if level == "minimal":
-        return f"n = {result.n_obs:,}   ·   {result.n_bins} bins"
-    if level == "audit":
-        d = result.decomposition
-        return (
-            f"R² {d.r_sq_linear:.2f}   ·   η² {d.eta_sq:.2f}\n"
-            f"lack of fit {d.gap:.2f}, {d.verdict}\n"
-            f"n = {result.n_obs:,}   ·   {result.n_bins} bins"
-        )
-    raise ValueError(f"annotate must be None, 'minimal' or 'audit', got {level!r}.")
 
 
 def annotate_layer(

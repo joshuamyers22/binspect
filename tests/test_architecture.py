@@ -49,3 +49,16 @@ def test_visual_renderer_does_not_own_sampling_or_baseline_policy() -> None:
     source = Path("src/binspect/viz/layers.py").read_text()
     assert "default_rng" not in source
     assert "target ==" not in source
+
+
+def test_annotation_adapter_does_not_own_caption_content_policy() -> None:
+    source = Path("src/binspect/viz/annotate.py").read_text()
+    assert 'level == "minimal"' not in source
+    assert 'level == "audit"' not in source
+    assert "from ..result_summary import" in source
+
+
+def test_result_summary_policy_does_not_depend_on_rendering_adapters() -> None:
+    source = Path("src/binspect/result_summary.py").read_text()
+    assert "matplotlib" not in source
+    assert "from .viz" not in source
