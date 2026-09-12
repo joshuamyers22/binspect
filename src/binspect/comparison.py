@@ -111,6 +111,9 @@ def compare(
     -----
     Common edges support comparisons at the same values of ``x``. Empty intervals
     can still be merged within a group, so the number of nonempty bins may differ.
+    Their rule is recorded as ``"pooled"`` with the pooled selection rule in
+    ``result.binning.source_rule``. DPI selection supports neither weights,
+    controls, nor clusters; see :func:`binspect.binscatter`.
 
     See Also
     --------
@@ -185,6 +188,13 @@ def compare(
             )
         except InsufficientDataError as exc:
             raise InsufficientDataError(f"group {label!r}: {exc}") from exc
+        if common_bins:
+            result = replace(
+                result,
+                binning=replace(
+                    result.binning, rule="pooled", source_rule=pooled.bin_rule
+                ),
+            )
         results[label] = replace(
             result, x_name=x_name, y_name=y_name, cluster=cluster_name
         )

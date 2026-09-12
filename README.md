@@ -97,6 +97,26 @@ clusters have undefined intervals.
 `binspect` delegates optimal bin selection to it when requested. Use `binsreg` when
 uniform confidence bands or formal shape-restriction tests are required.
 
+## Choosing bins with DPI
+
+Install `binspect-regression[dpi]` and use `bins="dpi"` for binsreg's direct
+plug-in count for a piecewise-constant fit. Both quantile and equal-width spacing
+are supported. Selection uses the full retained sample with mass-point checks.
+It currently requires no `weights`, `controls`, or `cluster`; those combinations
+raise an error rather than passing an incomplete specification to the selector.
+Use an integer, custom edges, or `bins="auto"` for those estimates.
+
+If DPI cannot produce a finite integer count between two and the retained sample
+size, selection raises `InvalidBinningError`. There is no rule-of-thumb fallback
+or silent count clipping. binspect constructs its own edges and may merge bins
+for tied/discrete x; it does not promise identical knots or intervals to binsreg.
+
+`bs.bin_rule`, `bs.binning.requested_bins`, and `bs.n_bins` distinguish the rule,
+selected count, and realized count. JSON and summary exports include this metadata
+and a `None` fallback. Groups sharing pooled edges report `bin_rule="pooled"` and
+the originating rule in `bs.binning.source_rule`; the pooled result retains the
+original selection count.
+
 ## What it draws
 
 The default plot presents the estimates, uncertainty, linear fit, lack of fit, and

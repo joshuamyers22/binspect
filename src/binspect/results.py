@@ -61,6 +61,8 @@ class BinscatterResult:
         Number of observations used in estimation.
     n_bins : int
         Number of nonempty bins.
+    bin_rule : str
+        Count-selection rule, or ``"fixed"``, ``"custom"``, or ``"pooled"``.
     verdict : str
         Descriptive interpretation of the lack-of-fit measure.
     table : pandas.DataFrame
@@ -92,6 +94,11 @@ class BinscatterResult:
     @property
     def n_bins(self) -> int:
         return self.binning.n_bins
+
+    @property
+    def bin_rule(self) -> str:
+        """Return the recorded bin-selection rule."""
+        return self.binning.rule
 
     @property
     def verdict(self) -> str:

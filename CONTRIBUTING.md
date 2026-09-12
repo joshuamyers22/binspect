@@ -11,8 +11,11 @@ Use Python 3.10 or newer in an isolated environment:
 
 ```bash
 python -m venv .venv
-.venv/bin/python -m pip install -e ".[dev]"
+.venv/bin/python -m pip install -e ".[dev,dpi]"
 ```
+
+For the exact CI dependency versions, use `uv sync --frozen --all-extras`.
+`make check` runs the complete local quality gate, including DPI integration.
 
 Before opening a pull request, run the same checks as CI:
 
@@ -21,9 +24,16 @@ Before opening a pull request, run the same checks as CI:
 .venv/bin/ruff format --check .
 .venv/bin/mypy
 .venv/bin/lint-imports
-.venv/bin/pytest --cov -m "not external"
+.venv/bin/pytest --cov -m "not external and not integration"
+.venv/bin/pytest tests/integration -m integration
 .venv/bin/python -m build
 ```
+
+The unit suite does not need binsreg. The `dpi-integration` CI job installs the
+committed lockfile on Python 3.12 and runs real-library tests without skips or
+`continue-on-error`. It is part of the required project quality gate; configuring
+GitHub branch protection to enforce it is tracked separately by G1/R1. Neither
+test suite makes runtime network calls.
 
 ## Change guidelines
 

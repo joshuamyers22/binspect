@@ -71,8 +71,7 @@ x = rng.normal(size=4000)
 y = np.sin(x) + rng.normal(scale=0.4, size=x.size)
 upstream = binsregselect(y=y, x=x)
 result = binspect.binscatter(x=x, y=y, bins="dpi")
-print(upstream.nbinsrot_regul, upstream.nbinsdpi,
-      result.binning.requested_bins)
+print(upstream.nbinsrot_regul, upstream.nbinsdpi, result.binning.requested_bins)
 ```
 
 Observed with binsreg 3.2.1 and NumPy 2.5.2: `35 65 35`. Exact numbers can change
@@ -88,8 +87,7 @@ from binspect.core.lines import fit_ols, fit_sd_line
 
 x = np.arange(6.0)
 r = binspect.binscatter(x=x, y=x**3, bins=2, ci=None)
-between = fit_ols(r.estimates.x_mean, r.estimates.y_mean,
-                  weights=r.estimates.n)
+between = fit_ols(r.estimates.x_mean, r.estimates.y_mean, weights=r.estimates.n)
 print(r.fit.slope, between.slope)
 
 fit = fit_ols(x, -x)

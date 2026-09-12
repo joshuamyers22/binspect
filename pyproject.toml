@@ -77,10 +77,11 @@ module = ["scipy.*", "binsreg.*", "matplotlib.*", "pandas.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
-addopts = "--strict-markers"
+addopts = "--strict-markers -m 'not external and not integration'"
 testpaths = ["tests"]
 markers = [
-  "external: cross-checks against binsreg; excluded from the CI gate",
+    "external: cross-checks against binsreg; excluded from the CI gate",
+    "integration: required checks against locked optional dependencies",
 ]
 
 [tool.coverage.run]

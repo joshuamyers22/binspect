@@ -6,6 +6,25 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+- `bins="dpi"` now uses binsreg's direct plug-in count instead of its regularized
+  rule-of-thumb count, with explicit piecewise-constant model, requested spacing,
+  and mass-point checks. Missing/invalid counts and numerical selection failures
+  raise an actionable error without a silent fallback or count clipping.
+- The missing-DPI-dependency message now names `binspect-regression[dpi]`.
+
+### Changed
+- DPI selection now rejects `weights`, `controls`, and `cluster` until those
+  integrations are validated. Previously these options were omitted from the
+  upstream selector. Other bin rules remain available with these options.
+
+### Added
+- `bin_rule` on results and rule/source/fallback metadata on partitions; JSON and
+  summary exports include selection provenance and requested/actual bin counts.
+  Grouped estimates using pooled edges identify the pooled source rule.
+- A required CI job tests DPI against the locked binsreg dependency, including
+  equal-width spacing and discrete-input success/failure cases.
+
 ## [0.1.1] - 2026-09-09
 
 ### Added

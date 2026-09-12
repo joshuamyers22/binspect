@@ -41,6 +41,8 @@ def summarize(result: BinscatterResult) -> str:
         f"{'Exog:':<20}{result.x_name:>14}{'No. Bins:':>22}{result.n_bins:>12}",
         f"{'Binning:':<20}{result.binning.method:>14}"
         f"{'Min. Bin Size:':>22}{decomposition.min_bin_n:>12,}",
+        f"{'Bin rule:':<20}{result.bin_rule:>14}"
+        f"{'Requested bins:':>22}{result.binning.requested_bins:>12,}",
         *(
             [f"{'Controls:':<20}{_controls_label(result.controls):>48}"]
             if result.controls
