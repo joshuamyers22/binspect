@@ -9,6 +9,14 @@ from ..types import FloatArray
 __all__ = ["residualize"]
 
 
+def scaled_design(design: FloatArray, root_weight: FloatArray) -> FloatArray:
+    """Normalize columns for numerical rank and least squares, preserving their span."""
+    peak = np.max(np.abs(design), axis=0)
+    unit = design / np.where(peak > 0, peak, 1.0)
+    norms = np.linalg.norm(unit * root_weight[:, None], axis=0)
+    return np.asarray(unit / np.where(norms > 0, norms, 1.0), dtype=float)
+
+
 def residualize(
     values: FloatArray,
     controls: FloatArray,
@@ -53,6 +61,7 @@ def residualize(
         root_weight = np.sqrt(weight)
         mean = float(np.average(y, weights=weight))
 
+    design = scaled_design(design, root_weight)
     weighted_design = design * root_weight[:, None]
     coefficient, *_ = np.linalg.lstsq(weighted_design, y * root_weight, rcond=None)
     return np.asarray(y - design @ coefficient + mean, dtype=float)

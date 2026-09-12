@@ -105,6 +105,12 @@ def _summary_notes(
         if cluster is not None
         else "Confidence intervals assume independent observations."
     )
+    if controls:
+        uncertainty_note = (
+            "Slope standard errors use CR1 cluster-robust inference."
+            if cluster is not None
+            else "Slope standard errors use classical covariance."
+        )
     notes = [
         uncertainty_note,
         "Lack of fit is descriptive; the verdict is not a formal test.",

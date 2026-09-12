@@ -1,5 +1,10 @@
 # C3: inference contract and initial reference validation
 
+This record describes the initial implementation and immutable v1 assessment.
+The [follow-up correction](adjusted-inference-boundary-review.md) withdraws public
+adjusted-bin uncertainty and amends development replay without changing that
+historical analysis plan or locked evidence.
+
 - Date: 2026-09-12; baseline `2b09086`, stacked after PR #9.
 - Implementer: Codex; accountable reviewer: Josh Myers; qualified statistical
   reviewer not yet assigned.

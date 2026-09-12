@@ -33,7 +33,7 @@ class BinEstimates:
         Lower and upper confidence limits.
     ci_level : float or None
         Confidence level, or None when intervals were not estimated.
-    se_type : {"independent", "cluster"}
+    se_type : {"independent", "cluster", "unavailable"}
         Standard-error estimator used for bin means.
     n_clusters : ndarray or None
         Number of positive-weight clusters represented in each bin.
@@ -50,7 +50,7 @@ class BinEstimates:
     ci_lo: FloatArray
     ci_hi: FloatArray
     ci_level: float | None
-    se_type: Literal["independent", "cluster"] = "independent"
+    se_type: Literal["independent", "cluster", "unavailable"] = "independent"
     n_clusters: IntArray | None = None
     ci_df: FloatArray | None = None
 

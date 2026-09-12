@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 __all__ = [
+    "AdjustedInferenceWarning",
     "BinCountWarning",
     "BinspectError",
     "InsufficientDataError",
@@ -24,3 +25,7 @@ class InvalidBinningError(BinspectError):
 
 class BinCountWarning(UserWarning):
     """Warning issued when a binning specification produces sparse or merged bins."""
+
+
+class AdjustedInferenceWarning(UserWarning):
+    """Requested adjusted-bin uncertainty is unavailable pending validation."""

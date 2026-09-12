@@ -26,7 +26,11 @@ def test_uncertainty_limits_and_df_are_exposed(adjusted, weighted, clustered):
         cluster=np.repeat(np.arange(40), 10) if clustered else None,
     )
     metadata = result.inference
-    assert metadata["interval_scope"] == "approximate_pointwise_conditional"
+    assert metadata["interval_scope"] == (
+        "unavailable_after_adjustment"
+        if adjusted
+        else "approximate_pointwise_conditional"
+    )
     assert metadata["slope_df_resid"] == 400 - (3 if adjusted else 2)
     assert metadata["slope_reference_df"] == (
         39 if clustered else metadata["slope_df_resid"]
@@ -35,8 +39,10 @@ def test_uncertainty_limits_and_df_are_exposed(adjusted, weighted, clustered):
     assert metadata["selection_uncertainty_included"] is False
     assert metadata["adjustment_uncertainty_included"] is (False if adjusted else None)
     assert any("fitted-control" in note for note in metadata["limitations"]) == adjusted
-    assert any("reliability" in note for note in metadata["limitations"]) == weighted
-    assert "pointwise" in result.summary()
+    assert any("reliability" in note for note in metadata["limitations"]) == (
+        weighted and not adjusted
+    )
+    assert ("unavailable" if adjusted else "pointwise") in result.summary()
     assert result.summary_frame().loc[0, "slope_se_type"] == result.fit.se_type
     payload = result.to_dict()
     assert payload["inference"] == metadata

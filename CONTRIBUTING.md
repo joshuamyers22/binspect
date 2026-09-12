@@ -48,6 +48,12 @@ seeds or tolerances. Development coverage is a regression gate for its stated
 sanity cases; diagnostic failures must remain visible and do not establish broader
 method validity. Locked assessment requires a committed plan/protocol and a clean
 checkout, with its evidence retained for qualified review.
+The [protocol amendment](docs/adjusted-inference-boundary-review.md) preserves
+the failed adjusted formula as a low-level development diagnostic and checks that
+the public API withholds its uncertainty. Current reports use schema version 2
+with an explicit scope for each scenario. The original plan and locked report are
+unchanged. The CLI refuses consumed v1 assessment seeds; reproduce the historical
+assessment at clean `c19c2a8`. New assessment requires a reviewed new protocol.
 
 ## Change guidelines
 

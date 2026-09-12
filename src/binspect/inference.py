@@ -11,19 +11,24 @@ if TYPE_CHECKING:
 
 def inference_metadata(result: BinscatterResult) -> dict[str, Any]:
     limitations = [
-        "Bin intervals are approximate, pointwise and conditional on "
-        "the observed partition.",
-        "Partition-selection uncertainty and simultaneous coverage are not provided.",
+        "Partition-selection uncertainty and simultaneous coverage are not provided."
     ]
+    if not result.adjusted:
+        limitations.insert(
+            0,
+            "Bin intervals are approximate, pointwise and conditional on "
+            "the observed partition.",
+        )
     if result.adjusted:
         limitations.append(
             "Bin uncertainty does not propagate fitted-control uncertainty."
         )
         limitations.append(
-            "Adjusted bin intervals have no validated nominal "
-            "population-coverage claim."
+            "Adjusted-bin SEs and intervals are unavailable pending a validated "
+            "uncertainty method; descriptive means and slope inference "
+            "remain available."
         )
-    if result.weights is not None:
+    if result.weights is not None and not result.adjusted:
         limitations.append(
             "Independent weighted bin SEs use reliability variance and "
             "effective sample size; "
@@ -40,7 +45,12 @@ def inference_metadata(result: BinscatterResult) -> dict[str, Any]:
         )
     degrees = result.estimates.ci_df
     return {
-        "interval_scope": "approximate_pointwise_conditional",
+        "interval_scope": "unavailable_after_adjustment"
+        if result.adjusted
+        else "approximate_pointwise_conditional",
+        "bin_inference_status": "unavailable_after_adjustment"
+        if result.adjusted
+        else "available_conditional",
         "ci_level": result.estimates.ci_level,
         "slope_covariance": result.fit.se_type,
         "slope_df_resid": result.fit.df_resid,

@@ -23,6 +23,7 @@ from typing import TYPE_CHECKING, Any
 from .api import binscatter
 from .comparison import BinscatterCollection, compare
 from .exceptions import (
+    AdjustedInferenceWarning,
     BinCountWarning,
     BinspectError,
     InsufficientDataError,
@@ -52,6 +53,7 @@ __version__ = "0.1.1"
 
 __all__ = [
     "THEMES",
+    "AdjustedInferenceWarning",
     "BinCountWarning",
     "BinscatterCollection",
     "BinscatterResult",

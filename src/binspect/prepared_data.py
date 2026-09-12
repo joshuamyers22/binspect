@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 from numpy.typing import ArrayLike
 
-from .core.residualize import residualize
+from .core.residualize import residualize, scaled_design
 from .exceptions import InsufficientDataError
 from .input_data import column, control_frame, encode_controls, labels
 from .types import FloatArray, ZeroWeightPolicy
@@ -125,10 +125,17 @@ def prepare_data(
         if not np.isfinite(control_matrix).all():
             raise ValueError("controls contain non-finite numeric values.")
         full_design = np.column_stack((control_matrix, x_arr))
-        if w_arr is not None:
-            full_design = full_design * np.sqrt(w_arr)[:, None]
+        root_weight = np.ones_like(y_arr) if w_arr is None else np.sqrt(w_arr)
+        full_design = scaled_design(full_design, root_weight) * root_weight[:, None]
+        full_rank = int(np.linalg.matrix_rank(full_design))
+        control_rank = int(np.linalg.matrix_rank(full_design[:, :-1]))
+        if full_rank <= control_rank:
+            raise InsufficientDataError(
+                "x is not identified after adjusting for controls: it adds no "
+                "numerical rank on positive-weight observations."
+            )
         effective_n = y_arr.size if w_arr is None else int(np.count_nonzero(w_arr > 0))
-        dof_resid = effective_n - int(np.linalg.matrix_rank(full_design))
+        dof_resid = effective_n - full_rank
         if dof_resid < 1:
             raise InsufficientDataError(
                 "controls leave no residual degrees of freedom."

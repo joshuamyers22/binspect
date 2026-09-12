@@ -59,7 +59,12 @@ def test_independent_adjustment_preserves_group_fits_and_means(
         weights="weight" if weighted else None,
         bins=5,
         common_bins=False,
+        ci=None,
     )
+    for result in [comparison.pooled, *comparison.results.values()]:
+        assert result.table[["se", "ci_lo", "ci_hi"]].isna().all().all()
+        assert result.estimates.ci_level is None
+        assert np.isfinite(result.fit.se_slope)
     for label, result in comparison.results.items():
         sample = shifted_controls.loc[shifted_controls["group"] == label]
         weights = sample["weight"].to_numpy() if weighted else None
