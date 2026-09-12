@@ -11,7 +11,7 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `package-identity` | Distribution `binspect-regression`, import `binspect`, existing MIT license. | [manifest](pyproject.toml), [license](LICENSE) | 2026-09-12 |
 | `library-scope` | In-process descriptive diagnostics; no hosted service or runtime telemetry. Existing stack exceptions remain proposed for review. | [brief](PROJECT_BRIEF.md), [ADR-0001](docs/decisions/0001-existing-library-baseline.md) | 2026-09-12 |
 | `quality-gate` | `make check` includes frozen DPI/Statsmodels/adapter references, original coverage, expanded nonflat/DPI/few-cluster simulations and separate binsreg function coverage; default pytest omits integration/external tests. | [Makefile](Makefile), [CI](.github/workflows/ci.yml) | 2026-09-12 |
-| `dpi-correction` | C1 is implemented in PR #7: actual DPI count, explicit spacing, no silent fallback; weights/controls/clusters rejected. Not yet released. | [C1 record](docs/dpi-selection-review.md), [PR #7](https://github.com/joshuamyers22/binspect/pull/7) | 2026-09-12 |
+| `dpi-correction` | C1 is integrated through PR #7: actual DPI count, explicit spacing, no silent fallback; weights/controls/clusters rejected. Not yet released. | [C1 record](docs/dpi-selection-review.md), [PR #7](https://github.com/joshuamyers22/binspect/pull/7) | 2026-09-12 |
 | `remote-controls` | Main is unprotected; PyPI environment has a reviewer; security-update automation and private vulnerability reporting are disabled. This is a dated observation, not a protection guarantee. | [API evidence](docs/GOVERNANCE.md) | 2026-09-12 |
 | `import-isolation` | Plain import and ordinary estimation defer plotting initialization; requesting theme/plotting exports may initialize Matplotlib caches. Native numerical workers and optional DPI are outside this test's scope. | [Runtime regression](tests/test_runtime_boundaries.py), [public plotting exports](tests/test_plot.py) | 2026-09-12 |
 
@@ -30,17 +30,14 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 
 ## Open work
 
-The [plan](binspect-plan.md) owns ordering and task status. G1/G2 records are
-prepared for review; C2's bounded guard/identity correction is implemented, and C3
-has withheld unsupported adjusted-bin uncertainty and added numerical references;
-expanded development now records uneven-cluster undercoverage and the requested
-binsreg reference review is complete. C3 final assessment/acceptance remain open.
-C4's independent descriptive correction is implemented. The user moved the binsreg
-adapter ahead of A1; implementation, references and development/full-gate verification
-are complete, pending review/integration. Few-cluster coverage remains unsupported.
-A1 ownership/mutation is the next independent implementation item. Governance/security
-acceptance and C3's qualified statistical
-review belong to the maintainer; no such approval is implied by agent work.
+The [plan](binspect-plan.md) owns ordering and task status. PRs #6–#14 were
+merged into main on 2026-09-12 at `e206e0c`, explicitly authorized by the user;
+[PR #14](https://github.com/joshuamyers22/binspect/pull/14) completed the stack.
+C1/C2/C4 corrections, C3 inference boundaries/development evidence, and the binsreg
+adapter are integrated. Next implementation: A1 ownership/mutation isolation.
+Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
+proposed baseline decisions and governance/security/release gates remain open;
+merge authorization is not an independent statistical approval or a release.
 
 Owner for these retrieval pointers: Josh Myers. Review before the next affected
 task and at each release; remote observations must be rechecked before use.
