@@ -13,3 +13,7 @@ site/
 tests/baseline/*.png.new
 .DS_Store
 .import_linter_cache/
+.work/
+.env
+.env.*
+!.env.example

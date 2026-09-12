@@ -18,6 +18,8 @@ Quick start
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
+
 from .api import binscatter
 from .comparison import BinscatterCollection, compare
 from .exceptions import (
@@ -27,7 +29,24 @@ from .exceptions import (
     InvalidBinningError,
 )
 from .results import BinscatterResult
-from .viz.theme import THEMES, theme
+
+if TYPE_CHECKING:
+    from .viz.theme import THEMES, theme
+
+
+def __getattr__(name: str) -> Any:
+    """Load plotting exports only when requested, preserving plain import isolation."""
+    if name in {"THEMES", "theme"}:
+        from .viz.theme import THEMES, theme
+
+        globals().update(THEMES=THEMES, theme=theme)
+        return globals()[name]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | {"THEMES", "theme"})
+
 
 __version__ = "0.1.1"
 

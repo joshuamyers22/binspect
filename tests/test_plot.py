@@ -32,6 +32,17 @@ def close_figures():
     plt.close("all")
 
 
+def test_top_level_plotting_exports_remain_available():
+    from binspect import THEMES, theme
+    from binspect.viz.theme import THEMES as EXPECTED_THEMES
+
+    assert theme is theme_fn
+    assert THEMES is EXPECTED_THEMES
+    assert {"THEMES", "theme"} <= set(dir(binspect))
+    with pytest.raises(AttributeError, match="has no attribute"):
+        _ = binspect.unknown_plotting_export
+
+
 def test_returns_the_axes_it_was_given(result):
     _, ax = plt.subplots()
     returned = result.plot(ax=ax)
