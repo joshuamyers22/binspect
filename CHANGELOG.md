@@ -48,6 +48,13 @@ All notable changes to this project are documented here. The format follows
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- Optional `binspect.binsreg()` and `BinsregResult` delegate original-coordinate
+  function inference to binsreg with joint control covariance, HC1 or clustered
+  covariance, DPI/fixed counts and explicit fallback status. Copied dot/interval
+  tables, JSON, summary and plotting keep this target separate from FWL diagnostics.
+  Few-cluster constant-fit fallbacks carry `limited_support`, without a coverage
+  guarantee. Matched backend references and prespecified development coverage
+  join the required quality gate.
 - Immutable `DiagnosticPolicy` for `binscatter` and `compare`, with configurable
   gap/effective-row/cluster thresholds and `None` to disable classification.
   Exports distinguish retained, positive-weight and effective rows, plus policy
@@ -63,7 +70,7 @@ All notable changes to this project are documented here. The format follows
 - `result.inference` and JSON/summary metadata expose covariance, residual/reference
   degrees of freedom and interval limitations. Bin intervals are explicitly
   approximate and pointwise when available; selection uncertainty is omitted, and
-  adjusted-bin uncertainty is withheld. HC1 remains unsupported.
+  adjusted-bin uncertainty is withheld. HC1 remains unsupported by binscatter/compare.
 - `binning.partition_edges` and `binning.interval_ids`, also included in JSON,
   preserve full partition boundaries and occupied interval identity. Legacy
   compressed edges and no-gap table behavior remain available.

@@ -33,6 +33,7 @@ Before opening a pull request, run the same checks as CI:
 .venv/bin/pytest tests/integration -m integration
 .venv/bin/python validation/coverage.py --phase development
 .venv/bin/python validation/expanded_coverage.py --phase development
+.venv/bin/python validation/binsreg_coverage.py --phase development
 .venv/bin/python -m build
 ```
 
@@ -66,6 +67,14 @@ writes `.work/expanded-coverage-development.json`, and retains diagnostic covera
 failures while requiring every replicate to complete. The harness permits only
 development seeds; qualified review and a separate locked assessment remain open.
 See the [results and limitations](docs/expanded-coverage-review.md).
+
+`make coverage-binsreg` tests the separate optional function-inference adapter,
+following its [committed protocol](docs/BINSREG_ADAPTER_PLAN.md). It requires
+zero invalid runs and checks iid DPI coverage against a prespecified band;
+clustered coverage remains diagnostic. Reports include actual method/status
+histograms in `.work/binsreg-coverage-development.json`. `make integration` checks
+adjusted, weighted, clustered, filtered and categorical inputs against direct
+binsreg, including degree-0 few-cluster fallback. Assessment seeds remain reserved.
 
 ## Change guidelines
 

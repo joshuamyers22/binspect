@@ -130,7 +130,7 @@ raises `InsufficientDataError`.
 `bs.inference` (also in JSON) reports covariance, degrees of freedom and these
 limitations. Classical slope SEs require their variance model; with weights this
 is inverse-variance WLS. Independent weighted bin SEs instead use reliability
-variance and effective sample size. HC1 is not supported for returned estimates;
+variance and effective sample size. HC1 is not supported by `binscatter`/`compare`;
 the DPI selector's internal covariance setting does not change that. See the
 [statistical analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md) for the exact contracts.
 
@@ -138,12 +138,51 @@ the DPI selector's internal covariance setting does not change that. See the
 
 
 `binsreg` (Cattaneo, Crump, Farrell, and Feng) provides formal binscatter inference.
-`binspect` delegates optimal bin selection to it when requested. Use `binsreg` when
+`binspect` delegates optimal bin selection and, through the separate adapter below,
+pointwise function inference to it when requested. Use `binsreg` directly when
 uniform confidence bands or formal shape-restriction tests are required.
+
+## Adjusted function inference with binsreg
+
+The unreleased optional adapter fits binsreg's function in the original x
+coordinates, jointly with numeric or categorical controls:
+
+```python
+# Install this checkout with: pip install -e ".[dpi]"
+function = binspect.binsreg(
+    df, y="sales", x="age", controls=["region", "tenure"], bins="dpi"
+)
+function.dots  # degree-0 dot estimates
+function.intervals  # pointwise limits and their own fitted centers
+function.metadata  # target, control evaluation, covariance, actual method, issues
+print(function.summary())
+function.plot()
+```
+
+Controls are evaluated at positive-weight sample means by default. Use `at="zero"`
+or an explicit vector in `metadata["control_columns"]` order to choose fixed
+encoded-control values. The full coefficient covariance includes estimated-control
+uncertainty (`asyvar=False`); uncertainty in the chosen evaluation values themselves
+is omitted. The normal path uses degree-1 intervals and HC1 covariance. `weights=`
+and `cluster=` pass through to binsreg after consistent complete-case filtering;
+zero-weight rows are always dropped and counts are exported.
+
+Use an integer `bins=` for a fixed count and `binning="equal_width"` for equal-width
+spacing. Fixed counts can leave approximation bias; upstream warnings are exposed
+as `BinsregWarning` and controlled issue codes. With few clusters, binsreg may
+reduce bins and return constant-fit intervals. These have `limited_support`
+status, explicit actual settings and **no few-cluster coverage guarantee**.
+Unrecognized warnings or an unvalidated backend version give `unverified_method`.
+The locked reference version is binsreg 3.2.1. See the
+[adapter protocol](docs/BINSREG_ADAPTER_PLAN.md) for the target and coverage scope.
+
+`BinsregResult` has separate copied dot/interval tables, metadata and strict-JSON
+`to_dict()` output. It supplies function estimates without an FWL slope or gap
+verdict. Its intervals do not apply to the residualized bins from `binscatter`.
 
 ## Choosing bins with DPI
 
-Install `binspect-regression[dpi]` and use `bins="dpi"` for binsreg's direct
+For `binscatter`/`compare`, install `binspect-regression[dpi]` and use `bins="dpi"` for binsreg's direct
 plug-in count for a piecewise-constant fit. Both quantile and equal-width spacing
 are supported. Selection uses the full retained sample with mass-point checks.
 It currently requires no `weights`, `controls`, or `cluster`; those combinations

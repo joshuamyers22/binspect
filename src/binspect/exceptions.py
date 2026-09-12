@@ -6,6 +6,8 @@ __all__ = [
     "AdjustedInferenceWarning",
     "BinCountWarning",
     "BinspectError",
+    "BinsregError",
+    "BinsregWarning",
     "InsufficientDataError",
     "InvalidBinningError",
 ]
@@ -29,3 +31,11 @@ class BinCountWarning(UserWarning):
 
 class AdjustedInferenceWarning(UserWarning):
     """Requested adjusted-bin uncertainty is unavailable pending validation."""
+
+
+class BinsregError(BinspectError):
+    """The optional binsreg method could not provide a supported result."""
+
+
+class BinsregWarning(UserWarning):
+    """Binsreg reported a support limitation, method fallback or uncertainty issue."""
