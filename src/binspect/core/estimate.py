@@ -37,6 +37,9 @@ class BinEstimates:
         Standard-error estimator used for bin means.
     n_clusters : ndarray or None
         Number of positive-weight clusters represented in each bin.
+    n_positive, n_effective : ndarray or None
+        Positive-weight row counts and Kish effective row counts, distinct from
+        retained counts and independent cluster counts.
     ci_df : ndarray or None
         Per-bin t-reference degrees of freedom (undefined where SE is undefined).
     """
@@ -53,6 +56,8 @@ class BinEstimates:
     se_type: Literal["independent", "cluster", "unavailable"] = "independent"
     n_clusters: IntArray | None = None
     ci_df: FloatArray | None = None
+    n_positive: IntArray | None = None
+    n_effective: FloatArray | None = None
 
     @property
     def n_bins(self) -> int:
@@ -203,6 +208,8 @@ def estimate_bins(
         se_type=se_type,
         n_clusters=n_clusters,
         ci_df=np.where(np.isfinite(se), interval_df, np.nan).astype(float),
+        n_positive=np.bincount(assignment[w > 0], minlength=n_bins).astype(np.int64),
+        n_effective=eff_n,
     )
 
 

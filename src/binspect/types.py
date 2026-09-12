@@ -31,7 +31,7 @@ BinRule: TypeAlias = (
 
 Layer = Literal["raw", "deviation", "rug", "fit", "sd_line", "ci", "bins", "smooth"]
 AnnotateLevel = Literal["minimal", "audit"]
-Verdict = Literal["linear", "curvature", "underpowered bins"]
+Verdict = Literal["linear", "curvature", "limited support", "not assessed"]
 ZeroWeightPolicy = Literal["retain", "drop"]
 
 

@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
+import numpy as np
 import pandas as pd
 
 from .core.binning import Binning
@@ -59,7 +60,9 @@ class BinscatterResult:
     Attributes
     ----------
     n_obs : int
-        Number of observations used in estimation.
+        Retained row count, including retained zero-weight observations.
+    n_positive, n_effective : int, float
+        Positive-weight and Kish effective row counts; neither counts clusters.
     n_bins : int
         Number of nonempty bins.
     bin_rule : str
@@ -91,6 +94,23 @@ class BinscatterResult:
     @property
     def n_obs(self) -> int:
         return int(self.y.size)
+
+    @property
+    def n_positive(self) -> int:
+        """Number of retained rows with positive estimation weight."""
+        return (
+            self.n_obs
+            if self.weights is None
+            else int(np.count_nonzero(self.weights > 0))
+        )
+
+    @property
+    def n_effective(self) -> float:
+        """Kish effective row count; not the number of independent clusters."""
+        if self.weights is None:
+            return float(self.n_obs)
+        scaled = self.weights / np.max(self.weights)
+        return float(np.sum(scaled) ** 2 / np.sum(scaled**2))
 
     @property
     def n_bins(self) -> int:

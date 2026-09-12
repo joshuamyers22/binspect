@@ -13,6 +13,7 @@ from numpy.typing import ArrayLike
 
 from .core.binning import compute_binning
 from .core.decompose import decompose
+from .core.diagnostics import DEFAULT_DIAGNOSTIC_POLICY, DiagnosticPolicy
 from .core.estimate import estimate_bins
 from .core.lines import fit_ols, fit_sd_line
 from .core.selection import select_n_bins
@@ -37,6 +38,7 @@ def binscatter(
     cluster: str | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
+    diagnostic_policy: DiagnosticPolicy | None = DEFAULT_DIAGNOSTIC_POLICY,
 ) -> BinscatterResult:
     """Estimate a binned scatterplot and linear specification diagnostic.
 
@@ -82,6 +84,11 @@ def binscatter(
     dropna : bool, default True
         If True, remove observations with nonfinite values in any input. If False,
         raise a ``ValueError`` when nonfinite values are present.
+    diagnostic_policy : DiagnosticPolicy or None, optional
+        Descriptive gap/support thresholds. Defaults to gap 0.02 and at least 30
+        effective rows per bin. Clustered verdicts require an explicit minimum
+        cluster count in the policy; no default count guarantees reliability.
+        ``None`` disables classification while retaining estimates and decomposition.
 
     Returns
     -------
@@ -209,6 +216,8 @@ def binscatter(
         fit,
         fit.r_sq,
         weights=w_arr,
+        bin_clusters=estimates.n_clusters,
+        diagnostic_policy=diagnostic_policy,
     )
 
     return BinscatterResult(

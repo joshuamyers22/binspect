@@ -12,6 +12,7 @@ from numpy.typing import ArrayLike
 
 from .api import binscatter
 from .comparison_results import BinscatterCollection as BinscatterCollection
+from .core.diagnostics import DEFAULT_DIAGNOSTIC_POLICY, DiagnosticPolicy
 from .exceptions import InsufficientDataError, InvalidBinningError
 from .input_data import column as _column
 from .input_data import control_frame as _control_frame
@@ -64,6 +65,7 @@ def compare(
     ci: float | None = 0.95,
     dropna: bool = True,
     common_bins: bool = True,
+    diagnostic_policy: DiagnosticPolicy | None = DEFAULT_DIAGNOSTIC_POLICY,
 ) -> BinscatterCollection:
     """Estimate binned scatterplots across groups.
 
@@ -105,6 +107,9 @@ def compare(
     common_bins : bool, default True
         If True, select bin edges from the pooled sample and use those edges for
         every group. If False, select bins independently within each group.
+    diagnostic_policy : DiagnosticPolicy or None, optional
+        Descriptive thresholds passed to every pooled and group estimate. ``None``
+        disables classification; clustered verdicts need an explicit cluster policy.
         Shared table bin IDs refer to the same original interval even when other
         intervals are empty in a group. Independent IDs are local to each sample.
 
@@ -174,6 +179,7 @@ def compare(
         cluster=None if cluster_values is None else cluster_values[group_ok],
         ci=ci,
         dropna=dropna,
+        diagnostic_policy=diagnostic_policy,
     )
     pooled = replace(pooled, x_name=x_name, y_name=y_name, cluster=cluster_name)
     group_bins: int | str | ArrayLike
@@ -199,6 +205,7 @@ def compare(
                 cluster=(None if cluster_values is None else cluster_values[selected]),
                 ci=ci,
                 dropna=dropna,
+                diagnostic_policy=diagnostic_policy,
             )
         except (InsufficientDataError, InvalidBinningError, ValueError) as exc:
             raise type(exc)(f"group {label!r}: {exc}") from exc

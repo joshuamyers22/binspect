@@ -23,6 +23,8 @@ def serialize_result(result: BinscatterResult) -> dict[str, Any]:
         "zero_weight": result.zero_weight,
         "inference": result.inference,
         "n_obs": result.n_obs,
+        "n_positive": result.n_positive,
+        "n_effective": json_value(result.n_effective),
         "binning": {
             "method": result.binning.method,
             "rule": result.bin_rule,

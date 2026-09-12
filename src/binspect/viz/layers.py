@@ -79,9 +79,8 @@ def deviation_layer(
 ) -> Axes:
     """Shading between each bin mean and the line it is being compared against.
 
-    This is the package's whole thesis rendered as ink: the visible area is the
-    lack of fit measured by ``SS_lof / SS_total``. It is descriptive rather than a
-    formal test of curvature.
+    Marks show signed departures. Their lengths/areas do not equal the weighted
+    squared lack of fit ``SS_lof / SS_total``. This is a descriptive display.
 
     Parameters
     ----------
@@ -161,9 +160,9 @@ def fit_layer(
 ) -> Axes:
     """The least-squares line through the underlying observations.
 
-    Note that this is fitted to the raw data, not to the bin means. Fitting to bin
-    means would give a similar slope and a wildly inflated R-squared, because
-    averaging deletes the within-bin noise the model has to explain.
+    The fit uses observation-level variables, residualized when controls are
+    supplied. FWL coefficient equality applies to these residuals. A regression
+    on bin means generally has a different slope and R-squared.
     """
     th = _theme(theme)
     xs = _span(result, span)

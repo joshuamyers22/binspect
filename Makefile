@@ -15,7 +15,7 @@ test:
 	uv run pytest --cov --cov-report=term-missing -m "not external and not integration"
 
 integration:
-	uv run --frozen --extra dev --extra dpi pytest tests/integration/test_dpi.py -m integration
+	uv run --frozen --extra dev --extra dpi pytest tests/integration/test_dpi.py tests/integration/test_binsreg_contract.py -m integration
 
 reference:
 	uv run --frozen --extra dev --extra validation pytest tests/integration/test_inference.py -m integration

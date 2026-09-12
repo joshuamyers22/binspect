@@ -62,7 +62,7 @@ def test_sparse_bins_dominate_the_verdict(concave):
     # 200 bins over 4,000 rows leaves 20 per bin: too few to call curvature.
     d = _decompose(concave, n_bins=200)
     assert d.min_bin_n < 30
-    assert d.verdict == "underpowered bins"
+    assert d.verdict == "limited support"
 
 
 def test_eta_squared_rises_mechanically_with_bin_count(linear):
@@ -73,7 +73,7 @@ def test_eta_squared_rises_mechanically_with_bin_count(linear):
 
 
 def test_gap_equals_weighted_squared_deviation_of_bin_means(concave):
-    """gap is exactly the ink in the deviation layer, normalised by total variance."""
+    """Gap uses weighted squared departures, not the rendered area or length."""
     x, y = concave["x"].to_numpy(), concave["y"].to_numpy()
     b = compute_binning(x, 20)
     fit = fit_ols(x, y)

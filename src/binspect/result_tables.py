@@ -29,6 +29,10 @@ def bin_table(result: BinscatterResult) -> pd.DataFrame:
     }
     if estimates.n_clusters is not None:
         columns["n_clusters"] = estimates.n_clusters
+    if estimates.n_positive is not None:
+        columns["n_positive"] = estimates.n_positive
+    if estimates.n_effective is not None:
+        columns["n_effective"] = estimates.n_effective
     return pd.DataFrame(columns)
 
 
@@ -55,6 +59,8 @@ def summary_frame(result: BinscatterResult) -> pd.DataFrame:
                 "n_clusters": result.fit.n_clusters,
                 "zero_weight": result.zero_weight,
                 "n_obs": result.n_obs,
+                "n_positive": result.n_positive,
+                "n_effective": result.n_effective,
                 "n_bins": result.n_bins,
                 "binning": result.binning.method,
                 "bin_rule": result.bin_rule,
@@ -70,6 +76,21 @@ def summary_frame(result: BinscatterResult) -> pd.DataFrame:
                 "lack_of_fit": decomposition.gap,
                 "min_bin_n": decomposition.min_bin_n,
                 "verdict": decomposition.verdict,
+                **{
+                    key: value
+                    for key, value in decomposition.as_dict().items()
+                    if key
+                    in {
+                        "min_bin_positive_n",
+                        "min_bin_effective_n",
+                        "min_bin_clusters",
+                        "verdict_reason",
+                        "diagnostics_enabled",
+                        "gap_threshold",
+                        "min_bin_effective_n_threshold",
+                        "min_bin_clusters_threshold",
+                    }
+                },
             }
         ]
     )

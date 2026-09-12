@@ -2,7 +2,12 @@
 
 Updated 2026-09-12 against `main` at `59c6a39`, package version `0.1.1`.
 
-**Current work: C3 — inference contract and independent references.** Initial
+**Current work: C4 — diagnostic policy, with C3 acceptance still open.** The
+[binsreg reference review](docs/binsreg-reference-review.md) is complete and its
+method checks are mandatory. The [C4 correction](docs/diagnostic-policy-review.md)
+on `fix/diagnostic-policy` makes support/thresholds explicit and corrects diagnostic
+claims. This descriptive work does not require resolving C3's covariance policy.
+Initial
 matched references, explicit inference metadata and a predeclared coverage protocol
 are implemented on `test/inference-contract`; see [C3 evidence](docs/inference-contract-review.md)
 and the [analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md). Development simulations
@@ -13,10 +18,12 @@ numerically unidentified controlled x, and adds rescaled/redundant-control and
 few-cluster arithmetic references. The [expanded development grid](docs/EXPANDED_COVERAGE_PLAN.md)
 is now implemented on `test/expanded-inference-coverage`: required sanity cases
 pass, but uneven-cluster bin coverage falls to 78.2%; see
-[results](docs/expanded-coverage-review.md). Next: qualified review of the
-uneven-cluster support policy and protocol before locked assessment on reserved
-fresh seeds. C3 is not complete; a validated adjusted-bin uncertainty method remains
-future work before enabling those intervals. C4 follows the applicable C3 disposition.
+[results](docs/expanded-coverage-review.md). The upstream review supports keeping
+adjusted-bin uncertainty unavailable and not inferring a safe cluster count.
+C3 still needs final assessment and maintainer acceptance; no binsreg-author
+endorsement is implied. A validated adjusted-bin uncertainty method remains future
+work before enabling those intervals. A1 (result ownership and mutation isolation)
+is the next independent implementation item after the C4 correction.
 C2's explicit shared-controls rejection and original interval identity are
 implemented and locally verified on `fix/grouped-intervals`, pending review; see
 [C2 evidence](docs/grouped-interval-review.md). A shared adjusted estimand remains
@@ -168,9 +175,11 @@ Current per-bin CR1 uses clusters represented in that bin and a correction
 the same finite-sample correction as one global saturated clustered regression.
 Reference comparisons must match the design and correction being claimed.
 
-Verdicts are descriptive heuristics, currently gap threshold 0.02 and minimum
-raw bin count 30. They are not power calculations, significance tests, or a
-validation of linearity. C4 must address effective sample size and cluster support.
+Verdicts are descriptive heuristics, with default gap threshold 0.02 and minimum
+effective bin count 30 under the C4 correction. Policies are configurable and
+exported; classification can be disabled. Clustered classification requires an
+explicit caller threshold, and constant outcomes are not assessed. These are not
+power calculations, significance tests, or validation of linearity/coverage.
 
 Per-bin IQR describes outcome dispersion. It is neither a confidence interval for
 the median nor a fitted conditional quantile regression. Uniform confidence bands
@@ -385,3 +394,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | C3 — initial inference contracts and references | [Analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [verification and locked assessment](docs/inference-contract-review.md); 238 unit tests, 30 integration tests, 92.16% coverage, required coverage/build gates pass | Partial: adjusted-bin coverage is 87.4% at nominal 95% in locked assessment; no nominal population-coverage claim. Expanded scenarios, method decisions and qualified review remain open. |
 | 2026-09-12 | C3 — adjusted inference boundary and numerical identification | [Correction and evidence](docs/adjusted-inference-boundary-review.md); 251 unit tests, 46 integration/reference tests, 92.49% coverage, required development coverage/build gates pass | Adjusted-bin uncertainty withheld; numerical control-span guard and rescaled/redundant-control/few-cluster references implemented. Pending review/integration; expanded coverage and qualified C3 acceptance remain open. |
 | 2026-09-12 | C3 — expanded development coverage | [Prespecified protocol](docs/EXPANDED_COVERAGE_PLAN.md), [clean-commit report and review](docs/expanded-coverage-review.md); 262 unit tests, 46 integrations/references, 92.49% coverage, both development protocols and builds pass | Required sanity cases pass; uneven-cluster bin coverage is 78.2% (80.7% weighted), preserved as diagnostic failure. Qualified support-policy/protocol review and locked assessment remain open. |
+| 2026-09-12 | C3 reference review and C4 diagnostic policy | [Binsreg source/method review](docs/binsreg-reference-review.md), [C4 contract and verification](docs/diagnostic-policy-review.md); 296 unit tests, 50 integrations/references, 92.60% coverage, both development protocols and builds pass | Explicit policies, opt-out, accurate support and signed-SD/display claims implemented. Default clustered/constant outcomes unassessed. Pending review/integration; C3 final assessment/acceptance remain open. |

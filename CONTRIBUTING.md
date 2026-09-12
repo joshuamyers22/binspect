@@ -41,6 +41,9 @@ committed lockfile on Python 3.12 and runs real-library tests without skips or
 `continue-on-error`. It is part of the required project quality gate; configuring
 GitHub branch protection to enforce it is tracked separately by G1/R1. Neither
 test suite makes runtime network calls.
+`make integration` also checks the locked binsreg inference contract: control
+uncertainty, higher-degree function intervals and small-cluster fallbacks. See
+the [reference review](docs/binsreg-reference-review.md) for the estimand differences.
 
 `make reference` and `make coverage` run the separate `inference-validation` CI
 gate using the explicit validation extra. Follow the

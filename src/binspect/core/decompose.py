@@ -23,9 +23,10 @@ fitted line, weighted by bin size::
     SS_lof = sum_j n_j (ybar_j - yhat(xbar_j))^2
     gap    = SS_lof / SS_total
 
-This is non-negative by construction, it is exactly what the deviation-shading layer
-draws (each shaded segment is one term's square root), and it is the quantity the
-verdict keys off. ``eta_sq`` is still reported, because it says how much a saturated
+This is non-negative by construction. Deviation marks show signed vertical
+departures, but their lengths/areas do not equal this weighted squared quantity.
+The descriptive verdict uses gap and an explicit support policy.
+``eta_sq`` is still reported, because it says how much a saturated
 model *could* explain --- it simply cannot be differenced against R-squared.
 
 The classical lack-of-fit test splits residual variance into lack of fit and pure
@@ -42,15 +43,14 @@ from dataclasses import dataclass
 import numpy as np
 
 from ..types import FloatArray, IntArray, Line, Verdict
+from .diagnostics import DEFAULT_DIAGNOSTIC_POLICY, DiagnosticPolicy, classify
 
 __all__ = ["GAP_THRESHOLD", "MIN_BIN_FOR_VERDICT", "Decomposition", "decompose"]
 
-#: Lack of fit below this share of total variance is not worth acting on. A
-#: heuristic for reading a picture, not a hypothesis test.
+#: Legacy default heuristic cutoff, not a practical-effect or significance test.
 GAP_THRESHOLD = 0.02
 
-#: Below this many observations in the smallest bin, bin means are noisy enough to
-#: manufacture apparent curvature on their own.
+#: Legacy cutoff, now applied to effective rows; not a power calculation.
 MIN_BIN_FOR_VERDICT = 30
 
 
@@ -70,8 +70,8 @@ class Decomposition:
         Coefficient of determination from the linear fit.
     gap : float
         Lack of fit normalized by total variation.
-    verdict : {"linear", "curvature", "underpowered bins"}
-        Heuristic interpretation of ``gap`` and the minimum bin size.
+    verdict : {"linear", "curvature", "limited support", "not assessed"}
+        Heuristic interpretation under the stored policy, never a formal test.
     min_bin_n : int
         Smallest unweighted bin count.
     """
@@ -85,8 +85,14 @@ class Decomposition:
     gap: float
     verdict: Verdict
     min_bin_n: int
+    min_bin_positive_n: int | None = None
+    min_bin_effective_n: float | None = None
+    min_bin_clusters: int | None = None
+    verdict_reason: str = "legacy result"
+    diagnostic_policy: DiagnosticPolicy | None = DEFAULT_DIAGNOSTIC_POLICY
 
-    def as_dict(self) -> dict[str, float | str | int]:
+    def as_dict(self) -> dict[str, float | str | int | bool | None]:
+        policy = self.diagnostic_policy
         return {
             "ss_between": self.ss_between,
             "ss_within": self.ss_within,
@@ -97,15 +103,19 @@ class Decomposition:
             "gap": self.gap,
             "verdict": self.verdict,
             "min_bin_n": self.min_bin_n,
+            "min_bin_positive_n": self.min_bin_positive_n,
+            "min_bin_effective_n": self.min_bin_effective_n,
+            "min_bin_clusters": self.min_bin_clusters,
+            "verdict_reason": self.verdict_reason,
+            "diagnostics_enabled": policy is not None,
+            "gap_threshold": None if policy is None else policy.gap_threshold,
+            "min_bin_effective_n_threshold": None
+            if policy is None
+            else policy.min_bin_effective_n,
+            "min_bin_clusters_threshold": None
+            if policy is None
+            else policy.min_bin_clusters,
         }
-
-
-def _verdict(gap: float, min_bin_n: int) -> Verdict:
-    if min_bin_n < MIN_BIN_FOR_VERDICT:
-        return "underpowered bins"
-    if gap < GAP_THRESHOLD:
-        return "linear"
-    return "curvature"
 
 
 def decompose(
@@ -117,6 +127,8 @@ def decompose(
     r_sq_linear: float,
     *,
     weights: FloatArray | None = None,
+    bin_clusters: IntArray | None = None,
+    diagnostic_policy: DiagnosticPolicy | None = DEFAULT_DIAGNOSTIC_POLICY,
 ) -> Decomposition:
     """Compute the variance decomposition and linear lack of fit.
 
@@ -134,6 +146,12 @@ def decompose(
         Coefficient of determination from ``fit``.
     weights : array_like, optional
         Nonnegative reliability weights. Equal weights are used if omitted.
+    bin_clusters : array_like, optional
+        Positive-weight cluster counts for each bin, when clustered.
+    diagnostic_policy : DiagnosticPolicy or None, optional
+        Descriptive thresholds, or None to omit classification. Effective row
+        support excludes zero weights. Clustered classification requires an
+        explicit cluster threshold; constant outcomes are not assessed.
 
     Returns
     -------
@@ -170,6 +188,16 @@ def decompose(
     eta_sq = ss_between / ss_total if ss_total > 0 else 0.0
     gap = ss_lof / ss_total if ss_total > 0 else 0.0
     min_bin_n = int(np.bincount(assignment, minlength=n_bins).min())
+    min_positive = int(np.bincount(assignment[w > 0], minlength=n_bins).min())
+    # Scaling preserves Kish support and avoids changing it when weight units change.
+    support_w = w / np.max(w)
+    support_sum = np.bincount(assignment, weights=support_w, minlength=n_bins)
+    support_sum2 = np.bincount(assignment, weights=support_w**2, minlength=n_bins)
+    min_effective = float(np.min(support_sum**2 / support_sum2))
+    min_clusters = None if bin_clusters is None else int(np.min(bin_clusters))
+    verdict, reason = classify(
+        float(gap), ss_total, min_effective, min_clusters, diagnostic_policy
+    )
 
     return Decomposition(
         ss_between=ss_between,
@@ -179,6 +207,11 @@ def decompose(
         eta_sq=float(eta_sq),
         r_sq_linear=float(r_sq_linear),
         gap=float(gap),
-        verdict=_verdict(gap, min_bin_n),
+        verdict=verdict,
         min_bin_n=min_bin_n,
+        min_bin_positive_n=min_positive,
+        min_bin_effective_n=min_effective,
+        min_bin_clusters=min_clusters,
+        verdict_reason=reason,
+        diagnostic_policy=diagnostic_policy,
     )
