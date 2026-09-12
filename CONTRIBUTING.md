@@ -86,6 +86,10 @@ binsreg, including degree-0 few-cluster fallback. Assessment seeds remain reserv
 - Keep orchestration in `api.py`, calculations in `core`, and drawing in `viz`.
 - Prefer small functions, descriptive names, immutable results, and actionable errors.
 - Do not change a public default or output schema without updating the changelog.
+- Follow the proposed [compatibility policy](docs/COMPATIBILITY.md): update the
+  [API inventory](docs/API_INVENTORY.md), supported option matrix and executable
+  migration examples when a public contract changes. Assign the release by actual
+  compatibility impact; policy acceptance and publishing require maintainer review.
 - Treat verdicts and intervals honestly: current verdicts are descriptive heuristics.
   Ordinary intervals use independence assumptions; clustered intervals depend on
   the supplied cluster structure. Broader inference validation remains open in C3.

@@ -29,6 +29,7 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `diagnostic-policy` | DiagnosticPolicy uses effective rows, not retained zeros; None opts out. Constant outcomes and clustered estimates without explicit cluster thresholds are not assessed. Limited support replaces the power-implying label. Policies, reasons and distinct counts are exported. | [C4 contract](docs/diagnostic-policy-review.md), [tests](tests/test_diagnostic_policy.py) | 2026-09-12 |
 | `polars-contract` | A2 makes Polars the default table type regardless of input; `.to_pandas()` explicitly converts. Inputs align by position, including named Series controls. Explicit categorical orders survive filtering; ordinary string categories sort observed levels. Native use does not install/import pandas; upstream binsreg still uses pandas internally. Review/integration pending. | [Contract](docs/INPUT_OUTPUT_CONTRACT.md), [parity tests](tests/test_polars_contract.py), [native gate](validation/native_smoke.py) | 2026-09-12 |
 | `evidence-export` | Schema v1 exports include exclusion counts/design identity and typed group labels; `to_json()` is deterministic. `to_evidence()` only records caller-supplied plan/input/lock/code references, with timestamp outside payload; no implicit fingerprints, reads, raw rows or provenance verification. | [Contract](docs/INPUT_OUTPUT_CONTRACT.md), [regressions](tests/test_evidence_export.py) | 2026-09-12 |
+| `compatibility-policy` | A3 inventories actual API/defaults and supported combinations, with executed migrations. Pending incompatible changes are allocated to proposed 0.2.0, not a patch; package remains 0.1.1. Axes identity/scoped themes remain intact. Policy acceptance/integration pending; availability does not establish statistical or dependency qualification. | [Policy](docs/COMPATIBILITY.md), [inventory](docs/API_INVENTORY.md), [verification](docs/compatibility-policy-review.md) | 2026-09-12 |
 
 ## Open work
 
@@ -40,7 +41,9 @@ adapter are integrated. A1 ownership/mutation isolation is locally implemented
 and verified on `fix/result-ownership`, pending maintainer review/integration.
 A2 adds the user-directed Polars-native boundary and versioned input/evidence
 contracts on `feat/export-input-contracts`, stacked on A1; review/integration pending.
-Next implementation: A3 compatibility policy.
+A3 documents compatibility/release allocation on `docs/compatibility-policy`,
+stacked on A2; policy acceptance/integration pending. Next implementation:
+D1 executable user guide/API reference. M2 maintainer acceptance remains open.
 Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
 proposed baseline decisions and governance/security/release gates remain open;
 merge authorization is not an independent statistical approval or a release.
