@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 
 from ..exceptions import InvalidBinningError
-from ..types import FloatArray
+from ..types import BinningMethod, FloatArray
 
 __all__ = ["DEFAULT_MAX_BINS", "DEFAULT_MIN_BINS", "select_n_bins"]
 
@@ -27,6 +27,7 @@ def select_n_bins(
     rule: int | str = "auto",
     *,
     y: FloatArray | None = None,
+    method: BinningMethod = "quantile",
 ) -> int:
     """Select the number of bins.
 
@@ -39,6 +40,8 @@ def select_n_bins(
         ``"dpi"``.
     y : array_like, optional
         Endogenous variable. Required when ``rule="dpi"``.
+    method : {"quantile", "equal_width"}, default "quantile"
+        Partition spacing passed to DPI selection. Other rules are unchanged.
 
     Returns
     -------
@@ -70,7 +73,7 @@ def select_n_bins(
         return _clip(int(np.ceil(span / width)), n_obs)
 
     if rule == "dpi":
-        return _select_dpi(x, y)
+        return _select_dpi(x, y, method)
 
     raise InvalidBinningError(
         f"unknown bin rule {rule!r}; expected an int or one of "
@@ -78,22 +81,56 @@ def select_n_bins(
     )
 
 
-def _select_dpi(x: FloatArray, y: FloatArray | None) -> int:
-    """Delegate IMSE-optimal selection to binsreg, if it is installed."""
+def _select_dpi(x: FloatArray, y: FloatArray | None, method: BinningMethod) -> int:
+    """Select the piecewise-constant DPI count before our own knot reduction."""
     if y is None:
         raise InvalidBinningError("bins='dpi' needs y as well as x.")
+    if method not in ("quantile", "equal_width"):
+        raise InvalidBinningError("DPI requires quantile or equal_width binning.")
+
+    failure = (
+        "DPI selection did not produce a usable bin count; choose an explicit "
+        "integer or bins='auto', or check sample size and distinct x values. "
+        "No ROT fallback was applied."
+    )
+    y = np.asarray(y, dtype=float)
+    if (
+        x.ndim != 1
+        or y.shape != x.shape
+        or x.size < 4
+        or not np.isfinite(x).all()
+        or not np.isfinite(y).all()
+        or np.unique(x).size < 2
+    ):
+        raise InvalidBinningError(failure)
     try:
         import binsreg
-    except ImportError as exc:  # pragma: no cover - depends on the environment
+    except ImportError as exc:
         raise InvalidBinningError(
             "bins='dpi' requires the optional binsreg dependency: "
-            "pip install 'binspect[dpi]'."
+            "pip install 'binspect-regression[dpi]'."
         ) from exc
 
-    import pandas as pd  # local import: only needed on this path
+    try:
+        out = binsreg.binsregselect(
+            y=y,
+            x=x,
+            bins=(0, 0),
+            binsmethod="dpi",
+            binspos="qs" if method == "quantile" else "es",
+            masspoints="on",
+            vce="HC1",
+            randcut=None,
+        )
+    except (ValueError, ArithmeticError, np.linalg.LinAlgError) as exc:
+        raise InvalidBinningError(failure) from exc
 
-    out = binsreg.binsregselect(  # pragma: no cover - exercised in external tests
-        y=pd.Series(np.asarray(y, dtype=float)),
-        x=pd.Series(np.asarray(x, dtype=float)),
-    )
-    return int(out.nbinsrot_regul)
+    count = getattr(out, "nbinsdpi", None)
+    if isinstance(count, (bool, np.bool_)) or not isinstance(
+        count, (int, float, np.integer, np.floating)
+    ):
+        raise InvalidBinningError(failure)
+    # Check the upper bound before float conversion, including huge Python ints.
+    if not 2 <= count <= x.size or not float(count).is_integer():
+        raise InvalidBinningError(failure)
+    return int(count)

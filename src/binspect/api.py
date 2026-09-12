@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
+from dataclasses import replace
 from typing import Any
 
 import numpy as np
@@ -14,6 +15,7 @@ from .core.decompose import decompose
 from .core.estimate import estimate_bins
 from .core.lines import fit_ols, fit_sd_line
 from .core.selection import select_n_bins
+from .exceptions import InvalidBinningError
 from .prepared_data import prepare_data
 from .results import BinscatterResult
 from .types import BinningMethod, ZeroWeightPolicy
@@ -51,6 +53,9 @@ def binscatter(
     bins : int, {"auto", "sturges", "iqr", "dpi"}, or array_like, default "auto"
         Number of bins, bin-selection rule, or custom bin edges. Custom edges must
         be strictly increasing and cover the observed range of ``x``.
+        ``"dpi"`` requires the optional binsreg dependency and currently supports
+        only estimates without weights, controls, or clusters. Failed DPI selection
+        raises ``InvalidBinningError`` without falling back to another rule.
     binning : {"quantile", "equal_width"}, default "quantile"
         Partition method. Ignored when custom edges are supplied in ``bins``.
     weights : str or array_like, optional
@@ -110,6 +115,21 @@ def binscatter(
     binspect.results.BinscatterResult
         Results container returned by this function.
     """
+    if isinstance(bins, str) and bins == "dpi":
+        unsupported = [
+            name
+            for name, value in (
+                ("weights", weights),
+                ("controls", controls),
+                ("cluster", cluster),
+            )
+            if value is not None
+        ]
+        if unsupported:
+            raise InvalidBinningError(
+                f"DPI selection does not yet support {', '.join(unsupported)}; "
+                "use an explicit integer, custom edges, or bins='auto'."
+            )
     prepared = prepare_data(
         data,
         y,
@@ -127,8 +147,11 @@ def binscatter(
 
     if isinstance(bins, (str, int, np.integer)):
         bin_rule = int(bins) if isinstance(bins, np.integer) else bins
-        n_bins = select_n_bins(x_arr, bin_rule, y=y_arr)
-        binning_obj = compute_binning(x_arr, n_bins, method=binning)
+        n_bins = select_n_bins(x_arr, bin_rule, y=y_arr, method=binning)
+        binning_obj = replace(
+            compute_binning(x_arr, n_bins, method=binning),
+            rule=bin_rule if isinstance(bin_rule, str) else "fixed",
+        )
     else:
         binning_obj = compute_binning(
             x_arr, method="custom", edges=np.asarray(bins, dtype=float)

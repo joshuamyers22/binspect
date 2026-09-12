@@ -24,6 +24,9 @@ def serialize_result(result: BinscatterResult) -> dict[str, Any]:
         "n_obs": result.n_obs,
         "binning": {
             "method": result.binning.method,
+            "rule": result.bin_rule,
+            "source_rule": result.binning.source_rule,
+            "fallback": result.binning.fallback,
             "requested_bins": result.binning.requested_bins,
             "n_bins": result.n_bins,
             "edges": [json_value(value) for value in result.binning.edges],

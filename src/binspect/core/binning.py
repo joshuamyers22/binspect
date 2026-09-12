@@ -43,6 +43,13 @@ class Binning:
         The partition rule that produced this binning.
     requested_bins : int
         What the caller asked for, retained so the result can explain a reduction.
+    rule : str
+        Count-selection rule, ``"fixed"``, ``"custom"``, or ``"pooled"``.
+    source_rule : str or None
+        Pooled sample's rule when group edges come from that sample.
+    fallback : str or None
+        Alternative rule substituted for the requested selection, if any.
+        DPI raises on failure and never substitutes another rule.
     """
 
     edges: FloatArray
@@ -50,6 +57,9 @@ class Binning:
     n_bins: int
     method: BinningMethod
     requested_bins: int
+    rule: str = "fixed"
+    source_rule: str | None = None
+    fallback: str | None = None
 
     @property
     def was_reduced(self) -> bool:
@@ -207,6 +217,7 @@ def compute_binning(
         n_bins=n_bins_actual,
         method=method,
         requested_bins=requested,
+        rule="custom" if method == "custom" else "fixed",
     )
 
     counts = binning.counts()

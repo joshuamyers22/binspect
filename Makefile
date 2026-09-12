@@ -1,4 +1,4 @@
-.PHONY: sync lint type test build check
+.PHONY: sync lint type test integration build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -12,9 +12,12 @@ type:
 	uv run lint-imports
 
 test:
-	uv run pytest --cov --cov-report=term-missing -m "not external"
+	uv run pytest --cov --cov-report=term-missing -m "not external and not integration"
+
+integration:
+	uv run --frozen --extra dev --extra dpi pytest tests/integration -m integration
 
 build:
 	uv build
 
-check: lint type test build
+check: lint type test integration build
