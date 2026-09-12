@@ -60,7 +60,8 @@ this brief and reviewed ADRs define intended constraints; the
 [memory](PROJECT_MEMORY.md) only indexes verified evidence.
 
 **Dependencies and boundaries:** pandas/array inputs enter validation/preparation;
-the NumPy/SciPy core estimates results; the optional binsreg adapter selects bins;
+the NumPy/SciPy core estimates results; optional binsreg integration selects bins
+or supplies separate original-coordinate function inference;
 result modules export summaries; Matplotlib layers render. Package consumers and
 CI/PyPI distribution are separate trust boundaries. Keep runtime I/O and side
 effects explicit. Current engine choices and the stricter template defaults are

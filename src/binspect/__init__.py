@@ -21,12 +21,16 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from .api import binscatter
+from .binsreg_api import binsreg
+from .binsreg_results import BinsregResult
 from .comparison import BinscatterCollection, compare
 from .core.diagnostics import DiagnosticPolicy
 from .exceptions import (
     AdjustedInferenceWarning,
     BinCountWarning,
     BinspectError,
+    BinsregError,
+    BinsregWarning,
     InsufficientDataError,
     InvalidBinningError,
 )
@@ -59,11 +63,15 @@ __all__ = [
     "BinscatterCollection",
     "BinscatterResult",
     "BinspectError",
+    "BinsregError",
+    "BinsregResult",
+    "BinsregWarning",
     "DiagnosticPolicy",
     "InsufficientDataError",
     "InvalidBinningError",
     "__version__",
     "binscatter",
+    "binsreg",
     "compare",
     "theme",
 ]

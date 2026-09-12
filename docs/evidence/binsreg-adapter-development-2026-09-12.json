@@ -1,0 +1,133 @@
+{
+  "acceptance_band": [
+    0.9224319024958195,
+    0.9775680975041804
+  ],
+  "command": "uv run --frozen --extra dev --extra validation --extra dpi python validation/binsreg_coverage.py --phase development",
+  "dirty": false,
+  "hashes": {
+    "docs/BINSREG_ADAPTER_PLAN.md": "06c99adc6a2cacbb0981286a5732ef32671e6c2c26f759087f31638902748422",
+    "src/binspect/binsreg_api.py": "5b0f33b9cfee605d30552dea3efa6deb2948fb61ec5c262c857a782c3105b4ca",
+    "src/binspect/binsreg_inputs.py": "d888b8e778345bf4338137cff0295cc75d5cb37d09ae201dbed7b0165308020d",
+    "src/binspect/binsreg_results.py": "1cd9cb254b809e83cebd7d73aaaac73d8748932134816cdd69501520aa568148",
+    "uv.lock": "e80f8124b8bcd0051f60b9beef7742434333c78f3e63d8ac7ed1de30deafed90",
+    "validation/binsreg_coverage.py": "365fa13cd6c60bffe00429252aa6b9d327616ba4bad2f4bb49761f41ecfc1f17"
+  },
+  "limitations": "Development evidence for this function target and DGP only; Clustered cases are diagnostic. No author endorsement or qualified acceptance. Assessment seeds 95000-95002 remain reserved and unrun.",
+  "nominal": 0.95,
+  "outcomes": [
+    {
+      "actual_bin_counts": {
+        "16": 7,
+        "17": 14,
+        "18": 41,
+        "19": 82,
+        "20": 117,
+        "21": 160,
+        "22": 164,
+        "23": 150,
+        "24": 96,
+        "25": 81,
+        "26": 43,
+        "27": 25,
+        "28": 9,
+        "29": 8,
+        "30": 3
+      },
+      "actual_interval_degrees": {
+        "[1, 1]": 1000
+      },
+      "coverage": 0.936,
+      "errors": {},
+      "failed": 0,
+      "fallback_interpretation": "Coverage against the function target, not a population-bin mean",
+      "generated_inputs_sha256": "7811939dafab5bff4a3fb0f1a930e9334d616db26ea87f610b555239ca98822f",
+      "hits": 936,
+      "issue_counts": {},
+      "mc_se": 0.007739767438366605,
+      "mean_width_valid": 0.5926625543970229,
+      "required_coverage": true,
+      "scenario": "adjusted_iid_dpi",
+      "seed": 94000,
+      "status_counts": {
+        "approximate_pointwise": 1000
+      },
+      "target": "3 + x + 2*x^2 at returned interval x nearest zero",
+      "valid": 1000,
+      "within_nominal_band": true
+    },
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "actual_interval_degrees": {
+        "[1, 1]": 1000
+      },
+      "coverage": 0.943,
+      "errors": {},
+      "failed": 0,
+      "fallback_interpretation": "Coverage against the function target, not a population-bin mean",
+      "generated_inputs_sha256": "d6171d3ef094ec7230f0be935aa4d132492ce9375d9a8689c457ac03bc0907fe",
+      "hits": 943,
+      "issue_counts": {
+        "fixed_count_bias_warning": 1000
+      },
+      "mc_se": 0.007331507348424336,
+      "mean_width_valid": 0.623495304233567,
+      "required_coverage": false,
+      "scenario": "adjusted_cluster_60",
+      "seed": 94001,
+      "status_counts": {
+        "approximate_pointwise": 1000
+      },
+      "target": "3 + x + 2*x^2 at returned interval x nearest zero",
+      "valid": 1000,
+      "within_nominal_band": true
+    },
+    {
+      "actual_bin_counts": {
+        "3": 1000
+      },
+      "actual_interval_degrees": {
+        "[0, 0]": 1000
+      },
+      "coverage": 0.424,
+      "errors": {},
+      "failed": 0,
+      "fallback_interpretation": "Coverage against the function target, not a population-bin mean",
+      "generated_inputs_sha256": "8af73e6b2fcd1e43d300b363814b54a54b78753a0706a4a43c74ea649969acdf",
+      "hits": 424,
+      "issue_counts": {
+        "constant_dots_fallback": 1000,
+        "constant_interval_fallback": 1000,
+        "fixed_count_bias_warning": 1000,
+        "small_effective_sample": 1000
+      },
+      "mc_se": 0.01562766777225572,
+      "mean_width_valid": 1.0586573300020568,
+      "required_coverage": false,
+      "scenario": "adjusted_cluster_3_uneven",
+      "seed": 94002,
+      "status_counts": {
+        "limited_support": 1000
+      },
+      "target": "3 + x + 2*x^2 at returned interval x nearest zero",
+      "valid": 1000,
+      "within_nominal_band": false
+    }
+  ],
+  "phase": "development",
+  "protocol": "binsreg-adapter-development-v1",
+  "python": "3.12.14",
+  "repetitions": 1000,
+  "required_pass": true,
+  "revision": "081066b1538cb78d559ef9e184836b935d3f0943",
+  "rng": "numpy.random.PCG64",
+  "schema_version": 1,
+  "versions": {
+    "binsreg": "3.2.1",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  }
+}

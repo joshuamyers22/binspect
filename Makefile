@@ -1,4 +1,4 @@
-.PHONY: sync lint type test integration reference coverage coverage-expanded build check
+.PHONY: sync lint type test integration reference coverage coverage-expanded coverage-binsreg build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -15,7 +15,7 @@ test:
 	uv run pytest --cov --cov-report=term-missing -m "not external and not integration"
 
 integration:
-	uv run --frozen --extra dev --extra dpi pytest tests/integration/test_dpi.py tests/integration/test_binsreg_contract.py -m integration
+	uv run --frozen --extra dev --extra dpi pytest tests/integration/test_dpi.py tests/integration/test_binsreg_contract.py tests/integration/test_binsreg_adapter.py -m integration
 
 reference:
 	uv run --frozen --extra dev --extra validation pytest tests/integration/test_inference.py -m integration
@@ -26,7 +26,10 @@ coverage:
 coverage-expanded:
 	uv run --frozen --extra dev --extra validation --extra dpi python validation/expanded_coverage.py --phase development --output .work/expanded-coverage-development.json
 
+coverage-binsreg:
+	uv run --frozen --extra dev --extra validation --extra dpi python validation/binsreg_coverage.py --phase development --output .work/binsreg-coverage-development.json
+
 build:
 	uv build
 
-check: lint type test integration reference coverage coverage-expanded build
+check: lint type test integration reference coverage coverage-expanded coverage-binsreg build
