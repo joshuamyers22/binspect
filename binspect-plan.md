@@ -2,8 +2,11 @@
 
 Updated 2026-09-12 against `main` at `59c6a39`, package version `0.1.1`.
 
-**Next work: G1–G2 — repository agreement and library threat model.** C1's DPI
-correction is implemented and locally verified on `fix/dpi-selection`, pending
+**Next implementation: C2 — grouped adjusted coordinates and interval identity.**
+G1–G2's repository guidance and threat model are prepared for maintainer review;
+see [G1/G2 evidence](docs/repository-baseline-review.md). Relevant baseline decisions
+remain prerequisites for broader contract changes. C1's DPI correction is in
+[PR #7](https://github.com/joshuamyers22/binspect/pull/7) with passing CI, pending
 maintainer review/integration; see [C1 evidence](docs/dpi-selection-review.md).
 Complete the correctness milestone before adding estimators. This document replaces the original unordered
 v0.5+ wishlist and supersedes its blanket claim that v0.1–v0.4 was complete.
@@ -358,4 +361,5 @@ API reference, and executable tests describe released behavior.
 |---|---|---|---|
 | 2026-09-12 | Adversarial plan revision | [Review and reproductions](docs/project-plan-review.md); baseline 160 tests / 90.41% coverage | Plan rewritten; C1–R3 remain open |
 | 2026-09-12 | Production-template alignment | [Requirement mapping and verification](docs/template-alignment.md), [brief](PROJECT_BRIEF.md), [proposed ADR](docs/decisions/0001-existing-library-baseline.md) | Planning records added; adoption and implementation gates remain open |
-| 2026-09-12 | C1 — DPI selection | [Implementation and verification](docs/dpi-selection-review.md); `make check`: 209 unit tests, 6 real-library tests, 91.62% coverage, lint/types/imports/build passed | Implemented on `fix/dpi-selection`; pending maintainer review/integration. G1/G2 and C2 onward remain open. |
+| 2026-09-12 | C1 — DPI selection | [Implementation and verification](docs/dpi-selection-review.md); `make check`: 209 unit tests, 6 real-library tests, 91.62% coverage, lint/types/imports/build passed; PR #7 CI passed | Pending maintainer review/integration. |
+| 2026-09-12 | G1/G2 — repository agreement and threat model | [Implementation, control audit and verification](docs/repository-baseline-review.md) | Prepared for review; policy/ADR and residual-risk acceptance remain open. Remote control changes are tracked for G1/P3/R1. |

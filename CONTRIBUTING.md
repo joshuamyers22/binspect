@@ -4,6 +4,10 @@ Thank you for helping improve `binspect`. Statistical correctness and clear publ
 behavior take priority over adding features.
 
 Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md).
+Repository work follows the [working agreement](AGENTS.md),
+[brief](PROJECT_BRIEF.md), and [project plan](binspect-plan.md). Review ownership
+and actual GitHub enforcement are recorded in [governance](docs/GOVERNANCE.md).
+For security-sensitive changes, update the [threat model](docs/THREAT_MODEL.md).
 
 ## Development setup
 
@@ -41,8 +45,9 @@ test suite makes runtime network calls.
 - Keep orchestration in `api.py`, calculations in `core`, and drawing in `viz`.
 - Prefer small functions, descriptive names, immutable results, and actionable errors.
 - Do not change a public default or output schema without updating the changelog.
-- Treat verdicts and intervals honestly: current verdicts are descriptive heuristics,
-  and current confidence intervals assume independent observations.
+- Treat verdicts and intervals honestly: current verdicts are descriptive heuristics.
+  Ordinary intervals use independence assumptions; clustered intervals depend on
+  the supplied cluster structure. Broader inference validation remains open in C3.
 
 Open an issue before undertaking a large API or statistical-method change so effort
 is not spent on a design that may not fit the project.

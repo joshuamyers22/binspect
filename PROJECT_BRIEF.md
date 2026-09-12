@@ -57,7 +57,7 @@ Top failure scenarios, with owners assigned through G1/G2:
 **Sources of truth:** code and executable tests determine current behavior;
 this brief and reviewed ADRs define intended constraints; the
 [plan](binspect-plan.md) orders work. The changelog records releases; project
-memory, once added, will only index verified evidence.
+[memory](PROJECT_MEMORY.md) only indexes verified evidence.
 
 **Dependencies and boundaries:** pandas/array inputs enter validation/preparation;
 the NumPy/SciPy core estimates results; the optional binsreg adapter selects bins;
@@ -97,7 +97,7 @@ them and defines privacy/retention contracts.
 | Figure/user journey | D1–D3 executed examples, docs and export checks | Maintainer | Open |
 | Capacity/support | P1–P2 measured workloads and dependency matrix | Maintainer | Open |
 | Security/distribution | G2, P3, R1–R3 threat controls, audits, artifact/provenance evidence | Maintainer | Open |
-| Repository continuity | G1 agreement, memory, bounded records, ownership/checklist | Maintainer | Open |
+| Repository continuity | G1 agreement, memory, bounded records, ownership/checklist | Maintainer | Prepared for review; see [G1/G2 evidence](docs/repository-baseline-review.md) |
 
 The earlier 160-test, 90.41%-coverage baseline is recorded in the
 [adversarial review](docs/project-plan-review.md); it does not close these gates.

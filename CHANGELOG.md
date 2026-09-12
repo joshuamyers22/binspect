@@ -7,6 +7,9 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Fixed
+- Plain `import binspect` and ordinary estimation defer Matplotlib initialization
+  until a plotting export or method is requested, avoiding font-cache background
+  work during non-plotting use. Public `THEMES` and `theme` imports remain available.
 - `bins="dpi"` now uses binsreg's direct plug-in count instead of its regularized
   rule-of-thumb count, with explicit piecewise-constant model, requested spacing,
   and mass-point checks. Missing/invalid counts and numerical selection failures
