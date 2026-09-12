@@ -172,6 +172,8 @@ spacing. Fixed counts can leave approximation bias; upstream warnings are expose
 as `BinsregWarning` and controlled issue codes. With few clusters, binsreg may
 reduce bins and return constant-fit intervals. These have `limited_support`
 status, explicit actual settings and **no few-cluster coverage guarantee**.
+Fallback may also change knot placement; `actual_binning=None` reports that the
+requested spacing is not certified in that path.
 Unrecognized warnings or an unvalidated backend version give `unverified_method`.
 The locked reference version is binsreg 3.2.1. See the
 [adapter protocol](docs/BINSREG_ADAPTER_PLAN.md) for the target and coverage scope.

@@ -125,6 +125,7 @@ def test_warning_status_and_actual_fallback_are_explicit(monkeypatch):
     def fallback(**kwargs):
         warnings.warn("Too small effective sample size for ci.", stacklevel=2)
         warnings.warn("ci=(0,0) used.", stacklevel=2)
+        warnings.warn("dots=c(0,0) used.", stacklevel=2)
         return output()
 
     monkeypatch.setattr(adapter, "_load_backend", lambda: (fallback, "3.2.1"))
@@ -132,6 +133,7 @@ def test_warning_status_and_actual_fallback_are_explicit(monkeypatch):
         result = binspect.binsreg(**sample())
     assert result.metadata["actual_intervals"] == [0, 0]
     assert result.metadata["fallback"]
+    assert result.metadata["actual_binning"] is None
     assert not result.metadata["few_cluster_coverage_guaranteed"]
     assert "limited_support" in result.summary()
 

@@ -253,7 +253,12 @@ def binsreg(
         else "dpi"
         if bins == "dpi"
         else "fixed_count",
-        "binning": binning,
+        "requested_binning": binning,
+        # Upstream's fallback can replace equal-width placement with quantiles
+        # or mass-point categories while retaining the requested options label.
+        "actual_binning": None
+        if status == "unverified_method" or "constant_dots_fallback" in issues
+        else binning,
         "requested_dots": [0, 0],
         "requested_intervals": [1, 1],
         "actual_dots": dot_degree,

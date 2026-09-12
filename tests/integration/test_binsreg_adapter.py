@@ -69,10 +69,12 @@ def test_matches_direct_binsreg(adjusted, weighted, clustered, spacing):
         atol=1e-11,
     )
     assert result.metadata["actual_intervals"] == [1, 1]
+    assert result.metadata["actual_binning"] == spacing
 
 
 @pytest.mark.parametrize("sizes", [(300, 300), (480, 60, 60)])
-def test_adjusted_few_cluster_fallback_matches_upstream(sizes):
+@pytest.mark.parametrize("spacing", ["quantile", "equal_width"])
+def test_adjusted_few_cluster_fallback_matches_upstream(sizes, spacing):
     from binsreg import binsreg
 
     rng = np.random.default_rng(93000)
@@ -82,14 +84,24 @@ def test_adjusted_few_cluster_fallback_matches_upstream(sizes):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", UserWarning)
         result = binspect.binsreg(
-            x=x, y=y, controls=z, cluster=groups, bins=5, at=[1.0]
+            x=x, y=y, controls=z, cluster=groups, bins=5, at=[1.0], binning=spacing
         )
         expected = binsreg(
-            y, x, w=z, cluster=groups, nbins=5, at=[1.0], ci=True, noplot=True
+            y,
+            x,
+            w=z,
+            cluster=groups,
+            nbins=5,
+            at=[1.0],
+            ci=True,
+            noplot=True,
+            binspos="qs" if spacing == "quantile" else "es",
         )
     assert result.metadata["inference_status"] == "limited_support"
     assert result.metadata["actual_intervals"] == [0, 0]
     assert result.metadata["actual_bins"] == len(sizes)
+    assert result.metadata["requested_binning"] == spacing
+    assert result.metadata["actual_binning"] is None
     np.testing.assert_allclose(
         result.intervals[["ci_lo", "ci_hi"]],
         expected.data_plot[0].ci[["ci_l", "ci_r"]],
