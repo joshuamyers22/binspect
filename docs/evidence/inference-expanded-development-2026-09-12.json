@@ -1,0 +1,309 @@
+{
+  "acceptance_band": [
+    0.9224319024958195,
+    0.9775680975041804
+  ],
+  "command": "uv run --frozen --extra dev --extra validation --extra dpi python validation/expanded_coverage.py --phase development",
+  "dirty": false,
+  "hashes": {
+    "docs/EXPANDED_COVERAGE_PLAN.md": "6bd56a2e12aaa8feffd6efa0fabd963410c9c06f84ac9a2eb313176718a3cecd",
+    "uv.lock": "e80f8124b8bcd0051f60b9beef7742434333c78f3e63d8ac7ed1de30deafed90",
+    "validation/expanded_coverage.py": "b225734ef4f14f6c547b304004bdb90d0d59661babae6a883702456b4727e63f"
+  },
+  "limitations": "Development evidence only; diagnostic coverage failures remain limitations. Qualified review and new locked assessment are pending.",
+  "nominal": 0.95,
+  "outcomes": [
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "generated_inputs_sha256": "dc42461b7f7006b31d89e05d710330fe0c1f842f0db5b570c3f42e9b739e5a58",
+      "metrics": {
+        "bin": {
+          "coverage": 0.946,
+          "errors": {},
+          "failed": 0,
+          "hits": 946,
+          "mc_se": 0.0071473071852271785,
+          "mean_width_valid": 0.3624113952228134,
+          "required": true,
+          "valid": 1000,
+          "within_nominal_band": true
+        }
+      },
+      "scenario": "fixed_nonflat",
+      "seed": 71000,
+      "selected_bin_cluster_counts": {},
+      "warning_counts": {}
+    },
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "generated_inputs_sha256": "a7ab3a67eb029b72a49445ba7d26f20180c98a7f36924df3df15268db2609987",
+      "metrics": {
+        "bin": {
+          "coverage": 0.95,
+          "errors": {},
+          "failed": 0,
+          "hits": 950,
+          "mc_se": 0.006892024376045114,
+          "mean_width_valid": 0.3637359282069051,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": true
+        }
+      },
+      "scenario": "quantile_nonflat",
+      "seed": 71001,
+      "selected_bin_cluster_counts": {},
+      "warning_counts": {}
+    },
+    {
+      "actual_bin_counts": {
+        "16": 6,
+        "17": 11,
+        "18": 32,
+        "19": 57,
+        "20": 111,
+        "21": 149,
+        "22": 153,
+        "23": 168,
+        "24": 117,
+        "25": 80,
+        "26": 57,
+        "27": 32,
+        "28": 12,
+        "29": 10,
+        "30": 4,
+        "31": 1
+      },
+      "generated_inputs_sha256": "994f8a52dc2e5f7dd62676454fde92a88008cb56132fe346091092ebd461b64a",
+      "metrics": {
+        "bin": {
+          "coverage": 0.943,
+          "errors": {},
+          "failed": 0,
+          "hits": 943,
+          "mc_se": 0.007331507348424336,
+          "mean_width_valid": 0.783836671191989,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": true
+        }
+      },
+      "scenario": "dpi_nonflat",
+      "seed": 71002,
+      "selected_bin_cluster_counts": {},
+      "warning_counts": {}
+    },
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "generated_inputs_sha256": "45d320e13590ddec1a2718c35a17a2b31fca6f7e32d3ed2c55fcf1e22c472432",
+      "metrics": {
+        "bin": {
+          "coverage": 0.941,
+          "errors": {},
+          "failed": 0,
+          "hits": 941,
+          "mc_se": 0.007451107300260817,
+          "mean_width_valid": 0.7026867208149858,
+          "required": true,
+          "valid": 1000,
+          "within_nominal_band": true
+        },
+        "slope": {
+          "coverage": 0.935,
+          "errors": {},
+          "failed": 0,
+          "hits": 935,
+          "mc_se": 0.0077958322198467015,
+          "mean_width_valid": 0.39317907104398714,
+          "required": true,
+          "valid": 1000,
+          "within_nominal_band": true
+        }
+      },
+      "scenario": "cluster_60",
+      "seed": 71003,
+      "selected_bin_cluster_counts": {
+        "45": 1,
+        "46": 2,
+        "47": 7,
+        "48": 20,
+        "49": 34,
+        "50": 39,
+        "51": 91,
+        "52": 118,
+        "53": 143,
+        "54": 187,
+        "55": 148,
+        "56": 110,
+        "57": 76,
+        "58": 17,
+        "59": 7
+      },
+      "warning_counts": {}
+    },
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "generated_inputs_sha256": "f69519b7c77ba93ae98eea80a53dec0b83a80d3286eb24e48e6117339dc524e9",
+      "metrics": {
+        "bin": {
+          "coverage": 0.947,
+          "errors": {},
+          "failed": 0,
+          "hits": 947,
+          "mc_se": 0.007084560677981384,
+          "mean_width_valid": 2.422820785136653,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": true
+        },
+        "slope": {
+          "coverage": 0.933,
+          "errors": {},
+          "failed": 0,
+          "hits": 933,
+          "mc_se": 0.007906389820898028,
+          "mean_width_valid": 0.4647759361446902,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": true
+        }
+      },
+      "scenario": "cluster_5",
+      "seed": 71004,
+      "selected_bin_cluster_counts": {
+        "5": 1000
+      },
+      "warning_counts": {}
+    },
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "generated_inputs_sha256": "f6e9ecd6b88f270d199708b5b72105093bc4861b3043c4fa8f462ba5c76c6d64",
+      "metrics": {
+        "bin": {
+          "coverage": 0.943,
+          "errors": {},
+          "failed": 0,
+          "hits": 943,
+          "mc_se": 0.007331507348424336,
+          "mean_width_valid": 14.082648394096996,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": true
+        },
+        "slope": {
+          "coverage": 0.942,
+          "errors": {},
+          "failed": 0,
+          "hits": 942,
+          "mc_se": 0.007391616873188169,
+          "mean_width_valid": 1.42620588868685,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": true
+        }
+      },
+      "scenario": "cluster_2",
+      "seed": 71005,
+      "selected_bin_cluster_counts": {
+        "2": 1000
+      },
+      "warning_counts": {}
+    },
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "generated_inputs_sha256": "d04347659e50550c8586a5fc4cd8923a1ad8c688176a5755076526d47609a009",
+      "metrics": {
+        "bin": {
+          "coverage": 0.782,
+          "errors": {},
+          "failed": 0,
+          "hits": 782,
+          "mc_se": 0.013056645817360598,
+          "mean_width_valid": 2.3898057598220594,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": false
+        },
+        "slope": {
+          "coverage": 0.917,
+          "errors": {},
+          "failed": 0,
+          "hits": 917,
+          "mc_se": 0.008724161850859943,
+          "mean_width_valid": 0.5173053575395337,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": false
+        }
+      },
+      "scenario": "cluster_3_unbalanced",
+      "seed": 71006,
+      "selected_bin_cluster_counts": {
+        "3": 1000
+      },
+      "warning_counts": {}
+    },
+    {
+      "actual_bin_counts": {
+        "5": 1000
+      },
+      "generated_inputs_sha256": "82fc0bf57663e34b80f09f95294f2b168731a8f6f54d4fed7578681704a05cb8",
+      "metrics": {
+        "bin": {
+          "coverage": 0.807,
+          "errors": {},
+          "failed": 0,
+          "hits": 807,
+          "mc_se": 0.012480024038438387,
+          "mean_width_valid": 2.4237945162231487,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": false
+        },
+        "slope": {
+          "coverage": 0.926,
+          "errors": {},
+          "failed": 0,
+          "hits": 926,
+          "mc_se": 0.008277922444671728,
+          "mean_width_valid": 0.5821140372457575,
+          "required": false,
+          "valid": 1000,
+          "within_nominal_band": true
+        }
+      },
+      "scenario": "weighted_cluster_3",
+      "seed": 71007,
+      "selected_bin_cluster_counts": {
+        "3": 1000
+      },
+      "warning_counts": {}
+    }
+  ],
+  "phase": "development",
+  "protocol": "expanded-c3-development-v1",
+  "python": "3.12.14",
+  "repetitions": 1000,
+  "required_pass": true,
+  "revision": "710d5e1c13d7dbc77616e3ba25bcae6c0b7d1349",
+  "rng": "numpy.random.PCG64",
+  "schema_version": 1,
+  "versions": {
+    "binsreg": "3.2.1",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0"
+  }
+}

@@ -70,8 +70,10 @@ jobs:
         with:
           enable-cache: true
       - name: Install locked statistical validation environment
-        run: uv sync --frozen --extra dev --extra validation
+        run: uv sync --frozen --extra dev --extra validation --extra dpi
       - name: Check matched independent references
         run: make reference
       - name: Check prespecified development coverage
         run: make coverage
+      - name: Check expanded development coverage
+        run: make coverage-expanded

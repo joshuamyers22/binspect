@@ -1,4 +1,4 @@
-.PHONY: sync lint type test integration reference coverage build check
+.PHONY: sync lint type test integration reference coverage coverage-expanded build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -23,7 +23,10 @@ reference:
 coverage:
 	uv run --frozen --extra dev --extra validation python validation/coverage.py --phase development
 
+coverage-expanded:
+	uv run --frozen --extra dev --extra validation --extra dpi python validation/expanded_coverage.py --phase development --output .work/expanded-coverage-development.json
+
 build:
 	uv build
 
-check: lint type test integration reference coverage build
+check: lint type test integration reference coverage coverage-expanded build

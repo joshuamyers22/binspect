@@ -106,6 +106,12 @@ means. Bin-mean intervals use a t reference distribution based on the number of
 clusters represented in each bin. Bins containing fewer than two positive-weight
 clusters have undefined intervals.
 
+Few or highly uneven clusters can produce severe undercoverage even when CR1
+arithmetic is correct. In a controlled development case with three clusters sized
+480/60/60, nominal 95% bin intervals covered the population target only 78.2% of
+the time. Cluster count alone is not a reliability guarantee; see the
+[expanded coverage evidence](docs/expanded-coverage-review.md).
+
 Unadjusted bin intervals are **approximate, pointwise and conditional on the
 observed partition**. They omit uncertainty from choosing bins and provide no
 simultaneous coverage guarantee.
