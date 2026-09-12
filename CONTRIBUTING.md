@@ -32,6 +32,7 @@ Before opening a pull request, run the same checks as CI:
 .venv/bin/pytest --cov -m "not external and not integration"
 .venv/bin/pytest tests/integration -m integration
 .venv/bin/python validation/coverage.py --phase development
+.venv/bin/python validation/expanded_coverage.py --phase development
 .venv/bin/python -m build
 ```
 
@@ -54,6 +55,14 @@ the public API withholds its uncertainty. Current reports use schema version 2
 with an explicit scope for each scenario. The original plan and locked report are
 unchanged. The CLI refuses consumed v1 assessment seeds; reproduce the historical
 assessment at clean `c19c2a8`. New assessment requires a reviewed new protocol.
+
+`make coverage-expanded` adds the
+[prespecified nonflat/DPI and few-cluster grid](docs/EXPANDED_COVERAGE_PLAN.md)
+to `make check` and the same CI job. It requires both validation and DPI extras,
+writes `.work/expanded-coverage-development.json`, and retains diagnostic coverage
+failures while requiring every replicate to complete. The harness permits only
+development seeds; qualified review and a separate locked assessment remain open.
+See the [results and limitations](docs/expanded-coverage-review.md).
 
 ## Change guidelines
 

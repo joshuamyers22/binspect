@@ -42,6 +42,10 @@ All notable changes to this project are documented here. The format follows
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- A prespecified nonflat/DPI and few-cluster development coverage gate with a
+  retained aggregate report and tested failure accounting. Uneven-cluster
+  undercoverage remains explicit evidence for qualified review, not a passing
+  production inference claim.
 - A statistical analysis plan, locked Statsmodels reference checks and seeded
   coverage protocol, enforced by a separate `inference-validation` CI job.
 - `result.inference` and JSON/summary metadata expose covariance, residual/reference
