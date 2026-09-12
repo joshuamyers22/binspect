@@ -38,7 +38,9 @@ class BinscatterCollection:
     Parameters
     ----------
     results : Mapping
-        Group labels mapped to their estimation results.
+        Immutable hashable group labels mapped to their immutable estimation
+        results. The mapping is copied and exposed read-only; result values are
+        safely shared. Tables and exports are independent editable projections.
     pooled : BinscatterResult
         Results estimated from all observations with nonmissing group labels.
     group_name : str

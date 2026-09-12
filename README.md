@@ -185,6 +185,29 @@ See the [results and limitations](docs/binsreg-adapter-review.md).
 `to_dict()` output. It supplies function estimates without an FWL slope or gap
 verdict. Its intervals do not apply to the residualized bins from `binscatter`.
 
+## Result ownership
+
+Results own snapshots of their numeric data. Changing input arrays, dataframe
+columns, weights or custom edges after estimation does not change the result.
+`result.x`, `result.y`, `result.weights`, and arrays in `binning` and `estimates`
+are read-only. Use `result.x.copy()` when you need an editable array; to change
+an estimate, run estimation again with the changed inputs. Array access shares
+immutable numeric storage but returns a fresh array header, so changing a
+returned array's shape or dtype also leaves the result intact.
+
+Grouped results own a read-only copy of the group mapping and share immutable
+single-result objects. Use immutable hashable group labels, such as strings,
+numbers or dates; mutable custom label objects are outside this contract.
+Tables, summaries, inference dictionaries and `to_dict()` exports are independent
+editable projections. The binsreg adapter similarly returns copied dot/interval
+tables and nested metadata. Public result access does not expose writable stored
+numeric data; deliberate private-attribute or native-memory tampering is outside
+this API contract.
+
+Snapshot construction copies the retained numeric buffers once per container;
+reading an array does not copy its values. This trades memory for stable results.
+See the [ownership verification and memory measurements](docs/result-ownership-review.md).
+
 ## Choosing bins with DPI
 
 For `binscatter`/`compare`, install `binspect-regression[dpi]` and use `bins="dpi"` for binsreg's direct

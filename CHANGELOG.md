@@ -7,6 +7,8 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Fixed
+- Results own their observations, weights, partitions and nested estimate arrays,
+  preventing caller mutation from desynchronizing fits, tables and plots.
 - Diagnostic support excludes retained zero-weight rows and uses effective sample
   size for unequal weights. Signed SD and deviation-layer explanations now state
   the absolute-correlation identity and distinguish visual marks from squared gap.
@@ -28,6 +30,9 @@ All notable changes to this project are documented here. The format follows
 - The missing-DPI-dependency message now names `binspect-regression[dpi]`.
 
 ### Changed
+- Stored result arrays are read-only and reject attempts to enable writes. Array
+  access isolates shape/dtype changes; use `.copy()` for editable data. Group
+  mappings retain immutable result values; returned tables/exports stay editable.
 - `underpowered bins` is now `limited support`; no power calculation is implied.
   Constant outcomes and clustered results without an explicit cluster threshold
   return `not assessed` with an exported reason. Numerical estimates are unchanged.
