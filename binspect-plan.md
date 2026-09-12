@@ -1,49 +1,34 @@
 # binspect — production project plan
 
-Updated 2026-09-12 against `main` at `59c6a39`, package version `0.1.1`.
+Updated 2026-09-12 after the user-authorized merge of PRs #6–#14 into `main`
+at `e206e0c`; package version remains `0.1.1` (no new release).
 
-**Current work: C3 — optional binsreg function inference, at the user's request.**
-The [committed adapter protocol](docs/BINSREG_ADAPTER_PLAN.md) precedes simulations.
-`feat/binsreg-inference` implements a separate original-coordinate function result,
-full control covariance and explicit upstream few-cluster fallbacks. The
-[implementation evidence](docs/binsreg-adapter-review.md) records passing matched
-references and the full gate. Development function coverage at nominal 95% is
-93.6% iid DPI, 94.3% with 60 balanced clusters and 42.4% with three uneven clusters;
-the last is a preserved diagnostic failure, not a few-cluster coverage solution.
-C3 statistical acceptance remains open. The
-[binsreg reference review](docs/binsreg-reference-review.md) is complete and its
-method checks are mandatory. The [C4 correction](docs/diagnostic-policy-review.md)
-on `fix/diagnostic-policy` makes support/thresholds explicit and corrects diagnostic
-claims. This descriptive work does not require resolving C3's covariance policy.
-Initial
-matched references, explicit inference metadata and a predeclared coverage protocol
-are implemented on `test/inference-contract`; see [C3 evidence](docs/inference-contract-review.md)
-and the [analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md). Development simulations
-found adjusted-bin undercoverage (89.2% in development, 87.4% in the locked
-assessment, at nominal 95%). The [follow-up correction](docs/adjusted-inference-boundary-review.md)
-on `fix/adjusted-inference-boundary` withholds adjusted-bin uncertainty, rejects
-numerically unidentified controlled x, and adds rescaled/redundant-control and
-few-cluster arithmetic references. The [expanded development grid](docs/EXPANDED_COVERAGE_PLAN.md)
-is now implemented on `test/expanded-inference-coverage`: required sanity cases
-pass, but uneven-cluster bin coverage falls to 78.2%; see
-[results](docs/expanded-coverage-review.md). The upstream review supports keeping
-adjusted-bin uncertainty unavailable and not inferring a safe cluster count.
-C3 still needs final assessment and maintainer acceptance; no binsreg-author
-endorsement is implied. A validated adjusted-bin uncertainty method remains future
-work before enabling those intervals. A1 (result ownership and mutation isolation)
-is the next independent implementation item after this requested adapter slice.
-C2's explicit shared-controls rejection and original interval identity are
-implemented and locally verified on `fix/grouped-intervals`, pending review; see
-[C2 evidence](docs/grouped-interval-review.md). A shared adjusted estimand remains
-unsupported and needs a separate reviewed design before enabling it.
-G1–G2's repository guidance and threat model are prepared for maintainer review;
-see [G1/G2 evidence](docs/repository-baseline-review.md). Relevant baseline decisions
-remain prerequisites for broader contract changes. C1's DPI correction is in
-[PR #7](https://github.com/joshuamyers22/binspect/pull/7) with passing CI, pending
-maintainer review/integration; see [C1 evidence](docs/dpi-selection-review.md).
-The user explicitly moved this binsreg integration ahead of A1; other new estimators
-remain behind the correctness milestone. This document replaces the original unordered
-v0.5+ wishlist and supersedes its blanket claim that v0.1–v0.4 was complete.
+**Next implementation: A1 — result ownership and mutation isolation.** The
+roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
+C3 inference boundaries and coverage evidence, C4 diagnostic policy, and optional
+binsreg adapter are integrated. The [binsreg PR #14](https://github.com/joshuamyers22/binspect/pull/14)
+completed the dependency stack using merge commits, preserving evidence revisions.
+All PR heads had passing checks before integration. The integrated tree matches
+that verified adapter head; its review incorporates the roadmap formatting fix.
+Historical verification records below retain their original review-time status;
+this integration record supersedes their pending-merge labels.
+
+C3 final assessment and qualified statistical acceptance remain open. The
+[adjusted FWL uncertainty withdrawal](docs/adjusted-inference-boundary-review.md)
+remains in force. The [expanded grid](docs/expanded-coverage-review.md) records
+78.2% coverage for the uneven-cluster bin-average case. The separate
+[binsreg function adapter](docs/binsreg-adapter-review.md) records 93.6% iid DPI,
+94.3% with 60 balanced clusters and 42.4% with three uneven clusters at nominal
+95%. These are distinct targets; the last result remains a diagnostic failure.
+Merge authorization does not establish nominal coverage, upstream endorsement,
+ADR acceptance, or completion of release/governance gates. Reserved assessment
+seeds remain unrun. G1/G2 decisions and C3 claim qualification remain open as
+specified in their records.
+
+The user moved the binsreg integration ahead of A1. That implementation slice is
+complete; other new estimators remain behind the correctness milestone. This
+production plan supersedes the original unordered v0.5+ wishlist and its blanket
+claim that v0.1–v0.4 was complete.
 
 Aligned on 2026-09-12 with the production project template at `d59f3e6`.
 The [project brief](PROJECT_BRIEF.md) defines the library scope; the
