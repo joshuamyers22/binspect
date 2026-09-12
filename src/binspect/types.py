@@ -88,6 +88,10 @@ class LineFit(Line):
         Covariance estimator used for ``se_slope``.
     n_clusters : int or None
         Number of clusters used by cluster-robust inference.
+    df_resid : int or None
+        Positive-weight rows minus full design rank used in covariance correction.
+    inference_df : int or None
+        Slope t-reference degrees of freedom: residual df or cluster count minus one.
     """
 
     se_slope: float
@@ -96,3 +100,5 @@ class LineFit(Line):
     n_obs: int
     se_type: Literal["classical", "cluster"] = "classical"
     n_clusters: int | None = None
+    df_resid: int | None = None
+    inference_df: int | None = None

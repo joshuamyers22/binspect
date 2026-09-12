@@ -46,7 +46,8 @@ def fit_ols(
     weights : array_like, optional
         Nonnegative reliability weights. Equal weights are used if omitted.
     dof_resid : int, optional
-        Residual degrees of freedom. Defaults to ``n_obs - 2``. Adjusted models
+        Residual degrees of freedom. Defaults to positive-weight row count minus 2.
+        Adjusted models
         supply the degrees of freedom from the full design matrix.
     clusters : array_like, optional
         Cluster label per observation. When supplied, the slope standard error uses
@@ -56,6 +57,12 @@ def fit_ols(
     -------
     LineFit
         Parameter estimates and fit statistics.
+
+    Notes
+    -----
+    Classical covariance assumes a correctly specified conditional mean and error
+    variance proportional to inverse weights (constant variance if unweighted).
+    Reliability weights alone do not justify that assumption. HC1 is not provided.
     """
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
@@ -114,6 +121,8 @@ def fit_ols(
         n_obs=n,
         se_type=se_type,
         n_clusters=n_clusters,
+        df_resid=dof,
+        inference_df=dof if n_clusters is None else n_clusters - 1,
     )
 
 

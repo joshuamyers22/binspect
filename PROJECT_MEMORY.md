@@ -10,7 +10,7 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 |---|---|---|---|
 | `package-identity` | Distribution `binspect-regression`, import `binspect`, existing MIT license. | [manifest](pyproject.toml), [license](LICENSE) | 2026-09-12 |
 | `library-scope` | In-process descriptive diagnostics; no hosted service or runtime telemetry. Existing stack exceptions remain proposed for review. | [brief](PROJECT_BRIEF.md), [ADR-0001](docs/decisions/0001-existing-library-baseline.md) | 2026-09-12 |
-| `quality-gate` | `make check` includes separately selected, frozen DPI integration; default pytest omits integration/external tests. | [Makefile](Makefile), [CI](.github/workflows/ci.yml) | 2026-09-12 |
+| `quality-gate` | `make check` includes frozen DPI and Statsmodels references plus development coverage simulations; default pytest omits integration/external tests. | [Makefile](Makefile), [CI](.github/workflows/ci.yml) | 2026-09-12 |
 | `dpi-correction` | C1 is implemented in PR #7: actual DPI count, explicit spacing, no silent fallback; weights/controls/clusters rejected. Not yet released. | [C1 record](docs/dpi-selection-review.md), [PR #7](https://github.com/joshuamyers22/binspect/pull/7) | 2026-09-12 |
 | `remote-controls` | Main is unprotected; PyPI environment has a reviewer; security-update automation and private vulnerability reporting are disabled. This is a dated observation, not a protection guarantee. | [API evidence](docs/GOVERNANCE.md) | 2026-09-12 |
 | `import-isolation` | Plain import and ordinary estimation defer plotting initialization; requesting theme/plotting exports may initialize Matplotlib caches. Native numerical workers and optional DPI are outside this test's scope. | [Runtime regression](tests/test_runtime_boundaries.py), [public plotting exports](tests/test_plot.py) | 2026-09-12 |
@@ -21,13 +21,14 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 |---|---|---|---|
 | `grouped-adjustment` | Shared bins with controls are explicitly rejected; independent group adjustment remains supported. Tables preserve original interval IDs/bounds while estimation indices stay compact. Do not join independent partitions by ID or enable shared adjusted coordinates by widening edges. | [C2 contract and evidence](docs/grouped-interval-review.md), [regressions](tests/test_grouped_intervals.py) | 2026-09-12 |
 | `frozen-arrays` | Frozen result dataclasses still expose mutable arrays; mutation can desynchronize stored results. | [AR9 reproduction](docs/project-plan-review.md), A1 in [plan](binspect-plan.md) | 2026-09-12 |
-| `inference-evidence` | Observation-level FWL does not prove adjusted-bin coverage; signed SD slope shrinks by abs(r). | [statistical contracts](binspect-plan.md), C3/C4 | 2026-09-12 |
+| `inference-evidence` | Initial matched references pass, but adjusted-bin locked-assessment coverage is 87.4% at nominal 95% (89.2% development); nominal population coverage is unvalidated. Consumed assessment seeds must not be reused for tuning. | [C3 analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [evidence](docs/inference-contract-review.md) | 2026-09-12 |
 
 ## Open work
 
 The [plan](binspect-plan.md) owns ordering and task status. G1/G2 records are
 prepared for review; C2's bounded guard/identity correction is implemented, and C3
-is the next numerical task after relevant baseline decisions. Governance/security
+has initial reference/coverage work underway with adjusted-bin coverage and expanded
+scenarios still open. Governance/security
 acceptance and C3's qualified statistical
 review belong to the maintainer; no such approval is implied by agent work.
 

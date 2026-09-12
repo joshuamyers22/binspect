@@ -105,6 +105,19 @@ means. Bin-mean intervals use a t reference distribution based on the number of
 clusters represented in each bin. Bins containing fewer than two positive-weight
 clusters have undefined intervals.
 
+Bin intervals are **approximate, pointwise and conditional on the observed
+partition and fitted adjustment**. They omit uncertainty from fitting controls
+and choosing bins, and provide no simultaneous coverage guarantee. Adjusted-bin
+intervals have no validated nominal population-coverage claim. Initial controlled
+simulations found undercoverage; see the [inference evidence](docs/inference-contract-review.md).
+
+`bs.inference` (also in JSON) reports covariance, degrees of freedom and these
+limitations. Classical slope SEs require their variance model; with weights this
+is inverse-variance WLS. Independent weighted bin SEs instead use reliability
+variance and effective sample size. HC1 is not supported for returned estimates;
+the DPI selector's internal covariance setting does not change that. See the
+[statistical analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md) for the exact contracts.
+
 ## Related packages
 
 

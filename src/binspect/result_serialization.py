@@ -21,6 +21,7 @@ def serialize_result(result: BinscatterResult) -> dict[str, Any]:
         "se_type": result.estimates.se_type,
         "n_clusters": result.fit.n_clusters,
         "zero_weight": result.zero_weight,
+        "inference": result.inference,
         "n_obs": result.n_obs,
         "binning": {
             "method": result.binning.method,
@@ -43,6 +44,9 @@ def serialize_result(result: BinscatterResult) -> dict[str, Any]:
             "slope_se": json_value(result.fit.se_slope),
             "correlation": json_value(result.fit.r),
             "r_squared": json_value(result.fit.r_sq),
+            "se_type": result.fit.se_type,
+            "df_resid": result.fit.df_resid,
+            "inference_df": result.fit.inference_df,
         },
         "sd_line": {
             "slope": json_value(result.sd_line.slope),

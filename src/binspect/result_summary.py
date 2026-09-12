@@ -68,6 +68,7 @@ def summarize(result: BinscatterResult) -> str:
         rule,
         "Notes:",
         *_summary_notes(decomposition, width, result.controls, result.cluster),
+        *wrap(" ".join(result.inference["limitations"]), width=width),
         rule,
     ]
     return "\n".join(lines)

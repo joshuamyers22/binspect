@@ -1,4 +1,4 @@
-.PHONY: sync lint type test integration build check
+.PHONY: sync lint type test integration reference coverage build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -15,9 +15,15 @@ test:
 	uv run pytest --cov --cov-report=term-missing -m "not external and not integration"
 
 integration:
-	uv run --frozen --extra dev --extra dpi pytest tests/integration -m integration
+	uv run --frozen --extra dev --extra dpi pytest tests/integration/test_dpi.py -m integration
+
+reference:
+	uv run --frozen --extra dev --extra validation pytest tests/integration/test_inference.py -m integration
+
+coverage:
+	uv run --frozen --extra dev --extra validation python validation/coverage.py --phase development
 
 build:
 	uv build
 
-check: lint type test integration build
+check: lint type test integration reference coverage build

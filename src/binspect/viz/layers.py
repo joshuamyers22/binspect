@@ -213,11 +213,13 @@ def ci_layer(
     theme: str | Theme = "notebook",
     **kwargs: Any,
 ) -> Axes:
-    """Per-bin confidence bars for the bin mean.
+    """Approximate pointwise conditional interval bars for the bin mean.
 
     These are intervals for the *mean*, not the spread of the observations. The
     within-bin SD lives in ``result.table['y_sd']`` and is deliberately not drawn by
     default: at typical bin sizes it dwarfs everything else and flattens the plot.
+    Fitted-control and partition-selection uncertainty are omitted; adjusted-bin
+    nominal population coverage is unvalidated. See ``result.inference``.
     """
     th = _theme(theme)
     e = result.estimates

@@ -15,11 +15,12 @@ Use Python 3.10 or newer in an isolated environment:
 
 ```bash
 python -m venv .venv
-.venv/bin/python -m pip install -e ".[dev,dpi]"
+.venv/bin/python -m pip install -e ".[dev,dpi,validation]"
 ```
 
 For the exact CI dependency versions, use `uv sync --frozen --all-extras`.
-`make check` runs the complete local quality gate, including DPI integration.
+`make check` runs the complete local quality gate, including DPI integration,
+locked Statsmodels references and prespecified development coverage simulations.
 
 Before opening a pull request, run the same checks as CI:
 
@@ -30,6 +31,7 @@ Before opening a pull request, run the same checks as CI:
 .venv/bin/lint-imports
 .venv/bin/pytest --cov -m "not external and not integration"
 .venv/bin/pytest tests/integration -m integration
+.venv/bin/python validation/coverage.py --phase development
 .venv/bin/python -m build
 ```
 
@@ -38,6 +40,14 @@ committed lockfile on Python 3.12 and runs real-library tests without skips or
 `continue-on-error`. It is part of the required project quality gate; configuring
 GitHub branch protection to enforce it is tracked separately by G1/R1. Neither
 test suite makes runtime network calls.
+
+`make reference` and `make coverage` run the separate `inference-validation` CI
+gate using the explicit validation extra. Follow the
+[analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md) before altering methods, scenarios,
+seeds or tolerances. Development coverage is a regression gate for its stated
+sanity cases; diagnostic failures must remain visible and do not establish broader
+method validity. Locked assessment requires a committed plan/protocol and a clean
+checkout, with its evidence retained for qualified review.
 
 ## Change guidelines
 
