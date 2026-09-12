@@ -78,6 +78,11 @@ intentional default changes.
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- Seven executable Polars-native synthetic examples covering linear/nonlinear means,
+  heteroskedasticity, clusters, weights, discrete x and grouped controls. The gallery
+  explains misleading interpretations and has a checkout launcher that retains
+  figures, seeds, versions and source/input/result hashes. No runtime dependency or
+  statistical behavior changes.
 - Four guarded PNG rendering baselines and portable PNG/PDF/SVG export checks for
   missing intervals, negative slopes, long labels, facets/audits and caller axes.
   `make figures` joins the required gate with pinned renderer/font metadata and a

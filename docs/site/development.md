@@ -32,6 +32,14 @@ address it reports. For the standalone synthetic figure, run
 `uv run python examples/quickstart.py --output .work/quickstart.png`.
 Updating `docs/hero.png` requires choosing that path explicitly.
 
+The [seven-case synthetic gallery](guide/gallery.md) is also executable Markdown.
+Its checkout launcher retains figures and a reproduction manifest:
+`uv run --frozen --all-extras python examples/gallery.py --output .work/gallery`.
+The launcher reads the page through the existing fence extractor, so teaching code
+has one source. `make docs` executes it automatically in temporary storage. Replace
+committed gallery images/manifest only after inspecting the generated files and
+checking the documented interpretations; the check does not overwrite site assets.
+
 ## Package release is a separate action
 
 The existing package workflow is triggered by a **published GitHub release**, not
@@ -57,9 +65,10 @@ inference validity. Reserved assessment seeds are not documentation examples.
 CI is configured for Python 3.10–3.13 on Linux/macOS. Manifest lower bounds admit
 other dependency combinations, but P2 qualification remains open. The
 [D2 export review](guide/figure-exports.md) adds four guarded PNG baselines and
-structural PDF/SVG checks, with explicit background and simulation limits. D3
-remains the broader example gallery. No performance ceiling or general
-accessibility qualification is implied.
+structural PDF/SVG checks, with explicit background and simulation limits. The D3
+gallery covers seven seeded teaching cases; review/integration remains pending.
+P1 workload measurement is next. No performance ceiling or general accessibility
+qualification is implied.
 
 | Repository reference | Purpose |
 |---|---|

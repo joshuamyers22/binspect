@@ -30,8 +30,9 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `polars-contract` | A2 makes Polars the default table type regardless of input; `.to_pandas()` explicitly converts. Inputs align by position, including named Series controls. Explicit categorical orders survive filtering; ordinary string categories sort observed levels. Native use does not install/import pandas; upstream binsreg still uses pandas internally. Review/integration pending. | [Contract](docs/INPUT_OUTPUT_CONTRACT.md), [parity tests](tests/test_polars_contract.py), [native gate](validation/native_smoke.py) | 2026-09-12 |
 | `evidence-export` | Schema v1 exports include exclusion counts/design identity and typed group labels; `to_json()` is deterministic. `to_evidence()` only records caller-supplied plan/input/lock/code references, with timestamp outside payload; no implicit fingerprints, reads, raw rows or provenance verification. | [Contract](docs/INPUT_OUTPUT_CONTRACT.md), [regressions](tests/test_evidence_export.py) | 2026-09-12 |
 | `compatibility-policy` | A3 inventories actual API/defaults and supported combinations, with executed migrations. Pending incompatible changes are allocated to proposed 0.2.0, not a patch; package remains 0.1.1. Axes identity/scoped themes remain intact. Policy acceptance/integration pending; availability does not establish statistical or dependency qualification. | [Policy](docs/COMPATIBILITY.md), [inventory](docs/API_INVENTORY.md), [verification](docs/compatibility-policy-review.md) | 2026-09-12 |
-| `executable-docs` | `docs/site` has source-generated mkdocstrings API and strict local links/anchors; D2 brings the executed examples to 29 Python blocks plus quickstart. Each page runs in a fresh process/temp directory. Root `/site/` alone is ignored; quickstart output defaults to `.work/quickstart.png`. No hosting/deployment added; publication/review pending. | [Guide](docs/site/index.md), [runner](validation/documentation.py), [D1 evidence](docs/user-guide-review.md), [D2 evidence](docs/figure-export-review.md) | 2026-09-12 |
+| `executable-docs` | `docs/site` has source-generated mkdocstrings API and strict local links/anchors; D3 adds nine gallery blocks to the prior 29 plus quickstart. Each page runs in a fresh process/temp directory. Root `/site/` alone is ignored; quickstart output defaults to `.work/quickstart.png`. No hosting/deployment added; publication/review pending. | [Guide](docs/site/index.md), [runner](validation/documentation.py), [D1 evidence](docs/user-guide-review.md), [D3 evidence](docs/example-gallery-review.md) | 2026-09-12 |
 | `figure-qualification` | D2 adds four initial PNG baselines (RMS limit 0.5/255; local rerender 0.0), PNG/PDF/SVG structure/text/geometry tests and vision/background sheets. Existing presets lose labels/context on dark backgrounds; general accessibility and vector pixel equivalence are unqualified. Baselines never auto-update; renderer mismatch fails. Maintainer visual acceptance pending. | [Guide/review](docs/site/guide/figure-exports.md), [evidence](docs/figure-export-review.md), [baseline policy](tests/baseline/README.md) | 2026-09-12 |
+| `synthetic-gallery` | D3 has seven Polars-native cases with PCG64 seeds 120101–120107, separate from assessment seeds. Markdown is the executable source; the checkout launcher retains figures and source/lock/version/input/result hashes under `.work/gallery` by default. Discrete-bin merging and sparse grouped tails intentionally retain warnings. No coverage qualification is implied. | [Gallery](docs/site/guide/gallery.md), [launcher](examples/gallery.py), [manifest](docs/site/assets/gallery/manifest.json), [verification](docs/example-gallery-review.md) | 2026-09-12 |
 
 ## Open work
 
@@ -48,8 +49,10 @@ stacked on A2; policy acceptance/integration pending. D1 guide/reference and CI
 checks are implemented on `docs/executable-user-guide`, stacked on A3, with
 maintainer review/integration and hosting/publication pending. D2 export/baseline
 checks are implemented on `test/figure-exports`, stacked on D1, with visual
-acceptance/integration pending. Next implementation: D3 reproducible example
-gallery. M2 maintainer acceptance remains open.
+acceptance/integration pending. D3 reproducible examples are implemented on
+`docs/reproducible-gallery`, stacked on D2, with maintainer review/integration
+pending. Next implementation: P1 workload measurement and limits. M2 maintainer
+acceptance remains open.
 Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
 proposed baseline decisions and governance/security/release gates remain open;
 merge authorization is not an independent statistical approval or a release.

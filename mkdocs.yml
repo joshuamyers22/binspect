@@ -17,6 +17,7 @@ theme:
 nav:
   - Start here: index.md
   - User guide:
+      - Reproducible example gallery: guide/gallery.md
       - Interpreting diagnostics: guide/interpretation.md
       - Adjusting for controls: guide/adjustment.md
       - Weights, clusters and missingness: guide/weights.md

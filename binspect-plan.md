@@ -18,7 +18,10 @@ and [D1 evidence](docs/user-guide-review.md). Hosting is not configured by D1.
 acceptance/integration pending.** See [the visual limits guide](docs/site/guide/figure-exports.md)
 and [D2 evidence](docs/figure-export-review.md). Existing presets are unqualified
 for dark backgrounds; these checks do not certify general accessibility.
-**Next implementation: D3 — reproducible example gallery.** A3 allocates
+**D3 reproducible gallery is implemented; maintainer review/integration pending.**
+See [seven executable synthetic cases](docs/site/guide/gallery.md) and
+[D3 verification](docs/example-gallery-review.md).
+**Next implementation: P1 — workload measurement and limits.** A3 allocates
 the pending incompatible changes to a proposed 0.2.0 minor release; package version
 and release authorization are unchanged. M2 review/acceptance remains open. The
 roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
@@ -416,3 +419,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | A3 — compatibility policy | [Policy/migrations](docs/COMPATIBILITY.md), [runtime API inventory](docs/API_INVENTORY.md), [verification](docs/compatibility-policy-review.md); 197 existing contract/plot tests and four migration examples pass | Documentation implemented on `docs/compatibility-policy`, stacked on A2. Proposed 0.2.0 allocation; maintainer policy acceptance/integration and release gates remain open. No source/default/version change in A3. Next implementation D1. |
 | 2026-09-12 | D1 — executable guide and API reference | [Guide](docs/site/index.md), [source-generated reference](docs/site/reference/estimation.md), [verification](docs/user-guide-review.md); `make docs` executes 28 Python blocks and the quickstart, then builds strictly | Implemented on `docs/executable-user-guide`, stacked on A3. Maintainer review/integration and hosting/publication pending; this development site is not a released API claim. Next implementation D2. |
 | 2026-09-12 | D2 — figure exports and baselines | [Visual limits/simulations](docs/site/guide/figure-exports.md), [four-image manifest](tests/baseline/manifest.json), [verification](docs/figure-export-review.md); 19 new export/guard checks and exact local baseline rerenders | Implemented on `test/figure-exports`, stacked on D1. Local inspection records grayscale/color-vision/background limits; dark backgrounds are unsuitable for existing presets. Maintainer visual acceptance/integration and broader accessibility/vector-viewer qualification remain open. Next implementation D3. |
+| 2026-09-12 | D3 — reproducible examples | [Executable gallery](docs/site/guide/gallery.md), [manifest](docs/site/assets/gallery/manifest.json), [verification](docs/example-gallery-review.md); seven fixed synthetic seeds, Polars tables, numerical assertions and retained figures | Implemented on `docs/reproducible-gallery`, stacked on D2. Informative/misleading interpretations and warnings are documented; maintainer review/integration remains pending. Teaching cases are not inference qualification. Next implementation P1. |

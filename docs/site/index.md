@@ -72,6 +72,7 @@ withheld. Start with [interpreting diagnostics](guide/interpretation.md), then
 
 | Need | Guide / API |
 |---|---|
+| Reproduce informative and misleading synthetic pictures | [Seven-case gallery](guide/gallery.md) |
 | Understand gap, R-squared and verdicts | [Interpretation](guide/interpretation.md) |
 | Adjust x and y for covariates | [Controls and distinct estimands](guide/adjustment.md) |
 | Handle weights, missing rows or dependent observations | [Weights and clusters](guide/weights.md) |
