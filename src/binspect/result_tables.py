@@ -51,7 +51,7 @@ def summary_frame(result: BinscatterResult) -> pd.DataFrame:
                 "slope_se_type": result.fit.se_type,
                 "slope_df_resid": result.fit.df_resid,
                 "slope_reference_df": result.fit.inference_df,
-                "interval_scope": "approximate_pointwise_conditional",
+                "interval_scope": result.inference["interval_scope"],
                 "n_clusters": result.fit.n_clusters,
                 "zero_weight": result.zero_weight,
                 "n_obs": result.n_obs,

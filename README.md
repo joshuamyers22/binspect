@@ -31,6 +31,7 @@ adjusted = binspect.binscatter(
     x="age",
     controls=["region", "tenure"],
     bins=20,
+    ci=None,  # adjusted bins are descriptive; slope uncertainty remains available
 )
 adjusted.fit.slope  # age coefficient from OLS(sales ~ age + region + tenure)
 adjusted.plot()  # axes are explicitly labelled as adjusted
@@ -105,11 +106,18 @@ means. Bin-mean intervals use a t reference distribution based on the number of
 clusters represented in each bin. Bins containing fewer than two positive-weight
 clusters have undefined intervals.
 
-Bin intervals are **approximate, pointwise and conditional on the observed
-partition and fitted adjustment**. They omit uncertainty from fitting controls
-and choosing bins, and provide no simultaneous coverage guarantee. Adjusted-bin
-intervals have no validated nominal population-coverage claim. Initial controlled
-simulations found undercoverage; see the [inference evidence](docs/inference-contract-review.md).
+Unadjusted bin intervals are **approximate, pointwise and conditional on the
+observed partition**. They omit uncertainty from choosing bins and provide no
+simultaneous coverage guarantee.
+
+With `controls=`, bin standard errors and confidence limits are unavailable
+(NaN in tables, null in JSON) because fitted-control uncertainty is not validated.
+Bin means, dispersion and slope uncertainty remain available. Requesting intervals
+issues `AdjustedInferenceWarning`; pass `ci=None` for descriptive adjusted bins
+without that warning. Controlled simulations found 87.4% coverage at nominal 95%;
+see the [withdrawal decision](docs/adjusted-inference-boundary-review.md). An `x`
+that adds no numerical rank beyond the controls on positive-weight observations
+raises `InsufficientDataError`.
 
 `bs.inference` (also in JSON) reports covariance, degrees of freedom and these
 limitations. Classical slope SEs require their variance model; with weights this
@@ -189,9 +197,10 @@ plot. This quantity is descriptive and is not a formal test of linearity.
 Initial alpha release (`0.1.0`). The API may continue to evolve during the `0.x`
 series. The distribution name is `binspect-regression`; the import remains `binspect`.
 
-**Not yet implemented:** uniform confidence bands and quantile regression. Without
-`cluster=`, standard errors are `sd/√n` within bin and assume independent
-observations.
+**Not yet implemented:** uniform confidence bands and quantile regression.
+Without controls, weights or clusters, bin standard errors are `sd/√n` and assume
+independent observations. Weighted/clustered conventions and the adjusted-bin
+uncertainty restriction are described above.
 
 ## Install
 

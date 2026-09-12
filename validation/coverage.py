@@ -14,6 +14,7 @@ from pathlib import Path
 import numpy as np
 
 import binspect
+from binspect.core.estimate import estimate_bins
 from binspect.exceptions import BinspectError
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,6 +61,7 @@ def run(phase: str) -> dict:
                     weights=weights,
                     cluster=clusters,
                     controls=controls,
+                    ci=None if controls is not None else 0.95,
                     bins=5
                     if scenario in {"adjusted", "quantile"}
                     else np.linspace(-1, 1, 6),
@@ -68,9 +70,26 @@ def run(phase: str) -> dict:
                 if positions.size != 1:
                     raise ValueError("prespecified interval absent")
                 index = positions[0]
+                estimates = result.estimates
+                if controls is not None:
+                    if (
+                        not np.isnan(estimates.se).all()
+                        or estimates.ci_level is not None
+                    ):
+                        raise AssertionError(
+                            "public adjusted-bin uncertainty was not withheld"
+                        )
+                    estimates = estimate_bins(
+                        result.x,
+                        result.y,
+                        result.binning.assignment,
+                        result.n_bins,
+                        weights=weights,
+                        clusters=clusters,
+                    )
                 lower, upper = (
-                    result.estimates.ci_lo[index],
-                    result.estimates.ci_hi[index],
+                    estimates.ci_lo[index],
+                    estimates.ci_hi[index],
                 )
                 if not np.isfinite([lower, upper]).all():
                     raise ValueError("undefined prespecified interval")
@@ -84,6 +103,9 @@ def run(phase: str) -> dict:
         outcomes.append(
             {
                 "scenario": scenario,
+                "scope": "withdrawn_adjusted_formula"
+                if scenario == "adjusted"
+                else "public_unadjusted",
                 "seed": base_seed + offset,
                 "required": required,
                 "hits": hits,
@@ -96,7 +118,7 @@ def run(phase: str) -> dict:
             }
         )
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "phase": phase,
         "revision": git("rev-parse", "HEAD"),
         "dirty": bool(git("status", "--porcelain")),
@@ -113,6 +135,7 @@ def run(phase: str) -> dict:
             path: digest(path)
             for path in [
                 "docs/STATISTICAL_ANALYSIS_PLAN.md",
+                "docs/adjusted-inference-boundary-review.md",
                 "validation/coverage.py",
                 "uv.lock",
             ]
@@ -136,8 +159,11 @@ def main() -> None:
     parser.add_argument("--phase", choices=["development", "assessment"], required=True)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    if args.phase == "assessment" and git("status", "--porcelain"):
-        parser.error("commit the plan/protocol before running locked assessment")
+    if args.phase == "assessment":
+        parser.error(
+            "v1 assessment seeds are consumed; reproduce the historical protocol at "
+            "clean c19c2a8 or specify a reviewed new assessment protocol"
+        )
     report = run(args.phase)
     serialized = json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n"
     if args.output is not None:

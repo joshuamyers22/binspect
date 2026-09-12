@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import warnings
 from collections.abc import Mapping, Sequence
 from dataclasses import replace
 from typing import Any
@@ -15,7 +16,7 @@ from .core.decompose import decompose
 from .core.estimate import estimate_bins
 from .core.lines import fit_ols, fit_sd_line
 from .core.selection import select_n_bins
-from .exceptions import InvalidBinningError
+from .exceptions import AdjustedInferenceWarning, InvalidBinningError
 from .prepared_data import prepare_data
 from .results import BinscatterResult
 from .types import BinningMethod, ZeroWeightPolicy
@@ -75,7 +76,9 @@ def binscatter(
         standard errors. At least two nonmissing clusters are required.
     ci : float or None, default 0.95
         Two-sided confidence level for bin means. Set to ``None`` to omit confidence
-        intervals.
+        intervals. With controls, bin SEs and intervals are always unavailable;
+        requesting intervals emits ``AdjustedInferenceWarning``. Set ``ci=None``
+        for descriptive adjusted bins without that warning.
     dropna : bool, default True
         If True, remove observations with nonfinite values in any input. If False,
         raise a ``ValueError`` when nonfinite values are present.
@@ -104,12 +107,14 @@ def binscatter(
     When controls are supplied, ``x`` and ``y`` are residualized on a constant and
     the encoded control matrix, then shifted back to their original weighted means.
     The reported slope equals the coefficient on ``x`` from the corresponding full
-    least-squares model.
+    least-squares model. If ``x`` adds no numerical rank beyond the controls on
+    positive-weight observations, ``InsufficientDataError`` is raised.
 
     Confidence intervals assume independent observations unless ``cluster`` is
-    supplied. Bin intervals are approximate, pointwise and conditional on the
-    supplied adjustment and partition; they omit first-stage/selection uncertainty.
-    Adjusted bin intervals have no validated nominal population-coverage claim.
+    supplied. Unadjusted bin intervals are approximate, pointwise and conditional
+    on the partition; they omit selection uncertainty. Adjusted-bin SEs, confidence
+    limits and reference df are NaN, with ``ci_level=None``, until fitted-control
+    uncertainty is validated. Descriptive bins and slope inference remain available.
     See ``result.inference`` for covariance, degrees of freedom and limitations.
     Clustered inference uses cluster-level score sums, a CR1 finite-sample
     correction, and t critical values based on the clusters represented in each bin.
@@ -170,6 +175,24 @@ def binscatter(
         clusters=cluster_arr,
         ci=ci,
     )
+    if prepared.controls:
+        if ci is not None:
+            warnings.warn(
+                "adjusted-bin uncertainty is unavailable: fitted-control uncertainty "
+                "is not validated. Bin means and slope inference remain available; "
+                "pass ci=None for descriptive adjusted bins without this warning.",
+                AdjustedInferenceWarning,
+                stacklevel=2,
+            )
+        estimates = replace(
+            estimates,
+            se=np.full(estimates.n_bins, np.nan),
+            ci_lo=np.full(estimates.n_bins, np.nan),
+            ci_hi=np.full(estimates.n_bins, np.nan),
+            ci_df=np.full(estimates.n_bins, np.nan),
+            ci_level=None,
+            se_type="unavailable",
+        )
     fit = fit_ols(
         x_arr,
         y_arr,

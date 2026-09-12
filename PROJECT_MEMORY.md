@@ -21,14 +21,15 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 |---|---|---|---|
 | `grouped-adjustment` | Shared bins with controls are explicitly rejected; independent group adjustment remains supported. Tables preserve original interval IDs/bounds while estimation indices stay compact. Do not join independent partitions by ID or enable shared adjusted coordinates by widening edges. | [C2 contract and evidence](docs/grouped-interval-review.md), [regressions](tests/test_grouped_intervals.py) | 2026-09-12 |
 | `frozen-arrays` | Frozen result dataclasses still expose mutable arrays; mutation can desynchronize stored results. | [AR9 reproduction](docs/project-plan-review.md), A1 in [plan](binspect-plan.md) | 2026-09-12 |
-| `inference-evidence` | Initial matched references pass, but adjusted-bin locked-assessment coverage is 87.4% at nominal 95% (89.2% development); nominal population coverage is unvalidated. Consumed assessment seeds must not be reused for tuning. | [C3 analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [evidence](docs/inference-contract-review.md) | 2026-09-12 |
+| `inference-evidence` | Adjusted-bin locked-assessment coverage is 87.4% at nominal 95% (89.2% development). Public adjusted-bin SEs/CIs are now unavailable; descriptive bins and slope SEs remain. Use ci=None to omit the warning. Consumed assessment seeds must not be reused for tuning; the failed primitive remains a development diagnostic. | [C3 analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [withdrawal](docs/adjusted-inference-boundary-review.md) | 2026-09-12 |
+| `control-identification` | Weighted design columns are normalized for projection and numerical rank. Redundant controls are allowed if x adds rank; x in the numerical control span on positive-weight rows raises InsufficientDataError. This is not a near-singular accuracy guarantee. | [API regressions](tests/test_adjusted_inference_boundary.py), [independent references](tests/integration/test_inference.py) | 2026-09-12 |
 
 ## Open work
 
 The [plan](binspect-plan.md) owns ordering and task status. G1/G2 records are
 prepared for review; C2's bounded guard/identity correction is implemented, and C3
-has initial reference/coverage work underway with adjusted-bin coverage and expanded
-scenarios still open. Governance/security
+has withheld unsupported adjusted-bin uncertainty and added numerical references;
+expanded nonflat/DPI and few-cluster coverage is next. Governance/security
 acceptance and C3's qualified statistical
 review belong to the maintainer; no such approval is implied by agent work.
 

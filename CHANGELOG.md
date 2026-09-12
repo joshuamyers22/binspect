@@ -7,6 +7,10 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Fixed
+- Control projection and numerical-rank checks normalize design columns, retaining
+  identified slope/df behavior when control units change or columns are redundant.
+  `x` in the numerical control span on positive-weight rows now raises
+  `InsufficientDataError` instead of fitting a slope from numerical roundoff.
 - Grouped tables and JSON retain original interval IDs and bounds when bins are
   empty, so groups with disjoint support no longer report renumbered or stretched
   intervals as matching bins. Group-specific binning and value errors now identify
@@ -21,6 +25,11 @@ All notable changes to this project are documented here. The format follows
 - The missing-DPI-dependency message now names `binspect-regression[dpi]`.
 
 ### Changed
+- With controls, public bin SEs, confidence limits and reference df are unavailable
+  (NaN / JSON null), with `ci_level=None` and explicit inference status, following
+  failed population-coverage validation. Means, dispersion and slope SEs remain.
+  Requesting adjusted intervals emits `AdjustedInferenceWarning`; `ci=None`
+  requests descriptive adjusted bins without that warning.
 - `compare(controls=..., common_bins=True)` now raises an explicit unsupported-
   combination error. Use `common_bins=False` for independently adjusted group
   fits; pooled and within-group adjustment do not share a common coordinate system.
@@ -37,8 +46,8 @@ All notable changes to this project are documented here. The format follows
   coverage protocol, enforced by a separate `inference-validation` CI job.
 - `result.inference` and JSON/summary metadata expose covariance, residual/reference
   degrees of freedom and interval limitations. Bin intervals are explicitly
-  approximate and pointwise; fitted-control/selection uncertainty is omitted, and
-  adjusted-bin nominal population coverage is unvalidated. HC1 remains unsupported.
+  approximate and pointwise when available; selection uncertainty is omitted, and
+  adjusted-bin uncertainty is withheld. HC1 remains unsupported.
 - `binning.partition_edges` and `binning.interval_ids`, also included in JSON,
   preserve full partition boundaries and occupied interval identity. Legacy
   compressed edges and no-gap table behavior remain available.

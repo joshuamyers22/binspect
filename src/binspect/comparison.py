@@ -97,6 +97,8 @@ def compare(
         group-specific estimates.
     ci : float or None, default 0.95
         Two-sided confidence level for bin means. Set to None to omit intervals.
+        With controls, bin SEs and intervals are unavailable in every estimate;
+        use ``ci=None`` to omit ``AdjustedInferenceWarning``.
     dropna : bool, default True
         If True, remove observations with nonfinite estimation inputs. If False,
         raise a ``ValueError`` when nonfinite values are present.
