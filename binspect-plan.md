@@ -1,577 +1,356 @@
-# binspect — project plan
+# binspect — production project plan
 
-*Name settled. The implementation has reached the original v0.4 scope; the roadmap
-below is retained as a record of the project's initial sequencing.*
+Updated 2026-09-12 against `main` at `59c6a39`, package version `0.1.1`.
 
-> This is a living roadmap, not a statement that every listed module or feature is
-> implemented. The README is the source of truth for current behavior.
+**Next task: C1 — correct and validate `bins="dpi"`.** Complete the correctness
+milestone before adding estimators. This document replaces the original unordered
+v0.5+ wishlist and supersedes its blanket claim that v0.1–v0.4 was complete.
 
-A binned scatterplot library that produces figures you can publish without redrawing,
-and diagnostics that tell you whether the regression underneath the figure is lying.
+Aligned on 2026-09-12 with the production project template at `d59f3e6`.
+The [project brief](PROJECT_BRIEF.md) defines the library scope; the
+[template alignment](docs/template-alignment.md) maps requirements to evidence,
+open tasks, and applicability decisions. The
+[proposed baseline ADR](docs/decisions/0001-existing-library-baseline.md) records
+departures from the template's engine/tool defaults. This is plan alignment,
+not a claim that the repository already conforms. G1–G2 establish the missing
+baseline alongside C1; their relevant contracts precede broader changes.
 
----
+The [adversarial plan review](docs/project-plan-review.md) records the evidence,
+counterexamples, and remaining risks behind this order. Updating this plan does
+not resolve the implementation findings.
 
-## 0. Naming
+## 1. Product and scope
 
-**`binspect`** — bin + inspect, which states the premise: binning as a way of
-inspecting a model, not just a way of drawing points. The repository and import
-package use `binspect`; the PyPI distribution uses `binspect-regression` because the
-original distribution name belongs to an unrelated project.
+`binspect` means bin + inspect. It provides binned scatterplots and descriptive
+diagnostics of departures from a linear fit. The import is `binspect`; the
+distribution is `binspect-regression`.
 
-Do before the first commit:
+The production target is a dependable Python library with explicit statistical
+assumptions, reproducible results, composable publication figures, and verified
+installable artifacts. A descriptive lack-of-fit score cannot establish that a
+model is correct, identify causality, or replace a specification test.
 
-- [x] Verify `binspect` on PyPI (taken); select `binspect-regression` as the
-  distribution name
-- [x] Claim the GitHub repo (and the org/user namespace if you want one)
-- [ ] Check the readthedocs slug even if docs go to GH Pages, to keep it from being squatted
+Retain NumPy, pandas, SciPy, and Matplotlib as the current required dependencies,
+subject to the baseline ADR's review and reference-validation conditions. Use
+`binsreg` as an optional integration for methods it implements; use independent
+reference packages in validation without making them runtime requirements.
+Interactive/web output, a general dataframe abstraction, and new inference theory
+are outside this production milestone.
 
-Known friction to live with: it reads at a glance as a typo of Python's stdlib
-`inspect`, so docs and the README should always render it in code style and spell out
-the bin/inspect derivation once, up top.
+## 2. Verified baseline
 
-Taken, do not use: `binsreg`, `binscatter`.
-
----
-
-## 1. Positioning
-
-Two packages already occupy this space:
-
-- **`binsreg`** (Cattaneo, Crump, Farrell, Feng) — the authoritative implementation.
-  Partition selection, LS/quantile/GLM binscatter, pointwise CIs, uniform bands,
-  shape-restriction tests, covariate adjustment, clustering. Statistically definitive,
-  API is a Stata port; users routinely wrap it just to get a readable DataFrame.
-- **`binscatter`** (PyPI) — narwhals-backed multi-backend dataframes, plotly output,
-  DPI bin selection. Pretty and modern; says nothing about your model.
-
-**The gap:** neither treats the binscatter as a *regression diagnostic*. The bin means
-are the saturated-dummy fit; the deviation of those means from the fitted line is
-exactly the nonlinearity your linear model is eating. Nobody surfaces that.
-
-**One-liner:** `binsreg` for inference, `binscatter` for a quick plot, `binspect` for
-auditing a regression you're about to publish — in a figure that's already
-presentation-ready.
-
-**Non-goals for v1:** multi-backend dataframes (that's the other package's
-differentiator), reimplementing binsreg's inference theory (depend on it, cite it),
-interactive/web output.
-
----
-
-## 2. Design principles
-
-1. **Every audit quantity has a visual form.** If a diagnostic can only be communicated
-   as a number in a corner, it does not go in the default plot. Normalized lack of fit
-   becomes deviation marks. Bin uncertainty becomes CI bar length. Sample imbalance
-   becomes the density rug.
-2. **Estimation is usable without plotting.** `plot()` is a method on a result object,
-   never the entry point. This is what makes the statistics testable in isolation.
-3. **`ax` in, `ax` out.** Drops into an existing figure; never owns the figure unless
-   explicitly asked.
-4. **Never mutate global rcParams on import.** Themes are opt-in, scoped, and reversible.
-5. **Layers are addressable.** Each visual layer callable standalone against an axes,
-   so someone can put deviation shading over their own scatter.
-6. **Defaults are honest.** Where a prettier option means something different from the
-   rigorous one (shading to a smoother vs. to the OLS line), the rigorous one is the
-   default and the pretty one is explicit.
-
----
-
-## 3. Public API
-
-```python
-import binspect
-
-bs = binspect.binscatter(
-    data=df,
-    y="sales",
-    x="age",
-    controls=["region", "tenure"],  # FWL-residualized before binning
-    bins="dpi",  # int | "dpi" | "iqr" | array of edges
-    binning="quantile",  # "quantile" | "equal_width" | "custom"
-    weights=None,  # column name or array
-    cluster="firm_id",  # for robust SEs
-    ci=0.95,  # None disables CI computation
-    bands="pointwise",  # None | "pointwise" | "uniform"
-)
-```
-
-### Result object
-
-```python
-bs.table            # DataFrame: bin, n, x_lo, x_hi, x_mean, y_mean, y_sd, se, ci_lo, ci_hi
-bs.decomposition    # DataFrame: ss_between, ss_within, ss_total, eta_sq, r_sq_linear, gap
-bs.fit              # slope, intercept, se, r_sq of the linear fit (post-residualization)
-bs.sd_line          # slope, intercept of the SD line (r-shrinkage reference)
-bs.n_obs, bs.n_bins, bs.bin_rule
-
-bs.summary()        # statsmodels-flavored text block
-bs.summary_frame()  # one-row DataFrame of model and diagnostic statistics
-bs.to_dict()        # JSON-compatible structured results
-bs.verdict          # "linear" | "curvature" | "underpowered bins"
-
-bs.plot(ax=None, theme="notebook", show=(...), annotate="minimal") -> Axes
-bs.audit(theme="notebook") -> Figure       # multi-panel, v0.4
-```
-
-### Grouped comparison
-
-```python
-comparison = binspect.compare(
-    data=df,
-    y="sales",
-    x="age",
-    group="region",
-    bins=20,
-    common_bins=True,
-)
-
-comparison.results  # mapping of group label -> BinscatterResult
-comparison.pooled  # pooled BinscatterResult
-comparison.table  # group-by-bin DataFrame
-comparison.summary_frame()  # one row per group
-comparison.plot()  # faceted Figure with shared axes by default
-```
-
-### Plot layers
-
-```python
-show = ("bins", "ci", "fit", "sd_line", "deviation", "rug", "smooth", "raw")
-```
-
-| Layer | Draws | Default |
+| Area | Present at the reviewed commit | Qualification / remaining work |
 |---|---|---|
-| `bins` | Bin-mean markers, optionally sized by n | on |
-| `ci` | Vertical CI bars per bin | on when `ci` computed |
-| `fit` | OLS line through the underlying data | on |
-| `sd_line` | Slope σy/σx through the point of averages | off |
-| `deviation` | Shading between bin means and the fit | on |
-| `rug` | x-density strip beneath the axis | on |
-| `smooth` | LOWESS/spline through the bin means | off |
-| `raw` | Underlying scatter at low alpha | off |
+| Estimation | Quantile, equal-width, custom bins; weighted means and dispersion; observation-level linear fit | C1–C4 below address selector and statistical contracts |
+| Diagnostics | Weighted between/within decomposition, normalized lack of fit, heuristic verdict | Thresholds fixed; raw counts can overstate information |
+| Controls | Numeric/categorical controls, weighted FWL, mean restoration | Grouped common-bin coordinates need correction |
+| Uncertainty | Independent bin-mean intervals, classical slope SE, CR1 cluster paths | No selectable HC1 slope estimator; adjusted-bin inference needs validation |
+| Results | Single/grouped results, tables, summaries, JSON-compatible exports | Frozen dataclasses contain mutable arrays; export provenance incomplete |
+| Figures | Eight layers; notebook/paper/deck themes; audit and faceted figures | Artist and theme tests exist; visual baselines/accessibility evidence incomplete |
+| Quality | Ruff, strict mypy, import boundaries, Python 3.10–3.13 on Linux/macOS, 85% coverage gate | Local baseline: 160 tests passed, 90.41% coverage on Python 3.12 |
+| Packaging | Hatchling, lockfile, CI builds, release workflow using Trusted Publishing | Trigger is GitHub release publication; deployment settings require separate verification |
+| Documentation | README, quickstart script, contribution/release instructions, hero image | No built documentation site, API reference, or docs CI |
+| Validation | NumPy matrix equivalence tests, deterministic behavioral tests | No tracked external comparison workflow or Hypothesis property suite |
 
-Each is also importable standalone:
+The old v0.1–v0.4 labels described intended feature sequencing, not package releases
+or evidence of production readiness. Actual releases are recorded in
+[CHANGELOG.md](CHANGELOG.md). Future release numbers are assigned when scope is
+known; milestone IDs below are stable task identifiers.
 
-```python
-from binspect.viz.layers import deviation_layer
+## 3. Statistical contracts
 
-deviation_layer(ax, bs, color="...", alpha=0.18)
+These govern implementation and tests. Distinguish current behavior from changes
+that require the acceptance criteria below.
+
+### Bins and weighted means
+
+Quantile edges currently use NumPy's interpolated quantiles. Values on an interior
+edge go into the lower bin. Ties are not split; repeated edges and empty intervals
+can reduce the number of bins. The old empirical-CDF assignment equation was not
+an exact specification of this implementation. Equal counts are a conditional
+property for suitable untied inputs, not a universal invariant.
+
+Every retained row has one assignment; assignments and edges reconstruct the same
+partition; counts sum to retained rows; each estimated bin has positive weight.
+Custom outer bounds are preserved. Grouped exports must identify pooled intervals
+even when individual groups have no observations there.
+
+For weights `w_i >= 0`, let `W_j = sum_{i in j} w_i`. Then
+`ybar_j = sum_{i in j} w_i*y_i / W_j` and similarly for `xbar_j`.
+These means match a saturated **WLS** indicator fit with the same weights.
+Unweighted means match OLS. Reliability weights are not frequency counts or a
+complete survey sampling design.
+
+`zero_weight="retain"` permits zero-weight rows to affect partition selection and
+descriptive counts. Thus they can indirectly change binned estimates by moving
+edges. Only `zero_weight="drop"` promises equivalence to omitting those rows
+throughout the pipeline.
+
+### FWL and adjusted coordinates
+
+Residualize both variables on an intercept and encoded controls using the same
+weights as the full least-squares fit; restore their weighted means for display.
+Use a rank-aware least-squares solution rather than an explicit matrix inverse.
+
+The slope fitted to the **observation-level residualized variables** equals the
+coefficient on x in the full model when x is identified. A regression on bin means
+generally has a different slope. Adjusted-model slope SEs must use the full
+design's residual degrees of freedom and the chosen covariance convention.
+
+Group-specific residualization changes coordinates. Reusing pooled residual-space
+edges does not by itself define a common adjusted estimand; C2 must resolve this.
+FWL coefficient equivalence alone does not validate inference on adjusted bin means
+or identify a nonlinear covariate-adjusted conditional mean function.
+
+### Decomposition and display
+
+Use the same observations, weights, and coordinate system for all terms:
+
+```text
+ybar       = sum_i w_i*y_i / sum_i w_i
+SS_total   = sum_i w_i*(y_i - ybar)^2
+SS_between = sum_j W_j*(ybar_j - ybar)^2
+SS_within  = sum_i w_i*(y_i - ybar_bin(i))^2
+SS_lof     = sum_j W_j*(ybar_j - fitted_line(xbar_j))^2
+
+SS_between + SS_within = SS_total
+eta_sq = SS_between / SS_total
+gap    = SS_lof / SS_total
 ```
 
-### Themes
+For positive total variance, gap is nonnegative and is zero exactly when all
+positive-weight bin means lie on the fitted line, within numerical tolerance.
+There is no general ordering between eta-squared and observation-level linear
+R-squared. Current zero-total-variance outputs use zero for eta-squared and gap;
+document this convention rather than interpreting it as statistical evidence.
 
-Three shipped, all colorblind-safe, all tested on light and dark backgrounds:
+Deviation marks show signed vertical departures. Their visual lengths or filled
+areas do not equal the weighted squared sum or normalized gap.
 
-| Theme | For | Character |
+For a signed SD reference slope `s = sign(r)*sd_y/sd_x`, the identity is
+`linear_slope = abs(r)*s`, not `r*s`. For exactly zero covariance the current
+implementation chooses the positive orientation; constant y gives a zero slope.
+Tests must include positive, negative, and zero correlation.
+
+### Uncertainty and verdicts
+
+Separate the estimand, weight interpretation, covariance estimator, finite-sample
+correction, and reference distribution. Current independent weighted bin SEs use
+weighted dispersion and Kish effective sample size. Classical slope SEs and CR1
+cluster SEs are distinct procedures. Two available clusters make a computation
+possible; they do not establish reliable small-sample coverage.
+
+Current per-bin CR1 uses clusters represented in that bin and a correction
+`G_j/(G_j-1)`; its t intervals use `G_j-1` degrees of freedom. This is not generally
+the same finite-sample correction as one global saturated clustered regression.
+Reference comparisons must match the design and correction being claimed.
+
+Verdicts are descriptive heuristics, currently gap threshold 0.02 and minimum
+raw bin count 30. They are not power calculations, significance tests, or a
+validation of linearity. C4 must address effective sample size and cluster support.
+
+Per-bin IQR describes outcome dispersion. It is neither a confidence interval for
+the median nor a fitted conditional quantile regression. Uniform confidence bands
+require simultaneous inference; connecting pointwise interval endpoints is
+insufficient.
+
+## 4. Ordered implementation milestones
+
+All tasks below are **open**. Work in listed order within each milestone unless a
+dependency explicitly permits otherwise. Each task is intended as one reviewable
+PR; split large tasks into contract, implementation, and validation PRs as needed.
+Josh Myers is the accountable maintainer identified by package metadata; this does
+not imply an on-call or delivery-date commitment. Assign an implementer and any
+independent statistical reviewer before each task begins. Record due dates by the
+milestone gates below until a calendar release date is selected. The implementer
+records evidence; the maintainer accepts completion. No task is
+done merely because it has an implementation or a passing coverage percentage.
+
+### M0 — project requirements and repository baseline
+
+**Dependencies:** none. **Exit:** G1–G2 have owned, reviewed evidence. These can
+proceed alongside the bounded C1 correction; finish the relevant decisions before
+C2/C3 contract changes. Do not defer security or ownership decisions until release.
+
+| Order | Task | Acceptance criteria |
 |---|---|---|
-| `notebook` | Default, exploratory | Balanced, matplotlib-native sizing |
-| `paper` | Publication | Thin strokes, no fills, survives grayscale print |
-| `deck` | Slides | Heavy marks, large type, one saturated accent |
+| G1 | Adopt the applicable repository agreement | Review the populated project brief and baseline ADR; record accepted decisions and owners without claiming agent self-approval. Add an adapted `AGENTS.md`, keyed/dated/evidence-linked `PROJECT_MEMORY.md`, bounded notes policy, ADR and improvement/verification records, and an evidence-based release checklist. Document repository/review ownership and actual GitHub control capabilities. Update memory only for durable facts. Preserve existing MIT licensing; do not copy the generator's proprietary default. Existing plan/review documents can satisfy equivalent records where their required fields are present. |
+| G2 | Define the library threat model and support boundary | Cover caller arrays/dataframes/labels, optional dependencies, serialized output/figures, CI credentials, and published artifacts. Address invalid shapes/nonfinite values, pathological allocation requests, accidental sensitive-data exposure, malicious dependency/build changes, and artifact substitution. Specify tests, input/resource limits, supported versions, private reporting, risk owner and review date. Keep runtime import/estimation free from unsolicited network, logging, and configuration side effects. Document that service auth/health endpoints and hosted-data backup are outside this library's scope; do not claim that local execution eliminates untrusted input or supply-chain risk. |
 
-Applied per-call (`bs.plot(theme="paper")`) or scoped
-(`with binspect.theme("paper"): ...`). Never globally on import.
+### M1 — statistical correctness and supported combinations
 
-### Annotation levels
+**Dependencies:** C1 may start immediately; C2/C3 depend on the relevant G1/G2
+contracts. **Exit:** C1–C4 accepted, known misleading behavior corrected
+or explicitly unavailable, and applicable regression checks run in PR CI.
 
-- `annotate=None` — nothing
-- `annotate="minimal"` (**default**) — n, bin count
-- `annotate="audit"` — adds R², η², gap, verdict
-
----
-
-## 4. Repository structure
-
-```
-binspect/
-├── src/
-│   └── binspect/
-│       ├── __init__.py             # public exports: binscatter, theme, __version__
-│       ├── api.py                  # binscatter() entry point, arg validation, orchestration
-│       ├── types.py                # TypedDicts, Literals, protocol for array-likes
-│       ├── exceptions.py           # BinspectError, InsufficientDataError, BinCountWarning
-│       │
-│       ├── core/
-│       │   ├── __init__.py
-│       │   ├── binning.py          # partition rules -> bin edges + assignment
-│       │   ├── selection.py        # bin-count selectors (dpi, iqr, sturges, fixed)
-│       │   ├── residualize.py      # FWL projection of y and x on controls
-│       │   ├── estimate.py         # bin means, SDs, weighted means, SEs
-│       │   ├── variance.py         # homoskedastic / HC1 / cluster-robust variance
-│       │   ├── decompose.py        # between/within SS, eta^2, linear R^2, gap
-│       │   └── lines.py            # OLS fit line, SD line, optional smoother
-│       │
-│       ├── results.py              # BinscatterResult dataclass + summary()
-│       │
-│       ├── viz/
-│       │   ├── __init__.py
-│       │   ├── figure.py           # plot() and audit() composition
-│       │   ├── layers.py           # one function per layer, all (ax, result) -> ax
-│       │   ├── theme.py            # theme registry, context manager, rcParams scoping
-│       │   ├── annotate.py         # caption block rendering
-│       │   └── palette.py          # colorblind-safe ramps, light/dark variants
-│       │
-│       └── datasets/
-│           ├── __init__.py         # load_gapminder(), load_wage(), load_synthetic()
-│           └── data/               # small CSVs, < 100 KB each
-│
-├── tests/
-│   ├── conftest.py                 # fixtures: linear DGP, concave DGP, heteroskedastic DGP
-│   ├── test_binning.py             # partition properties
-│   ├── test_selection.py           # selector behavior + monotonicity
-│   ├── test_residualize.py         # FWL equivalence
-│   ├── test_estimate.py            # bin means == saturated dummy OLS
-│   ├── test_variance.py            # cluster SE vs statsmodels
-│   ├── test_decompose.py           # SS identity, eta^2 >= R^2
-│   ├── test_results.py             # table schema, summary snapshot
-│   ├── test_api.py                 # end-to-end, arg validation, error messages
-│   ├── test_properties.py          # hypothesis-based invariants
-│   ├── test_themes.py              # no global rcParams leakage
-│   ├── test_plot.py                # layer smoke tests, ax-in/ax-out contract
-│   ├── test_baseline_images.py     # pytest-mpl, 4 baselines max
-│   ├── baseline/                   # reference PNGs for pytest-mpl
-│   └── external/
-│       └── test_vs_binsreg.py      # non-blocking cross-check, marked "external"
-│
-├── docs/
-│   ├── index.md                    # the one-liner + hero figure
-│   ├── quickstart.md
-│   ├── guide/
-│   │   ├── what-is-a-binscatter.md
-│   │   ├── auditing-a-regression.md   # the differentiator; lead with this
-│   │   ├── controls-and-fwl.md
-│   │   ├── choosing-bins.md
-│   │   └── themes-and-styling.md
-│   ├── reference/                  # mkdocstrings-generated API docs
-│   ├── comparison.md               # honest table vs binsreg and binscatter
-│   └── references.md               # Cattaneo et al. and related literature
-│
-├── examples/
-│   ├── 01-quickstart.ipynb
-│   ├── 02-auditing-a-published-regression.ipynb
-│   ├── 03-controls-and-fwl.ipynb
-│   └── 04-theme-gallery.ipynb
-│
-├── benchmarks/
-│   └── bench_estimate.py           # asv or pytest-benchmark; 10M-row path
-│
-├── .github/
-│   ├── workflows/
-│   │   ├── ci.yml                  # lint, type, test matrix
-│   │   ├── docs.yml                # build + deploy to Pages on main
-│   │   ├── external.yml            # weekly binsreg cross-check, non-blocking
-│   │   └── release.yml             # tag-triggered PyPI trusted publishing
-│   ├── ISSUE_TEMPLATE/
-│   │   ├── bug_report.yml
-│   │   └── feature_request.yml
-│   └── PULL_REQUEST_TEMPLATE.md
-│
-├── .pre-commit-config.yaml
-├── .gitignore
-├── pyproject.toml
-├── uv.lock
-├── mkdocs.yml
-├── CHANGELOG.md                    # Keep a Changelog format
-├── CITATION.cff
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
-├── LICENSE                         # MIT
-└── README.md
-```
-
----
-
-## 5. Module responsibilities
-
-| Module | Owns | Must not |
+| Order | Task | Acceptance criteria |
 |---|---|---|
-| `api.py` | Validation, orchestration, building the result | Contain statistical formulas |
-| `core/binning.py` | Edges and integer bin assignment | Know about y |
-| `core/selection.py` | Choosing bin count; wraps binsreg DPI if installed | Hard-depend on binsreg |
-| `core/residualize.py` | FWL projection, categorical expansion of controls | Touch binning |
-| `core/estimate.py` | Per-bin means, SDs, counts, weighted variants | Compute variance-covariance |
-| `core/variance.py` | SEs: homoskedastic, HC1, cluster | Know about bins directly |
-| `core/decompose.py` | SS decomposition, η², linear R², gap, verdict | Import matplotlib |
-| `core/lines.py` | OLS line, SD line, smoother | Draw anything |
-| `results.py` | Immutable container, table assembly, `summary()` | Do estimation |
-| `viz/*` | All matplotlib | Do any statistics |
-
-**Hard rule:** nothing under `core/` imports matplotlib; nothing under `viz/` computes
-a statistic. Enforced by an import-linter contract in CI.
-
----
-
-## 6. Statistical specification
-
-Definitions the implementation must satisfy exactly, not approximately.
-
-**Binning.** Quantile binning with J bins assigns observation i to bin
-j = ceil(J · F̂(xᵢ)), clipped to [1, J]. Bin counts differ by at most one. Ties in x
-go to the lower bin; document this, since it makes quantile bins uneven on discrete x.
-
-**Bin means.** ȳⱼ = Σ_{i∈j} wᵢyᵢ / Σ_{i∈j} wᵢ. Equivalently, the fitted values of
-`OLS(y ~ C(bin) - 1)`. This equivalence is a test, not a comment.
-
-**Residualization (FWL).** With controls W, compute ỹ = M_W y and x̃ = M_W x where
-M_W = I − W(W'W)⁻¹W'. Bin on x̃, plot ỹ. Add back the means of y and x so the axes
-stay on the original scale. The slope through the bin means then equals the coefficient
-on x from `OLS(y ~ x + W)`.
-
-**Decomposition.**
-```
-SS_total   = Σ (yᵢ − ȳ)²
-SS_between = Σⱼ nⱼ (ȳⱼ − ȳ)²
-SS_within  = Σⱼ Σ_{i∈j} (yᵢ − ȳⱼ)²
-SS_lof     = Σⱼ nⱼ (ȳⱼ − ŷ(x̄ⱼ))²
-η²         = SS_between / SS_total
-R²_linear  = from OLS(y ~ x)
-gap        = SS_lof / SS_total ≥ 0
-```
-
-> **Correction (found during implementation).** An earlier draft of this plan defined
-> `gap = η² − R²_linear` and claimed `η² ≥ R²_linear` always. That is false. A step
-> function does not nest a straight line, so a coarse partition can explain *less*
-> variance than a line: on a linear DGP with 3 bins, η² sits ~7.7 points *below* R².
-> The gap is therefore defined as normalised **lack of fit**, which is non-negative by
-> construction and is exactly what the deviation-shading layer draws — each shaded
-> segment is one term's square root. η² is still reported; it just cannot be
-> differenced against R². Note also that the classical lack-of-fit / pure-error split
-> is exact only with replicated x; with binned x it is approximate, so `gap` is a
-> descriptive magnitude, not an F-test numerator.
-
-**Verdict thresholds** (fixed heuristics in v0.1; make configurable before calling the
-API stable, and never present them as hypothesis tests):
-- `gap < 0.02` → `"linear"`  *(gap = lack of fit, per the correction above)*
-- `gap ≥ 0.02` and min bin count ≥ 30 → `"curvature"`
-- min bin count < 30 → `"underpowered bins"` (dominates; η² is inflated here)
-
-**SD line.** Slope sign(r)·σy/σx through (x̄, ȳ). The OLS slope is this shrunk by r.
-
-**Warnings.** Emit `BinCountWarning` when J > n/30, when any bin has < 10
-observations, or when x has fewer distinct values than J.
-
----
-
-## 7. Testing strategy
-
-The identities above give exact assertions rather than tolerance-fudging. This is
-where credibility comes from.
-
-### Equivalence tests (exact, to float tolerance)
-
-| Test | Assertion |
-|---|---|
-| Saturated fit | Bin means == fitted values of `OLS(y ~ C(bin))` from statsmodels |
-| Between estimator | Count-weighted OLS on bin means == between-variance estimator |
-| SS identity | `ss_between + ss_within == ss_total` to machine precision |
-| FWL | Slope through bin means (with controls) == `x` coefficient of full OLS |
-| Bound | `gap ≥ 0` always; `gap == 0` iff the bin means lie on the line |
-| Anti-bound | η² < R²_linear on a linear DGP with coarse bins — asserted, so nobody "fixes" it back |
-| Shrinkage | `ols_slope == r * sd_line_slope` |
-| Cluster SE | Matches `statsmodels` `cov_type="cluster"` on the saturated model |
-
-### Property tests (hypothesis)
-
-- Bin assignment is a partition: every row in exactly one bin, counts sum to n
-- Quantile bin counts differ by at most one
-- Results invariant to row permutation
-- Slope equivariant under affine rescaling: `y → a·y + b`, `x → c·x + d`
-- Weighted result with all-equal weights == unweighted result
-- Adding a constant column to `controls` changes nothing
-
-### Fixture DGPs (`conftest.py`)
-
-Linear, concave, heteroskedastic, clustered, weighted, and a discrete-x edge case.
-Fixed seeds; the concave one is the fixture that catches η²/gap regressions.
-
-### Visual tests
-
-`pytest-mpl` with **four** baselines maximum — default notebook plot, paper theme,
-audit panel, deviation layer alone. Image tests rot; keep them few and regenerate
-deliberately. Everything else is a smoke test asserting artist counts and that the
-returned object is the axes that was passed in.
-
-### Isolation tests
-
-- Importing `binspect` leaves `matplotlib.rcParams` byte-identical
-- `with binspect.theme(...)` restores rcParams on exit, including on exception
-- `import-linter` contract: `core` has no matplotlib import path
-
-### External (non-blocking)
-
-Weekly workflow comparing bin means and CIs against `binsreg` on a fixed dataset.
-Divergence opens an issue; it does not fail the build.
-
----
-
-## 8. Tooling and CI
-
-| Concern | Choice |
-|---|---|
-| Env/deps | Standard `venv`/pip locally; `uv` as the CI installer |
-| Build backend | `hatchling` |
-| Lint + format | `ruff` (replaces black, isort, flake8) |
-| Types | `mypy --strict` on `src/` only |
-| Tests | `pytest`, `pytest-cov`, `pytest-mpl`, `hypothesis` |
-| Import boundaries | `import-linter` |
-| Hooks | `pre-commit` |
-| Docs | `mkdocs-material` + `mkdocstrings` |
-| Versioning | SemVer, `0.x` until the API settles |
-| Changelog | Keep a Changelog |
-
-**Matrix:** Python 3.10–3.13 × {ubuntu-latest, macos-latest}. macOS is worth the runner
-minutes — matplotlib backend behavior differs and you develop there.
-
-**Coverage gate:** 85% overall. Prefer identity and behavior tests over line chasing;
-plot tests should assert meaningful artist and axes contracts.
-
-**Release:** tag-triggered workflow using PyPI trusted publishing (OIDC). No long-lived
-token in repository secrets.
-
-### Dependencies
-
-```
-Required:  numpy, pandas, scipy, matplotlib
-Optional:
-  [stats]  statsmodels          # richer SEs, formula interface
-  [dpi]    binsreg              # DPI bin selection
-  [polars] polars               # zero-copy input path
-  [dev]    pytest, hypothesis, pytest-mpl, ruff, mypy, import-linter, pre-commit
-  [docs]   mkdocs-material, mkdocstrings[python]
-```
-
-A stats package that pulls plotly and five dataframe backends on `pip install` is one
-people vendor around. Keep the required set to four.
-
----
-
-## 9. `pyproject.toml` skeleton
-
-```toml
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
-name = "binspect"
-dynamic = ["version"]
-description = "Binned scatterplots that audit the regression behind them"
-readme = "README.md"
-requires-python = ">=3.10"
-license = { file = "LICENSE" }
-authors = [{ name = "..." }]
-keywords = ["binscatter", "regression", "diagnostics", "visualization", "econometrics"]
-classifiers = [
-  "Development Status :: 3 - Alpha",
-  "Intended Audience :: Science/Research",
-  "License :: OSI Approved :: MIT License",
-  "Topic :: Scientific/Engineering :: Visualization",
-]
-dependencies = ["numpy>=1.24", "pandas>=2.0", "scipy>=1.10", "matplotlib>=3.7"]
-
-[project.optional-dependencies]
-stats = ["statsmodels>=0.14"]
-dpi = ["binsreg>=1.0"]
-polars = ["polars>=0.20"]
-dev = ["pytest", "pytest-cov", "pytest-mpl", "hypothesis", "ruff", "mypy",
-       "import-linter", "pre-commit"]
-docs = ["mkdocs-material", "mkdocstrings[python]"]
-
-[project.urls]
-Homepage = "https://github.com/<you>/binspect"
-Documentation = "https://<you>.github.io/binspect"
-Changelog = "https://github.com/<you>/binspect/blob/main/CHANGELOG.md"
-
-[tool.ruff]
-line-length = 88
-target-version = "py310"
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "N", "UP", "B", "SIM", "NPY", "PD"]
-
-[tool.mypy]
-strict = true
-files = ["src/binspect"]
-
-[tool.pytest.ini_options]
-addopts = "--strict-markers --mpl"
-markers = ["external: cross-checks against binsreg (not run in CI gate)"]
-
-[tool.importlinter]
-root_package = "binspect"
-
-[[tool.importlinter.contracts]]
-name = "core is plotting-free"
-type = "forbidden"
-source_modules = ["binspect.core"]
-forbidden_modules = ["matplotlib"]
-```
-
----
-
-## 10. Roadmap
-
-The original v0.1-v0.4 implementation scope is complete as of the `0.1.0` package
-release. Version labels below describe the order in which capabilities were built,
-not the final package versions in which they shipped. Uniform confidence bands and
-quantile regression remain future work.
-
-### v0.1 — it exists and it looks right
-Quantile binning, bin means and SDs, `.table`, `notebook` theme, layers `bins` + `fit`
-+ `sd_line`. No inference, no controls. Aesthetics are in scope from day one —
-"we'll make it look good later" is how the incumbents ended up here.
-*Ship early and let the API get criticized before it hardens.*
-
-### v0.2 — the differentiator
-Decomposition, η²/gap/verdict, deviation-shading layer, audit annotation block,
-`paper` and `deck` themes, `summary()`.
-
-### v0.3 — controls and inference
-FWL residualization, weights, CIs, HC1 and cluster-robust SEs, density rug,
-`bins="dpi"` via optional binsreg dependency.
-
-### v0.4 — the audit panel
-`bs.audit()` multi-panel figure (binscatter, residuals vs fitted, bin-count strip),
-grouped/faceted comparison of two or more series.
-
-### v0.5+ — candidates, unordered
-Quantile-regression variant (median + IQR bands — the boxplot answer), uniform
-confidence bands, polars fast path, `patsy`/formula interface, seaborn-style
-`data=`+`hue=` API.
-
----
-
-## 11. Open decisions
-
-1. **Deviation shading target.** To the OLS line (honest audit) or to a smoother
-   (prettier, means something different). *Leaning: line as default, smoother explicit.*
-2. **Does `raw` scatter ship in v0.1?** Overlaying the underlying points undercuts the
-   premise but is the first thing reviewers ask for.
-3. **statsmodels: optional or required?** Optional keeps the dep set clean but means
-   reimplementing cluster-robust variance, which is exactly the code most likely to be
-   subtly wrong. *Leaning: required, and drop the `[stats]` extra.*
-4. **Verdict strings in the default annotation?** A package that stamps
-   "curvature" on someone's figure by default may read as presumptuous.
-5. **Bin-count warning as `warnings.warn` or a field on the result?** Warnings are
-   noisy in notebooks; a silent field gets ignored.
-
----
-
-## 12. First week
-
-1. Reserve `binspect` on PyPI and GitHub (§0 checklist).
-2. `uv init`, repo skeleton, MIT license, pre-commit, CI green on an empty test.
-3. `core/binning.py` + `core/estimate.py` with the saturated-fit equivalence test.
-   This single test is the project's foundation — write it before anything else.
-4. `core/decompose.py` with the SS identity test.
-5. `results.py`, minimal `.table`.
-6. `viz/layers.py`: bins + fit only, `notebook` theme, ax-in/ax-out contract test.
-7. README with one hero figure generated from `examples/01`.
-
----
-
-## References
-
-- Cattaneo, M. D., Crump, R. K., Farrell, M. H., & Feng, Y. (2024). On Binscatter.
-  *American Economic Review*, 114(5), 1488–1514.
-- `binsreg` — https://nppackages.github.io/binsreg/
-- Starmer, C. et al. — prior art review to complete before v0.1 announcement.
+| C1 | Correct DPI selection and integration metadata | Read the actual DPI result rather than ROT; use a supported upstream result field with documented regularization/mass-point behavior. Validate finite integer output. Make failed DPI selection an actionable error or an explicit, recorded fallback, never silently label ROT as DPI. Fix the extra-install message to `binspect-regression[dpi]`. Test success, distinct ROT/DPI values, unavailable dependency, failed selection, and discrete x. Add a required real-library check on a pinned environment; record selected rule, requested/actual bins, and any fallback in results. |
+| C2 | Define grouped adjusted coordinates and interval identity | Reproduce the shifted-control failure in the review. Specify pooled versus within-group adjustment and mean restoration before implementing common bins; preserve per-group coefficient meaning. Until a coherent common-coordinate contract is implemented, reject `controls` plus `common_bins=True` with a specific explanation and supported alternative. Do not fix it merely by widening edges. Preserve pooled interval IDs or explicit empty intervals in grouped tables; never compare renumbered bins as though they were identical. Test disjoint support, empty intervals, shifted controls, weights, zero weights, missing inputs, and group-labelled failures. |
+| C3 | Validate the inference contract | Write an estimand/weights/covariance/df table for every supported combination of controls, weights, and clusters. Validate observation-level OLS/WLS coefficients and classical/CR1 slope SEs against an independent full-design reference. Validate per-bin CR1 against matched within-bin intercept-only fits, explicitly distinguishing global saturated corrections. Assess uncertainty from estimated controls and data-selected partitions; label approximate conditional intervals accordingly or disable unsupported combinations. Resolve HC1 explicitly: implement a validated selectable estimator or document it as deferred and classical assumptions as a limitation. Add pinned mandatory reference checks and seeded coverage simulations with predeclared Monte Carlo tolerances; keep upstream drift checks separate. |
+| C4 | Make diagnostic claims and policies accurate | Correct FWL and signed-SD claims in source docs, README, and tests. Remove statements equating displayed area with gap. Define configurable verdict thresholds, an opt-out, and exported policy values. Distinguish raw rows, positive-weight rows, effective sample size, and cluster counts; do not classify support solely from retained zero-weight rows. Document constant outcomes and unsupported/undefined inference. Test threshold boundaries, negative/zero correlation, constant y, highly unequal weights, sparse clusters, rank deficiency, and nonidentified x. |
+
+C1 must also decide which weighted, clustered, controlled, and equal-width requests
+can be faithfully delegated to the selector. Pass compatible metadata through or
+reject unsupported combinations explicitly; an unweighted selector must not be
+presented as optimal for a different estimation specification.
+
+Before C3 changes inference, complete a project-specific statistical analysis plan
+using the template fields: estimand, sample unit/inclusion, units and transformations,
+ordered design/intercept, weights, covariance/df, assumptions, dependence, partition
+selection, diagnostics, practical thresholds, multiple-comparison limitations,
+numerical rank/conditioning, and absolute/relative tolerances. Mark forecasting,
+financial decision utility, and Bayesian fields inapplicable with reasons. Keep
+simulation development separate from locked final-assessment seeds/cases. Bind
+validation results to input/plan/lock hashes, revision, reference versions, and
+random-generator identity. The maintainer names a qualified reviewer before C3
+sign-off; the implementation agent's review alone does not establish validity.
+
+### M2 — result integrity and API stability
+
+**Dependencies:** M1. **Exit:** consumers can rely on stable results and documented
+schemas, including failure paths.
+
+| Order | Task | Acceptance criteria |
+|---|---|---|
+| A1 | Protect stored results from mutation | Define ownership for input arrays, nested arrays, mappings, and returned tables. Ensure mutations of caller inputs or returned objects cannot silently desynchronize fits, tables, and plots. Choose defensive copies/read-only storage with measured memory cost. Add behavioral mutation tests for single and grouped results. |
+| A2 | Define export and input contracts | Document supported types, shapes, positional/index alignment, group-label encoding, missingness, and zero-weight policies. Specify schema/version compatibility, numeric nulls, interval level/df, both bin and slope covariance types, original/retained/dropped counts, adjustment coordinates, selection provenance, and heuristic settings. Require strict JSON encoding and test degenerate/clustered/grouped cases. Avoid exporting raw observations by default. |
+| A3 | Establish compatibility policy | Inventory public functions, result attributes, layers, defaults, warnings, and exceptions from real signatures. Publish a supported option matrix and migration examples. Record output/default changes in the changelog and assign patch/minor releases by their actual compatibility impact. Preserve `ax` input/output and scoped-theme behavior. |
+
+A2 must define a deterministic, versioned evidence export for consequential use,
+including ordered controls/design identity and links or hashes for the analysis
+plan, inputs, software lock, and code. Raw data and data-derived fingerprints must
+not be collected or published implicitly; callers control their own provenance
+and retention. Separate changing timestamps from the deterministic result payload.
+
+### M3 — documentation and figure verification
+
+**Dependencies:** M1–M2 for final contracts. Documentation scaffolding may begin
+earlier; pages must not claim unfinished methods.
+
+| Order | Task | Acceptance criteria |
+|---|---|---|
+| D1 | Ship an executable user guide and API reference | Build MkDocs with strict link checks and generated API reference. Cover unadjusted/adjusted estimands, weights, cluster limitations, bin selection, group support, missingness, gap versus R-squared, and plot composition. Execute quickstart and guide examples in CI. Correct stale version, dependency, and release-trigger claims across README and contribution docs. Publish only after the build passes and hosting is configured. |
+| D2 | Validate exported figures | Keep existing artist/axes/rcParams checks. Add a small, justified baseline set (default, paper, audit, standalone deviation) on a pinned rendering environment. Verify PNG plus PDF/SVG export, missing intervals, negative slopes, long labels, multi-panel layout, and caller-supplied axes. Record grayscale, color-vision, and light/dark-background checks before claiming support; label unsupported combinations. |
+| D3 | Document reproducible examples | Provide seeded linear, nonlinear, heteroskedastic, clustered, weighted, discrete-x, and grouped-control examples. Explain both informative and misleading pictures. Record seeds and versions; use synthetic data or documented source/license/provenance for bundled data. |
+
+### M4 — performance and dependency support
+
+**Dependencies:** P1–P2 depend on M1–M2 and can run alongside M3. P3 is independent
+and may start during M0; supply-chain findings must be triaged when discovered.
+**Exit:** documented limits are measured; supported installs work without extras.
+
+| Order | Task | Acceptance criteria |
+|---|---|---|
+| P1 | Establish and enforce workload limits | Benchmark estimation separately from rendering on 10k, 100k, and 1M rows, varying bin count, cluster count, groups, and control width. Record hardware, versions, wall time, peak memory, and output equivalence. The current dense bin-by-cluster aggregation must be replaced or explicitly bounded before high-cardinality claims; add a benchmark where clusters approach row count. Set numeric regression budgets from an accepted baseline on a controlled runner. Treat 10M rows as exploratory until demonstrated within a declared memory budget. |
+| P2 | Verify dependency configurations | Test minimal runtime installation without binsreg, the DPI extra, locked development dependencies, declared lower bounds, and current compatible dependencies in separate jobs. Ensure optional-import failures point at the right distribution. Review Python support explicitly; add a version only when its matrix passes. |
+| P3 | Add supply-chain and secret checks | Audit locked runtime/build/dev/docs/optional dependencies for vulnerabilities and license compatibility; record package/version, owner, expiry, and rationale for any reviewed exception. Generate and inspect a CycloneDX SBOM that covers the actual released artifacts and dependencies. Scan tracked history and built artifacts for secrets with controlled/redacted findings. Pin every third-party action, including the current mutable PyPI publisher reference, to a reviewed full SHA. Make dependency updates regenerate the lock and rerun numerical drift checks. Add an honest `make supply-chain` or equivalent gate to CI and release qualification; unavailable audit services are unverified, not passed. |
+
+Avoid promising a Polars fast path or zero-copy processing without end-to-end
+measurements through conversion, estimation, and rendering.
+
+P1 uses the template performance-experiment record: falsifiable hypothesis,
+simpler alternative, warm/cold boundaries, repeated-run distributions and baseline
+variance, workload/host/lock identity, correctness guardrails, and a rollback
+trigger. Throughput and memory budgets are library-specific; no service latency
+SLO or hardware-specialization requirement is implied.
+
+### M5 — release qualification
+
+**Dependencies:** M0–M4. **Exit:** a traceable, install-tested release and a recorded
+decision about remaining limitations. Stable 1.0 requires this evidence; completing
+this planning revision does not declare the current package production-ready.
+
+| Order | Task | Acceptance criteria |
+|---|---|---|
+| R1 | Exercise artifact and workflow behavior without publishing | Build wheel/sdist once using frozen, locked build tools; remove the current unpinned build/twine installation path and account for isolated build-backend resolution. Validate metadata, install each in clean environments outside the source checkout, and run estimation/export/plot smoke checks. Verify upload/download artifact handoff and version/tag rejection in a nonpublishing workflow path. Verify configured branch checks and the PyPI environment against the runbook; YAML alone does not prove protection or Trusted Publisher setup. |
+| R3 | Establish maintenance and recovery | Document failed publication, yank/fixed-release procedures, dependency drift triage, and maintainer responsibility. Never replace an already published version. Run scheduled upstream comparison checks without making upstream outages a routine PR blocker; preserve logs/artifacts and assign findings for triage. Any numerical correctness divergence affecting a supported method blocks its next release until resolved or that method is withdrawn. |
+| R2 | Qualify and verify a release | Require CI on the exact release commit, required pinned statistical references, docs/examples, supply-chain/secret checks, artifact checks, and accepted benchmark evidence. Attach checksums, SBOM, and verifiable build provenance tying the artifacts to the reviewed source and CI run; checksums alone do not authenticate a publisher. Review changelog/version/support matrix together. Complete the adapted release checklist with evidence links, approver/date, and owned residual risks with review/expiry dates. Publish via the existing GitHub `release: published` workflow after its prerequisites are met, then fresh-install the published distribution and verify artifact identity. |
+
+Execute R1, then R3's recovery/readiness work, then R2 publication. R3's recurring
+reviews and published-install monitoring continue afterward; rollback procedures
+and support ownership must exist before release.
+
+R3's library observability consists of user-controlled warnings/errors, reproducible
+bug reports, CI/reference/benchmark trends, and release-install results. Review
+these at each release and monthly maintenance triage; name the owner and retained
+evidence location. Log at an owning application boundary only if an application
+opts in. A runtime telemetry collector, event schema, storage service, or automatic
+usage reporting requires a separate user need and privacy design. Any improvement
+selected from trends needs baseline and later assessment windows, expected outcome,
+guardrails, and an explicit inconclusive/regressed disposition.
+
+## 5. Required evidence for each implementation PR
+
+- A bounded problem, supported behavior, dependencies, and acceptance criteria
+  referenced by task ID.
+- Regression tests for actual defects; independent algebraic/reference checks for
+  statistical claims. State floating-point tolerances and why they are appropriate.
+- Existing lint, formatting, typing, import-boundary, test/coverage, and build gates
+  as documented in [CONTRIBUTING.md](CONTRIBUTING.md).
+- Focused properties: partition reconstruction, tied values, weighted/unweighted
+  equivalence, zero-weight omission under `drop`, row permutation of estimates,
+  and affine slope changes including sign reversal. Do not require identical plot
+  sampling or group order unless those are promised contracts.
+- Changes to user docs, exports, and changelog where observable behavior changes.
+- A completion entry with PR/commit, checks, remaining limitations, and release
+  impact. Keep the task open if an acceptance criterion is missing.
+- At each milestone and before release, an evidence-based adversarial review using
+  the template rubric; map existing P1 findings to High and P2 findings to Medium,
+  escalate any credible critical risk, and record dispositions and owners. Use
+  a bounded loop for material work: objective, invariants, new evidence per pass,
+  predeclared iteration/time/compute ceilings, pass threshold, diminishing-return
+  stop, and domain-escalation trigger. Do not treat repeated self-review as
+  independent approval. Findings that affect supported correctness, security, or
+  data integrity block qualification until resolved or explicitly withdrawn from
+  supported scope.
+
+Pinned integration comparisons belong in a required CI job. Scheduled comparisons
+against newer dependencies detect drift. A numerical disagreement is investigated
+before relaxing tolerances; a reference is valid only for a matched estimand,
+weights, partition, covariance correction, and degrees of freedom.
+
+## 6. Architecture constraints
+
+Keep orchestration in `api.py`/`comparison.py`, input handling in
+`input_data.py`/`prepared_data.py`, statistical estimators in `core/`, and
+result presentation in the result/table/summary/serialization modules. Keep
+Matplotlib rendering in `viz/`; numerical presentation policy already has its
+own `viz/layer_policy.py`.
+
+Import-linter enforces dependency boundaries, including no core-to-Matplotlib path
+and no visualization-to-entry-point path. It cannot prove that drawing code
+contains no statistical calculations. Review and behavioral/architecture tests
+must enforce that distinction; presentation calculations are legitimate there.
+
+Do not create the old proposed `variance.py`, dataset tree, or extra result modules
+merely to match a diagram. Extract modules when the validated implementation has
+a clear responsibility to move. Estimation remains usable without calling plotting;
+themes remain opt-in and restore global state even after exceptions.
+
+## 7. Deferred feature queue
+
+These are ordered discovery candidates **after M5**, not release commitments.
+Each needs a user problem, explicit estimand, design, independent validation,
+maintenance cost, and acceptance criteria before implementation.
+
+| Order | Candidate | Entry condition |
+|---|---|---|
+| F1 | Uniform confidence bands through an optional binsreg adapter | Specify the fitted function, adjustment, bias correction, simultaneous domain, weights/clusters, and reproducible simulation controls. Validate against upstream. Do not attach bands for a different estimand to the existing descriptive result. |
+| F2 | Conditional quantile regression | Specify quantile-loss estimation, controls, weight semantics, and inference. Median/IQR bin summaries may be a separate descriptive feature; do not reuse least-squares FWL or label IQR as estimator uncertainty. |
+| F3 | Formula interface | Demonstrated demand, explicit categorical/intercept/missingness behavior, equivalence with the existing API, optional dependency. |
+| F4 | `hue=` convenience | Demonstrated usability gap beyond `compare(group=...)`; reuse the settled grouped coordinate and partition contracts. |
+| F5 | Polars input optimization | Benchmarks establish conversion as a material bottleneck; define copies and supported dtypes before adding an optional path. |
+
+ReadTheDocs slug reservation, speculative competitor claims, launch-week setup
+tasks, and the obsolete pyproject skeleton are removed from the delivery queue.
+Applicable production-template adoption is tracked in M0, P3, and R1–R3. Git history
+preserves the original plan. This plan is the source for priorities; the README,
+API reference, and executable tests describe released behavior.
+
+## 8. Completion record
+
+| Date | Task | Evidence | Status |
+|---|---|---|---|
+| 2026-09-12 | Adversarial plan revision | [Review and reproductions](docs/project-plan-review.md); baseline 160 tests / 90.41% coverage | Plan rewritten; C1–R3 remain open |
+| 2026-09-12 | Production-template alignment | [Requirement mapping and verification](docs/template-alignment.md), [brief](PROJECT_BRIEF.md), [proposed ADR](docs/decisions/0001-existing-library-baseline.md) | Planning records added; adoption and implementation gates remain open |
