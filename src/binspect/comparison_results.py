@@ -64,7 +64,12 @@ class BinscatterCollection:
 
     @property
     def table(self) -> pd.DataFrame:
-        """Return per-bin estimates for all groups as a DataFrame."""
+        """Return occupied intervals by group, retaining original bin IDs/bounds.
+
+        With common bins, equal IDs identify equal intervals across groups. With
+        independent bins, IDs are local to each group's partition. Empty intervals
+        have no row, so IDs need not be contiguous.
+        """
         return pd.concat(
             [
                 _add_group_column(result.table, "group", group)

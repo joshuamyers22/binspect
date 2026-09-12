@@ -12,7 +12,7 @@ from numpy.typing import ArrayLike
 
 from .api import binscatter
 from .comparison_results import BinscatterCollection as BinscatterCollection
-from .exceptions import InsufficientDataError
+from .exceptions import InsufficientDataError, InvalidBinningError
 from .input_data import column as _column
 from .input_data import control_frame as _control_frame
 from .input_data import labels as _labels
@@ -90,6 +90,8 @@ def compare(
     controls : str, sequence of str, or array_like, optional
         Variables partialled out of ``x`` and ``y`` within the pooled sample and
         each group. String values select columns from ``data``.
+        Requires ``common_bins=False``: each sample restores its own means after
+        adjustment, so the adjusted coordinates do not share a common partition.
     cluster : str or array_like, optional
         Cluster identifier used for CR1 cluster-robust uncertainty in the pooled and
         group-specific estimates.
@@ -101,6 +103,8 @@ def compare(
     common_bins : bool, default True
         If True, select bin edges from the pooled sample and use those edges for
         every group. If False, select bins independently within each group.
+        Shared table bin IDs refer to the same original interval even when other
+        intervals are empty in a group. Independent IDs are local to each sample.
 
     Returns
     -------
@@ -110,7 +114,8 @@ def compare(
     Notes
     -----
     Common edges support comparisons at the same values of ``x``. Empty intervals
-    can still be merged within a group, so the number of nonempty bins may differ.
+    have no estimated row, so the number of nonempty bins may differ, but original
+    interval IDs and bounds are retained in tables and JSON.
     Their rule is recorded as ``"pooled"`` with the pooled selection rule in
     ``result.binning.source_rule``. DPI selection supports neither weights,
     controls, nor clusters; see :func:`binspect.binscatter`.
@@ -120,6 +125,13 @@ def compare(
     binspect.binscatter
         Estimate a single binned scatterplot.
     """
+    if common_bins and controls is not None:
+        raise InvalidBinningError(
+            "controls with common_bins=True are not supported: pooled and "
+            "within-group adjustment use different coordinates. Pass "
+            "common_bins=False to fit and bin each group independently."
+        )
+
     y_values, y_name = _column(data, y, "y")
     x_values, x_name = _column(data, x, "x")
     group_values, group_name = _group_values(data, group)
@@ -163,7 +175,7 @@ def compare(
     )
     pooled = replace(pooled, x_name=x_name, y_name=y_name, cluster=cluster_name)
     group_bins: int | str | ArrayLike
-    group_bins = pooled.binning.edges if common_bins else bins
+    group_bins = pooled.binning.partition_edges if common_bins else bins
 
     labels = pd.unique(group_values[group_ok])
     results: dict[Hashable, BinscatterResult] = {}
@@ -186,8 +198,8 @@ def compare(
                 ci=ci,
                 dropna=dropna,
             )
-        except InsufficientDataError as exc:
-            raise InsufficientDataError(f"group {label!r}: {exc}") from exc
+        except (InsufficientDataError, InvalidBinningError, ValueError) as exc:
+            raise type(exc)(f"group {label!r}: {exc}") from exc
         if common_bins:
             result = replace(
                 result,

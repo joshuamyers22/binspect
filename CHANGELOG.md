@@ -7,6 +7,10 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Fixed
+- Grouped tables and JSON retain original interval IDs and bounds when bins are
+  empty, so groups with disjoint support no longer report renumbered or stretched
+  intervals as matching bins. Group-specific binning and value errors now identify
+  the group while preserving their exception type and cause.
 - Plain `import binspect` and ordinary estimation defer Matplotlib initialization
   until a plotting export or method is requested, avoiding font-cache background
   work during non-plotting use. Public `THEMES` and `theme` imports remain available.
@@ -17,11 +21,21 @@ All notable changes to this project are documented here. The format follows
 - The missing-DPI-dependency message now names `binspect-regression[dpi]`.
 
 ### Changed
+- `compare(controls=..., common_bins=True)` now raises an explicit unsupported-
+  combination error. Use `common_bins=False` for independently adjusted group
+  fits; pooled and within-group adjustment do not share a common coordinate system.
+- Table `bin` values identify the original partition interval and can contain gaps.
+  Estimation arrays and `binning.assignment` keep compact indices. Consumers joining
+  grouped rows should use IDs only when `common_bins=True`; use `x_lo`/`x_hi` for
+  original bounds instead of compressed `binning.edges`.
 - DPI selection now rejects `weights`, `controls`, and `cluster` until those
   integrations are validated. Previously these options were omitted from the
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- `binning.partition_edges` and `binning.interval_ids`, also included in JSON,
+  preserve full partition boundaries and occupied interval identity. Legacy
+  compressed edges and no-gap table behavior remain available.
 - `bin_rule` on results and rule/source/fallback metadata on partitions; JSON and
   summary exports include selection provenance and requested/actual bin counts.
   Grouped estimates using pooled edges identify the pooled source rule.

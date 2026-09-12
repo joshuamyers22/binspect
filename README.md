@@ -71,6 +71,21 @@ comparison.plot(sharex=True, sharey=True)
 Pass `common_bins=False` to select bins separately within each group. The pooled
 estimate remains available as `comparison.pooled`.
 
+When using `controls=`, set `common_bins=False`. Pooled and group fits adjust
+separately and restore their own means, so their adjusted coordinates do not share
+a common partition. Shared bins with controls raise an explicit error until a
+common adjusted-coordinate contract is validated.
+
+Tables include only occupied intervals. With shared bins, the `bin` ID and
+`x_lo`/`x_hi` bounds refer to the same original interval across groups; IDs can
+have gaps where a group has no observations. With independent bins, IDs are local
+to each partition and should not be used to join groups as matching x ranges.
+`binning.partition_edges` preserves the complete partition and
+`binning.interval_ids` maps the compact estimation arrays to those intervals.
+The older `binning.edges` remains a compressed partition that folds in empty
+intervals; use the table or full partition for interval comparisons. JSON includes
+the complete partition and interval IDs.
+
 Use `cluster=` when observations share shocks within a firm, person, location, or
 other sampling unit:
 

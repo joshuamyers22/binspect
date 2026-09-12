@@ -141,16 +141,24 @@ def test_dpi_refuses_custom_spacing_before_backend(selection_data, backend):
 
 
 @pytest.mark.parametrize("option", ["weights", "controls", "cluster"])
-@pytest.mark.parametrize("grouped", [False, True])
+@pytest.mark.parametrize("common_bins", [None, False, True])
 def test_unsupported_dpi_options_are_not_silently_ignored(
-    selection_data, backend, option, grouped
+    selection_data, backend, option, common_bins
 ):
     x, y = selection_data
     options = {option: np.ones(x.size)}
-    if grouped:
+    if common_bins is not None:
         options["group"] = np.repeat(["a", "b"], x.size // 2)
-    estimate = binspect.compare if grouped else binspect.binscatter
-    with pytest.raises(InvalidBinningError, match=f"DPI.*{option}"):
+        options["common_bins"] = common_bins
+    estimate = binspect.compare if common_bins is not None else binspect.binscatter
+    # The coordinate guard takes precedence when both combinations are invalid.
+    # Independent groups still reach the DPI-specific guard before the backend.
+    message = (
+        "controls with common_bins=True"
+        if common_bins is True and option == "controls"
+        else f"DPI.*{option}"
+    )
+    with pytest.raises(InvalidBinningError, match=message):
         estimate(x=x, y=y, bins="dpi", **options)
     assert backend[1] == []
 

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-import numpy as np
 import pandas as pd
 
 if TYPE_CHECKING:
@@ -12,14 +11,15 @@ if TYPE_CHECKING:
 
 
 def bin_table(result: BinscatterResult) -> pd.DataFrame:
-    """Return per-bin estimates as a DataFrame."""
+    """Return occupied intervals with original IDs and bounds as a DataFrame."""
     estimates = result.estimates
-    edges = result.binning.edges
+    edges = result.binning.partition_edges
+    interval_ids = result.binning.interval_ids
     columns: dict[str, Any] = {
-        "bin": np.arange(result.n_bins, dtype=int),
+        "bin": interval_ids,
         "n": estimates.n,
-        "x_lo": edges[:-1],
-        "x_hi": edges[1:],
+        "x_lo": edges[interval_ids],
+        "x_hi": edges[interval_ids + 1],
         "x_mean": estimates.x_mean,
         "y_mean": estimates.y_mean,
         "y_sd": estimates.y_sd,

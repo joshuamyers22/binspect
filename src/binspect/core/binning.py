@@ -3,8 +3,10 @@
 Tie convention
 --------------
 An observation whose ``x`` falls exactly on an interior edge is assigned to the
-*lower* bin. Bin ``j`` therefore covers the half-open interval ``(e[j], e[j + 1]]``,
-with the leftmost bin closed on both ends. This makes quantile bins uneven when
+*lower* interval. Original interval ``j`` therefore covers ``(e[j], e[j + 1]]``
+in ``partition_edges``, with the leftmost interval closed on both ends. Compact
+estimation indices map to these intervals through ``interval_ids``.
+This makes quantile bins uneven when
 ``x`` is discrete, which is the honest outcome: the alternative silently splits
 identical x values across different bins.
 """
@@ -32,7 +34,16 @@ class Binning:
     Attributes
     ----------
     edges : ndarray
-        Bin boundaries, length ``n_bins + 1``, strictly increasing.
+        Legacy compressed boundaries, length ``n_bins + 1``, strictly increasing.
+        Empty intervals are folded into occupied ones. Use ``partition_edges``
+        and ``interval_ids`` for original interval bounds and cross-group identity.
+    partition_edges : ndarray
+        Complete strictly increasing partition before removing empty intervals.
+        Duplicate quantile boundaries have already been removed.
+    interval_ids : ndarray
+        Original interval ID for each compact estimation bin, length ``n_bins``.
+        May contain gaps. The corresponding bounds are
+        ``partition_edges[interval_ids]`` and ``partition_edges[interval_ids + 1]``.
     assignment : ndarray
         Integer bin index in ``[0, n_bins)`` for every observation, same order and
         length as the input ``x``.
@@ -60,6 +71,20 @@ class Binning:
     rule: str = "fixed"
     source_rule: str | None = None
     fallback: str | None = None
+    _partition_edges: FloatArray | None = None
+    _interval_ids: IntArray | None = None
+
+    @property
+    def partition_edges(self) -> FloatArray:
+        """Return the full partition, including intervals with no observations."""
+        return self.edges if self._partition_edges is None else self._partition_edges
+
+    @property
+    def interval_ids(self) -> IntArray:
+        """Map compact estimation indices to original partition interval IDs."""
+        if self._interval_ids is None:
+            return np.arange(self.n_bins, dtype=np.int64)
+        return self._interval_ids
 
     @property
     def was_reduced(self) -> bool:
@@ -218,6 +243,8 @@ def compute_binning(
         method=method,
         requested_bins=requested,
         rule="custom" if method == "custom" else "fixed",
+        _partition_edges=partition_edges,
+        _interval_ids=occupied,
     )
 
     counts = binning.counts()

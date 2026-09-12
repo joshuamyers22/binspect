@@ -270,6 +270,9 @@ def test_table_survives_empty_outer_custom_bin():
     assert result.n_bins == 2
     assert result.binning.edges.size == result.n_bins + 1
     assert len(result.table) == result.n_bins
+    assert result.table["bin"].tolist() == [1, 2]
+    assert result.table["x_lo"].tolist() == [1.0, 2.0]
+    assert result.table["x_hi"].tolist() == [2.0, 3.0]
 
 
 def test_nan_rows_are_dropped(linear):
