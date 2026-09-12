@@ -20,6 +20,8 @@ EXPECTED_COLUMNS = [
     "se",
     "ci_lo",
     "ci_hi",
+    "n_positive",
+    "n_effective",
 ]
 
 
@@ -42,6 +44,8 @@ def test_table_schema_and_shape(linear):
     assert list(table.columns) == EXPECTED_COLUMNS
     assert len(table) == 12
     assert table["n"].sum() == len(linear)
+    np.testing.assert_array_equal(table["n_positive"], table["n"])
+    np.testing.assert_allclose(table["n_effective"], table["n"])
     assert table["x_mean"].is_monotonic_increasing
 
 

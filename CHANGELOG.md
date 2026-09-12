@@ -7,6 +7,9 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Fixed
+- Diagnostic support excludes retained zero-weight rows and uses effective sample
+  size for unequal weights. Signed SD and deviation-layer explanations now state
+  the absolute-correlation identity and distinguish visual marks from squared gap.
 - Control projection and numerical-rank checks normalize design columns, retaining
   identified slope/df behavior when control units change or columns are redundant.
   `x` in the numerical control span on positive-weight rows now raises
@@ -25,6 +28,9 @@ All notable changes to this project are documented here. The format follows
 - The missing-DPI-dependency message now names `binspect-regression[dpi]`.
 
 ### Changed
+- `underpowered bins` is now `limited support`; no power calculation is implied.
+  Constant outcomes and clustered results without an explicit cluster threshold
+  return `not assessed` with an exported reason. Numerical estimates are unchanged.
 - With controls, public bin SEs, confidence limits and reference df are unavailable
   (NaN / JSON null), with `ci_level=None` and explicit inference status, following
   failed population-coverage validation. Means, dispersion and slope SEs remain.
@@ -42,6 +48,12 @@ All notable changes to this project are documented here. The format follows
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- Immutable `DiagnosticPolicy` for `binscatter` and `compare`, with configurable
+  gap/effective-row/cluster thresholds and `None` to disable classification.
+  Exports distinguish retained, positive-weight and effective rows, plus policy
+  values, support minima and decision reasons.
+- Locked binsreg method checks document control uncertainty, higher-degree
+  function intervals and small-cluster warnings/fallbacks as independent references.
 - A prespecified nonflat/DPI and few-cluster development coverage gate with a
   retained aggregate report and tested failure accounting. Uneven-cluster
   undercoverage remains explicit evidence for qualified review, not a passing

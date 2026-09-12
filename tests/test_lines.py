@@ -1,5 +1,4 @@
-"""The OLS line is the SD line flattened by r. That is an identity, so it is
-tested as an equality, not a tolerance."""
+"""The OLS slope equals abs(r) times the signed SD reference slope."""
 
 from __future__ import annotations
 
@@ -9,11 +8,18 @@ import pytest
 from binspect.core.lines import fit_ols, fit_sd_line
 
 
-def test_ols_slope_is_sd_slope_shrunk_by_r(linear):
-    x, y = linear["x"].to_numpy(), linear["y"].to_numpy()
-    fit = fit_ols(x, y)
-    sd = fit_sd_line(x, y)
-    assert fit.slope == pytest.approx(fit.r * sd.slope, rel=1e-12)
+@pytest.mark.parametrize("sign", [-1, 0, 1])
+@pytest.mark.parametrize("weighted", [False, True])
+def test_ols_slope_is_sd_slope_shrunk_by_absolute_r(sign, weighted):
+    x = np.tile([-2.0, -1.0, 1.0, 2.0], 30)
+    y = sign * x + x**2
+    w = np.tile([2.0, 1.0, 1.0, 2.0], 30) if weighted else None
+    fit = fit_ols(x, y, weights=w)
+    sd = fit_sd_line(x, y, weights=w)
+    assert fit.slope == pytest.approx(abs(fit.r) * sd.slope, rel=1e-12, abs=1e-14)
+    if sign == 0:
+        assert fit.r == 0
+        assert sd.slope > 0
 
 
 def test_sd_line_is_steeper(linear, concave, negative):

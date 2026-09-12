@@ -40,6 +40,8 @@ adjusted.plot()  # axes are explicitly labelled as adjusted
 Residualized variables retain their original means, keeping the plot on a familiar
 scale. Categorical controls are indicator-encoded and a constant is included
 automatically. With `weights=`, the projection uses the same reliability weights.
+FWL preserves the coefficient fitted to observation-level residuals. A regression
+on the displayed bin means generally has a different slope.
 
 Zero-weight observations are retained by default: they can affect bin boundaries,
 unweighted bin counts, and stored descriptive arrays, but never point estimates or
@@ -197,6 +199,33 @@ SS_lof = Σⱼ nⱼ (ȳⱼ − ŷ(x̄ⱼ))²      gap = SS_lof / SS_total
 
 which is nonnegative by construction and corresponds to the deviations shown in the
 plot. This quantity is descriptive and is not a formal test of linearity.
+
+## Diagnostic policy
+
+Verdicts are configurable descriptive heuristics. The defaults use a gap threshold
+of 0.02 and require at least 30 effective rows in every bin. `linear` means the gap
+falls below that chosen cutoff; it is not evidence from a specification test.
+`limited support` replaces the former `underpowered bins` label. Constant outcomes
+and clustered results without an explicit cluster threshold are `not assessed`.
+
+```python
+policy = binspect.DiagnosticPolicy(gap_threshold=0.05, min_bin_effective_n=40)
+screened = binspect.binscatter(df, y="sales", x="age", diagnostic_policy=policy)
+descriptive = binspect.binscatter(df, y="sales", x="age", diagnostic_policy=None)
+```
+
+`compare` applies the same policy to pooled and group results. An explicit
+`min_bin_clusters` enables clustered classification using both cluster and effective
+row thresholds; it does not validate confidence coverage. Policy values, support
+minima and decision reasons are exported in decomposition/summary records.
+`n_obs` and bin `n` count retained rows; `n_positive` and `n_effective` separately
+report positive-weight and Kish effective rows. Cluster counts remain separate.
+Retained zero-weight rows cannot supply diagnostic support.
+
+The signed SD reference obeys `OLS slope = abs(correlation) * SD slope`, including
+negative relationships. At exactly zero covariance its orientation is positive;
+constant y gives zero slope. Deviation marks show signed departures; displayed
+area or length does not equal the weighted squared gap.
 
 ## Status
 

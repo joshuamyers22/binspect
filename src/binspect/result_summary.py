@@ -43,6 +43,8 @@ def summarize(result: BinscatterResult) -> str:
         f"{'Min. Bin Size:':>22}{decomposition.min_bin_n:>12,}",
         f"{'Bin rule:':<20}{result.bin_rule:>14}"
         f"{'Requested bins:':>22}{result.binning.requested_bins:>12,}",
+        f"{'Positive rows:':<20}{result.n_positive:>14,}"
+        f"{'Effective rows:':>22}{result.n_effective:>12.2f}",
         *(
             [f"{'Controls:':<20}{_controls_label(result.controls):>48}"]
             if result.controls
@@ -75,10 +77,26 @@ def summarize(result: BinscatterResult) -> str:
 
 
 def _verdict_note(decomposition: Decomposition) -> str:
-    if decomposition.verdict == "underpowered bins":
+    if decomposition.verdict == "not assessed":
+        if decomposition.verdict_reason == "constant outcome":
+            return (
+                "The positive-weight outcome is constant; zero gap is a convention, "
+                "not evidence for linearity."
+            )
+        if decomposition.verdict_reason == "cluster policy required":
+            return (
+                "Clustered verdicts require an explicit descriptive cluster threshold. "
+                "Cluster counts cannot guarantee reliable inference."
+            )
         return (
-            f"The smallest bin has {decomposition.min_bin_n} observations; sampling "
-            "variation may dominate the lack-of-fit measure."
+            "Diagnostic classification is disabled; the numerical decomposition "
+            "remains available."
+        )
+    if decomposition.verdict == "limited support":
+        return (
+            f"Diagnostic support is limited: {decomposition.verdict_reason}. "
+            f"Minimum effective rows {decomposition.min_bin_effective_n:.2f}; "
+            f"minimum represented clusters {decomposition.min_bin_clusters}."
         )
     if decomposition.verdict == "curvature":
         return (
@@ -115,7 +133,18 @@ def _summary_notes(
         uncertainty_note,
         "Lack of fit is descriptive; the verdict is not a formal test.",
         _verdict_note(decomposition),
+        "Observation and bin counts include retained zero-weight rows; positive "
+        "and effective row counts describe estimation support, "
+        "not independent clusters.",
     ]
+    policy = decomposition.diagnostic_policy
+    if policy is not None:
+        notes.append(
+            f"Descriptive policy: gap threshold {policy.gap_threshold:g}; "
+            f"minimum effective rows per bin {policy.min_bin_effective_n:g}; "
+            f"minimum clusters per bin {policy.min_bin_clusters}. "
+            "These are heuristic cutoffs, not significance or power thresholds."
+        )
     if controls:
         notes.append(
             "The displayed variables were residualized on the listed controls "

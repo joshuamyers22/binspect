@@ -147,7 +147,9 @@ def fit_sd_line(
     -----
     The slope is ``sign(r) * sd_y / sd_x`` and the line passes through the weighted
     means of ``x`` and ``y``. The weighted least-squares slope equals this slope
-    multiplied by the correlation coefficient.
+    multiplied by the absolute correlation, including negative relationships.
+    At exactly zero covariance the SD reference takes positive orientation;
+    constant y gives a zero slope. Neither case establishes a linear relationship.
 
     The reference is descriptive and is not an additional fitted model.
     """
