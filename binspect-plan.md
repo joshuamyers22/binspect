@@ -5,8 +5,11 @@ Updated 2026-09-12 against `main` at `59c6a39`, package version `0.1.1`.
 **Current work: C3 — optional binsreg function inference, at the user's request.**
 The [committed adapter protocol](docs/BINSREG_ADAPTER_PLAN.md) precedes simulations.
 `feat/binsreg-inference` implements a separate original-coordinate function result,
-full control covariance and explicit upstream few-cluster fallbacks. Matched
-backend checks pass locally; coverage evidence and the full gate are in progress.
+full control covariance and explicit upstream few-cluster fallbacks. The
+[implementation evidence](docs/binsreg-adapter-review.md) records passing matched
+references and the full gate. Development function coverage at nominal 95% is
+93.6% iid DPI, 94.3% with 60 balanced clusters and 42.4% with three uneven clusters;
+the last is a preserved diagnostic failure, not a few-cluster coverage solution.
 C3 statistical acceptance remains open. The
 [binsreg reference review](docs/binsreg-reference-review.md) is complete and its
 method checks are mandatory. The [C4 correction](docs/diagnostic-policy-review.md)
@@ -401,3 +404,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | C3 — adjusted inference boundary and numerical identification | [Correction and evidence](docs/adjusted-inference-boundary-review.md); 251 unit tests, 46 integration/reference tests, 92.49% coverage, required development coverage/build gates pass | Adjusted-bin uncertainty withheld; numerical control-span guard and rescaled/redundant-control/few-cluster references implemented. Pending review/integration; expanded coverage and qualified C3 acceptance remain open. |
 | 2026-09-12 | C3 — expanded development coverage | [Prespecified protocol](docs/EXPANDED_COVERAGE_PLAN.md), [clean-commit report and review](docs/expanded-coverage-review.md); 262 unit tests, 46 integrations/references, 92.49% coverage, both development protocols and builds pass | Required sanity cases pass; uneven-cluster bin coverage is 78.2% (80.7% weighted), preserved as diagnostic failure. Qualified support-policy/protocol review and locked assessment remain open. |
 | 2026-09-12 | C3 reference review and C4 diagnostic policy | [Binsreg source/method review](docs/binsreg-reference-review.md), [C4 contract and verification](docs/diagnostic-policy-review.md); 296 unit tests, 50 integrations/references, 92.60% coverage, both development protocols and builds pass | Explicit policies, opt-out, accurate support and signed-SD/display claims implemented. Default clustered/constant outcomes unassessed. Pending review/integration; C3 final assessment/acceptance remain open. |
+| 2026-09-12 | C3 — requested binsreg function adapter | [Committed protocol](docs/BINSREG_ADAPTER_PLAN.md), [implementation and clean development evidence](docs/binsreg-adapter-review.md); 334 unit tests, 72 integrations/references, 93.18% coverage, all three development protocols and builds pass | Original-coordinate adjusted function inference and explicit fallbacks implemented. Three uneven clusters give 42.4% coverage against the function target. Draft review/integration and qualified C3 acceptance/final assessment remain open; next independent item A1. |

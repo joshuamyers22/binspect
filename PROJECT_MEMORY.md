@@ -25,7 +25,7 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `control-identification` | Weighted design columns are normalized for projection and numerical rank. Redundant controls are allowed if x adds rank; x in the numerical control span on positive-weight rows raises InsufficientDataError. This is not a near-singular accuracy guarantee. | [API regressions](tests/test_adjusted_inference_boundary.py), [independent references](tests/integration/test_inference.py) | 2026-09-12 |
 | `uneven-cluster-coverage` | Expanded development finds 78.2% bin coverage at nominal 95% with three clusters sized 480/60/60 (80.7% weighted); unweighted slope coverage is 91.7%. Arithmetic agreement and passing balanced cases do not establish a safe cluster threshold. Seeds 81000–81007 remain reserved and unrun. | [Prespecification](docs/EXPANDED_COVERAGE_PLAN.md), [results](docs/expanded-coverage-review.md) | 2026-09-12 |
 | `binsreg-reference` | Requested upstream review confirms a different adjusted function target with full control covariance by default, higher-degree DPI function intervals, and warnings/fallbacks for few clusters. It supplies no safe cluster-count guarantee or author endorsement of binspect. | [Source review and locked tests](docs/binsreg-reference-review.md) | 2026-09-12 |
-| `binsreg-adapter` | User-requested `binspect.binsreg` adds original-coordinate function inference with full coefficient covariance and copied tables. Backend 3.2.1 references pass; unknown warnings/versions are unverified. Few-cluster degree-0 fallbacks remain limited support. Development coverage/full-gate evidence is in progress; assessment seeds 95000–95002 are reserved and unrun. | [Prespecified contract](docs/BINSREG_ADAPTER_PLAN.md), [matched references](tests/integration/test_binsreg_adapter.py) | 2026-09-12 |
+| `binsreg-adapter` | User-requested `binspect.binsreg` adds original-coordinate function inference with full coefficient covariance and copied tables. Backend 3.2.1 references and full gate pass; unknown warnings/versions are unverified. Development coverage is 93.6% iid DPI, 94.3% with 60 clusters, 42.4% with three uneven clusters at nominal 95%. Few-cluster degree-0 fallback remains limited support. Assessment seeds 95000–95002 are reserved and unrun. | [Prespecified contract](docs/BINSREG_ADAPTER_PLAN.md), [clean evidence and review](docs/binsreg-adapter-review.md) | 2026-09-12 |
 | `diagnostic-policy` | DiagnosticPolicy uses effective rows, not retained zeros; None opts out. Constant outcomes and clustered estimates without explicit cluster thresholds are not assessed. Limited support replaces the power-implying label. Policies, reasons and distinct counts are exported. | [C4 contract](docs/diagnostic-policy-review.md), [tests](tests/test_diagnostic_policy.py) | 2026-09-12 |
 
 ## Open work
@@ -36,8 +36,9 @@ has withheld unsupported adjusted-bin uncertainty and added numerical references
 expanded development now records uneven-cluster undercoverage and the requested
 binsreg reference review is complete. C3 final assessment/acceptance remain open.
 C4's independent descriptive correction is implemented. The user moved the binsreg
-adapter ahead of A1; it is implemented locally with coverage/full-gate verification
-pending. A1 ownership/mutation is the next independent implementation item. Governance/security
+adapter ahead of A1; implementation, references and development/full-gate verification
+are complete, pending review/integration. Few-cluster coverage remains unsupported.
+A1 ownership/mutation is the next independent implementation item. Governance/security
 acceptance and C3's qualified statistical
 review belong to the maintainer; no such approval is implied by agent work.
 

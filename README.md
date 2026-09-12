@@ -177,6 +177,9 @@ requested spacing is not certified in that path.
 Unrecognized warnings or an unvalidated backend version give `unverified_method`.
 The locked reference version is binsreg 3.2.1. See the
 [adapter protocol](docs/BINSREG_ADAPTER_PLAN.md) for the target and coverage scope.
+Prespecified development coverage at nominal 95% was 93.6% for adjusted iid DPI,
+94.3% with 60 balanced clusters and 42.4% for the three-uneven-cluster fallback.
+See the [results and limitations](docs/binsreg-adapter-review.md).
 
 `BinsregResult` has separate copied dot/interval tables, metadata and strict-JSON
 `to_dict()` output. It supplies function estimates without an FWL slope or gap
