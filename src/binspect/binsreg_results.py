@@ -6,7 +6,6 @@ from copy import deepcopy
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-import numpy as np
 import pandas as pd
 
 from .result_serialization import json_value
@@ -72,23 +71,6 @@ class BinsregResult:
 
     def plot(self, ax: Axes | None = None) -> Axes:
         """Draw dots and intervals around their own fitted centers."""
-        import matplotlib.pyplot as plt
+        from .viz.binsreg import plot
 
-        if ax is None:
-            _, ax = plt.subplots()
-        ax.scatter(self._dots.x, self._dots.fit, label="Dot fit")
-        ci = self._intervals
-        if len(ci):
-            center = ci["fit"].to_numpy()
-            ax.errorbar(
-                ci.x,
-                center,
-                yerr=np.vstack((center - ci.ci_lo, ci.ci_hi - center)),
-                fmt="x",
-                label="Interval fit",
-            )
-        ax.set_xlabel(self._metadata["x_name"])
-        ax.set_ylabel(f"{self._metadata['y_name']} (function estimate)")
-        ax.set_title(f"binsreg: {self._metadata['inference_status']}")
-        ax.legend()
-        return ax
+        return plot(self, ax=ax)
