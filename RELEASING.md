@@ -25,7 +25,9 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
 
 1. Complete the readiness record and obtain release authorization; ensure CI passes
    on the exact `main` commit and the working tree is clean.
-2. Update `CHANGELOG.md` and remove the development suffix from `__version__`.
+2. Set the chosen release version in `__version__` and update `CHANGELOG.md`.
+   The current value is 0.1.1 with no development suffix; the proposed 0.2.0
+   allocation still requires acceptance and release qualification.
 3. Run the checks documented in `CONTRIBUTING.md` and inspect both distributions.
 4. Commit the release changes and push `main`.
 5. Create a GitHub release whose tag exactly matches `v{__version__}`.
@@ -33,3 +35,7 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
 7. Verify the new PyPI page and install the wheel into a fresh environment.
 
 The workflow refuses to publish when the GitHub tag and package version differ.
+Its trigger is a **published GitHub release**; pushing a tag alone does not publish
+the package. Documentation builds are a separate CI job and do not deploy a site.
+Site publication requires configured hosting, a strict passing build and explicit
+maintainer authorization; D1 adds no deployment credentials or publishing workflow.
