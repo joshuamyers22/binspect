@@ -19,15 +19,16 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 
 | Key | Failure / implication | Evidence | Verified |
 |---|---|---|---|
-| `grouped-adjustment` | Pooled and group-specific residual coordinates can differ; common edges can fail. Do not repair merely by widening them. | [AR4 reproduction](docs/project-plan-review.md), C2 in [plan](binspect-plan.md) | 2026-09-12 |
+| `grouped-adjustment` | Shared bins with controls are explicitly rejected; independent group adjustment remains supported. Tables preserve original interval IDs/bounds while estimation indices stay compact. Do not join independent partitions by ID or enable shared adjusted coordinates by widening edges. | [C2 contract and evidence](docs/grouped-interval-review.md), [regressions](tests/test_grouped_intervals.py) | 2026-09-12 |
 | `frozen-arrays` | Frozen result dataclasses still expose mutable arrays; mutation can desynchronize stored results. | [AR9 reproduction](docs/project-plan-review.md), A1 in [plan](binspect-plan.md) | 2026-09-12 |
 | `inference-evidence` | Observation-level FWL does not prove adjusted-bin coverage; signed SD slope shrinks by abs(r). | [statistical contracts](binspect-plan.md), C3/C4 | 2026-09-12 |
 
 ## Open work
 
 The [plan](binspect-plan.md) owns ordering and task status. G1/G2 records are
-prepared for review; C2 is the next numerical implementation task after relevant
-baseline decisions. Governance/security acceptance and C3's qualified statistical
+prepared for review; C2's bounded guard/identity correction is implemented, and C3
+is the next numerical task after relevant baseline decisions. Governance/security
+acceptance and C3's qualified statistical
 review belong to the maintainer; no such approval is implied by agent work.
 
 Owner for these retrieval pointers: Josh Myers. Review before the next affected

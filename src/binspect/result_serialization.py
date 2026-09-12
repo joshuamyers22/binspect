@@ -30,6 +30,12 @@ def serialize_result(result: BinscatterResult) -> dict[str, Any]:
             "requested_bins": result.binning.requested_bins,
             "n_bins": result.n_bins,
             "edges": [json_value(value) for value in result.binning.edges],
+            "partition_edges": [
+                json_value(value) for value in result.binning.partition_edges
+            ],
+            "interval_ids": [
+                json_value(value) for value in result.binning.interval_ids
+            ],
         },
         "fit": {
             "slope": json_value(result.fit.slope),

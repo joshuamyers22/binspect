@@ -121,7 +121,12 @@ class BinscatterResult:
 
     @property
     def table(self) -> pd.DataFrame:
-        """Return per-bin estimates as a DataFrame."""
+        """Return occupied intervals with original IDs and bounds.
+
+        ``bin`` identifies an interval in ``binning.partition_edges``. Empty
+        intervals have no row, so IDs may contain gaps; estimation arrays and
+        ``binning.assignment`` still use compact indices in ``[0, n_bins)``.
+        """
         return bin_table(self)
 
     @property

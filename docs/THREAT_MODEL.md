@@ -1,6 +1,7 @@
 # binspect library threat model
 
-Date: 2026-09-12. Scope: 0.1.1 plus the C1 correction at `f89e945`.
+Date: 2026-09-12. Scope: 0.1.1 plus the C1/C2 corrections and import isolation;
+see the [plan's completion evidence](../binspect-plan.md).
 Owner: Josh Myers. Prepared by Codex for maintainer review in G2.
 Review before affected API/resource/security changes and before each release.
 No residual-risk acceptance or production qualification is implied.
@@ -59,7 +60,7 @@ does not mean accepted. No exploit or secret is included in this record.
 | T1 | Malformed shape, null/nonfinite data, degenerate weights/design silently alter the sample or estimate. | API/preparation/binning checks and error-path tests; C1 verifies invalid DPI inputs. | A2/C3 broaden type, index, rank/conditioning and sample-count contracts. |
 | T2 | Huge bins, categorical expansion, many groups/clusters or rendering allocations exhaust caller resources. | Small-sample checks and DPI bound only; no general cap. Dense allocation identified in AR10. | P1 measured budgets, early rejection/bounded aggregation and hostile-size cases before capacity claims. |
 | T3 | Input/result aliasing corrupts stored fit/table/plot consistency. | Frozen outer dataclasses; AR9 demonstrates nested mutation. | A1 ownership/copy/read-only contract and tests. |
-| T4 | Unsupported covariance or mixed group coordinates produce credible but misleading output. | C1 explicit supported scope; descriptive caveats; existing matrix tests. | C2 coordinate repair, C3 independent inference/coverage validation, C4 accurate diagnostics. |
+| T4 | Unsupported covariance or mixed group coordinates produce credible but misleading output. | C1 explicit supported scope; C2 rejects shared adjusted coordinates and preserves interval identity ([regressions](../tests/test_grouped_intervals.py)); descriptive caveats. | Shared adjustment remains unsupported pending reviewed design; C3 independent inference/coverage validation, C4 accurate diagnostics. |
 | T5 | Labels, ranges, small bins, exports or exception messages disclose sensitive inputs. | No automatic telemetry/export; outputs are explicitly requested. Existing errors intentionally expose column names/ranges. | A2/G2 caller redaction contract; P3 scans retained evidence/artifacts. Do not promise redacted exceptions or anonymous aggregates. |
 | T6 | Import/estimation adds network connections, subprocesses, workers, or root logging configuration. | [Runtime-boundary tests](../tests/test_runtime_boundaries.py) exercise a fresh process with forbidden operations; existing theme tests cover scoped rcParams. | Preserve these regression contracts; they do not audit arbitrary dependencies/custom caller objects or every optional path. |
 | T7 | Modified dependency/action/build tooling substitutes a malicious artifact. | Frozen developer/CI lock and mostly pinned actions; publisher still uses mutable ref and release tools are unpinned. | P3 audits/licenses/secrets/pins/SBOM; R1 locked builds; R2 provenance and artifact verification. |

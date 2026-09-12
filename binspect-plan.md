@@ -2,7 +2,11 @@
 
 Updated 2026-09-12 against `main` at `59c6a39`, package version `0.1.1`.
 
-**Next implementation: C2 — grouped adjusted coordinates and interval identity.**
+**Next implementation: C3 — inference contract and independent references.**
+C2's explicit shared-controls rejection and original interval identity are
+implemented and locally verified on `fix/grouped-intervals`, pending review; see
+[C2 evidence](docs/grouped-interval-review.md). A shared adjusted estimand remains
+unsupported and needs a separate reviewed design before enabling it.
 G1–G2's repository guidance and threat model are prepared for maintainer review;
 see [G1/G2 evidence](docs/repository-baseline-review.md). Relevant baseline decisions
 remain prerequisites for broader contract changes. C1's DPI correction is in
@@ -363,3 +367,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | Production-template alignment | [Requirement mapping and verification](docs/template-alignment.md), [brief](PROJECT_BRIEF.md), [proposed ADR](docs/decisions/0001-existing-library-baseline.md) | Planning records added; adoption and implementation gates remain open |
 | 2026-09-12 | C1 — DPI selection | [Implementation and verification](docs/dpi-selection-review.md); `make check`: 209 unit tests, 6 real-library tests, 91.62% coverage, lint/types/imports/build passed; PR #7 CI passed | Pending maintainer review/integration. |
 | 2026-09-12 | G1/G2 — repository agreement and threat model | [Implementation, control audit and verification](docs/repository-baseline-review.md) | Prepared for review; policy/ADR and residual-risk acceptance remain open. Remote control changes are tracked for G1/P3/R1. |
+| 2026-09-12 | C2 — grouped coordinates and interval identity | [Contract and regressions](docs/grouped-interval-review.md); `make check`: 228 unit tests, 6 integration tests, 92.02% coverage, lint/types/imports/build passed | Explicit unsupported-combination guard and interval identity implemented; review/integration pending. Shared adjusted coordinates remain unavailable. |

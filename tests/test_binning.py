@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from binspect.core.binning import compute_binning
+from binspect.core.binning import Binning, compute_binning
 from binspect.exceptions import (
     BinCountWarning,
     InsufficientDataError,
@@ -19,6 +19,18 @@ def test_assignment_is_a_partition(linear):
     assert b.assignment.min() >= 0
     assert b.assignment.max() == b.n_bins - 1
     assert b.counts().sum() == len(linear)
+
+
+def test_legacy_constructor_retains_interval_identity():
+    b = Binning(
+        edges=np.array([0.0, 1.0, 2.0]),
+        assignment=np.array([0, 0, 1, 1]),
+        n_bins=2,
+        method="custom",
+        requested_bins=2,
+    )
+    np.testing.assert_array_equal(b.partition_edges, b.edges)
+    np.testing.assert_array_equal(b.interval_ids, [0, 1])
 
 
 def test_quantile_counts_differ_by_at_most_one(linear):
@@ -121,6 +133,10 @@ def test_custom_edges_rebuild_around_occupied_bins(x, edges, expected_edges):
     assert result.edges.size == result.n_bins + 1
     expected_assignment = np.searchsorted(result.edges[1:-1], values, side="left")
     np.testing.assert_array_equal(result.assignment, expected_assignment)
+    # Compression remains available, but original interval identity is retained.
+    np.testing.assert_array_equal(result.partition_edges, edges)
+    expected_ids = np.searchsorted(np.asarray(edges)[1:-1], values, side="left")
+    np.testing.assert_array_equal(result.interval_ids[result.assignment], expected_ids)
 
 
 def test_too_few_bins_is_refused(linear):
