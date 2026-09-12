@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
-import pandas as pd
+import polars as pl
 import pytest
 
 SPEC = importlib.util.spec_from_file_location(
@@ -37,7 +37,7 @@ def test_function_target_at_nearest_interval_and_failures_remain_misses(monkeypa
                 "actual_bins": 3,
                 "actual_intervals": [0, 0],
             },
-            intervals=pd.DataFrame(
+            intervals=pl.DataFrame(
                 {
                     "x": [0.25, -0.25, 0.9],
                     "ci_lo": [3.37, 0, 0],

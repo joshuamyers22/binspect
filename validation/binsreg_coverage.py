@@ -63,18 +63,20 @@ def simulate(scenario: tuple, seed: int, repetitions: int = REPETITIONS) -> dict
             issues.update(meta["issues"])
             counts[meta["actual_bins"]] += 1
             degrees[json.dumps(meta["actual_intervals"])] += 1
-            if intervals.empty:
+            if intervals.is_empty():
                 raise ValueError("intervals unavailable")
-            row = intervals.iloc[int(np.argmin(np.abs(intervals.x.to_numpy())))]
-            target = 3 + row.x + 2 * row.x**2
+            row = intervals.row(
+                int(np.argmin(np.abs(intervals["x"].to_numpy()))), named=True
+            )
+            target = 3 + row["x"] + 2 * row["x"] ** 2
             if (
-                not np.isfinite([row.ci_lo, row.ci_hi, target]).all()
-                or row.ci_lo > row.ci_hi
+                not np.isfinite([row["ci_lo"], row["ci_hi"], target]).all()
+                or row["ci_lo"] > row["ci_hi"]
             ):
                 raise ValueError("invalid interval")
             valid += 1
-            hits += int(row.ci_lo <= target <= row.ci_hi)
-            width_sum += row.ci_hi - row.ci_lo
+            hits += int(row["ci_lo"] <= target <= row["ci_hi"])
+            width_sum += row["ci_hi"] - row["ci_lo"]
         except (BinspectError, ValueError, ArithmeticError) as exc:
             errors[type(exc).__name__] += 1
     assert valid + sum(errors.values()) == repetitions

@@ -5,34 +5,32 @@ from __future__ import annotations
 from collections.abc import Hashable, Mapping, Sequence
 from dataclasses import dataclass
 from types import MappingProxyType
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, Literal
 
 import numpy as np
-import pandas as pd
+import polars as pl
 
+from .evidence import JsonExport
+from .label_values import label_record
 from .result_serialization import json_value
 from .results import BinscatterResult
+from .tabular import to_pandas
 
 if TYPE_CHECKING:  # pragma: no cover
+    import pandas as pd
     from matplotlib.figure import Figure
 
 
-def _add_group_column(frame: pd.DataFrame, name: str, value: Hashable) -> pd.DataFrame:
-    result = frame.copy()
-    result.insert(0, name, cast(Any, value))
-    return result
-
-
-def _add_summary_group(
-    frame: pd.DataFrame, value: Hashable | None, is_pooled: bool
-) -> pd.DataFrame:
-    result = _add_group_column(frame, "group", value)
-    result.insert(1, "is_pooled", is_pooled)
-    return result
+def _add_group_column(
+    frame: pl.DataFrame, value: Hashable | None, dtype: pl.DataType
+) -> pl.DataFrame:
+    return frame.insert_column(
+        0, pl.Series("group", [value] * frame.height, dtype=dtype)
+    )
 
 
 @dataclass(frozen=True, slots=True)
-class BinscatterCollection:
+class BinscatterCollection(JsonExport):
     """Results from estimating binned scatterplots by group.
 
     Parameters
@@ -65,42 +63,74 @@ class BinscatterCollection:
         return tuple(self.results)
 
     @property
-    def table(self) -> pd.DataFrame:
+    def table(self) -> pl.DataFrame:
         """Return occupied intervals by group, retaining original bin IDs/bounds.
 
         With common bins, equal IDs identify equal intervals across groups. With
         independent bins, IDs are local to each group's partition. Empty intervals
         have no row, so IDs need not be contiguous.
         """
-        return pd.concat(
-            [
-                _add_group_column(result.table, "group", group)
-                for group, result in self.results.items()
-            ],
-            ignore_index=True,
-        ).loc[:, ["group", *self.pooled.table.columns]]
-
-    def summary_frame(self, *, include_pooled: bool = False) -> pd.DataFrame:
-        """Return model and diagnostic statistics by group."""
         frames = [
-            _add_summary_group(result.summary_frame(), group, is_pooled=False)
+            _add_group_column(result.table, group, self._group_dtype())
+            for group, result in self.results.items()
+        ]
+        return pl.concat(frames, how="vertical_relaxed")
+
+    def _group_dtype(self) -> pl.DataType:
+        kinds = {label_record(group)["type"] for group in self.groups}
+        if len(kinds) > 1 or "datetime64" in kinds:
+            return pl.Object()
+        try:
+            return pl.Series("group", self.groups, strict=True).dtype
+        except (TypeError, ValueError):
+            return pl.Object()
+
+    def summary_frame(self, *, include_pooled: bool = False) -> pl.DataFrame:
+        """Return a Polars model/diagnostic summary by group."""
+        frames = [
+            _add_group_column(
+                result.summary_frame(), group, self._group_dtype()
+            ).insert_column(1, pl.Series("is_pooled", [False]))
             for group, result in self.results.items()
         ]
         if include_pooled:
-            frames.append(_add_summary_group(self.pooled.summary_frame(), None, True))
-        summary = pd.concat(frames, ignore_index=True)
-        return summary.loc[
-            :, ["group", "is_pooled", *self.pooled.summary_frame().columns]
-        ]
+            frames.append(
+                _add_group_column(
+                    self.pooled.summary_frame(), None, self._group_dtype()
+                ).insert_column(1, pl.Series("is_pooled", [True]))
+            )
+        return pl.concat(frames, how="vertical_relaxed")
+
+    def to_pandas(
+        self,
+        table: Literal["bins", "summary"] = "bins",
+        *,
+        include_pooled: bool = False,
+    ) -> pd.DataFrame:
+        """Return an editable pandas table or grouped summary."""
+        if table == "bins":
+            return to_pandas(self.table)
+        if table == "summary":
+            return to_pandas(self.summary_frame(include_pooled=include_pooled))
+        raise ValueError("table must be bins or summary.")
 
     def to_dict(self) -> dict[str, Any]:
         """Return grouped estimation results using JSON-compatible values."""
         return {
             "group": self.group_name,
             "common_bins": self.common_bins,
+            "schema_version": 1,
+            "result_type": "collection",
+            "sample": None
+            if self.pooled.sample is None
+            else self.pooled.sample.to_dict(self.pooled.n_obs),
             "pooled": self.pooled.to_dict(),
             "groups": [
-                {"value": json_value(group), "result": result.to_dict()}
+                {
+                    "value": json_value(group),
+                    "label": label_record(group),
+                    "result": result.to_dict(),
+                }
                 for group, result in self.results.items()
             ],
         }

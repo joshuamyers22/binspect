@@ -62,7 +62,7 @@ def test_independent_adjustment_preserves_group_fits_and_means(
         ci=None,
     )
     for result in [comparison.pooled, *comparison.results.values()]:
-        assert result.table[["se", "ci_lo", "ci_hi"]].isna().all().all()
+        assert result.to_pandas()[["se", "ci_lo", "ci_hi"]].isna().all().all()
         assert result.estimates.ci_level is None
         assert np.isfinite(result.fit.se_slope)
     for label, result in comparison.results.items():
@@ -124,7 +124,7 @@ def test_shared_interval_ids_and_bounds_survive_empty_bins(partition, zero_weigh
     edges = comparison.pooled.binning.partition_edges
     if partition == "custom":
         np.testing.assert_array_equal(edges, custom_edges)
-    pooled_bounds = comparison.pooled.table.set_index("bin")[["x_lo", "x_hi"]]
+    pooled_bounds = comparison.pooled.to_pandas().set_index("bin")[["x_lo", "x_hi"]]
     for label, result in comparison.results.items():
         np.testing.assert_array_equal(result.binning.partition_edges, edges)
         sample = frame.loc[(frame["group"] == label) & frame["y"].notna()]
@@ -141,21 +141,21 @@ def test_shared_interval_ids_and_bounds_survive_empty_bins(partition, zero_weigh
             if members.empty:
                 continue
             expected_ids.append(interval)
-            row = result.table.set_index("bin").loc[interval]
+            row = result.to_pandas().set_index("bin").loc[interval]
             assert row["n"] == len(members)
             assert row["x_lo"] == edges[interval]
             assert row["x_hi"] == edges[interval + 1]
             assert row["y_mean"] == pytest.approx(
                 np.average(members["y"], weights=members["weight"])
             )
-        assert result.table["bin"].tolist() == expected_ids
+        assert result.to_pandas()["bin"].tolist() == expected_ids
         np.testing.assert_array_equal(result.binning.interval_ids, expected_ids)
         # Estimation indices stay compact even though displayed IDs can have gaps.
         np.testing.assert_array_equal(
             np.unique(result.binning.assignment), np.arange(result.n_bins)
         )
         pd.testing.assert_frame_equal(
-            result.table.set_index("bin")[["x_lo", "x_hi"]],
+            result.to_pandas().set_index("bin")[["x_lo", "x_hi"]],
             pooled_bounds.loc[expected_ids],
         )
     payload = comparison.to_dict()
@@ -164,15 +164,16 @@ def test_shared_interval_ids_and_bounds_survive_empty_bins(partition, zero_weigh
         result = comparison.results[entry["value"]]
         assert entry["result"]["binning"]["partition_edges"] == edges.tolist()
         assert (
-            entry["result"]["binning"]["interval_ids"] == result.table["bin"].tolist()
+            entry["result"]["binning"]["interval_ids"]
+            == result.to_pandas()["bin"].tolist()
         )
-        assert [row["bin"] for row in entry["result"]["bins"]] == result.table[
+        assert [row["bin"] for row in entry["result"]["bins"]] == result.to_pandas()[
             "bin"
         ].tolist()
-    assert comparison.table["bin"].tolist() == [
+    assert comparison.to_pandas()["bin"].tolist() == [
         interval
         for result in comparison.results.values()
-        for interval in result.table["bin"]
+        for interval in result.to_pandas()["bin"]
     ]
 
 

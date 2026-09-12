@@ -13,9 +13,11 @@ working tree and preserve unrelated changes. Proposed decisions are not accepted
 decisions; never invent a reviewer or approval.
 
 Keep numerical calculations in core, input preparation at its boundary, result
-presentation in result modules, and rendering in viz. Preserve the current
-pandas/NumPy/SciPy baseline while [ADR-0001](docs/decisions/0001-existing-library-baseline.md)
-is reviewed. Do not import a template's unrelated service or license defaults.
+presentation in result modules, and rendering in viz. Use the user-directed Polars
+dataframe boundary with optional pandas compatibility in
+[ADR-0002](docs/decisions/0002-polars-native-dataframes.md). Retain NumPy/SciPy
+calculations; remaining [ADR-0001](docs/decisions/0001-existing-library-baseline.md)
+decisions still need review. Do not import unrelated service or license defaults.
 
 ## Work and verify in bounded slices
 

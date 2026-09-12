@@ -7,6 +7,11 @@
 - Scope: binspect 0.1.1 production-hardening plan.
 - Supersedes: none.
 
+The pandas-first tabular proposal below was superseded during A2 by explicit
+user direction: [ADR-0002](0002-polars-native-dataframes.md) establishes Polars-native
+preparation/results with pandas compatibility. This record preserves the original
+proposal; its other review conditions remain open.
+
 ## Context and forces
 
 The production template defaults to Polars for quantitative tabular work,

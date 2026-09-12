@@ -7,6 +7,9 @@ All notable changes to this project are documented here. The format follows
 ## [Unreleased]
 
 ### Fixed
+- Named control Series in mappings now use row positions consistently with x/y,
+  preventing silent pandas index alignment. Named numeric inputs also enforce
+  one-dimensional shape validation.
 - Results own their observations, weights, partitions and nested estimate arrays,
   preventing caller mutation from desynchronizing fits, tables and plots.
 - Diagnostic support excludes retained zero-weight rows and uses effective sample
@@ -30,6 +33,14 @@ All notable changes to this project are documented here. The format follows
 - The missing-DPI-dependency message now names `binspect-regression[dpi]`.
 
 ### Changed
+- Polars is the native dataframe dependency and default result-table type for
+  single/grouped results and the binsreg adapter. Pandas inputs remain supported;
+  use `result.to_pandas()` (or a named table) for explicit pandas projections.
+  Pandas is an optional `[pandas]` extra; upstream binsreg still requires it.
+  This table-type migration requires a minor 0.x release; no version is released here.
+- All inputs align positionally. Explicit pandas Categorical/Polars Enum category
+  order is preserved; LazyFrames require explicit collection. Unsupported custom
+  labels and ambiguous encoded control names now fail explicitly.
 - Stored result arrays are read-only and reject attempts to enable writes. Array
   access isolates shape/dtype changes; use `.copy()` for editable data. Group
   mappings retain immutable result values; returned tables/exports stay editable.
@@ -53,6 +64,12 @@ All notable changes to this project are documented here. The format follows
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- Versioned strict-JSON result schemas, deterministic `to_json()`, input exclusion
+  counts, encoded control/design identity and tagged group labels. `to_evidence()`
+  accepts caller-owned plan/input/lock/code references and a separate optional
+  timestamp, without implicit file access, data fingerprints or raw-row export.
+- A minimal Polars-only installation gate verifies estimation, exports and plots
+  without pandas. Native/pandas parity tests preserve numerical reference checks.
 - Optional `binspect.binsreg()` and `BinsregResult` delegate original-coordinate
   function inference to binsreg with joint control covariance, HC1 or clustered
   covariance, DPI/fixed counts and explicit fallback status. Copied dot/interval

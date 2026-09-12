@@ -40,7 +40,7 @@ def test_array_interface_needs_no_dataframe(linear):
 
 
 def test_table_schema_and_shape(linear):
-    table = binspect.binscatter(linear, y="y", x="x", bins=12).table
+    table = binspect.binscatter(linear, y="y", x="x", bins=12).to_pandas()
     assert list(table.columns) == EXPECTED_COLUMNS
     assert len(table) == 12
     assert table["n"].sum() == len(linear)
@@ -50,13 +50,13 @@ def test_table_schema_and_shape(linear):
 
 
 def test_decomposition_table_is_one_row(concave):
-    d = binspect.binscatter(concave, y="y", x="x", bins=20).decomposition_table
+    d = binspect.binscatter(concave, y="y", x="x", bins=20).to_pandas("decomposition")
     assert len(d) == 1
     assert d.loc[0, "eta_sq"] >= d.loc[0, "r_sq_linear"]
 
 
 def test_summary_frame_is_one_row(linear):
-    summary = binspect.binscatter(linear, y="y", x="x", bins=20).summary_frame()
+    summary = binspect.binscatter(linear, y="y", x="x", bins=20).to_pandas("summary")
     assert len(summary) == 1
     assert {"slope", "slope_se", "lack_of_fit", "verdict"} <= set(summary.columns)
 
@@ -82,7 +82,9 @@ def test_results_are_permutation_invariant(linear):
     order = np.random.default_rng(1).permutation(len(linear))
     a = binspect.binscatter(linear, y="y", x="x", bins=15)
     b = binspect.binscatter(linear.iloc[order], y="y", x="x", bins=15)
-    np.testing.assert_allclose(a.table["y_mean"], b.table["y_mean"], rtol=1e-12)
+    np.testing.assert_allclose(
+        a.to_pandas()["y_mean"], b.to_pandas()["y_mean"], rtol=1e-12
+    )
     assert a.fit.slope == pytest.approx(b.fit.slope, rel=1e-12)
 
 
@@ -101,7 +103,7 @@ def test_affine_rescaling_is_equivariant(linear):
 def test_binning_to_bin_means_reproduces_the_saturated_fit(concave):
     bs = binspect.binscatter(concave, y="y", x="x", bins=20)
     grouped = pd.Series(bs.y).groupby(bs.binning.assignment).mean().to_numpy()
-    np.testing.assert_allclose(bs.table["y_mean"], grouped, rtol=1e-12)
+    np.testing.assert_allclose(bs.to_pandas()["y_mean"], grouped, rtol=1e-12)
 
 
 def test_weighted_run_differs_from_unweighted(weighted):
@@ -114,7 +116,9 @@ def test_constant_weights_match_unweighted(linear):
     frame = linear.assign(w=1.0)
     plain = binspect.binscatter(frame, y="y", x="x", bins=15)
     wtd = binspect.binscatter(frame, y="y", x="x", bins=15, weights="w")
-    np.testing.assert_allclose(plain.table["y_mean"], wtd.table["y_mean"], rtol=1e-12)
+    np.testing.assert_allclose(
+        plain.to_pandas()["y_mean"], wtd.to_pandas()["y_mean"], rtol=1e-12
+    )
 
 
 def test_clustered_inference_is_exposed_in_results(linear):
@@ -124,8 +128,8 @@ def test_clustered_inference_is_exposed_in_results(linear):
     assert result.fit.se_type == "cluster"
     assert result.fit.n_clusters == frame["firm"].nunique()
     assert result.estimates.se_type == "cluster"
-    assert "n_clusters" in result.table
-    assert result.summary_frame().loc[0, "se_type"] == "cluster"
+    assert "n_clusters" in result.to_pandas()
+    assert result.to_pandas("summary").loc[0, "se_type"] == "cluster"
     assert result.to_dict()["cluster"] == "firm"
     assert "CR1 cluster-robust" in result.summary()
 
@@ -194,7 +198,7 @@ def test_zero_weight_drop_is_equivalent_to_omitting_rows(linear):
     omitted = binspect.binscatter(omitted_frame, x="x", y="y", weights="weight", bins=8)
     assert dropped.n_obs == len(omitted_frame)
     assert dropped.zero_weight == "drop"
-    np.testing.assert_allclose(dropped.table, omitted.table, rtol=1e-12)
+    np.testing.assert_allclose(dropped.to_pandas(), omitted.to_pandas(), rtol=1e-12)
     assert dropped.fit.se_slope == pytest.approx(omitted.fit.se_slope, rel=1e-12)
 
 
@@ -210,8 +214,8 @@ def test_zero_weight_retain_keeps_descriptive_rows(linear):
         bins=8,
     )
     assert result.n_obs == len(frame)
-    assert result.table["n"].sum() == len(frame)
-    assert result.summary_frame().loc[0, "zero_weight"] == "retain"
+    assert result.to_pandas()["n"].sum() == len(frame)
+    assert result.to_pandas("summary").loc[0, "zero_weight"] == "retain"
     assert result.to_dict()["zero_weight"] == "retain"
 
 
@@ -273,10 +277,10 @@ def test_table_survives_empty_outer_custom_bin():
         )
     assert result.n_bins == 2
     assert result.binning.edges.size == result.n_bins + 1
-    assert len(result.table) == result.n_bins
-    assert result.table["bin"].tolist() == [1, 2]
-    assert result.table["x_lo"].tolist() == [1.0, 2.0]
-    assert result.table["x_hi"].tolist() == [2.0, 3.0]
+    assert len(result.to_pandas()) == result.n_bins
+    assert result.to_pandas()["bin"].tolist() == [1, 2]
+    assert result.to_pandas()["x_lo"].tolist() == [1.0, 2.0]
+    assert result.to_pandas()["x_hi"].tolist() == [2.0, 3.0]
 
 
 def test_nan_rows_are_dropped(linear):
@@ -389,7 +393,7 @@ def test_missing_control_rows_follow_dropna_policy(linear):
 def test_control_metadata_is_exported_and_labels_are_explicit(linear):
     frame = linear.assign(control=np.linspace(-1.0, 1.0, len(linear)))
     result = binspect.binscatter(frame, x="x", y="y", controls=["control"])
-    assert result.summary_frame().loc[0, "controls"] == "control"
+    assert result.to_pandas("summary").loc[0, "controls"] == "control"
     assert result.to_dict()["controls"] == ["control"]
     axis = result.plot(annotate=None)
     assert axis.get_xlabel() == "x (adjusted)"

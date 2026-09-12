@@ -9,6 +9,7 @@ import numpy as np
 from scipy import stats
 
 from .._ownership import ArrayOwner
+from ..label_values import factorize_labels
 from ..types import FloatArray, IntArray
 
 __all__ = ["BinEstimates", "estimate_bins"]
@@ -220,9 +221,7 @@ def _factorize_clusters(
     clusters: np.ndarray[Any, np.dtype[Any]],
 ) -> tuple[IntArray, np.ndarray[Any, np.dtype[Any]]]:
     """Factorize nonmissing cluster labels without imposing sortability."""
-    import pandas as pd
-
-    codes, uniques = pd.factorize(clusters, sort=False)
+    codes, uniques = factorize_labels(clusters)
     if np.any(codes < 0):
         raise ValueError("clusters must not contain missing values.")
     return codes.astype(np.int64), np.asarray(uniques, dtype=object)

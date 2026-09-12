@@ -51,7 +51,9 @@ def inference_metadata(result: BinscatterResult) -> dict[str, Any]:
         "bin_inference_status": "unavailable_after_adjustment"
         if result.adjusted
         else "available_conditional",
-        "ci_level": result.estimates.ci_level,
+        "ci_level": None
+        if result.estimates.ci_level is None
+        else float(result.estimates.ci_level),
         "slope_covariance": result.fit.se_type,
         "slope_df_resid": result.fit.df_resid,
         "slope_reference_df": result.fit.inference_df,

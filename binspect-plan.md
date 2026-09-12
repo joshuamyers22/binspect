@@ -3,9 +3,13 @@
 Updated 2026-09-12 after the user-authorized merge of PRs #6–#14 into `main`
 at `e206e0c`; package version remains `0.1.1` (no new release).
 
-**A1 is implemented and locally verified; maintainer review/integration pending.**
-See the [ownership contract, regressions and memory measurements](docs/result-ownership-review.md).
-**Next implementation: A2 — export and input contracts.** The
+**A1 and A2 are implemented; maintainer review/integration pending.** See the
+[ownership evidence](docs/result-ownership-review.md) and
+[Polars-native input/export contract](docs/INPUT_OUTPUT_CONTRACT.md).
+During A2 the user directed Polars-native preparation and default result tables,
+with pandas inputs and explicit pandas conversions retained; this supersedes the
+pandas-first proposal through [ADR-0002](docs/decisions/0002-polars-native-dataframes.md).
+**Next implementation: A3 — compatibility policy.** The
 roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
 C3 inference boundaries and coverage evidence, C4 diagnostic policy, and optional
 binsreg adapter are integrated. The [binsreg PR #14](https://github.com/joshuamyers22/binspect/pull/14)
@@ -56,8 +60,9 @@ assumptions, reproducible results, composable publication figures, and verified
 installable artifacts. A descriptive lack-of-fit score cannot establish that a
 model is correct, identify causality, or replace a specification test.
 
-Retain NumPy, pandas, SciPy, and Matplotlib as the current required dependencies,
-subject to the baseline ADR's review and reference-validation conditions. Use
+Use Polars, NumPy, SciPy, and Matplotlib as required dependencies, with optional
+pandas compatibility under the user-directed ADR-0002. The remaining baseline
+ADR review and reference-validation conditions still apply. Use
 `binsreg` as an optional integration for methods it implements; use independent
 reference packages in validation without making them runtime requirements.
 Interactive/web output, a general dataframe abstraction, and new inference theory
@@ -276,7 +281,7 @@ and may start during M0; supply-chain findings must be triaged when discovered.
 | P2 | Verify dependency configurations | Test minimal runtime installation without binsreg, the DPI extra, locked development dependencies, declared lower bounds, and current compatible dependencies in separate jobs. Ensure optional-import failures point at the right distribution. Review Python support explicitly; add a version only when its matrix passes. |
 | P3 | Add supply-chain and secret checks | Audit locked runtime/build/dev/docs/optional dependencies for vulnerabilities and license compatibility; record package/version, owner, expiry, and rationale for any reviewed exception. Generate and inspect a CycloneDX SBOM that covers the actual released artifacts and dependencies. Scan tracked history and built artifacts for secrets with controlled/redacted findings. Pin every third-party action, including the current mutable PyPI publisher reference, to a reviewed full SHA. Make dependency updates regenerate the lock and rerun numerical drift checks. Add an honest `make supply-chain` or equivalent gate to CI and release qualification; unavailable audit services are unverified, not passed. |
 
-Avoid promising a Polars fast path or zero-copy processing without end-to-end
+Avoid promising conversion speedups or zero-copy processing without end-to-end
 measurements through conversion, estimation, and rendering.
 
 P1 uses the template performance-experiment record: falsifiable hypothesis,
@@ -370,7 +375,10 @@ maintenance cost, and acceptance criteria before implementation.
 | F2 | Conditional quantile regression | Specify quantile-loss estimation, controls, weight semantics, and inference. Median/IQR bin summaries may be a separate descriptive feature; do not reuse least-squares FWL or label IQR as estimator uncertainty. |
 | F3 | Formula interface | Demonstrated demand, explicit categorical/intercept/missingness behavior, equivalence with the existing API, optional dependency. |
 | F4 | `hue=` convenience | Demonstrated usability gap beyond `compare(group=...)`; reuse the settled grouped coordinate and partition contracts. |
-| F5 | Polars input optimization | Benchmarks establish conversion as a material bottleneck; define copies and supported dtypes before adding an optional path. |
+
+The former F5 Polars candidate was promoted into A2 by explicit user direction:
+native preparation and tables with pandas compatibility. Workload/performance
+qualification remains P1; changing the dataframe engine does not establish a speedup.
 
 ReadTheDocs slug reservation, speculative competitor claims, launch-week setup
 tasks, and the obsolete pyproject skeleton are removed from the delivery queue.
@@ -393,3 +401,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | C3 reference review and C4 diagnostic policy | [Binsreg source/method review](docs/binsreg-reference-review.md), [C4 contract and verification](docs/diagnostic-policy-review.md); 296 unit tests, 50 integrations/references, 92.60% coverage, both development protocols and builds pass | Explicit policies, opt-out, accurate support and signed-SD/display claims implemented. Default clustered/constant outcomes unassessed. Pending review/integration; C3 final assessment/acceptance remain open. |
 | 2026-09-12 | C3 — requested binsreg function adapter | [Committed protocol](docs/BINSREG_ADAPTER_PLAN.md), [implementation and clean development evidence](docs/binsreg-adapter-review.md); 334 unit tests, 72 integrations/references, 93.18% coverage, all three development protocols and builds pass | Original-coordinate adjusted function inference and explicit fallbacks implemented. Three uneven clusters give 42.4% coverage against the function target. Draft review/integration and qualified C3 acceptance/final assessment remain open; next independent item A1. |
 | 2026-09-12 | A1 — result ownership and mutation isolation | [Ownership contract and measured evidence](docs/result-ownership-review.md); 349 unit tests, 72 integrations/references, 93.75% coverage; all development coverage gates pass; build passed after authorized network retry | Implemented on `fix/result-ownership`; inputs/nested numeric arrays isolated, editable projections preserved, eight synthetic exports identical to baseline. Maintainer review/integration pending; unreleased. Next implementation A2. |
+| 2026-09-12 | A2 — Polars-native inputs/tables and export contracts | [Contract and migration](docs/INPUT_OUTPUT_CONTRACT.md), [implementation evidence](docs/export-input-contract-review.md); final `make check`: 402 unit tests, 74 integrations/references, 94.56% coverage, native installation without pandas, all development coverage gates and builds pass | User-directed Polars defaults with optional pandas compatibility; positional inputs, sample/design metadata and deterministic evidence exports implemented on `feat/export-input-contracts`, stacked on A1. Maintainer review/integration pending; unreleased. Next A3. |

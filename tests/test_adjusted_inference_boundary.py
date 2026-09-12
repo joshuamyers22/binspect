@@ -32,7 +32,7 @@ def test_adjusted_bins_withhold_uncertainty_but_keep_slope(weighted, clustered):
     assert np.isfinite(result.estimates.y_sd).all()
     assert np.isfinite(result.fit.se_slope)
     assert result.estimates.ci_level is None
-    assert result.table[["se", "ci_lo", "ci_hi"]].isna().all().all()
+    assert result.to_pandas()[["se", "ci_lo", "ci_hi"]].isna().all().all()
     assert result.inference["bin_inference_status"] == "unavailable_after_adjustment"
     assert all(value is None for value in result.inference["bin_reference_df"])
     assert "unavailable" in result.summary()
@@ -97,7 +97,7 @@ def test_descriptive_adjustment_omits_warning_and_confidence_artists():
         warnings.simplefilter("always")
         result = binspect.binscatter(x=x, y=x + z, controls=z, bins=5, ci=None)
     assert not any("adjusted-bin uncertainty" in str(item.message) for item in captured)
-    assert result.table["se"].isna().all()
+    assert result.to_pandas()["se"].isna().all()
     figure, ax = plt.subplots()
     result.plot(ax=ax, show=["ci"], annotate=None)
     assert not ax.collections

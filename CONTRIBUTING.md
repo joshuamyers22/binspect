@@ -21,6 +21,10 @@ python -m venv .venv
 For the exact CI dependency versions, use `uv sync --frozen --all-extras`.
 `make check` runs the complete local quality gate, including DPI integration,
 locked Statsmodels references and prespecified development coverage simulations.
+It also runs `make native` in an isolated installation without pandas, exercising
+Polars input, categorical/weighted/clustered estimation, grouped controls, exports
+and plots. Pandas compatibility is tested in the all-extras environment. Native
+tabular code must not import pandas; convert only at the optional boundary.
 
 Before opening a pull request, run the same checks as CI:
 

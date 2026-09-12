@@ -173,7 +173,11 @@ def test_copied_results_keep_ownership(clone):
 def test_single_tables_metadata_and_derived_arrays_are_editable_projections():
     result = binspect.binscatter(sample(), x="x", y="y", weights="w", bins=4)
     before = result.to_dict()
-    for frame in (result.table, result.decomposition_table, result.summary_frame()):
+    for frame in (
+        result.to_pandas(),
+        result.to_pandas("decomposition"),
+        result.to_pandas("summary"),
+    ):
         for column in frame.select_dtypes(include="number"):
             frame.loc[:, column] = 0
     exported = result.to_dict()
@@ -203,11 +207,11 @@ def test_group_mapping_pooled_results_and_exports_are_isolated(common_bins):
         for _, _, value in arrays(result):
             with pytest.raises(ValueError):
                 value.flat[0] = 0
-        table = result.table
+        table = result.to_pandas()
         table.loc[:, "y_mean"] = 999
-    table = collection.table
+    table = collection.to_pandas()
     table.loc[:, "y_mean"] = 0
-    summary = collection.summary_frame(include_pooled=True)
+    summary = collection.to_pandas("summary", include_pooled=True)
     summary.loc[:, "slope"] = 0
     collection.to_dict()["groups"].clear()
     assert json.dumps(collection.to_dict(), allow_nan=False) == expected
@@ -222,8 +226,8 @@ def test_adapter_tables_and_nested_metadata_remain_owned():
     dots.loc[:, "fit"] = 0
     intervals.loc[:, "ci_l"] = 0
     metadata["nested"]["values"].clear()
-    returned_dots = result.dots
-    returned_intervals = result.intervals
+    returned_dots = result.to_pandas()
+    returned_intervals = result.to_pandas("intervals")
     returned_dots.loc[:, "fit"] = 0
     returned_intervals.loc[:, "ci_r"] = 0
     result.metadata["nested"]["values"].clear()

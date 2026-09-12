@@ -19,8 +19,8 @@ def test_zero_weight_rows_do_not_supply_diagnostic_support():
     assert result.verdict == "limited support"
     assert result.n_obs == 100
     assert result.n_positive == result.n_effective == 10
-    np.testing.assert_allclose(result.table["n_positive"], 5)
-    np.testing.assert_allclose(result.table["n_effective"], 5)
+    np.testing.assert_allclose(result.to_pandas()["n_positive"], 5)
+    np.testing.assert_allclose(result.to_pandas()["n_effective"], 5)
     assert result.decomposition.min_bin_positive_n == 5
     assert result.decomposition.min_bin_effective_n == 5
 
@@ -112,7 +112,7 @@ def test_opt_out_preserves_estimates_and_group_policy_exports():
     assert disabled.decomposition.verdict_reason == "disabled"
     assert disabled.fit == plain.fit
     assert disabled.decomposition.gap == plain.decomposition.gap
-    np.testing.assert_allclose(disabled.table, plain.table)
+    np.testing.assert_allclose(disabled.to_pandas(), plain.to_pandas())
     assert "classification is disabled" in disabled.summary()
     from binspect.result_summary import plot_caption
 
@@ -128,7 +128,7 @@ def test_opt_out_preserves_estimates_and_group_policy_exports():
         assert exported["gap_threshold"] == 0.1
         assert exported["min_bin_effective_n_threshold"] == 20
         assert exported["min_bin_clusters_threshold"] == 4
-        assert result.summary_frame()["gap_threshold"].iloc[0] == 0.1
+        assert result.to_pandas("summary")["gap_threshold"].iloc[0] == 0.1
     json.dumps(comparison.to_dict(), allow_nan=False)
     json.dumps(disabled.to_dict(), allow_nan=False)
     disabled_groups = binspect.compare(

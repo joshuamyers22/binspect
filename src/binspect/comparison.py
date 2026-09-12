@@ -2,56 +2,38 @@
 
 from __future__ import annotations
 
-from collections.abc import Hashable, Mapping, Sequence
+from collections.abc import Hashable, Sequence
 from dataclasses import replace
 from typing import Any
 
 import numpy as np
-import pandas as pd
 from numpy.typing import ArrayLike
 
 from .api import binscatter
 from .comparison_results import BinscatterCollection as BinscatterCollection
 from .core.diagnostics import DEFAULT_DIAGNOSTIC_POLICY, DiagnosticPolicy
 from .exceptions import InsufficientDataError, InvalidBinningError
+from .input_data import ControlFrame
 from .input_data import column as _column
 from .input_data import control_frame as _control_frame
 from .input_data import labels as _labels
+from .label_values import factorize_labels, is_missing
 from .results import BinscatterResult
+from .tabular import ControlInput, DataSource
 from .types import BinningMethod, FloatArray, ZeroWeightPolicy
 
 __all__ = ["BinscatterCollection", "compare"]
 
 
 def _group_values(
-    data: pd.DataFrame | Mapping[str, Any] | None,
+    data: DataSource,
     group: str | Sequence[Any],
 ) -> tuple[np.ndarray[Any, np.dtype[np.object_]], str]:
-    if isinstance(group, str):
-        if data is None:
-            raise ValueError(
-                f"group={group!r} is a column name, but no data= was given."
-            )
-        try:
-            values = data[group]
-        except KeyError:
-            available = list(getattr(data, "columns", data.keys()))
-            raise KeyError(
-                f"column {group!r} not found; available: {available}"
-            ) from None
-        name = group
-    else:
-        values = group
-        name = str(getattr(group, "name", None) or "group")
-
-    array = np.asarray(values, dtype=object)
-    if array.ndim != 1:
-        raise ValueError(f"group must be one-dimensional, got shape {array.shape}.")
-    return array, name
+    return _labels(data, group, "group")
 
 
 def compare(
-    data: pd.DataFrame | Mapping[str, Any] | None = None,
+    data: DataSource = None,
     y: str | ArrayLike | None = None,
     x: str | ArrayLike | None = None,
     *,
@@ -60,7 +42,7 @@ def compare(
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
     zero_weight: ZeroWeightPolicy = "retain",
-    controls: str | Sequence[str] | ArrayLike | None = None,
+    controls: ControlInput | None = None,
     cluster: str | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
@@ -71,7 +53,7 @@ def compare(
 
     Parameters
     ----------
-    data : pandas.DataFrame or Mapping, optional
+    data : polars.DataFrame, pandas.DataFrame or Mapping, optional
         Data containing the variables. Not required when all variables are
         array-like.
     y : str or array_like
@@ -153,7 +135,7 @@ def compare(
         if weight_values.shape != y_values.shape:
             raise ValueError("weights must have the same shape as x, y, and group.")
 
-    control_frame: pd.DataFrame | None = None
+    control_frame: ControlFrame | None = None
     if controls is not None:
         control_frame, _ = _control_frame(data, controls, y_values.size)
 
@@ -164,7 +146,7 @@ def compare(
         if cluster_values.shape != y_values.shape:
             raise ValueError("cluster must have the same shape as x, y, and group.")
 
-    group_ok = np.asarray(pd.notna(group_values), dtype=bool)
+    group_ok = np.array([not is_missing(v) for v in group_values])
     if not group_ok.any():
         raise InsufficientDataError("group has no nonmissing values.")
 
@@ -175,22 +157,31 @@ def compare(
         binning=binning,
         weights=None if weight_values is None else weight_values[group_ok],
         zero_weight=zero_weight,
-        controls=None if control_frame is None else control_frame.loc[group_ok],
+        controls=None if control_frame is None else control_frame.filter(group_ok),
         cluster=None if cluster_values is None else cluster_values[group_ok],
         ci=ci,
         dropna=dropna,
         diagnostic_policy=diagnostic_policy,
     )
     pooled = replace(pooled, x_name=x_name, y_name=y_name, cluster=cluster_name)
+    if pooled.sample is not None:
+        pooled = replace(
+            pooled,
+            sample=replace(
+                pooled.sample,
+                n_input=y_values.size,
+                n_missing_group=int(np.count_nonzero(~group_ok)),
+            ),
+        )
     group_bins: int | str | ArrayLike
     group_bins = pooled.binning.partition_edges if common_bins else bins
 
-    labels = pd.unique(group_values[group_ok])
+    group_codes, labels = factorize_labels(group_values)
     results: dict[Hashable, BinscatterResult] = {}
-    for label in labels:
+    for code, label in enumerate(labels):
         if not isinstance(label, Hashable):
             raise TypeError(f"group labels must be hashable, got {label!r}.")
-        selected = group_ok & (group_values == label)
+        selected = group_codes == code
         try:
             result = binscatter(
                 x=x_values[selected],
@@ -200,7 +191,7 @@ def compare(
                 weights=(None if weight_values is None else weight_values[selected]),
                 zero_weight=zero_weight,
                 controls=(
-                    None if control_frame is None else control_frame.loc[selected]
+                    None if control_frame is None else control_frame.filter(selected)
                 ),
                 cluster=(None if cluster_values is None else cluster_values[selected]),
                 ci=ci,

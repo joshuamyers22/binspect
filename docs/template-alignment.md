@@ -75,8 +75,10 @@ assigned before work and completion due at the named milestone gate.
 The [project brief](../PROJECT_BRIEF.md) and
 [proposed ADR](decisions/0001-existing-library-baseline.md) record these choices:
 
-- **Documented departures requiring G1 disposition:** existing pandas
-  input/control/table boundaries; conditional retention of NumPy/SciPy
+- **User-directed dataframe decision:** [ADR-0002](decisions/0002-polars-native-dataframes.md)
+  replaces the earlier pandas-first proposal with Polars preparation/tables and
+  optional pandas compatibility. The historical mapping above records the planning baseline.
+- **Documented departures requiring G1 disposition:** conditional retention of NumPy/SciPy
   estimators with locked Statsmodels validation; strict mypy; current tested
   runtime range. These are compatibility choices, not waivers of correctness.
 - **Preserved owner decision:** existing MIT licensing. Template generation's

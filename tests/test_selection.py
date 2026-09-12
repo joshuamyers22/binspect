@@ -181,7 +181,7 @@ def test_result_records_rule_counts_and_no_fallback(selection_data, backend):
     assert payload["binning"]["requested_bins"] == 17
     assert payload["binning"]["n_bins"] == 17
     assert payload["binning"]["fallback"] is None
-    frame = result.summary_frame().iloc[0]
+    frame = result.to_pandas("summary").iloc[0]
     assert frame["bin_rule"] == "dpi"
     assert frame["requested_bins"] == 17
     assert "dpi" in result.summary()

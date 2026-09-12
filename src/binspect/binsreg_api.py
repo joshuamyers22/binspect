@@ -6,17 +6,18 @@ import contextlib
 import importlib.metadata
 import io
 import warnings
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Callable
 from numbers import Integral, Real
 from typing import Any
 
 import numpy as np
-import pandas as pd
+import polars as pl
 from numpy.typing import ArrayLike
 
 from .binsreg_inputs import prepare_binsreg
 from .binsreg_results import BinsregResult
 from .exceptions import BinsregError, BinsregWarning
+from .tabular import ControlInput, DataSource, numeric_table
 
 
 def _load_backend() -> tuple[Callable[..., Any], str]:
@@ -46,33 +47,39 @@ def _issue(message: str) -> str:
     return "unclassified_upstream_warning"
 
 
-def _table(value: Any, *, intervals: bool) -> pd.DataFrame:
+def _table(value: Any, *, intervals: bool) -> pl.DataFrame:
     columns = ["x", "bin", "ci_l", "ci_r"] if intervals else ["x", "bin", "fit"]
     if value is None and intervals:
-        return pd.DataFrame(columns=["x", "bin", "fit", "ci_lo", "ci_hi"], dtype=float)
-    if not isinstance(value, pd.DataFrame) or not set(columns) <= set(value):
-        raise BinsregError("binsreg returned an unsupported result schema.")
-    table = value[columns].astype(float).copy(deep=True).reset_index(drop=True)
-    numbers = table.to_numpy(dtype=float)
+        return pl.DataFrame(
+            schema={name: pl.Float64 for name in ["x", "bin", "fit", "ci_lo", "ci_hi"]}
+        )
+    try:
+        table = numeric_table(value).select(columns).cast(pl.Float64)
+    except (TypeError, ValueError, pl.exceptions.PolarsError):
+        raise BinsregError("binsreg returned an unsupported result schema.") from None
+    numbers = table.to_numpy()
     if not len(table) or not np.isfinite(numbers).all():
         raise BinsregError("binsreg returned empty or nonfinite estimates.")
-    if np.any(table["bin"] < 1) or np.any(table["bin"] % 1 != 0):
+    ids = table["bin"].to_numpy()
+    if np.any(ids < 1) or np.any(ids % 1 != 0):
         raise BinsregError("binsreg returned invalid interval identifiers.")
-    table["bin"] = table["bin"].astype(int)
+    table = table.with_columns(pl.col("bin").cast(pl.Int64))
     if intervals:
-        table = table.rename(columns={"ci_l": "ci_lo", "ci_r": "ci_hi"})
-        if (table.ci_lo > table.ci_hi).any():
+        table = table.rename({"ci_l": "ci_lo", "ci_r": "ci_hi"})
+        if (table["ci_lo"] > table["ci_hi"]).any():
             raise BinsregError("binsreg returned reversed confidence limits.")
-        table["fit"] = table.ci_lo / 2 + table.ci_hi / 2
+        table = table.with_columns(
+            (pl.col("ci_lo") / 2 + pl.col("ci_hi") / 2).alias("fit")
+        )
     return table
 
 
 def binsreg(
-    data: pd.DataFrame | Mapping[str, Any] | None = None,
+    data: DataSource = None,
     y: str | ArrayLike | None = None,
     x: str | ArrayLike | None = None,
     *,
-    controls: str | Sequence[str] | ArrayLike | None = None,
+    controls: ControlInput | None = None,
     weights: str | ArrayLike | None = None,
     cluster: str | ArrayLike | None = None,
     bins: int | str = "dpi",
@@ -168,11 +175,11 @@ def binsreg(
         actual = int(result.options.nbins_by[0])
         if (
             actual != result.options.nbins_by[0]
-            or actual != dots.bin.nunique()
+            or actual != dots["bin"].n_unique()
             or actual < 1
         ):
             raise ValueError("inconsistent bins")
-        if len(intervals) and not set(intervals.bin) <= set(dots.bin):
+        if len(intervals) and not set(intervals["bin"]) <= set(dots["bin"]):
             raise ValueError("inconsistent intervals")
         dot_degree = [int(v) for v in result.options.dots[0]]
         ci_degree = [int(v) for v in result.options.ci[0]]
@@ -228,6 +235,15 @@ def binsreg(
         "x_name": prepared.x_name,
         "y_name": prepared.y_name,
         "control_columns": list(prepared.control_columns),
+        "control_design": prepared.control_design.to_dict(),
+        "sample": prepared.sample.to_dict(n),
+        "coordinates": "original_x_at_fixed_controls",
+        "weight_interpretation": "reliability"
+        if prepared.weights is not None
+        else "unit",
+        "bin_covariance": "HC1" if prepared.clusters is None else "cluster",
+        "slope_covariance": None,
+        "reference_df": None,
         "at": np.asarray(evaluation).tolist(),
         "asyvar": False,
         "control_evaluation_uncertainty_included": False,

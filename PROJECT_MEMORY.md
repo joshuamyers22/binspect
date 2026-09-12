@@ -9,8 +9,8 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | Key | Fact / limitation | Evidence | Verified |
 |---|---|---|---|
 | `package-identity` | Distribution `binspect-regression`, import `binspect`, existing MIT license. | [manifest](pyproject.toml), [license](LICENSE) | 2026-09-12 |
-| `library-scope` | In-process descriptive diagnostics; no hosted service or runtime telemetry. Existing stack exceptions remain proposed for review. | [brief](PROJECT_BRIEF.md), [ADR-0001](docs/decisions/0001-existing-library-baseline.md) | 2026-09-12 |
-| `quality-gate` | `make check` includes frozen DPI/Statsmodels/adapter references, original coverage, expanded nonflat/DPI/few-cluster simulations and separate binsreg function coverage; default pytest omits integration/external tests. | [Makefile](Makefile), [CI](.github/workflows/ci.yml) | 2026-09-12 |
+| `library-scope` | In-process descriptive diagnostics; no hosted service or runtime telemetry. User-directed Polars-native preparation/tables retain optional pandas compatibility; remaining numerical/tooling baseline decisions are proposed. | [brief](PROJECT_BRIEF.md), [ADR-0002](docs/decisions/0002-polars-native-dataframes.md) | 2026-09-12 |
+| `quality-gate` | `make check` includes native Polars estimation/plotting in an isolated environment without pandas, frozen DPI/Statsmodels/adapter references and all three development coverage protocols; default pytest omits integration/external tests. | [Makefile](Makefile), [CI](.github/workflows/ci.yml) | 2026-09-12 |
 | `dpi-correction` | C1 is integrated through PR #7: actual DPI count, explicit spacing, no silent fallback; weights/controls/clusters rejected. Not yet released. | [C1 record](docs/dpi-selection-review.md), [PR #7](https://github.com/joshuamyers22/binspect/pull/7) | 2026-09-12 |
 | `remote-controls` | Main is unprotected; PyPI environment has a reviewer; security-update automation and private vulnerability reporting are disabled. This is a dated observation, not a protection guarantee. | [API evidence](docs/GOVERNANCE.md) | 2026-09-12 |
 | `import-isolation` | Plain import and ordinary estimation defer plotting initialization; requesting theme/plotting exports may initialize Matplotlib caches. Native numerical workers and optional DPI are outside this test's scope. | [Runtime regression](tests/test_runtime_boundaries.py), [public plotting exports](tests/test_plot.py) | 2026-09-12 |
@@ -27,6 +27,8 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `binsreg-reference` | Requested upstream review confirms a different adjusted function target with full control covariance by default, higher-degree DPI function intervals, and warnings/fallbacks for few clusters. It supplies no safe cluster-count guarantee or author endorsement of binspect. | [Source review and locked tests](docs/binsreg-reference-review.md) | 2026-09-12 |
 | `binsreg-adapter` | User-requested `binspect.binsreg` adds original-coordinate function inference with full coefficient covariance and copied tables. Backend 3.2.1 references and full gate pass; unknown warnings/versions are unverified. Development coverage is 93.6% iid DPI, 94.3% with 60 clusters, 42.4% with three uneven clusters at nominal 95%. Few-cluster degree-0 fallback remains limited support. Assessment seeds 95000–95002 are reserved and unrun. | [Prespecified contract](docs/BINSREG_ADAPTER_PLAN.md), [clean evidence and review](docs/binsreg-adapter-review.md) | 2026-09-12 |
 | `diagnostic-policy` | DiagnosticPolicy uses effective rows, not retained zeros; None opts out. Constant outcomes and clustered estimates without explicit cluster thresholds are not assessed. Limited support replaces the power-implying label. Policies, reasons and distinct counts are exported. | [C4 contract](docs/diagnostic-policy-review.md), [tests](tests/test_diagnostic_policy.py) | 2026-09-12 |
+| `polars-contract` | A2 makes Polars the default table type regardless of input; `.to_pandas()` explicitly converts. Inputs align by position, including named Series controls. Explicit categorical orders survive filtering; ordinary string categories sort observed levels. Native use does not install/import pandas; upstream binsreg still uses pandas internally. Review/integration pending. | [Contract](docs/INPUT_OUTPUT_CONTRACT.md), [parity tests](tests/test_polars_contract.py), [native gate](validation/native_smoke.py) | 2026-09-12 |
+| `evidence-export` | Schema v1 exports include exclusion counts/design identity and typed group labels; `to_json()` is deterministic. `to_evidence()` only records caller-supplied plan/input/lock/code references, with timestamp outside payload; no implicit fingerprints, reads, raw rows or provenance verification. | [Contract](docs/INPUT_OUTPUT_CONTRACT.md), [regressions](tests/test_evidence_export.py) | 2026-09-12 |
 
 ## Open work
 
@@ -36,7 +38,9 @@ merged into main on 2026-09-12 at `e206e0c`, explicitly authorized by the user;
 C1/C2/C4 corrections, C3 inference boundaries/development evidence, and the binsreg
 adapter are integrated. A1 ownership/mutation isolation is locally implemented
 and verified on `fix/result-ownership`, pending maintainer review/integration.
-Next implementation: A2 export and input contracts.
+A2 adds the user-directed Polars-native boundary and versioned input/evidence
+contracts on `feat/export-input-contracts`, stacked on A1; review/integration pending.
+Next implementation: A3 compatibility policy.
 Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
 proposed baseline decisions and governance/security/release gates remain open;
 merge authorization is not an independent statistical approval or a release.

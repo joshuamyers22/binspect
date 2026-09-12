@@ -17,13 +17,15 @@ def plot(result: BinsregResult, ax: Axes | None = None) -> Axes:
     if ax is None:
         _, ax = plt.subplots()
     dots, ci, meta = result.dots, result.intervals, result.metadata
-    ax.scatter(dots.x, dots.fit, label="Dot fit")
+    ax.scatter(dots["x"].to_numpy(), dots["fit"].to_numpy(), label="Dot fit")
     if len(ci):
         center = ci["fit"].to_numpy()
         ax.errorbar(
-            ci.x,
+            ci["x"].to_numpy(),
             center,
-            yerr=np.vstack((center - ci.ci_lo, ci.ci_hi - center)),
+            yerr=np.vstack(
+                (center - ci["ci_lo"].to_numpy(), ci["ci_hi"].to_numpy() - center)
+            ),
             fmt="x",
             label="Interval fit",
         )

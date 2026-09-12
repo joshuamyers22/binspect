@@ -4,22 +4,26 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Literal
 
 import numpy as np
-import pandas as pd
+import polars as pl
 
 from ._ownership import ArrayOwner
 from .core.binning import Binning
 from .core.decompose import Decomposition
 from .core.estimate import BinEstimates
+from .evidence import JsonExport
 from .inference import inference_metadata
+from .input_metadata import ControlDesign, SampleCounts
 from .result_serialization import serialize_result
 from .result_summary import summarize
 from .result_tables import bin_table, decomposition_table, summary_frame
+from .tabular import to_pandas
 from .types import FloatArray, Line, LineFit, ZeroWeightPolicy
 
 if TYPE_CHECKING:  # pragma: no cover
+    import pandas as pd
     from matplotlib.axes import Axes
     from matplotlib.figure import Figure
 
@@ -27,7 +31,7 @@ __all__ = ["BinscatterResult"]
 
 
 @dataclass(frozen=True, slots=True)
-class BinscatterResult(ArrayOwner):
+class BinscatterResult(ArrayOwner, JsonExport):
     """Results from binned scatterplot estimation.
 
     Numeric arrays are owned read-only snapshots, including nested partition and
@@ -74,9 +78,9 @@ class BinscatterResult(ArrayOwner):
         Count-selection rule, or ``"fixed"``, ``"custom"``, or ``"pooled"``.
     verdict : str
         Descriptive interpretation of the lack-of-fit measure.
-    table : pandas.DataFrame
+    table : polars.DataFrame
         Per-bin estimates.
-    decomposition_table : pandas.DataFrame
+    decomposition_table : polars.DataFrame
         Variance decomposition as a one-row table.
     """
 
@@ -93,6 +97,8 @@ class BinscatterResult(ArrayOwner):
     controls: tuple[str, ...] = ()
     cluster: str | None = None
     zero_weight: ZeroWeightPolicy = "retain"
+    sample: SampleCounts | None = None
+    control_design: ControlDesign | None = None
 
     def __post_init__(self) -> None:
         ArrayOwner.__post_init__(self)
@@ -155,7 +161,7 @@ class BinscatterResult(ArrayOwner):
         return f"{self.y_name} (adjusted)" if self.adjusted else self.y_name
 
     @property
-    def table(self) -> pd.DataFrame:
+    def table(self) -> pl.DataFrame:
         """Return occupied intervals with original IDs and bounds.
 
         ``bin`` identifies an interval in ``binning.partition_edges``. Empty
@@ -165,13 +171,25 @@ class BinscatterResult(ArrayOwner):
         return bin_table(self)
 
     @property
-    def decomposition_table(self) -> pd.DataFrame:
+    def decomposition_table(self) -> pl.DataFrame:
         """Return the variance decomposition as a one-row DataFrame."""
         return decomposition_table(self)
 
-    def summary_frame(self) -> pd.DataFrame:
+    def summary_frame(self) -> pl.DataFrame:
         """Return model and diagnostic statistics as a one-row DataFrame."""
         return summary_frame(self)
+
+    def to_pandas(
+        self, table: Literal["bins", "decomposition", "summary"] = "bins"
+    ) -> pd.DataFrame:
+        """Return an editable pandas projection; pandas is optional."""
+        if table == "bins":
+            return to_pandas(self.table)
+        if table == "decomposition":
+            return to_pandas(self.decomposition_table)
+        if table == "summary":
+            return to_pandas(self.summary_frame())
+        raise ValueError("table must be bins, decomposition or summary.")
 
     def to_dict(self) -> dict[str, Any]:
         """Return estimation results using JSON-compatible Python values."""

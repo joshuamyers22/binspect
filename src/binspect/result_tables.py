@@ -4,13 +4,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-import pandas as pd
+import polars as pl
 
 if TYPE_CHECKING:
     from .results import BinscatterResult
 
 
-def bin_table(result: BinscatterResult) -> pd.DataFrame:
+def bin_table(result: BinscatterResult) -> pl.DataFrame:
     """Return occupied intervals with original IDs and bounds as a DataFrame."""
     estimates = result.estimates
     edges = result.binning.partition_edges
@@ -33,18 +33,18 @@ def bin_table(result: BinscatterResult) -> pd.DataFrame:
         columns["n_positive"] = estimates.n_positive
     if estimates.n_effective is not None:
         columns["n_effective"] = estimates.n_effective
-    return pd.DataFrame(columns, copy=True)
+    return pl.DataFrame(columns)
 
 
-def decomposition_table(result: BinscatterResult) -> pd.DataFrame:
+def decomposition_table(result: BinscatterResult) -> pl.DataFrame:
     """Return the variance decomposition as a one-row DataFrame."""
-    return pd.DataFrame([result.decomposition.as_dict()])
+    return pl.DataFrame([result.decomposition.as_dict()])
 
 
-def summary_frame(result: BinscatterResult) -> pd.DataFrame:
+def summary_frame(result: BinscatterResult) -> pl.DataFrame:
     """Return model and diagnostic statistics as a one-row DataFrame."""
     decomposition = result.decomposition
-    return pd.DataFrame(
+    return pl.DataFrame(
         [
             {
                 "x": result.x_name,
