@@ -6,7 +6,8 @@ Updated 2026-09-12 against `main` at `59c6a39`, package version `0.1.1`.
 matched references, explicit inference metadata and a predeclared coverage protocol
 are implemented on `test/inference-contract`; see [C3 evidence](docs/inference-contract-review.md)
 and the [analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md). Development simulations
-found adjusted-bin undercoverage (89.2% at nominal 95%); no nominal population-coverage
+found adjusted-bin undercoverage (89.2% in development, 87.4% in the locked
+assessment, at nominal 95%); no nominal population-coverage
 claim is made for adjusted bins. Expanded scenarios and qualified review remain
 open, so C3 is not complete.
 C2's explicit shared-controls rejection and original interval identity are
@@ -374,4 +375,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | C1 — DPI selection | [Implementation and verification](docs/dpi-selection-review.md); `make check`: 209 unit tests, 6 real-library tests, 91.62% coverage, lint/types/imports/build passed; PR #7 CI passed | Pending maintainer review/integration. |
 | 2026-09-12 | G1/G2 — repository agreement and threat model | [Implementation, control audit and verification](docs/repository-baseline-review.md) | Prepared for review; policy/ADR and residual-risk acceptance remain open. Remote control changes are tracked for G1/P3/R1. |
 | 2026-09-12 | C2 — grouped coordinates and interval identity | [Contract and regressions](docs/grouped-interval-review.md); `make check`: 228 unit tests, 6 integration tests, 92.02% coverage, lint/types/imports/build passed | Explicit unsupported-combination guard and interval identity implemented; review/integration pending. Shared adjusted coordinates remain unavailable. |
-| 2026-09-12 | C3 — initial inference contracts and references | [Analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [verification and diagnostic failures](docs/inference-contract-review.md); 238 unit tests, 30 integration tests, 92.16% coverage, required development coverage/build gates pass | Partial: adjusted-bin undercoverage found; no nominal population-coverage claim. Expanded scenarios, locked assessment and qualified review remain open. |
+| 2026-09-12 | C3 — initial inference contracts and references | [Analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [verification and locked assessment](docs/inference-contract-review.md); 238 unit tests, 30 integration tests, 92.16% coverage, required coverage/build gates pass | Partial: adjusted-bin coverage is 87.4% at nominal 95% in locked assessment; no nominal population-coverage claim. Expanded scenarios, method decisions and qualified review remain open. |

@@ -3,8 +3,8 @@
 - Date: 2026-09-12; baseline `2b09086`, stacked after PR #9.
 - Implementer: Codex; accountable reviewer: Josh Myers; qualified statistical
   reviewer not yet assigned.
-- Status: initial implementation locally verified; locked assessment pending;
-  C3 acceptance remains open.
+- Status: initial implementation and locked assessment recorded; C3 acceptance
+  remains open because broader coverage/design work and qualified review remain.
 
 ## Bounded verification contract
 
@@ -54,10 +54,30 @@ limited approximate interval; it must not be used as validated population infere
 
 ## Locked assessment
 
-Commit the plan, protocol and implementation before executing seeds 51000–51004
-from a clean tree. Retain the generated JSON with revision, source/plan/lock hashes,
-input hash, versions and RNG identity. Results pending; this record does not claim
-the assessment has run or that reviewer approval exists.
+The plan, protocol and implementation were committed as `c19c2a8` before running
+seeds 51000–51004 from a clean tree. The
+[assessment JSON](evidence/inference-coverage-2026-09-12.json) records that revision,
+source/plan/lock hashes, generated-input hash, versions and RNG identity.
+
+| Scenario | Coverage / 1,000 replicates | Monte Carlo SE | Disposition |
+|---|---|---|---|
+| IID | 94.6% | 0.71 percentage points | Required sanity case passed |
+| Reliability weights | 95.6% | 0.65 percentage points | Required sanity case passed |
+| Clustered | 94.9% | 0.70 percentage points | Required sanity case passed |
+| Adjusted diagnostic | 87.4% | 1.05 percentage points | Outside nominal band; confirms undercoverage concern |
+| Quantile diagnostic | 95.2% | 0.68 percentage points | Within band for flat target only |
+
+No invalid replicate occurred. Required-case acceptance band was fixed at
+[92.243%, 97.757%] before either run. Neither scenarios nor tolerances were changed
+after observing results. The report's `required_pass` covers only its three
+prespecified sanity cases; the failing adjusted diagnostic remains visible and
+does not pass C3. Assessment seeds are now consumed and cannot serve as an unseen
+assessment set for future method tuning. Use a reviewed new set after changes.
+
+Reproduction command: `uv run --frozen --extra dev --extra validation python
+validation/coverage.py --phase assessment --output docs/evidence/inference-coverage-2026-09-12.json`
+from clean `c19c2a8`. Do not overwrite this historical report with a changed method.
+Independent statistical approval has not been supplied by this run.
 
 ## Remaining C3 work
 

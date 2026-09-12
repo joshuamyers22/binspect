@@ -21,7 +21,7 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 |---|---|---|---|
 | `grouped-adjustment` | Shared bins with controls are explicitly rejected; independent group adjustment remains supported. Tables preserve original interval IDs/bounds while estimation indices stay compact. Do not join independent partitions by ID or enable shared adjusted coordinates by widening edges. | [C2 contract and evidence](docs/grouped-interval-review.md), [regressions](tests/test_grouped_intervals.py) | 2026-09-12 |
 | `frozen-arrays` | Frozen result dataclasses still expose mutable arrays; mutation can desynchronize stored results. | [AR9 reproduction](docs/project-plan-review.md), A1 in [plan](binspect-plan.md) | 2026-09-12 |
-| `inference-evidence` | Initial matched references pass, but adjusted-bin development coverage is 89.2% at nominal 95%; nominal population coverage is unvalidated. FWL does not establish adjusted-bin coverage. | [C3 analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [evidence](docs/inference-contract-review.md) | 2026-09-12 |
+| `inference-evidence` | Initial matched references pass, but adjusted-bin locked-assessment coverage is 87.4% at nominal 95% (89.2% development); nominal population coverage is unvalidated. Consumed assessment seeds must not be reused for tuning. | [C3 analysis plan](docs/STATISTICAL_ANALYSIS_PLAN.md), [evidence](docs/inference-contract-review.md) | 2026-09-12 |
 
 ## Open work
 
