@@ -11,6 +11,7 @@ import pandas as pd
 from .core.binning import Binning
 from .core.decompose import Decomposition
 from .core.estimate import BinEstimates
+from .inference import inference_metadata
 from .result_serialization import serialize_result
 from .result_summary import summarize
 from .result_tables import bin_table, decomposition_table, summary_frame
@@ -99,6 +100,11 @@ class BinscatterResult:
     def bin_rule(self) -> str:
         """Return the recorded bin-selection rule."""
         return self.binning.rule
+
+    @property
+    def inference(self) -> dict[str, Any]:
+        """Return covariance/df metadata and limitations of pointwise intervals."""
+        return inference_metadata(self)
 
     @property
     def verdict(self) -> str:

@@ -30,6 +30,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dpi = ["binsreg>=1.0"]
+validation = ["statsmodels==0.15.0"]
 dev = [
   "build",
   "pytest>=8.0",

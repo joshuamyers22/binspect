@@ -29,7 +29,8 @@ instructions explicitly authorize delegation.
 
 Install the committed environment with `uv sync --frozen --all-extras`; run
 `make check` for source/workflow changes. This includes lint/format, strict mypy,
-import contracts, unit tests/coverage, locked DPI integration, and builds.
+import contracts, unit tests/coverage, locked DPI/Statsmodels integration,
+prespecified development coverage simulations, and builds.
 Documentation-only changes need link/example/format checks; do not call skipped
 software checks passed. New failures or material code changes justify reruns.
 Never silently change statistical conventions, drop failing reference tests, or

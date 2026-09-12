@@ -107,7 +107,11 @@ def binscatter(
     least-squares model.
 
     Confidence intervals assume independent observations unless ``cluster`` is
-    supplied. Clustered inference uses cluster-level score sums, a CR1 finite-sample
+    supplied. Bin intervals are approximate, pointwise and conditional on the
+    supplied adjustment and partition; they omit first-stage/selection uncertainty.
+    Adjusted bin intervals have no validated nominal population-coverage claim.
+    See ``result.inference`` for covariance, degrees of freedom and limitations.
+    Clustered inference uses cluster-level score sums, a CR1 finite-sample
     correction, and t critical values based on the clusters represented in each bin.
 
     See Also

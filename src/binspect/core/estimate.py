@@ -37,6 +37,8 @@ class BinEstimates:
         Standard-error estimator used for bin means.
     n_clusters : ndarray or None
         Number of positive-weight clusters represented in each bin.
+    ci_df : ndarray or None
+        Per-bin t-reference degrees of freedom (undefined where SE is undefined).
     """
 
     x_mean: FloatArray
@@ -50,6 +52,7 @@ class BinEstimates:
     ci_level: float | None
     se_type: Literal["independent", "cluster"] = "independent"
     n_clusters: IntArray | None = None
+    ci_df: FloatArray | None = None
 
     @property
     def n_bins(self) -> int:
@@ -100,12 +103,17 @@ def estimate_bins(
 
     Notes
     -----
-    The within-bin SD uses a denominator of ``n - 1`` (``NaN`` for singleton bins).
-    Without ``clusters``, standard errors are the within-bin ``sd / sqrt(n)``.
+    The unweighted SD uses a denominator of ``n - 1`` (``NaN`` for singleton bins).
+    With reliability weights, that denominator is ``sum(w) - sum(w**2)/sum(w)``.
+    Without ``clusters``, standard errors are ``sd / sqrt(n_eff)``, where
+    ``n_eff = sum(w)**2 / sum(w**2)``. This differs from classical WLS covariance.
     Clustered standard errors aggregate weighted score contributions by cluster and
     apply the ``G / (G - 1)`` CR1 correction, where ``G`` is the number of clusters
     represented in a bin. A bin with fewer than two positive-weight clusters has an
     undefined standard error and confidence interval.
+    Intervals are approximate and pointwise. The calculation treats the supplied
+    partition and adjusted variables as given; it does not propagate fitted-control
+    or partition-selection uncertainty.
     """
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
@@ -194,6 +202,7 @@ def estimate_bins(
         ci_level=ci,
         se_type=se_type,
         n_clusters=n_clusters,
+        ci_df=np.where(np.isfinite(se), interval_df, np.nan).astype(float),
     )
 
 

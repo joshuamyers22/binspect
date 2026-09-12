@@ -33,6 +33,12 @@ All notable changes to this project are documented here. The format follows
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- A statistical analysis plan, locked Statsmodels reference checks and seeded
+  coverage protocol, enforced by a separate `inference-validation` CI job.
+- `result.inference` and JSON/summary metadata expose covariance, residual/reference
+  degrees of freedom and interval limitations. Bin intervals are explicitly
+  approximate and pointwise; fitted-control/selection uncertainty is omitted, and
+  adjusted-bin nominal population coverage is unvalidated. HC1 remains unsupported.
 - `binning.partition_edges` and `binning.interval_ids`, also included in JSON,
   preserve full partition boundaries and occupied interval identity. Legacy
   compressed edges and no-gap table behavior remain available.
