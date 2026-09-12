@@ -1,0 +1,32 @@
+{
+  "scope": "qualitative simulation; not accessibility certification",
+  "themes": {
+    "deck": {
+      "accent_luminance": 0.22151541200376595,
+      "neutral_luminance": 0.1946178304415758,
+      "text_background_ratios": {
+        "#202124": 1.0810845532536795,
+        "#F2F2F2": 15.546591565855719,
+        "white": 17.40432753274219
+      }
+    },
+    "notebook": {
+      "accent_luminance": 0.15248980125973846,
+      "neutral_luminance": 0.1559264637078274,
+      "text_background_ratios": {
+        "#202124": 1.1370096290293008,
+        "#F2F2F2": 12.647695010129434,
+        "white": 14.159028077509387
+      }
+    },
+    "paper": {
+      "accent_luminance": 0.010329823029626936,
+      "neutral_luminance": 0.25415209433082675,
+      "text_background_ratios": {
+        "#202124": 1.0810845532536795,
+        "#F2F2F2": 15.546591565855719,
+        "white": 17.40432753274219
+      }
+    }
+  }
+}

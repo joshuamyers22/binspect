@@ -294,8 +294,11 @@ distribution of the exogenous variable as separate layers.
 
 Three themes are included: `notebook` (default), `paper` (thin, serif), and `deck`
 (larger marks and type). Themes are scoped; importing `binspect` does not modify
-global `rcParams`. Grayscale/color-vision and exported-figure qualification remain
-in plan task D2. See the [public plotting inventory](docs/API_INVENTORY.md) for
+global `rcParams`. D2 adds local PNG/PDF/SVG checks and
+[grayscale/color-vision review with explicit limits](docs/site/guide/figure-exports.md).
+Existing presets are unsuitable for dark figure/axes backgrounds; general
+accessibility and maintainer visual acceptance remain open.
+See the [public plotting inventory](docs/API_INVENTORY.md) for
 layer options, draw order and return types.
 
 Use `bs.audit()` for a composed diagnostic figure with the unchanged binscatter in

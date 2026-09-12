@@ -78,6 +78,12 @@ intentional default changes.
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- Four guarded PNG rendering baselines and portable PNG/PDF/SVG export checks for
+  missing intervals, negative slopes, long labels, facets/audits and caller axes.
+  `make figures` joins the required gate with pinned renderer/font metadata and a
+  dedicated CI job. Grayscale/color-vision/background review records dark-background
+  limitations; palette values are unchanged and universal accessibility claims
+  are removed. PDF parsing adds pypdf to development dependencies only.
 - A MkDocs Material user guide and source-generated API reference, plus a required
   `make docs`/CI documentation gate that executes README, guide and contract examples
   and the quickstart before a strict link/anchor build. Site output is local only;

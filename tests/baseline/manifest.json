@@ -1,0 +1,57 @@
+{
+  "cases": [
+    "default",
+    "paper",
+    "audit",
+    "deviation"
+  ],
+  "host": {
+    "machine": "arm64",
+    "release": "24.1.0",
+    "system": "Darwin"
+  },
+  "lock_sha256": "b8fdf6e1b0243cfb90c63cbf292dd8700347b76b56b3bd8244891612a9dbf40e",
+  "renderer": {
+    "fonts_sha256": {
+      "DejaVu Sans": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+      "DejaVu Serif": "107244956e9962b9e96faccdc551825e0ae0898ae13737133e1b921a2fd35ffa"
+    },
+    "freetype": "2.14.3",
+    "implementation": "CPython",
+    "python": [
+      "3",
+      "12"
+    ],
+    "rc": {
+      "backend": "Agg",
+      "figure.dpi": 100,
+      "font.family": "DejaVu Sans",
+      "font.sans-serif": [
+        "DejaVu Sans"
+      ],
+      "font.serif": [
+        "DejaVu Serif"
+      ],
+      "pdf.fonttype": 42,
+      "savefig.dpi": 100,
+      "svg.fonttype": "none",
+      "svg.hashsalt": "binspect-d2",
+      "text.usetex": false
+    },
+    "versions": {
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2",
+      "pillow": "12.3.0",
+      "scipy": "1.18.1"
+    }
+  },
+  "review": "Initial D2 candidates; local visual inspection recorded separately; maintainer acceptance pending.",
+  "rms_limit": 0.5,
+  "schema_version": 1,
+  "sha256": {
+    "audit.png": "d97747a559ee9dbc2e8254c477e08aba13efeaeb4012baf286f91f354044e44b",
+    "default.png": "a7293e736d557565497cc568f61d60ab2b9bcb7599d22a1bec593262d662493f",
+    "deviation.png": "acc9fcb7023f452b55aed018f734f46e15128076149c2405969e084a6761cd51",
+    "paper.png": "d1101be8802c0aea6b58622deeccd583d8b227397fc1e56320dc59a78730915f"
+  }
+}
