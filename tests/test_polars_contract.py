@@ -230,3 +230,38 @@ def test_explicit_date_categories_keep_reference_coding():
         "type": "date",
         "value": "2026-01-01",
     }
+
+
+@pytest.mark.parametrize("weighted", [False, True])
+def test_large_integer_categories_preserve_design_and_adjusted_fit(weighted):
+    rng = np.random.default_rng(421)
+    indicator = np.tile([0.0, 1.0], 120)
+    x = indicator + rng.normal(size=240)
+    y = 0.7 * x + 4 * indicator + rng.normal(size=240)
+    values = pd.Series(
+        pd.Categorical([2**53, 2**53 + 1] * 120, categories=[2**53, 2**53 + 1]),
+        name="category",
+    )
+    weights = rng.uniform(0.5, 2, 240) if weighted else None
+    controls, _ = control_frame(None, values, 240)
+    encoded, design = encoded_controls(controls)
+    np.testing.assert_array_equal(encoded.to_numpy(), indicator[:, None])
+    assert design.to_dict()["encoding"][0]["levels"] == [
+        {"type": "integer", "value": 2**53},
+        {"type": "integer", "value": 2**53 + 1},
+    ]
+    result = binspect.binscatter(
+        x=x, y=y, controls=values, weights=weights, bins=4, ci=None
+    )
+    full_design = np.column_stack((np.ones(240), indicator, x))
+    root_weights = np.ones(240) if weights is None else np.sqrt(weights)
+    coefficients = np.linalg.lstsq(
+        full_design * root_weights[:, None], y * root_weights, rcond=None
+    )[0]
+    assert result.fit.slope == pytest.approx(coefficients[-1], rel=1e-12, abs=1e-12)
+
+    # The separate function adapter uses the same categorical boundary.
+    from binspect.binsreg_inputs import prepare_binsreg
+
+    prepared = prepare_binsreg(None, y, x, weights, values, None, True)
+    np.testing.assert_array_equal(prepared.controls, indicator[:, None])
