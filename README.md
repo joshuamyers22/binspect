@@ -7,10 +7,10 @@ the underlying observations. The bin means are the fitted values from the satura
 model `OLS(y ~ C(bin))`. Their weighted deviations from the line provide a descriptive
 linear specification diagnostic.
 
-The development version is **Polars-native**, with pandas input compatibility.
+Version 0.2.0 is **Polars-native**, with pandas input compatibility.
 Result tables are Polars DataFrames; use `result.to_pandas()` for an explicit
-pandas projection. NumPy/SciPy handle numerical estimation. These changes are
-unreleased; see the [input and export contract](docs/INPUT_OUTPUT_CONTRACT.md) and
+pandas projection. NumPy/SciPy handle numerical estimation. See the
+[input and export contract](docs/INPUT_OUTPUT_CONTRACT.md) and
 [compatibility policy and migration examples](docs/COMPATIBILITY.md).
 
 The [user guide](docs/site/index.md) covers the supported workflows, with an
@@ -179,7 +179,7 @@ uniform confidence bands or formal shape-restriction tests are required.
 
 ## Adjusted function inference with binsreg
 
-The unreleased optional adapter fits binsreg's function in the original x
+The optional adapter fits binsreg's function in the original x
 coordinates, jointly with numeric or categorical controls:
 
 ```python
@@ -355,9 +355,8 @@ area or length does not equal the weighted squared gap.
 
 ## Status
 
-Package version is `0.1.1`; Polars tables and versioned exports are unreleased.
-The proposed next release is `0.2.0` because these changes affect existing callers;
-maintainer review and release gates remain open. See the
+Package version is `0.2.0`. This minor release makes Polars tables, versioned exports,
+result ownership changes and the optional function adapter available to callers. See the
 [compatibility policy](docs/COMPATIBILITY.md) for supported options and migration.
 The distribution name is `binspect-regression`; the import remains `binspect`.
 
@@ -389,8 +388,8 @@ the compatibility policy. NumPy/SciPy, Polars and Matplotlib are required; panda
 is optional for native use.
 
 Install the published package with `python -m pip install binspect-regression` and
-continue to write `import binspect`. Published 0.1.1 does not include all unreleased
-features documented here. See [CONTRIBUTING.md](CONTRIBUTING.md) for development checks.
+continue to write `import binspect`. See [CONTRIBUTING.md](CONTRIBUTING.md) for
+development checks.
 
 For contributing, release checks, and development conventions, see
 [CONTRIBUTING.md](CONTRIBUTING.md). Please report vulnerabilities privately as

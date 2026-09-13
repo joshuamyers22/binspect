@@ -1,9 +1,9 @@
 # Development and releases
 
-The guide describes unreleased development behavior. Package version is 0.1.1;
-the proposed next release is 0.2.0 because Polars return types, ownership and other
-contract changes affect existing callers. This site is prepared for review and
-has not been published. Hosting and maintainer publication approval remain open.
+The guide describes version 0.2.0 behavior. This minor release contains Polars
+return types, ownership and other contract changes that affect existing callers.
+The documentation site is built and checked separately from the package and is not
+deployed by the package release workflow.
 
 ## Reproduce the documentation checks
 
@@ -67,13 +67,14 @@ CI is configured for Python 3.10–3.13 on Linux/macOS. P2 adds separate
 and current compatible resolution. Other admitted combinations remain unqualified. The
 [D2 export review](guide/figure-exports.md) adds four guarded PNG baselines and
 structural PDF/SVG checks, with explicit background and simulation limits. The D3
-gallery covers seven seeded teaching cases; review/integration remains pending.
+gallery covers seven seeded teaching cases and is integrated; its interpretations
+retain the documented statistical limitations.
 [P1 workload measurements](guide/performance.md) cover the synthetic 10k–1M grid
 and replace dense clustered-bin storage. Maintainer baseline/runner acceptance
 remains pending. P3 adds a blocking online supply-chain gate; six exact license
 scopes were accepted on 2026-09-13 through 2026-10-13. See the
 [audit scope and decisions](https://github.com/joshuamyers22/binspect/blob/main/docs/SUPPLY_CHAIN.md).
-R1 artifact/workflow and R3 recovery preparation are implemented; release-specific
+R1 artifact/workflow and R3 recovery preparation are integrated; release-specific
 qualification remains open. No general capacity or
 accessibility qualification is implied.
 

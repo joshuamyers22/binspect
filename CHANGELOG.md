@@ -6,13 +6,13 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
-### Release allocation
+## [0.2.0] - 2026-09-13
 
-Proposed next version: **0.2.0**, pending maintainer acceptance and release gates.
-Polars default tables, result mutation restrictions, changed verdicts and rejected
-inference combinations affect existing callers and will not ship as a 0.1.2 patch.
-Compatible fixes are included in the same minor release. Package version remains
-0.1.1 and no release is published by this allocation. See the
+### Release scope
+
+This minor release contains Polars default tables, result mutation restrictions,
+changed verdicts and rejected inference combinations that affect existing callers.
+Compatible fixes are included in the same release. See the
 [compatibility policy and per-change allocation](docs/COMPATIBILITY.md) for migration
 examples, schema/deprecation rules and the distinction between corrections and
 intentional default changes.
