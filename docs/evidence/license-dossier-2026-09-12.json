@@ -1,0 +1,814 @@
+{
+  "binspect_artifacts": [
+    {
+      "license_members": [
+        "binspect_regression-0.1.1.dist-info/licenses/LICENSE"
+      ],
+      "members": 43,
+      "name": "binspect_regression-0.1.1-py3-none-any.whl",
+      "project_license_matches_checkout": true,
+      "provides_extra": [
+        "dev",
+        "docs",
+        "dpi",
+        "pandas",
+        "validation"
+      ],
+      "requires_dist": [
+        "matplotlib>=3.7",
+        "numpy>=1.24",
+        "polars>=1.0",
+        "scipy>=1.10",
+        "build; extra == 'dev'",
+        "hypothesis; extra == 'dev'",
+        "import-linter; extra == 'dev'",
+        "mypy; extra == 'dev'",
+        "pandas-stubs; extra == 'dev'",
+        "pandas>=2.0; extra == 'dev'",
+        "pre-commit; extra == 'dev'",
+        "pypdf>=6.18.1; extra == 'dev'",
+        "pytest-cov; extra == 'dev'",
+        "pytest-mpl; extra == 'dev'",
+        "pytest>=8.0; extra == 'dev'",
+        "ruff; extra == 'dev'",
+        "mkdocs-material; extra == 'docs'",
+        "mkdocstrings[python]; extra == 'docs'",
+        "binsreg>=3.2.1; extra == 'dpi'",
+        "pandas>=2.0; extra == 'pandas'",
+        "statsmodels==0.15.0; extra == 'validation'"
+      ],
+      "sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+      "source_revision": "a0a758fedc022ecc2acc6d973801886e2c34a1b9",
+      "upstream_package_directories": {
+        "binsreg": [],
+        "certifi": [],
+        "docutils": [],
+        "fqdn": [],
+        "hypothesis": [],
+        "pathspec": []
+      }
+    },
+    {
+      "license_members": [
+        "binspect_regression-0.1.1/LICENSE"
+      ],
+      "members": 226,
+      "name": "binspect_regression-0.1.1.tar.gz",
+      "project_license_matches_checkout": true,
+      "provides_extra": [
+        "dev",
+        "docs",
+        "dpi",
+        "pandas",
+        "validation"
+      ],
+      "requires_dist": [
+        "matplotlib>=3.7",
+        "numpy>=1.24",
+        "polars>=1.0",
+        "scipy>=1.10",
+        "build; extra == 'dev'",
+        "hypothesis; extra == 'dev'",
+        "import-linter; extra == 'dev'",
+        "mypy; extra == 'dev'",
+        "pandas-stubs; extra == 'dev'",
+        "pandas>=2.0; extra == 'dev'",
+        "pre-commit; extra == 'dev'",
+        "pypdf>=6.18.1; extra == 'dev'",
+        "pytest-cov; extra == 'dev'",
+        "pytest-mpl; extra == 'dev'",
+        "pytest>=8.0; extra == 'dev'",
+        "ruff; extra == 'dev'",
+        "mkdocs-material; extra == 'docs'",
+        "mkdocstrings[python]; extra == 'docs'",
+        "binsreg>=3.2.1; extra == 'dpi'",
+        "pandas>=2.0; extra == 'pandas'",
+        "statsmodels==0.15.0; extra == 'validation'"
+      ],
+      "sha256": "772560f9b44992d342a0ed35ca833c22b3f833df7317a1a21472cb617bc9acf3",
+      "source_revision": "a0a758fedc022ecc2acc6d973801886e2c34a1b9",
+      "upstream_package_directories": {
+        "binsreg": [],
+        "certifi": [],
+        "docutils": [],
+        "fqdn": [],
+        "hypothesis": [],
+        "pathspec": []
+      }
+    }
+  ],
+  "decision": "pending for all six packages",
+  "inputs": [
+    {
+      "path": "uv.lock",
+      "sha256": "60cb5990b92833832ce44891b648f4eed0ef5cd06a6c8df50d00a18c6d88afee"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "cdf7e5c2ff46505174d6746010713e9abf8fd332f832578bb364cf7affada6e2"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "8e004010775307bfc2ee749277c9944ac4f13fa2d54cbd27ef84b0120a841613"
+    },
+    {
+      "path": "validation/supply-chain-exceptions.json",
+      "sha256": "05858b356b0cfe50d1974a31a06ad4bb1d13f2756edffa8966c7ae053a0462a1"
+    }
+  ],
+  "inspection_baseline": "af4972c66b1e0e6e20f090ce6641a15b6a3f10a8",
+  "inspection_method": {
+    "claim_limits": [
+      "Not a whole-code or native-component license audit.",
+      "Not all platform-specific wheels were inspected.",
+      "No legal compatibility determination or reviewer approval.",
+      "Development binspect archives are neither published PyPI bytes nor a release candidate."
+    ],
+    "downloads": "Exact lock URLs; all twelve archive digests matched before member reads.",
+    "hypothesis_wheels_inspected": 1,
+    "hypothesis_wheels_locked": 80,
+    "members": "Read regular license/copying/notice files, files under licenses directories, and the Docutils Emacs helper. No archive links followed.",
+    "scope_exports": "Eight frozen universal profiles; no packages installed or executed."
+  },
+  "locked_profile_membership": {
+    "audit": [
+      "certifi==2026.7.22",
+      "fqdn==1.5.1"
+    ],
+    "build": [
+      "certifi==2026.7.22",
+      "docutils==0.23",
+      "pathspec==1.1.1"
+    ],
+    "dev": [
+      "hypothesis==6.165.10",
+      "pathspec==1.1.1"
+    ],
+    "docs": [
+      "certifi==2026.7.22",
+      "pathspec==1.1.1"
+    ],
+    "dpi": [
+      "binsreg==3.2.1"
+    ],
+    "pandas": [],
+    "runtime": [],
+    "validation": []
+  },
+  "method": "Frozen universal requirement exports preserve markers; memberships are possible profile dependencies, not new installed-environment evidence. Directory inventory does not detect renamed/copied fragments or constitute a whole-code license audit.",
+  "owner": "Josh Myers",
+  "recorded_at": "2026-09-13T03:15:48.202223+00:00",
+  "review_expiry": "2026-10-13",
+  "schema_version": 1,
+  "upstream_archives": [
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "wheel",
+      "license_members": [
+        {
+          "member": "binsreg-3.2.1.dist-info/licenses/LICENSE.md",
+          "sha256": "4d77c925a918b23fa0220fefeb3ab19723ade4c06798508badfb6054c8a59291",
+          "size": 459
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 13,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Science/Research",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Operating System :: OS Independent",
+          "Topic :: Scientific/Engineering",
+          "Topic :: Scientific/Engineering :: Mathematics"
+        ],
+        "License": [
+          "GPL-3.0-only"
+        ]
+      },
+      "package": "binsreg",
+      "sha256": "f006d36987fcad721c1577c3565e5eab9d9fffc6ea8b6c9a4020d2178fcaf20a",
+      "size": 92363,
+      "url": "https://files.pythonhosted.org/packages/60/53/9160603d9a0ec3d423428249b4cacf717c0f14b9ed4720bd190c30451375/binsreg-3.2.1-py3-none-any.whl",
+      "version": "3.2.1"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "sdist",
+      "license_members": [
+        {
+          "member": "binsreg-3.2.1/LICENSE.md",
+          "sha256": "4d77c925a918b23fa0220fefeb3ab19723ade4c06798508badfb6054c8a59291",
+          "size": 459
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 22,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Science/Research",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Operating System :: OS Independent",
+          "Topic :: Scientific/Engineering",
+          "Topic :: Scientific/Engineering :: Mathematics"
+        ],
+        "License": [
+          "GPL-3.0-only"
+        ]
+      },
+      "package": "binsreg",
+      "sha256": "7b8d0b1cddfdfd042e4eca837058d98ec55e9781b32fb42b437dd08c933647c2",
+      "size": 92338,
+      "url": "https://files.pythonhosted.org/packages/ac/fc/62948125665358cff87907227ddeaa18ea3416de5437d337003656f4ac9e/binsreg-3.2.1.tar.gz",
+      "version": "3.2.1"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "wheel",
+      "license_members": [
+        {
+          "member": "certifi-2026.7.22.dist-info/licenses/LICENSE",
+          "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
+          "size": 989
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 12,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+          "Natural Language :: English",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14"
+        ],
+        "License": [
+          "MPL-2.0"
+        ]
+      },
+      "package": "certifi",
+      "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+      "size": 136983,
+      "url": "https://files.pythonhosted.org/packages/0b/a7/71ac2cff56fec219ed242bb11b8efb69fcc4bec75db06fb7bfe35de520e6/certifi-2026.7.22-py3-none-any.whl",
+      "version": "2026.7.22"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "sdist",
+      "license_members": [
+        {
+          "member": "certifi-2026.7.22/LICENSE",
+          "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
+          "size": 989
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 19,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+          "Natural Language :: English",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14"
+        ],
+        "License": [
+          "MPL-2.0"
+        ]
+      },
+      "package": "certifi",
+      "sha256": "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55",
+      "size": 138112,
+      "url": "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz",
+      "version": "2026.7.22"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "wheel",
+      "license_members": [
+        {
+          "member": "docutils-0.23.dist-info/licenses/COPYING.rst",
+          "sha256": "6ab4f27c76c74f96e5e692da5944a6f82968f3bddaac5660a4aa723e70eb5d8f",
+          "size": 6075
+        },
+        {
+          "member": "docutils-0.23.dist-info/licenses/licenses/BSD-0-Clause.rst",
+          "sha256": "42ac50251ab8a6738f77d5707f2a788dbf3446a6ed68edecb6ac17489a78e163",
+          "size": 644
+        },
+        {
+          "member": "docutils-0.23.dist-info/licenses/licenses/BSD-2-Clause.rst",
+          "sha256": "b8f3b31a2f4312401fe4122fe932a333ec0d7e47d849c02da0404e8048fe74d0",
+          "size": 1318
+        },
+        {
+          "member": "docutils-0.23.dist-info/licenses/licenses/gpl-3-0.txt",
+          "sha256": "e6037104443f9a7829b2aa7c5370d0789a7bda3ca65a0b904cdc0c2e285d9195",
+          "size": 35150
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 212,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 4 - Beta",
+          "Environment :: Console",
+          "Intended Audience :: Developers",
+          "Intended Audience :: End Users/Desktop",
+          "Intended Audience :: Information Technology",
+          "Intended Audience :: Other Audience",
+          "Intended Audience :: System Administrators",
+          "License :: Public Domain",
+          "License :: OSI Approved :: BSD License",
+          "License :: OSI Approved :: GNU General Public License (GPL)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Topic :: Documentation",
+          "Topic :: Software Development",
+          "Topic :: Software Development :: Documentation",
+          "Topic :: Text Editors :: Documentation",
+          "Topic :: Text Processing",
+          "Topic :: Text Processing :: General",
+          "Topic :: Text Processing :: Markup",
+          "Topic :: Text Processing :: Markup :: HTML",
+          "Topic :: Text Processing :: Markup :: LaTeX",
+          "Topic :: Text Processing :: Markup :: Markdown",
+          "Topic :: Text Processing :: Markup :: reStructuredText",
+          "Topic :: Text Processing :: Markup :: XML",
+          "Topic :: Utilities",
+          "Natural Language :: English",
+          "Natural Language :: Afrikaans",
+          "Natural Language :: Arabic",
+          "Natural Language :: Catalan",
+          "Natural Language :: Catalan (Valencian)",
+          "Natural Language :: Chinese (Simplified)",
+          "Natural Language :: Chinese (Traditional)",
+          "Natural Language :: Czech",
+          "Natural Language :: Danish",
+          "Natural Language :: Dutch",
+          "Natural Language :: Esperanto",
+          "Natural Language :: Finnish",
+          "Natural Language :: French",
+          "Natural Language :: Galician",
+          "Natural Language :: Georgian",
+          "Natural Language :: German",
+          "Natural Language :: Hebrew",
+          "Natural Language :: Italian",
+          "Natural Language :: Japanese",
+          "Natural Language :: Korean",
+          "Natural Language :: Latvian",
+          "Natural Language :: Lithuanian",
+          "Natural Language :: Persian",
+          "Natural Language :: Polish",
+          "Natural Language :: Portuguese (Brazilian)",
+          "Natural Language :: Russian",
+          "Natural Language :: Slovak",
+          "Natural Language :: Spanish",
+          "Natural Language :: Swedish",
+          "Natural Language :: Ukrainian"
+        ]
+      },
+      "package": "docutils",
+      "sha256": "25d013af9bf23bc1c7b2b093dff4208166c53a94786c9e447808335ef1185fea",
+      "size": 634701,
+      "url": "https://files.pythonhosted.org/packages/32/91/30151a39f7570f448ed84529390628a651d7f27c87d73c9b887f8189695e/docutils-0.23-py3-none-any.whl",
+      "version": "0.23"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [
+        "docutils-0.23/tools/editors/emacs/rst.el"
+      ],
+      "kind": "sdist",
+      "license_members": [
+        {
+          "member": "docutils-0.23/COPYING.rst",
+          "sha256": "6ab4f27c76c74f96e5e692da5944a6f82968f3bddaac5660a4aa723e70eb5d8f",
+          "size": 6075
+        },
+        {
+          "member": "docutils-0.23/licenses/BSD-0-Clause.rst",
+          "sha256": "42ac50251ab8a6738f77d5707f2a788dbf3446a6ed68edecb6ac17489a78e163",
+          "size": 644
+        },
+        {
+          "member": "docutils-0.23/licenses/BSD-2-Clause.rst",
+          "sha256": "b8f3b31a2f4312401fe4122fe932a333ec0d7e47d849c02da0404e8048fe74d0",
+          "size": 1318
+        },
+        {
+          "member": "docutils-0.23/licenses/docutils.conf",
+          "sha256": "176c87e34902dcde679e318845d4fb0c71c65db0ca6dde58b1b86643117608d6",
+          "size": 151
+        },
+        {
+          "member": "docutils-0.23/licenses/gpl-3-0.txt",
+          "sha256": "e6037104443f9a7829b2aa7c5370d0789a7bda3ca65a0b904cdc0c2e285d9195",
+          "size": 35150
+        },
+        {
+          "member": "docutils-0.23/tools/editors/emacs/rst.el",
+          "sha256": "b62671575c5cc258d5ae5594458be44be577932d3044e33d13163f6d07735335",
+          "size": 167362
+        }
+      ],
+      "links_not_followed": [
+        {
+          "member": "docutils-0.23/test/functional/input/data/html4css1.css",
+          "target": "../../../../docutils/writers/html4css1/html4css1.css"
+        },
+        {
+          "member": "docutils-0.23/test/functional/input/data/math.css",
+          "target": "../../../../docutils/writers/html5_polyglot/math.css"
+        },
+        {
+          "member": "docutils-0.23/test/functional/input/data/minimal.css",
+          "target": "../../../../docutils/writers/html5_polyglot/minimal.css"
+        },
+        {
+          "member": "docutils-0.23/test/functional/input/data/plain.css",
+          "target": "../../../../docutils/writers/html5_polyglot/plain.css"
+        },
+        {
+          "member": "docutils-0.23/test/functional/input/data/responsive.css",
+          "target": "../../../../docutils/writers/html5_polyglot/responsive.css"
+        },
+        {
+          "member": "docutils-0.23/test/functional/input/data/tuftig.css",
+          "target": "../../../../docutils/writers/html5_polyglot/tuftig.css"
+        }
+      ],
+      "member_count": 767,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 4 - Beta",
+          "Environment :: Console",
+          "Intended Audience :: Developers",
+          "Intended Audience :: End Users/Desktop",
+          "Intended Audience :: Information Technology",
+          "Intended Audience :: Other Audience",
+          "Intended Audience :: System Administrators",
+          "License :: Public Domain",
+          "License :: OSI Approved :: BSD License",
+          "License :: OSI Approved :: GNU General Public License (GPL)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Topic :: Documentation",
+          "Topic :: Software Development",
+          "Topic :: Software Development :: Documentation",
+          "Topic :: Text Editors :: Documentation",
+          "Topic :: Text Processing",
+          "Topic :: Text Processing :: General",
+          "Topic :: Text Processing :: Markup",
+          "Topic :: Text Processing :: Markup :: HTML",
+          "Topic :: Text Processing :: Markup :: LaTeX",
+          "Topic :: Text Processing :: Markup :: Markdown",
+          "Topic :: Text Processing :: Markup :: reStructuredText",
+          "Topic :: Text Processing :: Markup :: XML",
+          "Topic :: Utilities",
+          "Natural Language :: English",
+          "Natural Language :: Afrikaans",
+          "Natural Language :: Arabic",
+          "Natural Language :: Catalan",
+          "Natural Language :: Catalan (Valencian)",
+          "Natural Language :: Chinese (Simplified)",
+          "Natural Language :: Chinese (Traditional)",
+          "Natural Language :: Czech",
+          "Natural Language :: Danish",
+          "Natural Language :: Dutch",
+          "Natural Language :: Esperanto",
+          "Natural Language :: Finnish",
+          "Natural Language :: French",
+          "Natural Language :: Galician",
+          "Natural Language :: Georgian",
+          "Natural Language :: German",
+          "Natural Language :: Hebrew",
+          "Natural Language :: Italian",
+          "Natural Language :: Japanese",
+          "Natural Language :: Korean",
+          "Natural Language :: Latvian",
+          "Natural Language :: Lithuanian",
+          "Natural Language :: Persian",
+          "Natural Language :: Polish",
+          "Natural Language :: Portuguese (Brazilian)",
+          "Natural Language :: Russian",
+          "Natural Language :: Slovak",
+          "Natural Language :: Spanish",
+          "Natural Language :: Swedish",
+          "Natural Language :: Ukrainian"
+        ]
+      },
+      "package": "docutils",
+      "sha256": "746f5060322511280a1e50eb76846ed6bf2342984b2ac04dc42caa1a8d78799e",
+      "size": 2303823,
+      "url": "https://files.pythonhosted.org/packages/39/a4/5180d9afc57e8fca05601dd652bdff19604c218814037fe90ffc7625a50a/docutils-0.23.tar.gz",
+      "version": "0.23"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "wheel",
+      "license_members": [
+        {
+          "member": "fqdn-1.5.1.dist-info/LICENSE",
+          "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+          "size": 16725
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 8,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Environment :: Web Environment",
+          "Intended Audience :: Developers",
+          "Intended Audience :: System Administrators",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python :: 2.7",
+          "Programming Language :: Python :: 3.5",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Internet :: Name Service (DNS)",
+          "Topic :: Internet",
+          "Topic :: System :: Systems Administration",
+          "Topic :: Utilities"
+        ],
+        "License": [
+          "MPL 2.0"
+        ]
+      },
+      "package": "fqdn",
+      "sha256": "3a179af3761e4df6eb2e026ff9e1a3033d3587bf980a0b1b2e1e5d08d7358014",
+      "size": 9121,
+      "url": "https://files.pythonhosted.org/packages/cf/58/8acf1b3e91c58313ce5cb67df61001fc9dcd21be4fadb76c1a2d540e09ed/fqdn-1.5.1-py3-none-any.whl",
+      "version": "1.5.1"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "sdist",
+      "license_members": [],
+      "links_not_followed": [],
+      "member_count": 12,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Environment :: Web Environment",
+          "Intended Audience :: Developers",
+          "Intended Audience :: System Administrators",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python :: 2.7",
+          "Programming Language :: Python :: 3.5",
+          "Programming Language :: Python :: 3.6",
+          "Programming Language :: Python :: 3.7",
+          "Programming Language :: Python :: 3.8",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Internet :: Name Service (DNS)",
+          "Topic :: Internet",
+          "Topic :: System :: Systems Administration",
+          "Topic :: Utilities"
+        ],
+        "License": [
+          "MPL 2.0"
+        ]
+      },
+      "package": "fqdn",
+      "sha256": "105ed3677e767fb5ca086a0c1f4bb66ebc3c100be518f0e0d755d9eae164d89f",
+      "size": 6015,
+      "url": "https://files.pythonhosted.org/packages/30/3e/a80a8c077fd798951169626cde3e239adeba7dab75deb3555716415bd9b0/fqdn-1.5.1.tar.gz",
+      "version": "1.5.1"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "wheel",
+      "license_members": [
+        {
+          "member": "hypothesis-6.165.10.dist-info/licenses/LICENSE.txt",
+          "sha256": "ac89037bac63550644dce8cf32c6765e5fab9dc1a1ce94b89f8a805f341a6750",
+          "size": 17141
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 115,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Framework :: Hypothesis",
+          "Framework :: Pytest",
+          "Intended Audience :: Developers",
+          "Operating System :: Unix",
+          "Operating System :: POSIX",
+          "Operating System :: Microsoft :: Windows",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Education :: Testing",
+          "Topic :: Software Development :: Testing",
+          "Typing :: Typed"
+        ],
+        "License-Expression": [
+          "MPL-2.0"
+        ]
+      },
+      "package": "hypothesis",
+      "sha256": "e10858f57ed0e74baa04393845f469fe8ad502c16ece4499bef7700c575611bd",
+      "size": 778815,
+      "url": "https://files.pythonhosted.org/packages/a1/30/b70d9d79e871a75cbdeccd9067f20ecdb9eb2a1dfa03c630be3ad13b8b30/hypothesis-6.165.10-cp310-abi3-macosx_11_0_arm64.whl",
+      "version": "6.165.10"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "sdist",
+      "license_members": [
+        {
+          "member": "hypothesis-6.165.10/LICENSE.txt",
+          "sha256": "ac89037bac63550644dce8cf32c6765e5fab9dc1a1ce94b89f8a805f341a6750",
+          "size": 17141
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 119,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Framework :: Hypothesis",
+          "Framework :: Pytest",
+          "Intended Audience :: Developers",
+          "Operating System :: Unix",
+          "Operating System :: POSIX",
+          "Operating System :: Microsoft :: Windows",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3 :: Only",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Education :: Testing",
+          "Topic :: Software Development :: Testing",
+          "Typing :: Typed"
+        ],
+        "License-Expression": [
+          "MPL-2.0"
+        ]
+      },
+      "package": "hypothesis",
+      "sha256": "68b45e09834cd80523cb1eb274463073c7a9af4e4ef7cff34d9615f355572d32",
+      "size": 503703,
+      "url": "https://files.pythonhosted.org/packages/5c/e2/0fad246d2b6330e1f78479bfc566b5c22be82aee8a865cde9a08f648487d/hypothesis-6.165.10.tar.gz",
+      "version": "6.165.10"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "wheel",
+      "license_members": [
+        {
+          "member": "pathspec-1.1.1.dist-info/licenses/LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "size": 16726
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 36,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Software Development :: Libraries :: Python Modules",
+          "Topic :: Utilities"
+        ]
+      },
+      "package": "pathspec",
+      "sha256": "a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189",
+      "size": 57328,
+      "url": "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl",
+      "version": "1.1.1"
+    },
+    {
+      "decision": "pending",
+      "emacs_helper_members": [],
+      "kind": "sdist",
+      "license_members": [
+        {
+          "member": "pathspec-1.1.1/LICENSE",
+          "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+          "size": 16726
+        }
+      ],
+      "links_not_followed": [],
+      "member_count": 120,
+      "metadata": {
+        "Classifier": [
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.9",
+          "Programming Language :: Python :: 3.10",
+          "Programming Language :: Python :: 3.11",
+          "Programming Language :: Python :: 3.12",
+          "Programming Language :: Python :: 3.13",
+          "Programming Language :: Python :: 3.14",
+          "Programming Language :: Python :: Implementation :: CPython",
+          "Programming Language :: Python :: Implementation :: PyPy",
+          "Topic :: Software Development :: Libraries :: Python Modules",
+          "Topic :: Utilities"
+        ]
+      },
+      "package": "pathspec",
+      "sha256": "17db5ecd524104a120e173814c90367a96a98d07c45b2e10c2f3919fff91bf5a",
+      "size": 135180,
+      "url": "https://files.pythonhosted.org/packages/5a/82/42f767fc1c1143d6fd36efb827202a2d997a375e160a71eb2888a925aac1/pathspec-1.1.1.tar.gz",
+      "version": "1.1.1"
+    }
+  ]
+}
