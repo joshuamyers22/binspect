@@ -25,6 +25,8 @@ try:
 except ModuleNotFoundError:
     import tomli as tomllib
 
+from packaging.markers import Marker
+from packaging.requirements import Requirement
 from packaging.utils import canonicalize_name
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -263,6 +265,58 @@ def extract_artifact(artifact, destination):
     return names
 
 
+def tracked_manifest(root):
+    listed = command(["git", "ls-files", "-z"], cwd=root).stdout.decode().split("\0")
+    paths = [name for name in listed if name]
+    if not paths or len(paths) != len(set(paths)):
+        raise ValueError("Tracked source manifest is empty or ambiguous")
+    for name in paths:
+        source = root / safe_member(name, 0)
+        if source.is_symlink() or not source.is_file():
+            raise ValueError("Tracked source is missing or symlinked")
+    return paths
+
+
+def expected_requirements(project):
+    requirements = [Requirement(value) for value in project.get("dependencies", [])]
+    for extra, values in project.get("optional-dependencies", {}).items():
+        for value in values:
+            requirement = Requirement(value)
+            extra_marker = Marker(f'extra == "{canonicalize_name(extra)}"')
+            requirement.marker = (
+                Marker(f"({requirement.marker}) and ({extra_marker})")
+                if requirement.marker
+                else extra_marker
+            )
+            requirements.append(requirement)
+    return sorted(map(str, requirements))
+
+
+def verify_distribution_metadata(info, root):
+    project = tomllib.loads((root / "pyproject.toml").read_text())["project"]
+    observed_requirements = sorted(
+        str(Requirement(value)) for value in info.get_all("Requires-Dist", [])
+    )
+    expected_extras = sorted(
+        canonicalize_name(value) for value in project.get("optional-dependencies", {})
+    )
+    observed_extras = sorted(
+        canonicalize_name(value) for value in info.get_all("Provides-Extra", [])
+    )
+    license_file = project.get("license", {}).get("file")
+    observed_license = info["License"].replace("\n        ", "\n").strip()
+    if (
+        info["Summary"] != project["description"]
+        or info["Requires-Python"] != project["requires-python"]
+        or observed_requirements != expected_requirements(project)
+        or observed_extras != expected_extras
+        or info.get_all("Classifier", []) != project.get("classifiers", [])
+        or info.get_all("License-File", []) != [license_file]
+        or observed_license != (root / license_file).read_text().strip()
+    ):
+        raise ValueError("Artifact metadata differs from pyproject or license")
+
+
 def verify_artifact_source(artifact, destination, names, root=ROOT):
     if artifact.suffix == ".whl":
         metadata = [n for n in names if n.endswith(".dist-info/METADATA")]
@@ -278,10 +332,18 @@ def verify_artifact_source(artifact, destination, names, root=ROOT):
             raise ValueError("Sdist metadata missing")
         prefix = metadata[0].split("/")[0] + "/"
         source_prefix = prefix + "src/"
-        if (destination / prefix / "pyproject.toml").read_bytes() != (
-            root / "pyproject.toml"
-        ).read_bytes():
+        tracked = tracked_manifest(root)
+        observed_manifest = {
+            name.removeprefix(prefix) for name in names if name.startswith(prefix)
+        }
+        if any(not name.startswith(prefix) for name in names) or observed_manifest != {
+            *tracked,
+            "PKG-INFO",
+        }:
             raise ValueError("Sdist manifest differs from checkout")
+        for name in tracked:
+            if (destination / prefix / name).read_bytes() != (root / name).read_bytes():
+                raise ValueError("Sdist file bytes differ from checkout")
     info = BytesParser().parsebytes((destination / metadata[0]).read_bytes())
     expected_version = re.search(
         r'^__version__ = "([^"]+)"',
@@ -293,6 +355,7 @@ def verify_artifact_source(artifact, destination, names, root=ROOT):
         or info["Version"] != expected_version
     ):
         raise ValueError("Artifact name/version differs from checkout")
+    verify_distribution_metadata(info, root)
     expected = {
         str(p.relative_to(root / "src")): p
         for p in (root / "src/binspect").rglob("*")

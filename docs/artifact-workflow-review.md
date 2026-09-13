@@ -88,3 +88,21 @@ repository/Trusted Publisher controls, renderer availability and P3 license revi
 remain open. The overall CI run is not green and this is not release qualification.
 Next implementation is R3 maintenance/recovery preparation, before R2 publication.
 No release, merge, publication, waiver or repository-setting change was performed.
+
+## 2026-09-13 integration follow-up
+
+A main-based review of draft #30 found that the artifact checker enforced package
+source identity but did not enforce its documented full-sdist manifest claim, and
+did not tie wheel/sdist dependency, extra, Python and license metadata back to
+`pyproject.toml` and `LICENSE`. The integrated branch now rejects a missing, extra,
+outside-prefix or byte-altered tracked sdist member and altered dependency, extra
+or license metadata. Seven new regressions cover these cases. Fresh locally built
+wheel and sdist files pass the strengthened checker.
+
+The required full gate passes with 565 unit tests, 34 DPI integrations and 40
+reference tests (639 total), 94.65% coverage, type/import contracts, all development
+simulations, executable/strict documentation, four RMS-0.0 figure comparisons and
+builds. A fresh online supply-chain run passes action, vulnerability, artifact,
+secret and SBOM checks; it still fails only on the six owner-held pending license
+decisions. This follow-up hardens implementation readiness but does not supply
+license, integration or release acceptance.

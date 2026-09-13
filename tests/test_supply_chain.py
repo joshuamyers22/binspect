@@ -9,6 +9,7 @@ import tarfile
 import zipfile
 from datetime import date
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -188,6 +189,20 @@ def test_artifact_identity_must_match_checkout(tmp_path, tamper):
     source = '__version__ = "0.1.1"\n'
     (package / "__init__.py").write_text(source)
     (package / "py.typed").write_text("")
+    (root / "LICENSE").write_text("Synthetic license\n")
+    (root / "pyproject.toml").write_text(
+        """[project]
+name = "binspect-regression"
+dynamic = ["version"]
+description = "Synthetic package"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+classifiers = ["Synthetic classifier"]
+dependencies = ["numpy>=1"]
+[project.optional-dependencies]
+test = ["pytest>=8"]
+"""
+    )
     extracted = tmp_path / "unpacked"
     (extracted / "binspect").mkdir(parents=True)
     (extracted / "binspect/__init__.py").write_text(source)
@@ -195,7 +210,20 @@ def test_artifact_identity_must_match_checkout(tmp_path, tamper):
     metadata_dir = extracted / "binspect_regression-0.1.1.dist-info"
     metadata_dir.mkdir()
     metadata = metadata_dir / "METADATA"
-    metadata.write_text("Name: binspect-regression\nVersion: 0.1.1\n")
+    metadata.write_text(
+        """Name: binspect-regression
+Version: 0.1.1
+Summary: Synthetic package
+Requires-Python: >=3.10
+Requires-Dist: numpy>=1
+Requires-Dist: pytest>=8; extra == 'test'
+Provides-Extra: test
+Classifier: Synthetic classifier
+License-File: LICENSE
+License: Synthetic license
+
+"""
+    )
     names = [
         "binspect/__init__.py",
         "binspect/py.typed",
@@ -211,3 +239,127 @@ def test_artifact_identity_must_match_checkout(tmp_path, tamper):
         names.append("unexpected/library.py")
     with pytest.raises(ValueError):
         supply.verify_artifact_source(artifact, extracted, names, root)
+
+
+@pytest.mark.parametrize("tamper", ["bytes", "missing", "extra", "outside"])
+def test_sdist_manifest_and_all_tracked_bytes_must_match_checkout(
+    tmp_path, monkeypatch, tamper
+):
+    root = tmp_path / "source"
+    package = root / "src/binspect"
+    package.mkdir(parents=True)
+    source = '__version__ = "0.1.1"\n'
+    tracked = {
+        "LICENSE": "Synthetic license\n",
+        "README.md": "reviewed documentation\n",
+        "pyproject.toml": """[project]
+name = "binspect-regression"
+dynamic = ["version"]
+description = "Synthetic package"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+classifiers = ["Synthetic classifier"]
+dependencies = ["numpy>=1"]
+[project.optional-dependencies]
+test = ["pytest>=8"]
+""",
+        "src/binspect/__init__.py": source,
+        "src/binspect/py.typed": "",
+    }
+    for name, contents in tracked.items():
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(contents)
+    monkeypatch.setattr(
+        supply,
+        "command",
+        lambda *args, **kwargs: SimpleNamespace(
+            stdout=("\0".join(tracked) + "\0").encode()
+        ),
+    )
+    prefix = "binspect_regression-0.1.1/"
+    extracted = tmp_path / "unpacked"
+    for name, contents in tracked.items():
+        path = extracted / prefix / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(contents)
+    metadata = extracted / prefix / "PKG-INFO"
+    metadata.write_text(
+        """Name: binspect-regression
+Version: 0.1.1
+Summary: Synthetic package
+Requires-Python: >=3.10
+Requires-Dist: numpy>=1
+Requires-Dist: pytest>=8; extra == 'test'
+Provides-Extra: test
+Classifier: Synthetic classifier
+License-File: LICENSE
+License: Synthetic license
+
+"""
+    )
+    names = [*(prefix + name for name in tracked), prefix + "PKG-INFO"]
+    artifact = tmp_path / "package.tar.gz"
+    assert supply.verify_artifact_source(artifact, extracted, names, root) == "0.1.1"
+    if tamper == "bytes":
+        (extracted / prefix / "README.md").write_text("different\n")
+    elif tamper == "missing":
+        names.remove(prefix + "README.md")
+    elif tamper == "extra":
+        names.append(prefix + "setup.py")
+    else:
+        names.append("outside-prefix")
+    with pytest.raises(ValueError, match="Sdist"):
+        supply.verify_artifact_source(artifact, extracted, names, root)
+
+
+@pytest.mark.parametrize(
+    "header,replacement",
+    [
+        ("Requires-Dist: numpy>=1", "Requires-Dist: numpy>=2"),
+        ("Provides-Extra: test", "Provides-Extra: hidden"),
+        ("License: Synthetic license", "License: Different license"),
+    ],
+)
+def test_artifact_metadata_must_match_declared_project(tmp_path, header, replacement):
+    root = tmp_path / "source"
+    package = root / "src/binspect"
+    package.mkdir(parents=True)
+    (package / "__init__.py").write_text('__version__ = "0.1.1"\n')
+    (root / "LICENSE").write_text("Synthetic license\n")
+    (root / "pyproject.toml").write_text(
+        """[project]
+name = "binspect-regression"
+dynamic = ["version"]
+description = "Synthetic package"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+classifiers = []
+dependencies = ["numpy>=1"]
+[project.optional-dependencies]
+test = ["pytest>=8"]
+"""
+    )
+    extracted = tmp_path / "unpacked"
+    (extracted / "binspect").mkdir(parents=True)
+    (extracted / "binspect/__init__.py").write_text('__version__ = "0.1.1"\n')
+    metadata_dir = extracted / "binspect_regression-0.1.1.dist-info"
+    metadata_dir.mkdir()
+    metadata = """Name: binspect-regression
+Version: 0.1.1
+Summary: Synthetic package
+Requires-Python: >=3.10
+Requires-Dist: numpy>=1
+Requires-Dist: pytest>=8; extra == 'test'
+Provides-Extra: test
+License-File: LICENSE
+License: Synthetic license
+
+""".replace(header, replacement)
+    (metadata_dir / "METADATA").write_text(metadata)
+    names = [
+        "binspect/__init__.py",
+        "binspect_regression-0.1.1.dist-info/METADATA",
+    ]
+    with pytest.raises(ValueError, match="metadata"):
+        supply.verify_artifact_source(tmp_path / "package.whl", extracted, names, root)

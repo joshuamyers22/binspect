@@ -74,3 +74,23 @@ archive and executable match the committed pin; no exclusion was added.
 No GitHub PR has been merged, no previous draft changed or closed, and no release,
 setting or approval changed. License, statistical, policy, performance, visual,
 operator and exact-release gates remain open.
+
+## 2026-09-13 follow-up review
+
+Review of the combined diff found one artifact-integrity defect: the sdist checker
+claimed full manifest equivalence while only comparing `pyproject.toml` and package
+source, and distribution dependency/extra/license metadata was not compared with
+the project declaration. The fix verifies that an sdist contains exactly its
+generated `PKG-INFO` plus every Git-tracked file with identical bytes, and verifies
+declared dependencies, extras, classifiers, Python requirement and license for
+both distribution formats. Seven new rejection regressions exercise altered,
+missing, extra and outside-prefix sdist members and altered metadata.
+
+Fresh local wheel and sdist builds pass the strengthened verifier. `make check`
+passes with 565 unit tests, 34 DPI integrations and 40 references (639 total),
+94.65% coverage, all type/import, native, simulation, documentation, figure and
+build gates. A new online `make supply-chain` run passes actions, vulnerabilities,
+artifacts, secrets and SBOM checks and fails only for the unchanged six pending
+license decisions. Main remains unprotected as of the read-only GitHub query; that
+does not justify bypassing the fail-closed license gate. Integration and all
+owner-held acceptance decisions remain pending.
