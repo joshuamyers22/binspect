@@ -13,6 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  artifacts:
+    uses: ./.github/workflows/artifacts.yml
+
   supply-chain:
     runs-on: ubuntu-latest
     timeout-minutes: 20

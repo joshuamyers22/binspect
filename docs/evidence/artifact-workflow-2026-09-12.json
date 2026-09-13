@@ -1,0 +1,2205 @@
+{
+  "ci": {
+    "artifacts": [
+      {
+        "digest": "sha256:564d1410551f0bd92af21950fe28445f750ff00d58761e091b4a70aee712e51d",
+        "expired": false,
+        "id": 10310320006,
+        "name": "artifact-install-macos-latest-3.12-native",
+        "size_in_bytes": 889
+      },
+      {
+        "digest": "sha256:5fb25a0420484e2fe028e34d8603c3faee3e4188cc8ade2eccb0782501db8243",
+        "expired": false,
+        "id": 10310080865,
+        "name": "artifact-install-macos-latest-3.11-native",
+        "size_in_bytes": 887
+      },
+      {
+        "digest": "sha256:c4219a889d85aa4feeb6925bb6246ce1de1780b4961c70d1950fbe191189afe8",
+        "expired": false,
+        "id": 10309926092,
+        "name": "artifact-install-ubuntu-latest-3.11-native",
+        "size_in_bytes": 889
+      },
+      {
+        "digest": "sha256:6d6e66014e575f62effc0c0ef668c53c5fe437cd75a885d1e564edc6d0ddd4bc",
+        "expired": false,
+        "id": 10309886330,
+        "name": "artifact-install-macos-latest-3.10-native",
+        "size_in_bytes": 889
+      },
+      {
+        "digest": "sha256:f88ae419b5ebaa475d5fcc52bbc7413c4d04c7524ed74480ffc86a928e2eed24",
+        "expired": false,
+        "id": 10309846191,
+        "name": "artifact-install-macos-latest-3.12-dpi",
+        "size_in_bytes": 1005
+      },
+      {
+        "digest": "sha256:4a9cb7c1bdb279008e18f00238a9d6c23e8fcb33348b542b1a8a3039d3a7477f",
+        "expired": false,
+        "id": 10309561684,
+        "name": "artifact-install-ubuntu-latest-3.12-pandas",
+        "size_in_bytes": 890
+      },
+      {
+        "digest": "sha256:6f71a066c0168ed42b7a183ba2cab6c06bee374a749c3f1d39a9fbab76d30f49",
+        "expired": false,
+        "id": 10309551596,
+        "name": "qualified-distributions",
+        "size_in_bytes": 2150511
+      },
+      {
+        "digest": "sha256:aa7284e9810ce58686bf83b516f32e68d356ca1f376ba3838bb8faa29b7c001d",
+        "expired": false,
+        "id": 10309536778,
+        "name": "artifact-install-macos-latest-3.12-pandas",
+        "size_in_bytes": 889
+      },
+      {
+        "digest": "sha256:87ec71fea666814f0712b51e97ddfc7a60f3c38871c5d203a89cbac018c5e3cb",
+        "expired": false,
+        "id": 10309485952,
+        "name": "artifact-install-ubuntu-latest-3.12-dpi",
+        "size_in_bytes": 1002
+      },
+      {
+        "digest": "sha256:ae61744f045de7816020ec5742777e962cd832dbc0ddd25152d07a55406f6d50",
+        "expired": false,
+        "id": 10309441884,
+        "name": "artifact-install-macos-latest-3.13-native",
+        "size_in_bytes": 889
+      },
+      {
+        "digest": "sha256:09766b3bf05a4b696ad04a2aa2349eb3105f78fec721e4220435020e3e433951",
+        "expired": false,
+        "id": 10309382013,
+        "name": "artifact-install-ubuntu-latest-3.13-native",
+        "size_in_bytes": 891
+      },
+      {
+        "digest": "sha256:c6e19e516edd2adb719c73a729102ed0155dc1bb3582075b416c99a9a0cf9c27",
+        "expired": false,
+        "id": 10309292733,
+        "name": "artifact-install-ubuntu-latest-3.12-native",
+        "size_in_bytes": 891
+      },
+      {
+        "digest": "sha256:242d53b6050f01d56773a1196344d6c32d6dc1cbb0d4340642f24f5d348f8537",
+        "expired": false,
+        "id": 10308474927,
+        "name": "artifact-install-ubuntu-latest-3.10-native",
+        "size_in_bytes": 890
+      }
+    ],
+    "conclusion": "failure",
+    "failures": {
+      "figures": "setup-python cannot obtain 3.12.14 arm64 for macOS 15.7.9; comparison did not run.",
+      "supply-chain": "Six pending license reviews; all other audit checks pass."
+    },
+    "head_sha": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+    "installs": {
+      "artifact-install-macos-latest-3.10-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.10.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.2",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.10.9",
+              "numpy": "2.2.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.15.3",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.10.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.2",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.10.9",
+              "numpy": "2.2.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.15.3",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-macos-latest-3.11-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.11.9",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.4.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.17.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.11.9",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.4.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.17.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-macos-latest-3.12-dpi": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": true,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "dpi",
+            "python": "3.12.10",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "binsreg": "3.2.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "formulaic": "1.2.2",
+              "interface_meta": "2.0.1",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "mizani": "0.14.4",
+              "narwhals": "2.25.0",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "patsy": "1.0.2",
+              "pillow": "12.3.0",
+              "plotnine": "0.15.8",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0",
+              "statsmodels": "0.15.0",
+              "typing_extensions": "4.16.0",
+              "wrapt": "2.3.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": true,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "dpi",
+            "python": "3.12.10",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "binsreg": "3.2.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "formulaic": "1.2.2",
+              "interface_meta": "2.0.1",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "mizani": "0.14.4",
+              "narwhals": "2.25.0",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "patsy": "1.0.2",
+              "pillow": "12.3.0",
+              "plotnine": "0.15.8",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0",
+              "statsmodels": "0.15.0",
+              "typing_extensions": "4.16.0",
+              "wrapt": "2.3.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-macos-latest-3.12-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.12.10",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.12.10",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-macos-latest-3.12-pandas": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "pandas",
+            "python": "3.12.10",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "pandas",
+            "python": "3.12.10",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-macos-latest-3.13-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.13.15",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.13.15",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-ubuntu-latest-3.10-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.10.21",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.2",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.10.9",
+              "numpy": "2.2.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.15.3",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.10.21",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.2",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.10.9",
+              "numpy": "2.2.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.15.3",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-ubuntu-latest-3.11-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.11.16",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.4.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.17.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.11.16",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.4.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.17.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-ubuntu-latest-3.12-dpi": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": true,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "dpi",
+            "python": "3.12.14",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "binsreg": "3.2.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "formulaic": "1.2.2",
+              "interface_meta": "2.0.1",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "mizani": "0.14.4",
+              "narwhals": "2.25.0",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "patsy": "1.0.2",
+              "pillow": "12.3.0",
+              "plotnine": "0.15.8",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0",
+              "statsmodels": "0.15.0",
+              "typing_extensions": "4.16.0",
+              "wrapt": "2.3.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": true,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "dpi",
+            "python": "3.12.14",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "binsreg": "3.2.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "formulaic": "1.2.2",
+              "interface_meta": "2.0.1",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "mizani": "0.14.4",
+              "narwhals": "2.25.0",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "patsy": "1.0.2",
+              "pillow": "12.3.0",
+              "plotnine": "0.15.8",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0",
+              "statsmodels": "0.15.0",
+              "typing_extensions": "4.16.0",
+              "wrapt": "2.3.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-ubuntu-latest-3.12-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.12.14",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.12.14",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-ubuntu-latest-3.12-pandas": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "pandas",
+            "python": "3.12.14",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "pandas",
+            "python": "3.12.14",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      },
+      "artifact-install-ubuntu-latest-3.13-native": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.13.15",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "x86_64",
+              "system": "Linux"
+            },
+            "profile": "native",
+            "python": "3.13.15",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+        "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+        "status": "pass"
+      }
+    },
+    "jobs": [
+      {
+        "conclusion": "failure",
+        "databaseId": 103655496293,
+        "name": "supply-chain",
+        "status": "completed"
+      },
+      {
+        "conclusion": "failure",
+        "databaseId": 103655496361,
+        "name": "figures",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496367,
+        "name": "test (macos-latest, 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496401,
+        "name": "test (ubuntu-latest, 3.13)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496406,
+        "name": "documentation",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496417,
+        "name": "dpi-integration",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496422,
+        "name": "test (ubuntu-latest, 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496446,
+        "name": "test (ubuntu-latest, 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496447,
+        "name": "test (macos-latest, 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496473,
+        "name": "test (ubuntu-latest, 3.11)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496506,
+        "name": "dependencies (minimal, Python 3.11)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496520,
+        "name": "dependencies (minimal, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496522,
+        "name": "artifacts / build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496544,
+        "name": "test (macos-latest, 3.11)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496545,
+        "name": "dependencies (minimal, Python 3.13)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496547,
+        "name": "dependencies (lower-pandas, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496560,
+        "name": "dependencies (dpi, Python 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496561,
+        "name": "dependencies (current, Python 3.13)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496565,
+        "name": "dependencies (lower-dpi, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496566,
+        "name": "dependencies (lower, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496571,
+        "name": "test (macos-latest, 3.13)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496578,
+        "name": "dependencies (minimal, Python 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496584,
+        "name": "inference-validation",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655496627,
+        "name": "dependencies (locked, Python 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545314,
+        "name": "artifacts / install (ubuntu-latest, 3.12, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545319,
+        "name": "artifacts / install (macos-latest, 3.11, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545324,
+        "name": "artifacts / install (macos-latest, 3.12, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545338,
+        "name": "artifacts / install (macos-latest, 3.12, dpi)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545341,
+        "name": "artifacts / install (ubuntu-latest, 3.13, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545343,
+        "name": "artifacts / install (macos-latest, 3.13, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545348,
+        "name": "artifacts / install (macos-latest, 3.12, pandas)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545351,
+        "name": "artifacts / install (macos-latest, 3.10, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545354,
+        "name": "artifacts / install (ubuntu-latest, 3.12, dpi)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545364,
+        "name": "artifacts / install (ubuntu-latest, 3.12, pandas)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545393,
+        "name": "artifacts / install (ubuntu-latest, 3.11, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103655545437,
+        "name": "artifacts / install (ubuntu-latest, 3.10, native)",
+        "status": "completed"
+      }
+    ],
+    "manifest": {
+      "artifacts": [
+        {
+          "name": "binspect_regression-0.1.1-py3-none-any.whl",
+          "sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+          "size": 78530
+        },
+        {
+          "name": "binspect_regression-0.1.1.tar.gz",
+          "sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+          "size": 2073908
+        }
+      ],
+      "build_tools": {
+        "build": "1.6.1",
+        "hatchling": "1.32.0",
+        "twine": "7.0.0"
+      },
+      "built_at": "2026-09-13T01:54:35.067728+00:00",
+      "lock_sha256": "60cb5990b92833832ce44891b648f4eed0ef5cd06a6c8df50d00a18c6d88afee",
+      "schema_version": 1,
+      "smoke_sha256": "81070af955899cb508c38afc8c8f457285c60e166ab73a436b016a7d5a9d7ae9",
+      "source_revision": "f0a357297fcb030b33112e0e6eadc356789e0c55",
+      "version": "0.1.1"
+    },
+    "manifest_sha256": "93e22c5320ca5774c8695bd49db54e369384b88a15bbdd44db7fa2347a23ccef",
+    "run_id": 34731681077,
+    "run_url": "https://github.com/joshuamyers22/binspect/actions/runs/34731681077",
+    "status": "completed"
+  },
+  "implementation_commit": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+  "local": {
+    "installs": {
+      "dpi-3.12": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": true,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "dpi",
+            "python": "3.12.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "binsreg": "3.2.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "formulaic": "1.2.2",
+              "interface_meta": "2.0.1",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "mizani": "0.14.4",
+              "narwhals": "2.25.0",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "patsy": "1.0.2",
+              "pillow": "12.3.0",
+              "plotnine": "0.15.8",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0",
+              "statsmodels": "0.15.0",
+              "typing_extensions": "4.16.0",
+              "wrapt": "2.3.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": true,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "dpi",
+            "python": "3.12.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "binsreg": "3.2.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "formulaic": "1.2.2",
+              "interface_meta": "2.0.1",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "mizani": "0.14.4",
+              "narwhals": "2.25.0",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "patsy": "1.0.2",
+              "pillow": "12.3.0",
+              "plotnine": "0.15.8",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0",
+              "statsmodels": "0.15.0",
+              "typing_extensions": "4.16.0",
+              "wrapt": "2.3.0"
+            }
+          }
+        ],
+        "manifest_sha256": "23fd7f6ffea3ed5c3e097921d3d014d7bae3e39de37f5be95039ebd29327ee50",
+        "source_revision": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+        "status": "pass"
+      },
+      "native-3.10": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.10.21",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.2",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.10.9",
+              "numpy": "2.2.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.15.3",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.10.21",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.2",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.10.9",
+              "numpy": "2.2.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.15.3",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "23fd7f6ffea3ed5c3e097921d3d014d7bae3e39de37f5be95039ebd29327ee50",
+        "source_revision": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+        "status": "pass"
+      },
+      "native-3.11": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.11.16",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.4.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.17.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.11.16",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.4.6",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.17.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "23fd7f6ffea3ed5c3e097921d3d014d7bae3e39de37f5be95039ebd29327ee50",
+        "source_revision": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+        "status": "pass"
+      },
+      "native-3.12": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.12.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.12.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "23fd7f6ffea3ed5c3e097921d3d014d7bae3e39de37f5be95039ebd29327ee50",
+        "source_revision": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+        "status": "pass"
+      },
+      "native-3.13": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.13.15",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": false
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "native",
+            "python": "3.13.15",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "23fd7f6ffea3ed5c3e097921d3d014d7bae3e39de37f5be95039ebd29327ee50",
+        "source_revision": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+        "status": "pass"
+      },
+      "pandas-3.12": {
+        "checks": [
+          {
+            "artifact": "binspect_regression-0.1.1-py3-none-any.whl",
+            "artifact_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "pandas",
+            "python": "3.12.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          },
+          {
+            "artifact": "binspect_regression-0.1.1.tar.gz",
+            "artifact_sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+            "checks": [
+              "weighted_clustered",
+              "FWL_numeric_categorical",
+              "grouped_controls",
+              "Polars_tables",
+              "ownership_JSON",
+              "optional_boundaries",
+              "PNG_rendering"
+            ],
+            "extras": {
+              "dpi": false,
+              "pandas": true
+            },
+            "installed_code": true,
+            "installed_wheel_sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+            "platform": {
+              "machine": "arm64",
+              "system": "Darwin"
+            },
+            "profile": "pandas",
+            "python": "3.12.11",
+            "seed": 140101,
+            "status": "pass",
+            "versions": {
+              "binspect-regression": "0.1.1",
+              "contourpy": "1.3.3",
+              "cycler": "0.12.1",
+              "fonttools": "4.63.0",
+              "kiwisolver": "1.5.1",
+              "matplotlib": "3.11.1",
+              "numpy": "2.5.2",
+              "packaging": "26.3",
+              "pandas": "3.0.5",
+              "pillow": "12.3.0",
+              "polars": "1.44.2",
+              "polars-runtime-32": "1.44.2",
+              "pyparsing": "3.3.2",
+              "python-dateutil": "2.9.0.post0",
+              "scipy": "1.18.1",
+              "six": "1.17.0"
+            }
+          }
+        ],
+        "manifest_sha256": "23fd7f6ffea3ed5c3e097921d3d014d7bae3e39de37f5be95039ebd29327ee50",
+        "source_revision": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+        "status": "pass"
+      }
+    },
+    "make_check": {
+      "build": "pass",
+      "coverage_percent": 94.65,
+      "development_simulations": "all pass; reserved assessments unrun",
+      "documentation_blocks": 38,
+      "figures_rms": {
+        "audit": 0.0,
+        "default": 0.0,
+        "deviation": 0.0,
+        "paper": 0.0
+      },
+      "import_contracts": 4,
+      "integration_tests": 34,
+      "mypy_source_files": 38,
+      "quickstart": "pass",
+      "reference_tests": 40,
+      "status": "pass",
+      "unit_tests": 501
+    },
+    "manifest": {
+      "artifacts": [
+        {
+          "name": "binspect_regression-0.1.1-py3-none-any.whl",
+          "sha256": "55055f2102d9d33feb42b915e878f141da20a633ffbfb33f389c8e254200545b",
+          "size": 78530
+        },
+        {
+          "name": "binspect_regression-0.1.1.tar.gz",
+          "sha256": "01af40f37b38fea0426419f4e73235740ca2e93dc1d4e7b1c6358005577b77d0",
+          "size": 2073908
+        }
+      ],
+      "build_tools": {
+        "build": "1.6.1",
+        "hatchling": "1.32.0",
+        "twine": "7.0.0"
+      },
+      "built_at": "2026-09-13T01:52:45.693598+00:00",
+      "lock_sha256": "60cb5990b92833832ce44891b648f4eed0ef5cd06a6c8df50d00a18c6d88afee",
+      "schema_version": 1,
+      "smoke_sha256": "81070af955899cb508c38afc8c8f457285c60e166ab73a436b016a7d5a9d7ae9",
+      "source_revision": "0c3fb1ecbab26c0f136689df2714d4f740505022",
+      "version": "0.1.1"
+    },
+    "manifest_sha256": "23fd7f6ffea3ed5c3e097921d3d014d7bae3e39de37f5be95039ebd29327ee50"
+  },
+  "publication": "not performed; no settings changes; maintainer acceptance pending",
+  "qualification_date_local": "2026-09-12",
+  "remote_controls": {
+    "actions": {
+      "allowed_actions": "all",
+      "enabled": true,
+      "sha_pinning_required": false
+    },
+    "main_protection": "404 Branch not protected",
+    "observed_local_date": "2026-09-12",
+    "observed_utc_date": "2026-09-13",
+    "private_vulnerability_reporting": false,
+    "pypi": {
+      "deployment_branch_policy": null,
+      "prevent_self_review": false,
+      "reviewer": "joshuamyers22"
+    },
+    "rulesets": [],
+    "trusted_publisher": "Owner-side PyPI mapping unverified"
+  },
+  "schema_version": 1
+}
