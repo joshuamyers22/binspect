@@ -29,10 +29,33 @@ The original manifest handoff and read-only R1 workflow are preserved. The signe
 bundle is retained separately by immutable artifact ID with 90-day requested
 retention. No version, package API, lock or statistical input changed.
 
-Initial targeted checks: 30 provenance rejection/policy tests plus 21 existing
+Targeted checks: 30 provenance rejection/policy tests plus 21 existing
 artifact integrity tests pass. Parsed workflow checks confirm the release-only
 trigger, dependency order, signing permission scope and prepublication gate.
-Ruff and formatting pass. Required full gate and final evidence are pending.
+Ruff, formatting and 157 local Markdown links pass.
+
+At implementation `a0a758fedc022ecc2acc6d973801886e2c34a1b9`, required `make check`
+passes: 556 unit + 34 DPI + 40 reference tests (630), 94.65% coverage, strict mypy
+(38 files), four import contracts, native Polars without pandas, all prespecified
+development simulations, 38 docs blocks plus quickstart, strict site, four figure
+comparisons at RMS 0.0 and wheel/sdist build. Reserved assessments remain unrun.
+
+[CI run 34734345196](https://github.com/joshuamyers22/binspect/actions/runs/34734345196)
+at that head completes with 34 passing jobs. Only supply-chain fails, exclusively
+for the six existing pending licenses; its action, vulnerability, artifact, secret
+and SBOM checks pass. The separate local audit fails for the same license reviews
+and leaves secret scanning **unverified** after `ReadTimeout`; its other checks
+pass. The local timeout is not relabeled as a pass using CI's separate evidence.
+No scanner exception was added or license decision changed.
+The retained evidence directory separately passes the cached Gitleaks 8.30.1
+scanner, after verifying its archive and executable against the committed pin.
+That bounded evidence scan does not replace the unverified full local secret audit.
+
+[Controlled evidence](evidence/release-provenance-2026-09-12.json) records exact
+inputs, action/probe identities, job conclusions and audit dispositions. Draft
+[PR #28](https://github.com/joshuamyers22/binspect/pull/28) is stacked on #27.
+Subsequent documentation/evidence commits are distinct from the verified
+implementation head and receive separate link/format/secret checks.
 
 The official `actions/attest` v4.2.2 tag resolves to
 `1e69f48acb82d1966a394da916b4c1698aa569d6`. Inspection of that commit's action
