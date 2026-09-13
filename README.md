@@ -7,6 +7,11 @@ the underlying observations. The bin means are the fitted values from the satura
 model `OLS(y ~ C(bin))`. Their weighted deviations from the line provide a descriptive
 linear specification diagnostic.
 
+The development version is **Polars-native**, with pandas input compatibility.
+Result tables are Polars DataFrames; use `result.to_pandas()` for an explicit
+pandas projection. NumPy/SciPy handle numerical estimation. These changes are
+unreleased; see the [input and export contract](docs/INPUT_OUTPUT_CONTRACT.md).
+
 ![binspect](docs/hero.png)
 
 ```python
@@ -14,9 +19,10 @@ import binspect
 
 bs = binspect.binscatter(df, y="sales", x="age", bins=20)
 
-bs.table  # per-bin means, SDs, standard errors, intervals
+bs.table  # Polars: per-bin means, SDs, standard errors, intervals
 bs.summary_frame()  # one-row model and diagnostic table
-bs.to_dict()  # JSON-compatible structured results
+bs.to_pandas()  # optional pandas projection
+bs.to_json()  # deterministic, versioned strict JSON
 print(bs.summary())
 bs.plot(theme="paper")
 bs.audit(theme="paper")  # plot plus marginal distributions and residuals
@@ -187,6 +193,13 @@ verdict. Its intervals do not apply to the residualized bins from `binscatter`.
 
 ## Result ownership
 
+Use eager Polars or pandas dataframes, Series, or array inputs. All inputs align
+by row position; pandas indexes do not trigger joins. Collect LazyFrames explicitly.
+Polars tables are returned for both input backends. The pandas compatibility extra
+is optional, and native estimation/export/plotting do not require pandas.
+`result.to_pandas("summary")` and `result.to_pandas("decomposition")` provide the
+other single-result tables; collections also support the summary conversion.
+
 Results own snapshots of their numeric data. Changing input arrays, dataframe
 columns, weights or custom edges after estimation does not change the result.
 `result.x`, `result.y`, `result.weights`, and arrays in `binning` and `estimates`
@@ -207,6 +220,18 @@ this API contract.
 Snapshot construction copies the retained numeric buffers once per container;
 reading an array does not copy its values. This trades memory for stable results.
 See the [ownership verification and memory measurements](docs/result-ownership-review.md).
+
+## Versioned exports and provenance
+
+`to_dict()` and deterministic `to_json()` exports include schema version 1,
+input/retained/dropped row counts, encoded control identity and coordinates,
+selection provenance, inference limitations and diagnostic policies. Undefined
+numeric values encode as JSON null. Raw observations are omitted.
+
+`to_evidence(provenance=..., exported_at=...)` adds caller-supplied references to
+the analysis plan, inputs, software lock and code. References are never fetched,
+read or hashed implicitly. An optional caller timestamp stays outside the
+deterministic payload. See the [schema, examples and migration guide](docs/INPUT_OUTPUT_CONTRACT.md).
 
 ## Choosing bins with DPI
 
@@ -296,7 +321,8 @@ area or length does not equal the weighted squared gap.
 
 ## Status
 
-Initial alpha release (`0.1.0`). The API may continue to evolve during the `0.x`
+Package version is `0.1.1`; Polars tables and versioned exports are unreleased.
+The API may continue to evolve during the `0.x`
 series. The distribution name is `binspect-regression`; the import remains `binspect`.
 
 **Not yet implemented:** uniform confidence bands and quantile regression.

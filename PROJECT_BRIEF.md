@@ -59,10 +59,13 @@ this brief and reviewed ADRs define intended constraints; the
 [plan](binspect-plan.md) orders work. The changelog records releases; project
 [memory](PROJECT_MEMORY.md) only indexes verified evidence.
 
-**Dependencies and boundaries:** pandas/array inputs enter validation/preparation;
+**Dependencies and boundaries:** Polars inputs and optional pandas/array inputs
+enter positional Polars preparation under the user-directed
+[ADR-0002](docs/decisions/0002-polars-native-dataframes.md);
 the NumPy/SciPy core estimates results; optional binsreg integration selects bins
 or supplies separate original-coordinate function inference;
-result modules export summaries; Matplotlib layers render. Package consumers and
+result modules export Polars tables with explicit pandas conversions; Matplotlib
+layers render. Package consumers and
 CI/PyPI distribution are separate trust boundaries. Keep runtime I/O and side
 effects explicit. Current engine choices and the stricter template defaults are
 reconciled in the [proposed baseline ADR](docs/decisions/0001-existing-library-baseline.md).
@@ -107,7 +110,7 @@ The earlier 160-test, 90.41%-coverage baseline is recorded in the
 
 | Decision | Due gate | Owner / evidence |
 |---|---|---|
-| Accept or amend the existing pandas/numerical/type-checker baseline | G1, before broader engine/contract changes | Maintainer; proposed ADR |
+| Review remaining numerical/type-checker baseline decisions | G1, before broader engine/contract changes | Maintainer; ADR-0001 remains proposed outside the user-directed Polars decision in ADR-0002 |
 | Choose grouped adjusted coordinates and supported combinations | Before C2 implementation beyond a bounded rejection fix | Maintainer; C2 design/reference cases |
 | Validate covariance, HC1 disposition, and adjusted-bin estimands | Before C3 sign-off; method plan before inference changes | Maintainer and designated statistical reviewer |
 | Define measurable capacity limits and benchmark host | Before P1 acceptance or performance claims | Maintainer; benchmark evidence |

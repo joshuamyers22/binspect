@@ -43,7 +43,7 @@ def test_uncertainty_limits_and_df_are_exposed(adjusted, weighted, clustered):
         weighted and not adjusted
     )
     assert ("unavailable" if adjusted else "pointwise") in result.summary()
-    assert result.summary_frame().loc[0, "slope_se_type"] == result.fit.se_type
+    assert result.to_pandas("summary").loc[0, "slope_se_type"] == result.fit.se_type
     payload = result.to_dict()
     assert payload["inference"] == metadata
     assert payload["fit"]["df_resid"] == metadata["slope_df_resid"]

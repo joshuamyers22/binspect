@@ -3,12 +3,9 @@
 from __future__ import annotations
 
 import warnings
-from collections.abc import Mapping, Sequence
 from dataclasses import replace
-from typing import Any
 
 import numpy as np
-import pandas as pd
 from numpy.typing import ArrayLike
 
 from .core.binning import compute_binning
@@ -20,13 +17,14 @@ from .core.selection import select_n_bins
 from .exceptions import AdjustedInferenceWarning, InvalidBinningError
 from .prepared_data import prepare_data
 from .results import BinscatterResult
+from .tabular import ControlInput, DataSource
 from .types import BinningMethod, ZeroWeightPolicy
 
 __all__ = ["binscatter"]
 
 
 def binscatter(
-    data: pd.DataFrame | Mapping[str, Any] | None = None,
+    data: DataSource = None,
     y: str | ArrayLike | None = None,
     x: str | ArrayLike | None = None,
     *,
@@ -34,7 +32,7 @@ def binscatter(
     binning: BinningMethod = "quantile",
     weights: str | ArrayLike | None = None,
     zero_weight: ZeroWeightPolicy = "retain",
-    controls: str | Sequence[str] | ArrayLike | None = None,
+    controls: ControlInput | None = None,
     cluster: str | ArrayLike | None = None,
     ci: float | None = 0.95,
     dropna: bool = True,
@@ -44,7 +42,7 @@ def binscatter(
 
     Parameters
     ----------
-    data : pandas.DataFrame or Mapping, optional
+    data : polars.DataFrame, pandas.DataFrame or Mapping, optional
         Data containing the variables. Not required when ``x``, ``y``, and
         ``weights`` are array-like.
     y : str or array_like
@@ -234,4 +232,6 @@ def binscatter(
         controls=prepared.controls,
         cluster=prepared.cluster_name,
         zero_weight=zero_weight,
+        sample=prepared.sample,
+        control_design=prepared.control_design,
     )

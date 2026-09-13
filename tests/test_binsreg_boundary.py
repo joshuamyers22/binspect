@@ -180,7 +180,7 @@ def test_unavailable_intervals_have_explicit_status(monkeypatch):
     monkeypatch.setattr(adapter, "_load_backend", lambda: (lambda **kw: raw, "3.2.1"))
     with pytest.warns(binspect.BinsregWarning, match="unavailable"):
         result = binspect.binsreg(**sample())
-    assert result.intervals.empty
+    assert result.to_pandas("intervals").empty
     json.dumps(result.to_dict(), allow_nan=False)
 
 
@@ -192,7 +192,7 @@ def test_outputs_are_copied_and_plot_uses_interval_centers(backend):
 
     result = binspect.binsreg(**sample())
     before = result.to_dict()
-    dots, intervals = result.dots, result.intervals
+    dots, intervals = result.to_pandas(), result.to_pandas("intervals")
     dots.loc[0, "fit"] = 999
     intervals.loc[0, "ci_lo"] = 999
     result.metadata["issues"].append("changed")

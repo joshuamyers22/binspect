@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import date, datetime
 from typing import TYPE_CHECKING, Any
 
@@ -14,6 +15,33 @@ if TYPE_CHECKING:  # pragma: no cover
 def serialize_result(result: BinscatterResult) -> dict[str, Any]:
     """Return the stable external representation of an estimation result."""
     return {
+        "schema_version": 1,
+        "result_type": "binscatter",
+        "sample": None
+        if result.sample is None
+        else result.sample.to_dict(result.n_obs),
+        "design": {
+            "intercept": True,
+            "column_order": None
+            if result.control_design is None
+            else [
+                {"role": "intercept"},
+                *[
+                    {"role": "control", "name": name}
+                    for name in result.control_design.columns
+                ],
+                {"role": "x", "name": result.x_name},
+            ],
+            "controls": None
+            if result.control_design is None
+            else result.control_design.to_dict(),
+            "coordinates": "fwl_residuals_with_sample_weighted_means"
+            if result.adjusted
+            else "original",
+            "weight_interpretation": "unit"
+            if result.weights is None
+            else "reliability",
+        },
         "x": result.x_name,
         "y": result.y_name,
         "controls": list(result.controls),
@@ -60,13 +88,15 @@ def serialize_result(result: BinscatterResult) -> dict[str, Any]:
         },
         "bins": [
             {key: json_value(value) for key, value in row.items()}
-            for row in result.table.to_dict(orient="records")
+            for row in result.table.to_dicts()
         ],
     }
 
 
 def json_value(value: Any) -> Any:
     """Normalize NumPy, date, and nonfinite scalar values for strict JSON."""
+    if isinstance(value, np.datetime64):
+        return None if np.isnat(value) else str(value)
     if isinstance(value, np.generic):
         value = value.item()
     if isinstance(value, float) and not np.isfinite(value):
@@ -75,4 +105,10 @@ def json_value(value: Any) -> Any:
         return value.isoformat()
     if value is None or isinstance(value, (str, int, float, bool)):
         return value
-    return str(value)
+    if isinstance(value, Mapping):
+        if any(not isinstance(key, str) for key in value):
+            raise TypeError("JSON object keys must be strings.")
+        return {key: json_value(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [json_value(item) for item in value]
+    raise TypeError("Unsupported value in JSON export.")

@@ -38,6 +38,8 @@ jobs:
         run: uv run lint-imports
       - name: Test
         run: uv run pytest --cov --cov-report=term-missing -m "not external and not integration"
+      - name: Verify native installation without pandas
+        run: make native
       - name: Build distributions
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
         run: uv build

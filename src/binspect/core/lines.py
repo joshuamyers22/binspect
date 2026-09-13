@@ -6,6 +6,7 @@ from typing import Any, Literal
 
 import numpy as np
 
+from ..label_values import factorize_labels
 from ..types import FloatArray, Line, LineFit
 
 __all__ = ["fit_ols", "fit_sd_line"]
@@ -92,10 +93,8 @@ def fit_ols(
         cluster_values = np.asarray(clusters, dtype=object)
         if cluster_values.ndim != 1 or cluster_values.shape != y.shape:
             raise ValueError("clusters must be one-dimensional and match x and y.")
-        import pandas as pd
-
         active = w > 0
-        codes, uniques = pd.factorize(cluster_values[active], sort=False)
+        codes, uniques = factorize_labels(cluster_values[active])
         if np.any(codes < 0):
             raise ValueError("clusters must not contain missing values.")
         n_clusters = int(uniques.size)

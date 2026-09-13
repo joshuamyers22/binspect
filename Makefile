@@ -1,4 +1,4 @@
-.PHONY: sync lint type test integration reference coverage coverage-expanded coverage-binsreg build check
+.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -17,6 +17,9 @@ test:
 integration:
 	uv run --frozen --extra dev --extra dpi pytest tests/integration/test_dpi.py tests/integration/test_binsreg_contract.py tests/integration/test_binsreg_adapter.py -m integration
 
+native:
+	uv run --isolated --frozen --no-dev python validation/native_smoke.py
+
 reference:
 	uv run --frozen --extra dev --extra validation pytest tests/integration/test_inference.py -m integration
 
@@ -32,4 +35,4 @@ coverage-binsreg:
 build:
 	uv build
 
-check: lint type test integration reference coverage coverage-expanded coverage-binsreg build
+check: lint type test native integration reference coverage coverage-expanded coverage-binsreg build

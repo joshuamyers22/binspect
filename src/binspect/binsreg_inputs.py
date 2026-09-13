@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from typing import Any
 
 import numpy as np
-import pandas as pd
 from numpy.typing import ArrayLike
 
 from .core.residualize import scaled_design
 from .exceptions import InsufficientDataError
-from .input_data import column, control_frame, labels
+from .input_data import column, control_frame, encoded_controls, labels
+from .input_metadata import ControlDesign, SampleCounts
+from .label_values import factorize_labels, is_missing
+from .tabular import ControlInput, DataSource
 from .types import FloatArray
 
 
@@ -29,14 +29,16 @@ class BinsregInputs:
     n_input: int
     n_missing: int
     n_zero_weight: int
+    sample: SampleCounts
+    control_design: ControlDesign
 
 
 def prepare_binsreg(
-    data: pd.DataFrame | Mapping[str, Any] | None,
+    data: DataSource,
     y: str | ArrayLike | None,
     x: str | ArrayLike | None,
     weights: str | ArrayLike | None,
-    controls: str | Sequence[str] | ArrayLike | None,
+    controls: ControlInput | None,
     cluster: str | ArrayLike | None,
     dropna: bool,
 ) -> BinsregInputs:
@@ -56,12 +58,9 @@ def prepare_binsreg(
     if wa is not None:
         keep &= np.isfinite(wa)
     if ca is not None:
-        keep &= np.asarray(pd.notna(ca), dtype=bool)
+        keep &= np.array([not is_missing(v) for v in ca])
     if frame is not None:
-        keep &= ~frame.isna().any(axis=1).to_numpy()
-        keep &= np.isfinite(frame.select_dtypes(include="number").to_numpy()).all(
-            axis=1
-        )
+        keep &= frame.valid_rows()
     missing = int(np.count_nonzero(~keep))
     if missing and not dropna:
         raise ValueError("inputs contain missing/nonfinite values; use dropna=True.")
@@ -75,7 +74,7 @@ def prepare_binsreg(
         raise InsufficientDataError("binsreg needs at least four positive-weight rows.")
     clusters = None
     if ca is not None:
-        codes, unique = pd.factorize(ca[keep], sort=False)
+        codes, unique = factorize_labels(ca[keep])
         if len(unique) < 2:
             raise InsufficientDataError(
                 "binsreg needs at least two positive-weight clusters."
@@ -83,13 +82,12 @@ def prepare_binsreg(
         clusters = codes.astype(float)
     design_controls = None
     columns: tuple[str, ...] = ()
+    control_design = ControlDesign()
     if frame is not None:
-        encoded = pd.get_dummies(frame.loc[keep], drop_first=True, dtype=float)
-        if not encoded.columns.is_unique:
-            raise ValueError("encoded control columns must be unique.")
+        encoded, control_design = encoded_controls(frame.filter(keep))
         columns = tuple(str(name) for name in encoded.columns)
         if columns:
-            design_controls = encoded.to_numpy(dtype=float).copy()
+            design_controls = encoded.to_numpy().astype(float, copy=True)
             if not np.isfinite(design_controls).all():
                 raise ValueError("encoded controls must be finite numeric values.")
     design = np.column_stack((np.ones(len(xa)), xa))
@@ -102,5 +100,17 @@ def prepare_binsreg(
             "binsreg requires an identified full-rank x/control design."
         )
     return BinsregInputs(
-        xa, ya, wa, design_controls, clusters, xn, yn, columns, n_input, missing, zero
+        xa,
+        ya,
+        wa,
+        design_controls,
+        clusters,
+        xn,
+        yn,
+        columns,
+        n_input,
+        missing,
+        zero,
+        SampleCounts(n_input, missing, zero, dropna),
+        control_design,
     )

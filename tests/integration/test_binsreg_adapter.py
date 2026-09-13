@@ -6,6 +6,7 @@ import warnings
 
 import numpy as np
 import pandas as pd
+import polars as pl
 import pytest
 
 import binspect
@@ -57,13 +58,13 @@ def test_matches_direct_binsreg(adjusted, weighted, clustered, spacing):
             masspoints="on",
         )
     np.testing.assert_allclose(
-        result.dots[["x", "fit"]],
+        result.to_pandas()[["x", "fit"]],
         expected.data_plot[0].dots[["x", "fit"]],
         rtol=1e-9,
         atol=1e-11,
     )
     np.testing.assert_allclose(
-        result.intervals[["x", "ci_lo", "ci_hi"]],
+        result.to_pandas("intervals")[["x", "ci_lo", "ci_hi"]],
         expected.data_plot[0].ci[["x", "ci_l", "ci_r"]],
         rtol=1e-9,
         atol=1e-11,
@@ -103,7 +104,7 @@ def test_adjusted_few_cluster_fallback_matches_upstream(sizes, spacing):
     assert result.metadata["requested_binning"] == spacing
     assert result.metadata["actual_binning"] is None
     np.testing.assert_allclose(
-        result.intervals[["ci_lo", "ci_hi"]],
+        result.to_pandas("intervals")[["ci_lo", "ci_hi"]],
         expected.data_plot[0].ci[["ci_l", "ci_r"]],
         rtol=1e-9,
         atol=1e-11,
@@ -111,7 +112,8 @@ def test_adjusted_few_cluster_fallback_matches_upstream(sizes, spacing):
 
 
 @pytest.mark.parametrize("count", ["dpi", 5])
-def test_filtered_categorical_weighted_target_matches_upstream(count):
+@pytest.mark.parametrize("input_backend", ["pandas", "polars"])
+def test_filtered_categorical_weighted_target_matches_upstream(count, input_backend):
     from binsreg import binsreg
 
     rng = np.random.default_rng(93000)
@@ -131,8 +133,13 @@ def test_filtered_categorical_weighted_target_matches_upstream(count):
     at = np.average(encoded, axis=0, weights=kept.weight)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", UserWarning)
+        source = (
+            frame
+            if input_backend == "pandas"
+            else pl.DataFrame(frame.to_dict(orient="list"))
+        )
         result = binspect.binsreg(
-            frame,
+            source,
             x="x",
             y="y",
             controls=["z", "category"],
@@ -166,13 +173,13 @@ def test_filtered_categorical_weighted_target_matches_upstream(count):
     )
     np.testing.assert_allclose(result.metadata["at"], at, rtol=1e-9, atol=1e-11)
     np.testing.assert_allclose(
-        result.dots[["x", "fit"]],
+        result.to_pandas()[["x", "fit"]],
         expected.data_plot[0].dots[["x", "fit"]],
         rtol=1e-9,
         atol=1e-11,
     )
     np.testing.assert_allclose(
-        result.intervals[["x", "ci_lo", "ci_hi"]],
+        result.to_pandas("intervals")[["x", "ci_lo", "ci_hi"]],
         expected.data_plot[0].ci[["x", "ci_l", "ci_r"]],
         rtol=1e-9,
         atol=1e-11,

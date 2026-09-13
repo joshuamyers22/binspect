@@ -63,10 +63,10 @@ def test_independent_bins_can_differ():
 def test_group_tables_are_tidy(grouped_frame):
     result = binspect.compare(grouped_frame, x="x", y="y", group="arm", bins=12)
     assert result.group_name == "arm"
-    assert result.table.columns[0] == "group"
-    assert set(result.table["group"]) == {"control", "treatment"}
+    assert result.to_pandas().columns[0] == "group"
+    assert set(result.to_pandas()["group"]) == {"control", "treatment"}
 
-    summary = result.summary_frame(include_pooled=True)
+    summary = result.to_pandas("summary", include_pooled=True)
     assert summary.columns[:2].tolist() == ["group", "is_pooled"]
     assert summary["group"].tolist() == ["control", "treatment", None]
     assert summary["is_pooled"].tolist() == [False, False, True]
@@ -94,8 +94,8 @@ def test_group_name_cannot_collide_with_export_columns():
     frame = pd.DataFrame({"x": x, "y": x, "bin": np.repeat(["a", "b"], 100)})
     result = binspect.compare(frame, x="x", y="y", group="bin", bins=5)
     assert result.group_name == "bin"
-    assert result.table.columns.tolist().count("bin") == 1
-    assert result.table.columns[0] == "group"
+    assert result.to_pandas().columns.tolist().count("bin") == 1
+    assert result.to_pandas().columns[0] == "group"
 
 
 def test_missing_group_labels_are_excluded(grouped_frame):

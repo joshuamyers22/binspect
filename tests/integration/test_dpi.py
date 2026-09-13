@@ -42,7 +42,7 @@ def test_dpi_count_matches_real_selector(method, spacing, discrete):
     result = binspect.binscatter(x=x, y=y, bins="dpi", binning=method)
     assert result.binning.requested_bins == reference.nbinsdpi
     assert result.n_bins <= result.binning.requested_bins
-    assert result.table["n"].sum() == len(x)
+    assert result.to_pandas()["n"].sum() == len(x)
     assert result.bin_rule == "dpi"
     json.dumps(result.to_dict(), allow_nan=False)
 

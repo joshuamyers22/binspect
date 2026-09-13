@@ -2,17 +2,18 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
-import pandas as pd
 from numpy.typing import ArrayLike
 
 from .core.residualize import residualize, scaled_design
 from .exceptions import InsufficientDataError
-from .input_data import column, control_frame, encode_controls, labels
+from .input_data import ControlFrame, column, control_frame, encoded_controls, labels
+from .input_metadata import ControlDesign, SampleCounts
+from .label_values import factorize_labels, is_missing
+from .tabular import ControlInput, DataSource
 from .types import FloatArray, ZeroWeightPolicy
 
 
@@ -27,16 +28,18 @@ class PreparedData:
     controls: tuple[str, ...]
     cluster_name: str | None
     dof_resid: int | None
+    sample: SampleCounts
+    control_design: ControlDesign
 
 
 def prepare_data(
-    data: pd.DataFrame | Mapping[str, Any] | None,
+    data: DataSource,
     y: str | ArrayLike | None,
     x: str | ArrayLike | None,
     *,
     weights: str | ArrayLike | None,
     zero_weight: ZeroWeightPolicy,
-    controls: str | Sequence[str] | ArrayLike | None,
+    controls: ControlInput | None,
     cluster: str | ArrayLike | None,
     dropna: bool,
 ) -> PreparedData:
@@ -53,6 +56,8 @@ def prepare_data(
             f"x and y must have the same shape, got {x_arr.shape} and {y_arr.shape}."
         )
 
+    n_input = y_arr.size
+    n_zero_weight_dropped = 0
     w_arr: FloatArray | None = None
     if weights is not None:
         w_arr, _ = column(data, weights, "weights")
@@ -61,7 +66,7 @@ def prepare_data(
         if np.any(w_arr < 0):
             raise ValueError("weights must be non-negative.")
 
-    controls_frame: pd.DataFrame | None = None
+    controls_frame: ControlFrame | None = None
     control_names: tuple[str, ...] = ()
     if controls is not None:
         controls_frame, control_names = control_frame(data, controls, y_arr.size)
@@ -77,13 +82,11 @@ def prepare_data(
     if w_arr is not None:
         finite &= np.isfinite(w_arr)
     if controls_frame is not None:
-        finite &= ~controls_frame.isna().any(axis=1).to_numpy()
-        numeric_controls = controls_frame.select_dtypes(include="number")
-        if numeric_controls.shape[1]:
-            finite &= np.isfinite(numeric_controls.to_numpy(dtype=float)).all(axis=1)
+        finite &= controls_frame.valid_rows()
     if cluster_arr is not None:
-        finite &= np.asarray(pd.notna(cluster_arr), dtype=bool)
+        finite &= np.array([not is_missing(v) for v in cluster_arr])
 
+    n_missing = int(np.count_nonzero(~finite))
     if not finite.all():
         if not dropna:
             raise ValueError(
@@ -94,7 +97,7 @@ def prepare_data(
         if w_arr is not None:
             w_arr = w_arr[finite]
         if controls_frame is not None:
-            controls_frame = controls_frame.loc[finite].reset_index(drop=True)
+            controls_frame = controls_frame.filter(finite)
         if cluster_arr is not None:
             cluster_arr = cluster_arr[finite]
 
@@ -102,9 +105,10 @@ def prepare_data(
         raise ValueError("weights must contain at least one positive value.")
     if w_arr is not None and zero_weight == "drop":
         positive = w_arr > 0
+        n_zero_weight_dropped = int(np.count_nonzero(~positive))
         x_arr, y_arr, w_arr = x_arr[positive], y_arr[positive], w_arr[positive]
         if controls_frame is not None:
-            controls_frame = controls_frame.loc[positive].reset_index(drop=True)
+            controls_frame = controls_frame.filter(positive)
         if cluster_arr is not None:
             cluster_arr = cluster_arr[positive]
 
@@ -114,14 +118,20 @@ def prepare_data(
         )
 
     cluster_active = np.ones(y_arr.size, dtype=bool) if w_arr is None else w_arr > 0
-    if cluster_arr is not None and pd.unique(cluster_arr[cluster_active]).size < 2:
+    if (
+        cluster_arr is not None
+        and factorize_labels(cluster_arr[cluster_active])[1].size < 2
+    ):
         raise InsufficientDataError(
             "cluster-robust inference requires at least 2 positive-weight clusters."
         )
 
     dof_resid: int | None = None
+    control_design = ControlDesign()
     if controls_frame is not None:
-        control_matrix = encode_controls(controls_frame)
+        encoded, control_design = encoded_controls(controls_frame)
+        values = encoded.to_numpy() if encoded.width else np.empty((y_arr.size, 0))
+        control_matrix = np.column_stack((np.ones(y_arr.size), values))
         if not np.isfinite(control_matrix).all():
             raise ValueError("controls contain non-finite numeric values.")
         full_design = np.column_stack((control_matrix, x_arr))
@@ -153,4 +163,6 @@ def prepare_data(
         control_names,
         cluster_name,
         dof_resid,
+        SampleCounts(int(n_input), n_missing, n_zero_weight_dropped, dropna),
+        control_design,
     )
