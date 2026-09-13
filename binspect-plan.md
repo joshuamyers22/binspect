@@ -1,17 +1,16 @@
 # binspect — production project plan
 
-Updated 2026-09-13 from a read-only remote check: `main` is
-`2a6a486174c00475fcb5fda31a0fe802789245dc`, through merged PR #23. PRs #15–#23
-have integrated A1–A3, D1–D3 and P1–P2 after the previously recorded #6–#14 stack.
+Updated 2026-09-13 from a remote check: `main` is
+`6d1169b516287933cb604f977a314bcc95e24e08`, through merged PR #30. PR #30
+integrated the #24–#29 release-hardening stack after the previously recorded #6–#23 work.
 Package version remains `0.1.1`; proposed incompatible changes remain unreleased.
 Historical verification records retain their review-time status; this observation
 supersedes pending-integration labels, not independent acceptance requirements.
 
-The [release-stack integration branch](docs/release-stack-integration-review.md)
-prepares drafts #24–#29 against that exact main. It restores main's large-integer
-categorical fix and regression tests, preserves the release tooling stack and
-reconciles review records. This is a proposed integration, not a main merge or
-release candidate; the original drafts and acceptance gates remain open.
+The [release-stack integration review](docs/release-stack-integration-review.md)
+records the main-based reconciliation, artifact-integrity correction, scoped
+license acceptance and all-green exact-head CI. The merge is not a release-candidate
+selection or publication approval; the remaining acceptance gates stay open.
 
 Polars-native preparation/default tables with pandas inputs and explicit conversion
 are the user's accepted direction through [ADR-0002](docs/decisions/0002-polars-native-dataframes.md).
@@ -23,7 +22,7 @@ See the integrated [ownership evidence](docs/result-ownership-review.md),
 [dependency scope](docs/site/guide/dependencies.md). Visual, policy, statistical and
 performance-budget acceptance remain explicit review gates; site hosting is not configured.
 
-P3, R1 and R3 are implemented on draft PRs #24–#26 and remain unintegrated.
+P3, R1 and R3 are integrated through PR #30.
 [Six exact license scopes](docs/SUPPLY_CHAIN.md) were accepted by Josh Myers on
 2026-09-13 through 2026-10-13, and the fresh local P3 gate passes. R1 has passing actual
 artifact handoff/installation evidence; R3 has passing local reference/recovery
@@ -439,3 +438,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | R3 — maintenance and recovery | [Procedure](docs/MAINTENANCE.md), [retained evidence](docs/maintenance-recovery-review.md); [draft PR #26](https://github.com/joshuamyers22/binspect/pull/26) | Implemented on `chore/maintenance-recovery`, stacked on R1. 222 locked/current reference cases, three installed journeys, ten simulated recovery scenarios and the full local 600-test gate pass. Fresh-current monitoring moves to weekly/manual runs; locked/floor PR gates remain. Maintainer acceptance, default-branch schedule activation and actual PyPI operator recovery evidence remain open. P3/R1 gaps still block R2 publication. |
 | 2026-09-12 | R2 — readiness preparation and figure provisioning repair | [Concrete readiness record](docs/releases/0.2.0-readiness.md), [verification](docs/release-readiness-review.md); [draft PR #27](https://github.com/joshuamyers22/binspect/pull/27) | Local 600-test full gate passes; uv-managed Python 3.12.14 restores the macOS CI figure job with unchanged baselines and RMS 0.0. All CI jobs pass except six pending license reviews. Read-only checks confirm main now includes #15–#23; #24–#26 remain drafts. R2 publication remains blocked by owned acceptance, controls, integration and exact-candidate artifact/provenance gates. No candidate/version/tag/release selected or published. |
 | 2026-09-13 | P3 license scope acceptance and distribution-integrity follow-up | [Accepted scope](docs/SUPPLY_CHAIN.md), [artifact dossier](docs/LICENSE_REVIEW_DOSSIER.md), [integration review](docs/release-stack-integration-review.md) | Josh Myers accepted six exact separately installed/non-bundled dependency scopes through 2026-10-13. The strengthened checker rejects sdist manifest/byte and project-metadata divergence. The 639-test full gate and fresh online supply-chain gate pass locally; exact pushed-head CI and main integration remain next. No release is authorized. |
+| 2026-09-13 | Release-hardening stack integration | [Merged PR #30](https://github.com/joshuamyers22/binspect/pull/30), [integration review](docs/release-stack-integration-review.md), [exact-head CI](https://github.com/joshuamyers22/binspect/actions/runs/34783516923) | All 35 jobs pass on exact head `30d0793`, including supply-chain and 12 artifact installations. PR #30 merged #24–#29 into main as `6d1169b`. Candidate selection, owner-held acceptance, actual controls, maintenance activation/recovery and release-specific provenance remain open; no release was published. |
