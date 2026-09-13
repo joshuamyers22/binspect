@@ -67,8 +67,10 @@ other dependency combinations, but P2 qualification remains open. The
 [D2 export review](guide/figure-exports.md) adds four guarded PNG baselines and
 structural PDF/SVG checks, with explicit background and simulation limits. The D3
 gallery covers seven seeded teaching cases; review/integration remains pending.
-P1 workload measurement is next. No performance ceiling or general accessibility
-qualification is implied.
+[P1 workload measurements](guide/performance.md) cover the synthetic 10k–1M grid
+and replace dense clustered-bin storage. Maintainer baseline/runner acceptance
+remains pending; P2 dependency configurations are next. No general capacity or
+accessibility qualification is implied.
 
 | Repository reference | Purpose |
 |---|---|

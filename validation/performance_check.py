@@ -76,6 +76,14 @@ def propose(report):
         trials = entry["trials"]
         if len(trials) < 3:
             raise ValueError("At least three fresh trials are required for budgets.")
+        for trial in trials:
+            values = [
+                *trial["timings"].values(),
+                trial["estimate_peak_rss_bytes"],
+                trial["process_peak_rss_bytes"],
+            ]
+            if any(not np.isfinite(value) or value < 0 for value in values):
+                raise ValueError("Benchmark metrics must be finite and nonnegative.")
         limits[name] = {
             "spec": entry["spec"],
             "timings": {
@@ -122,10 +130,22 @@ def enforce(budget, report):
             raise ValueError(f"Budgeted specification changed: {name}")
         for trial in entry["trials"]:
             for key, ceiling in limits["timings"].items():
-                if trial["timings"][key] > ceiling:
+                value = trial["timings"][key]
+                if (
+                    not np.isfinite(value)
+                    or not np.isfinite(ceiling)
+                    or min(value, ceiling) < 0
+                    or value > ceiling
+                ):
                     raise ValueError(f"Timing budget exceeded: {name}: {key}")
             for key, ceiling in limits["rss_bytes"].items():
-                if trial[key] > ceiling:
+                value = trial[key]
+                if (
+                    not np.isfinite(value)
+                    or not np.isfinite(ceiling)
+                    or min(value, ceiling) < 0
+                    or value > ceiling
+                ):
                     raise ValueError(f"Memory budget exceeded: {name}: {key}")
 
 

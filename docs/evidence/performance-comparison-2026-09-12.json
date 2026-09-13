@@ -1,0 +1,44 @@
+{
+  "numerically_equivalent": [
+    "base_10000",
+    "bins100_10000",
+    "clusters100_10000",
+    "clusters_n_10000",
+    "groups4_10000",
+    "groups16_10000",
+    "controls4_10000",
+    "controls16_10000",
+    "default_plot_10000",
+    "clusters_n_default_10000",
+    "base_100000",
+    "bins100_100000",
+    "clusters100_100000",
+    "clusters_n_100000",
+    "groups4_100000",
+    "groups16_100000",
+    "controls4_100000",
+    "controls16_100000",
+    "default_plot_100000",
+    "clusters_n_default_100000",
+    "base_1000000",
+    "bins100_1000000",
+    "clusters100_1000000",
+    "groups4_1000000",
+    "groups16_1000000",
+    "controls4_1000000",
+    "controls16_1000000",
+    "default_plot_1000000"
+  ],
+  "not_compared": [
+    {
+      "name": "clusters_n_1000000",
+      "before": "preflight_skip",
+      "after": "pass"
+    },
+    {
+      "name": "clusters_n_default_1000000",
+      "before": "preflight_skip",
+      "after": "pass"
+    }
+  ]
+}

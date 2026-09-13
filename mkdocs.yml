@@ -18,6 +18,7 @@ nav:
   - Start here: index.md
   - User guide:
       - Reproducible example gallery: guide/gallery.md
+      - Workload measurements and limits: guide/performance.md
       - Interpreting diagnostics: guide/interpretation.md
       - Adjusting for controls: guide/adjustment.md
       - Weights, clusters and missingness: guide/weights.md

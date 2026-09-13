@@ -33,6 +33,7 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `executable-docs` | `docs/site` has source-generated mkdocstrings API and strict local links/anchors; D3 adds nine gallery blocks to the prior 29 plus quickstart. Each page runs in a fresh process/temp directory. Root `/site/` alone is ignored; quickstart output defaults to `.work/quickstart.png`. No hosting/deployment added; publication/review pending. | [Guide](docs/site/index.md), [runner](validation/documentation.py), [D1 evidence](docs/user-guide-review.md), [D3 evidence](docs/example-gallery-review.md) | 2026-09-12 |
 | `figure-qualification` | D2 adds four initial PNG baselines (RMS limit 0.5/255; local rerender 0.0), PNG/PDF/SVG structure/text/geometry tests and vision/background sheets. Existing presets lose labels/context on dark backgrounds; general accessibility and vector pixel equivalence are unqualified. Baselines never auto-update; renderer mismatch fails. Maintainer visual acceptance pending. | [Guide/review](docs/site/guide/figure-exports.md), [evidence](docs/figure-export-review.md), [baseline policy](tests/baseline/README.md) | 2026-09-12 |
 | `synthetic-gallery` | D3 has seven Polars-native cases with PCG64 seeds 120101–120107, separate from assessment seeds. Markdown is the executable source; the checkout launcher retains figures and source/lock/version/input/result hashes under `.work/gallery` by default. Discrete-bin merging and sparse grouped tails intentionally retain warnings. No coverage qualification is implied. | [Gallery](docs/site/guide/gallery.md), [launcher](examples/gallery.py), [manifest](docs/site/assets/gallery/manifest.json), [verification](docs/example-gallery-review.md) | 2026-09-12 |
+| `workload-limits` | P1 replaces dense bin-by-cluster score/count storage with occupied-pair aggregation, preserving CR1. The separate benchmark measures 10k–1M Polars rows with 2 GiB/120-second child guards and proposed host-specific budgets; pending acceptance cannot pass budget enforcement. Existing default rugs cap at 2,000 marks. Control matrices remain dense; 10M/general capacity are unqualified. | [Scope](docs/site/guide/performance.md), [evidence](docs/performance-review.md), [storage regressions](tests/test_cluster_storage.py), [budget checker](validation/performance_check.py) | 2026-09-12 |
 
 ## Open work
 
@@ -51,8 +52,10 @@ maintainer review/integration and hosting/publication pending. D2 export/baselin
 checks are implemented on `test/figure-exports`, stacked on D1, with visual
 acceptance/integration pending. D3 reproducible examples are implemented on
 `docs/reproducible-gallery`, stacked on D2, with maintainer review/integration
-pending. Next implementation: P1 workload measurement and limits. M2 maintainer
-acceptance remains open.
+pending. P1 occupied-cluster aggregation and workload/budget tooling are implemented
+on `perf/cluster-workloads`, stacked on D3; baseline/controlled-runner acceptance
+and integration remain pending. Next implementation: P2 dependency configurations.
+M2 maintainer acceptance remains open.
 Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
 proposed baseline decisions and governance/security/release gates remain open;
 merge authorization is not an independent statistical approval or a release.

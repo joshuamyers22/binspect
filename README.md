@@ -366,6 +366,13 @@ Without controls, weights or clusters, bin standard errors are `sd/√n` and ass
 independent observations. Weighted/clustered conventions and the adjusted-bin
 uncertainty restriction are described above.
 
+For workload measurements, see [performance and limits](docs/site/guide/performance.md).
+Clustered bin scores use occupied-pair storage rather than dense bin-by-cluster
+arrays. The measured grid covers 10k–1M synthetic Polars rows; control width,
+group count and plot layers still affect cost. Baseline/runner acceptance remains
+pending, and 10M rows are unqualified. Run `make benchmark` separately from the
+portable checks on the recorded host.
+
 ## Install
 
 ```bash

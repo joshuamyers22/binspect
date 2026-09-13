@@ -42,7 +42,17 @@ def test_budget_requires_explicit_acceptance():
 
 
 @pytest.mark.parametrize(
-    "defect", ["host", "missing", "incomplete", "time", "memory", "spec"]
+    "defect",
+    [
+        "host",
+        "missing",
+        "incomplete",
+        "time",
+        "memory",
+        "spec",
+        "nan_time",
+        "nan_memory",
+    ],
 )
 def test_budget_detects_regression_or_unqualified_run(defect):
     original = evidence()
@@ -66,6 +76,10 @@ def test_budget_detects_regression_or_unqualified_run(defect):
         entry["trials"][0]["timings"]["estimate_first_s"] = 2
     elif defect == "memory":
         entry["trials"][0]["process_peak_rss_bytes"] = 300
+    elif defect == "nan_time":
+        entry["trials"][0]["timings"]["estimate_first_s"] = float("nan")
+    elif defect == "nan_memory":
+        entry["trials"][0]["process_peak_rss_bytes"] = float("nan")
     else:
         entry["spec"]["n"] = 100_000
     with pytest.raises(ValueError):
