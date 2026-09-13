@@ -99,8 +99,11 @@ prespecified RGB RMS ceiling of 0.5 on the 0–255 scale. Dimensions and opacity
 must match. Baseline hashes guard accidental changes; failures never regenerate
 references. The initial local rerender matched every image exactly (RMS 0.0).
 Structural/export tests run in the normal unit suite on the configured matrix;
-a dedicated macos-15/Python 3.12 CI job checks the pinned raster environment.
-Configured CI is not a claim that this draft already passed on every host.
+a dedicated macos-15/uv-managed Python 3.12.14 CI job checks the pinned raster
+environment. Managed Python supplies the macOS patch build missing from setup-python;
+the [R2 comparison](https://github.com/joshuamyers22/binspect/actions/runs/34733407408)
+passes locally and on that CI runner. This does not qualify every
+host or replace maintainer visual acceptance.
 
 To regenerate disposable simulation sheets, run
 `uv run --frozen --all-extras python validation/figure_accessibility.py`.

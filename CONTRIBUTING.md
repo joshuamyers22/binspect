@@ -101,6 +101,12 @@ binsreg, including degree-0 few-cluster fallback. Assessment seeds remain reserv
 
 ## Change guidelines
 
+Run `make supply-chain` for the separate online advisory/license/history/artifact
+gate. It uses isolated locked tooling and fails on unavailable evidence or
+unapproved findings. See [scope and license review records](docs/SUPPLY_CHAIN.md).
+Dependency updates must regenerate `uv.lock` and rerun `make check`, affected P2
+profiles and this audit; CI rejects stale locks and retains numerical drift gates.
+
 The [user guide](docs/site/index.md) and generated API reference build from
 `mkdocs.yml`. `make docs` executes every plain `python`/`py` fenced block in the
 site, README and input/compatibility contracts, in page order with one fresh process
@@ -118,7 +124,7 @@ publication approval and configured hosting remain separate requirements.
 `make figures` compares four reviewed PNG candidates using the renderer/font
 manifest in [tests/baseline](tests/baseline/README.md); `make check` includes it.
 Use CPython 3.12 and the frozen lock for this qualification gate. The dedicated CI
-job pins Python 3.12 on macos-15; the normal unit matrix runs portable PNG/PDF/SVG
+job pins uv-managed Python 3.12.14 on macos-15; the normal unit matrix runs portable PNG/PDF/SVG
 structure, text, geometry and state tests (pypdf is development-only). Renderer
 mismatches and image differences fail; baseline replacement requires an explicit
 command, visual diff inspection and maintainer review. Do not relax thresholds.
@@ -139,3 +145,13 @@ Generate disposable color/background review sheets with
 
 Open an issue before undertaking a large API or statistical-method change so effort
 is not spent on a design that may not fit the project.
+
+## Maintenance monitoring
+
+The separate [weekly/manual maintenance workflow](.github/workflows/maintenance.yml)
+compares installed code against the existing reference tests with locked/current
+dependencies and retains controlled evidence for Josh Myers's triage. Fresh-current
+checks run there; locked correctness and floor checks remain PR gates. See the
+[maintenance procedure](docs/MAINTENANCE.md) for drift classification, evidence
+retention and recovery. Supported-method numerical divergences block the next
+release until resolved or that method is explicitly withdrawn.

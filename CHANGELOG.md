@@ -18,6 +18,14 @@ examples, schema/deprecation rules and the distinction between corrections and
 intentional default changes.
 
 ### Fixed
+- The figure CI job obtains pinned Python 3.12.14 through uv-managed Python,
+  restoring baseline comparisons on macOS. Renderer/font/library guards and
+  baseline images remain intact.
+- Build/audit tooling is locked, the publisher action is pinned, and a required
+  supply-chain gate checks all locked versions, licenses, available Git history,
+  actual distributions and a validated CycloneDX SBOM. Six exact dependency-license
+  scopes were accepted by Josh Myers on 2026-09-13 with a 2026-10-13 re-review
+  expiry; this does not itself authorize a release.
 - The DPI extra now requires binsreg ≥3.2.1. The previous 1.0 minimum installed
   but rejected the function adapter's confidence-interval request. Separate CI
   jobs exercise minimal, DPI, locked, direct minimum and current dependencies,
@@ -87,6 +95,14 @@ intentional default changes.
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- Release-only signed provenance and independent prepublication verification of
+  both distributions, exact source/workflow/tag and authenticated run attempt.
+  Candidate signing evidence and release approval remain required.
+- A shared nonpublishing artifact workflow builds one locked wheel/sdist pair,
+  verifies its handoff and runs clean installed journeys across Linux/macOS.
+- Weekly/manual locked/current reference monitoring, controlled triage evidence,
+  and a read-only recovery checker for partial, conflicting or yanked releases.
+  Fresh-current monitoring runs separately from routine PR checks.
 - A sequential, resource-guarded workload harness for 10k–1M Polars rows, separate
   estimation/render timings and peak RSS, numerical comparison and explicit budget
   proposal/enforcement. Baseline/runner acceptance remains pending.

@@ -3,6 +3,10 @@
 `binspect` is an in-process statistical library. It has no network listener, but
 caller inputs, dependencies, builds and published artifacts cross trust boundaries.
 See the [threat model](docs/THREAT_MODEL.md) for current checks and open risks.
+The development [supply-chain gate](docs/SUPPLY_CHAIN.md) scans the complete lock,
+available history and built artifacts, retaining controlled findings. Six license
+scopes were accepted by Josh Myers on 2026-09-13 through 2026-10-13; changed scope
+or expiry blocks the gate. A passing supply-chain scan is not release approval.
 
 Please do not file vulnerability details or sensitive reproductions in public
 issues, discussions or pull requests. GitHub private vulnerability reporting was

@@ -30,12 +30,19 @@ the existing library stack remains the working baseline pending that disposition
 |---|---|---|
 | Main branch protection | GET branch protection returned 404, “Branch not protected.” | No enforced required checks/reviews, force-push or deletion protection verified; G1/R1. |
 | Repository rulesets | Empty list. | No substitute ruleset enforcement observed; G1/R1. |
-| Actions policy | Enabled; all actions allowed; SHA-pinning not required remotely. | Workflow pins must be checked in source; mutable publisher ref remains a P3 gap. |
-| Secret scanning / push protection | Both enabled. | Useful controls, not evidence that every secret/data leak is prevented. P3 still audits history/artifacts. |
+| Actions policy | Enabled; all actions allowed; SHA-pinning not required remotely. | P3 now checks full SHA references in source, including the publisher; remote enforcement remains separate. |
+| Secret scanning / push protection | Both enabled. | Useful controls, not evidence that every secret/data leak is prevented. P3 adds history/artifact scanning; see its [scope](SUPPLY_CHAIN.md). |
 | Dependabot security updates | Disabled in repository settings. | Version-update schedule exists in YAML; automatic security-fix PRs are a separate gap, due P3. |
 | Private vulnerability reporting | `enabled: false`. | The public “Report a vulnerability” route is unavailable. The maintainer must enable it or publish a verified private contact before R2. |
 | PyPI environment | Required reviewer `joshuamyers22`; prevent-self-review false; no branch/tag deployment policy. | Approval exists, but self-review is allowed and ref restrictions are absent. R1 verifies desired policy. |
 | PyPI Trusted Publisher | Not inspected at PyPI. | GitHub OIDC YAML/environment alone does not verify publisher mapping or successful publication; R1/R2. |
+
+R1 and R2 rechecked branch protection, rulesets, Actions policy, private vulnerability
+reporting and the PyPI environment on 2026-09-12 local time (2026-09-13 UTC);
+those observations remain unchanged. PyPI owner-side publisher mapping was not
+available for inspection. See [the R1 record](artifact-workflow-review.md) and [R2 readiness](releases/0.2.0-readiness.md).
+R2 also observes `main` at `2a6a486`, through merged PR #23; integration does not
+change the controls above.
 
 No account-plan limitation was returned for this public repository. Do not copy
 the production-template repository's historical private-repository limitation

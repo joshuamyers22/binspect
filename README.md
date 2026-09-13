@@ -400,7 +400,9 @@ Maintainer release instructions are in [RELEASING.md](RELEASING.md).
 
 ## License
 
-MIT.
+MIT. Dependencies retain their own licenses. See the
+[supply-chain scope and approved license decisions](docs/SUPPLY_CHAIN.md),
+including the optional binsreg backend's GPL-3.0-only metadata.
 
 ## Citation
 

@@ -30,10 +30,16 @@ actual reviewer decisions. No release date or approval is supplied here.
   review/bypass rules and release-environment ref restrictions match approved policy.
 - [ ] Required CI and `make check` pass on the exact release commit, including DPI.
 - [ ] P3 dependency/license/secret review, action pins and SBOM are complete.
+  Attach a fresh passing [supply-chain report](../docs/SUPPLY_CHAIN.md), license
+  decisions and validated SBOM matching the exact wheel/sdist hashes. A failed or
+  unverified check, pending exception or expired review does not satisfy this item.
 - [ ] R1 locked build and tag/version/publisher-identity checks pass; PyPI Trusted
   Publisher mapping is independently inspected, not inferred from workflow YAML.
 - [ ] R2 wheel/sdist contents, hashes, fresh installs, advertised extras and smoke
   journeys are checked across supported targets; provenance matches the artifacts.
+- [ ] Review the latest locked/current [maintenance evidence](../docs/MAINTENANCE.md);
+  supported-method numerical divergences are resolved or the affected method is
+  explicitly withdrawn. An outage is unverified evidence, not a pass.
 - [ ] R3 failed-publish, yank/fixed-release and recovery procedures were exercised;
   owner, trigger and evidence retention for ongoing maintenance are recorded.
 - [ ] Maintainer has explicitly authorized publication of these artifacts.

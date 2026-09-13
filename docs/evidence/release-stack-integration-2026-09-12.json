@@ -1,0 +1,302 @@
+{
+  "ci": {
+    "artifacts": [
+      {
+        "files": 43,
+        "name": "binspect_regression-0.1.1-py3-none-any.whl",
+        "sha256": "8ac8ef5c00d9128e6a0e0e4dd2cf2a2867f60db828643d6f4e6e8fcee3acd06f",
+        "version": "0.1.1"
+      },
+      {
+        "files": 232,
+        "name": "binspect_regression-0.1.1.tar.gz",
+        "sha256": "a5c87bb5d45a5f6d56b7d810a49496327de76dfb592407b80de4dffaa2b49bb2",
+        "version": "0.1.1"
+      }
+    ],
+    "audit_checks": {
+      "actions": "pass",
+      "artifacts": "pass",
+      "licenses": "fail",
+      "sbom": "pass",
+      "secrets": "pass",
+      "vulnerabilities": "pass"
+    },
+    "audit_report_sha256": "23b1557222ffa4eaea0c21a0decf7e7a8561fca8d989e457dc2d9aae21ea01ac",
+    "checkout_revision": "e34e588b15c8816f2eba6ce398d514ef261ef780",
+    "conclusion": "failure",
+    "head_revision": "a1940587ecf13c258c8ff482f3f68cf4ad11817b",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "name": "figures"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / build"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "documentation"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.13)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dpi-integration"
+      },
+      {
+        "conclusion": "success",
+        "name": "inference-validation"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.11)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (lower-pandas, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (lower-dpi, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.11)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (dpi, Python 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (locked, Python 3.12)"
+      },
+      {
+        "conclusion": "failure",
+        "name": "supply-chain"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.13)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.11)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (lower, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.13)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.11, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.12, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.12, dpi)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.12, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.10, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.11, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.13, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.12, dpi)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.13, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.12, pandas)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.10, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.12, pandas)"
+      }
+    ],
+    "pending_licenses": [
+      {
+        "package": "binsreg",
+        "version": "3.2.1"
+      },
+      {
+        "package": "certifi",
+        "version": "2026.7.22"
+      },
+      {
+        "package": "docutils",
+        "version": "0.23"
+      },
+      {
+        "package": "fqdn",
+        "version": "1.5.1"
+      },
+      {
+        "package": "hypothesis",
+        "version": "6.165.10"
+      },
+      {
+        "package": "pathspec",
+        "version": "1.1.1"
+      }
+    ],
+    "run_id": 34735451959,
+    "status": "completed",
+    "url": "https://github.com/joshuamyers22/binspect/actions/runs/34735451959"
+  },
+  "conflicts": {
+    "count": 5,
+    "files": [
+      ".github/workflows/ci.yml",
+      "PROJECT_MEMORY.md",
+      "binspect-plan.md",
+      "docs/site/guide/figure-exports.md",
+      "tests/baseline/README.md"
+    ],
+    "records": "Preserve main review dispositions and the stack pending gates; retain historical main review.",
+    "renderer": "Preserve the verified uv-managed 3.12.14 stack setup."
+  },
+  "inputs": [
+    {
+      "path": "src/binspect/input_data.py",
+      "sha256": "f688d261da8627182d5b295e55ab8e095e112a708ac460f5e9b37ae52b7f8a93"
+    },
+    {
+      "path": "tests/test_polars_contract.py",
+      "sha256": "4e3745f7e63aac51fe6c762a8092896b5a2c9677a2b1ae8e4c7cef379e649ea4"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "60cb5990b92833832ce44891b648f4eed0ef5cd06a6c8df50d00a18c6d88afee"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "cdf7e5c2ff46505174d6746010713e9abf8fd332f832578bb364cf7affada6e2"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "ead5a370059ca8e67ce21af562cb684d07c045097ffb2f9005124412d4f8d0ee"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "sha256": "cda6d2fd3dd8511ff37f0e6fd3bf2ff77ba4ddcbb7bd86af8f3ef7187f1a9acf"
+    }
+  ],
+  "integration_parents": [
+    "83d28ae3acb380e01c7f35d8253f97db1f31c62d",
+    "2a6a486174c00475fcb5fda31a0fe802789245dc"
+  ],
+  "integration_revision": "a1940587ecf13c258c8ff482f3f68cf4ad11817b",
+  "limitations": [
+    "Review branch only; main and prior drafts unchanged.",
+    "No release candidate, version, signing, publication or approval selected.",
+    "Six license decisions and other release acceptance gates remain pending.",
+    "Historical artifact evidence retains its original source identities; combined-tree CI evidence must identify its own build.",
+    "Evidence-only follow-up commits are distinct from the verified integration head."
+  ],
+  "local_checks": {
+    "build": "pass",
+    "coverage_percent": 94.65,
+    "development_simulations": "pass",
+    "documentation_blocks": 38,
+    "dpi_tests": 34,
+    "figure_rms": {
+      "audit": 0.0,
+      "default": 0.0,
+      "deviation": 0.0,
+      "paper": 0.0
+    },
+    "import_contracts": 4,
+    "make_check": "pass",
+    "markdown_links": 189,
+    "mypy_source_files": 38,
+    "native_without_pandas": "pass",
+    "quickstart": "pass",
+    "reference_tests": 40,
+    "reserved_assessments": "unrun",
+    "strict_site": "pass",
+    "total_tests": 632,
+    "unit_tests": 558
+  },
+  "main_revision": "2a6a486174c00475fcb5fda31a0fe802789245dc",
+  "main_source_tree": "e89dc99bf584f569a4345ef258a0c9f70afda788",
+  "parent_preservation": {
+    "excluded_documentation": "tests/baseline/README.md",
+    "existing_main_source_test_baseline_files_equal": 77,
+    "historical_main_review_record_preserved": true,
+    "stack_validation_workflows_manifest_lock_equal": true
+  },
+  "pull_request": "https://github.com/joshuamyers22/binspect/pull/30",
+  "recorded_at": "2026-09-13T03:29:07.897164+00:00",
+  "regression": {
+    "combined_polars_contract_passes": 35,
+    "new_statistical_seeds_or_tolerances": false,
+    "observed_failure": "Distinct declared integer categories collapse to an all-one indicator instead of alternating zero/one.",
+    "old_stack_failures": 2,
+    "parameters": [
+      false,
+      true
+    ],
+    "test": "test_large_integer_categories_preserve_design_and_adjusted_fit"
+  },
+  "schema_version": 1,
+  "source_tree": "e89dc99bf584f569a4345ef258a0c9f70afda788",
+  "stack_revision": "8830649798cb4d09d989e585fe45069ccb391efd",
+  "stack_validation_tree": "d224743cd8dbac8517a5deba4b21741ac1aeec2f",
+  "target_branch": "main",
+  "validation_tree": "d224743cd8dbac8517a5deba4b21741ac1aeec2f"
+}
