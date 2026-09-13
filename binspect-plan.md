@@ -3,7 +3,9 @@
 Updated 2026-09-12 after the user-authorized merge of PRs #6–#14 into `main`
 at `e206e0c`; package version remains `0.1.1` (no new release).
 
-**Next implementation: A1 — result ownership and mutation isolation.** The
+**A1 is implemented and locally verified; maintainer review/integration pending.**
+See the [ownership contract, regressions and memory measurements](docs/result-ownership-review.md).
+**Next implementation: A2 — export and input contracts.** The
 roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
 C3 inference boundaries and coverage evidence, C4 diagnostic policy, and optional
 binsreg adapter are integrated. The [binsreg PR #14](https://github.com/joshuamyers22/binspect/pull/14)
@@ -390,3 +392,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | C3 — expanded development coverage | [Prespecified protocol](docs/EXPANDED_COVERAGE_PLAN.md), [clean-commit report and review](docs/expanded-coverage-review.md); 262 unit tests, 46 integrations/references, 92.49% coverage, both development protocols and builds pass | Required sanity cases pass; uneven-cluster bin coverage is 78.2% (80.7% weighted), preserved as diagnostic failure. Qualified support-policy/protocol review and locked assessment remain open. |
 | 2026-09-12 | C3 reference review and C4 diagnostic policy | [Binsreg source/method review](docs/binsreg-reference-review.md), [C4 contract and verification](docs/diagnostic-policy-review.md); 296 unit tests, 50 integrations/references, 92.60% coverage, both development protocols and builds pass | Explicit policies, opt-out, accurate support and signed-SD/display claims implemented. Default clustered/constant outcomes unassessed. Pending review/integration; C3 final assessment/acceptance remain open. |
 | 2026-09-12 | C3 — requested binsreg function adapter | [Committed protocol](docs/BINSREG_ADAPTER_PLAN.md), [implementation and clean development evidence](docs/binsreg-adapter-review.md); 334 unit tests, 72 integrations/references, 93.18% coverage, all three development protocols and builds pass | Original-coordinate adjusted function inference and explicit fallbacks implemented. Three uneven clusters give 42.4% coverage against the function target. Draft review/integration and qualified C3 acceptance/final assessment remain open; next independent item A1. |
+| 2026-09-12 | A1 — result ownership and mutation isolation | [Ownership contract and measured evidence](docs/result-ownership-review.md); 349 unit tests, 72 integrations/references, 93.75% coverage; all development coverage gates pass; build passed after authorized network retry | Implemented on `fix/result-ownership`; inputs/nested numeric arrays isolated, editable projections preserved, eight synthetic exports identical to baseline. Maintainer review/integration pending; unreleased. Next implementation A2. |

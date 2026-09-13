@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 import pandas as pd
 
+from ._ownership import ArrayOwner
 from .core.binning import Binning
 from .core.decompose import Decomposition
 from .core.estimate import BinEstimates
@@ -26,8 +27,12 @@ __all__ = ["BinscatterResult"]
 
 
 @dataclass(frozen=True, slots=True)
-class BinscatterResult:
+class BinscatterResult(ArrayOwner):
     """Results from binned scatterplot estimation.
+
+    Numeric arrays are owned read-only snapshots, including nested partition and
+    estimate arrays. Use ``.copy()`` for editable arrays. Tables and exports are
+    independent editable projections; changing them does not update this result.
 
     Parameters
     ----------
@@ -88,6 +93,10 @@ class BinscatterResult:
     controls: tuple[str, ...] = ()
     cluster: str | None = None
     zero_weight: ZeroWeightPolicy = "retain"
+
+    def __post_init__(self) -> None:
+        ArrayOwner.__post_init__(self)
+        object.__setattr__(self, "controls", tuple(self.controls))
 
     # -- convenience accessors -------------------------------------------------
 

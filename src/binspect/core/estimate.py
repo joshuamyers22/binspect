@@ -8,14 +8,17 @@ from typing import Any, Literal
 import numpy as np
 from scipy import stats
 
+from .._ownership import ArrayOwner
 from ..types import FloatArray, IntArray
 
 __all__ = ["BinEstimates", "estimate_bins"]
 
 
 @dataclass(frozen=True, slots=True)
-class BinEstimates:
+class BinEstimates(ArrayOwner):
     """Within-bin summary statistics.
+
+    Arrays own read-only numeric snapshots. Use ``.copy()`` for editable values.
 
     Parameters
     ----------

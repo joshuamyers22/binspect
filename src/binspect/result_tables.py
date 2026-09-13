@@ -33,7 +33,7 @@ def bin_table(result: BinscatterResult) -> pd.DataFrame:
         columns["n_positive"] = estimates.n_positive
     if estimates.n_effective is not None:
         columns["n_effective"] = estimates.n_effective
-    return pd.DataFrame(columns)
+    return pd.DataFrame(columns, copy=True)
 
 
 def decomposition_table(result: BinscatterResult) -> pd.DataFrame:

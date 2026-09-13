@@ -18,6 +18,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .._ownership import ArrayOwner
 from ..exceptions import BinCountWarning, InsufficientDataError, InvalidBinningError
 from ..types import BinningMethod, FloatArray, IntArray
 
@@ -28,8 +29,10 @@ SPARSE_BIN_THRESHOLD = 10
 
 
 @dataclass(frozen=True, slots=True)
-class Binning:
+class Binning(ArrayOwner):
     """Results from partitioning an exogenous variable.
+
+    Stored arrays own read-only numeric snapshots; caller inputs are not retained.
 
     Attributes
     ----------
