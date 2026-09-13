@@ -118,7 +118,7 @@ publication approval and configured hosting remain separate requirements.
 `make figures` compares four reviewed PNG candidates using the renderer/font
 manifest in [tests/baseline](tests/baseline/README.md); `make check` includes it.
 Use CPython 3.12 and the frozen lock for this qualification gate. The dedicated CI
-job pins Python 3.12.14 on macos-15; the normal unit matrix runs portable PNG/PDF/SVG
+job pins Python 3.12 on macos-15; the normal unit matrix runs portable PNG/PDF/SVG
 structure, text, geometry and state tests (pypdf is development-only). Renderer
 mismatches and image differences fail; baseline replacement requires an explicit
 command, visual diff inspection and maintainer review. Do not relax thresholds.

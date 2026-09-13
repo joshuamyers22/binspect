@@ -99,7 +99,7 @@ prespecified RGB RMS ceiling of 0.5 on the 0–255 scale. Dimensions and opacity
 must match. Baseline hashes guard accidental changes; failures never regenerate
 references. The initial local rerender matched every image exactly (RMS 0.0).
 Structural/export tests run in the normal unit suite on the configured matrix;
-a dedicated macos-15/Python 3.12.14 CI job checks the pinned raster environment.
+a dedicated macos-15/Python 3.12 CI job checks the pinned raster environment.
 Configured CI is not a claim that this draft already passed on every host.
 
 To regenerate disposable simulation sheets, run
