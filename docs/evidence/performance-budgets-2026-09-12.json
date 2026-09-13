@@ -1,0 +1,678 @@
+{
+  "schema_version": 1,
+  "acceptance": {
+    "status": "pending",
+    "reviewer": null,
+    "date": null
+  },
+  "identity": {
+    "host": {
+      "system": "Darwin",
+      "release": "24.1.0",
+      "machine": "arm64",
+      "hardware": [
+        "Apple M1 Pro",
+        "17179869184",
+        "8"
+      ]
+    },
+    "python": "3.12.14",
+    "versions": {
+      "binspect-regression": "0.1.1",
+      "numpy": "2.5.2",
+      "polars": "1.44.2",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.1",
+      "pillow": "12.3.0"
+    },
+    "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "POLARS_MAX_THREADS": "1",
+      "MPLBACKEND": "Agg"
+    },
+    "source_sha256": "9269fd011374fd4f1ea04b4530d680a6a81e39781cb9614f07e16a8596ebadae",
+    "harness_sha256": "1c2d835f03246e2b68a8d27b02866b31587956a8d2514301d57ad5f2b5ed28bc",
+    "lock_sha256": "b8fdf6e1b0243cfb90c63cbf292dd8700347b76b56b3bd8244891612a9dbf40e",
+    "revision": "7cab2488014ee9f678f3c25a88506aee0fbfd67c"
+  },
+  "formula": {
+    "time_max_multiplier": 1.25,
+    "rss_max_multiplier": 1.2
+  },
+  "limits": {
+    "base_10000": {
+      "spec": {
+        "name": "base_10000",
+        "n": 10000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.002747761250248004,
+        "estimate_warm_s": 0.002390728748196125,
+        "render_first_s": 0.05399067624921372,
+        "render_warm_s": 0.03389260374888181
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 147259392,
+        "process_peak_rss_bytes": 189038592
+      }
+    },
+    "bins100_10000": {
+      "spec": {
+        "name": "bins100_10000",
+        "n": 10000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.0029583850005110435,
+        "estimate_warm_s": 0.0027358325019122276,
+        "render_first_s": 0.0481670312501592,
+        "render_warm_s": 0.031401613750858814
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 146669568,
+        "process_peak_rss_bytes": 188448768
+      }
+    },
+    "clusters100_10000": {
+      "spec": {
+        "name": "clusters100_10000",
+        "n": 10000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 100,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.04854640625126194,
+        "estimate_warm_s": 0.046985676249278185,
+        "render_first_s": 0.052182447500399576,
+        "render_warm_s": 0.03526057374983793
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 148006502,
+        "process_peak_rss_bytes": 188075212
+      }
+    },
+    "clusters_n_10000": {
+      "spec": {
+        "name": "clusters_n_10000",
+        "n": 10000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 10000,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.05036364500028867,
+        "estimate_warm_s": 0.050226093749188294,
+        "render_first_s": 0.048255572498874244,
+        "render_warm_s": 0.03131317750103335
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 149127168,
+        "process_peak_rss_bytes": 189176217
+      }
+    },
+    "groups4_10000": {
+      "spec": {
+        "name": "groups4_10000",
+        "n": 10000,
+        "bins": 20,
+        "groups": 4,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.029691146248751465,
+        "estimate_warm_s": 0.02934400999947684,
+        "render_first_s": 0.11403723999819704,
+        "render_warm_s": 0.09472307250007361
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 148262092,
+        "process_peak_rss_bytes": 189726720
+      }
+    },
+    "groups16_10000": {
+      "spec": {
+        "name": "groups16_10000",
+        "n": 10000,
+        "bins": 20,
+        "groups": 16,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.03776520750079726,
+        "estimate_warm_s": 0.03371119749999707,
+        "render_first_s": 0.36565791624980193,
+        "render_warm_s": 0.3446498962489386
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 148262092,
+        "process_peak_rss_bytes": 198613401
+      }
+    },
+    "controls4_10000": {
+      "spec": {
+        "name": "controls4_10000",
+        "n": 10000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 4,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.00641718750102882,
+        "estimate_warm_s": 0.0054214062492974335,
+        "render_first_s": 0.05347192624867603,
+        "render_warm_s": 0.03560635374924459
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 158741299,
+        "process_peak_rss_bytes": 196372070
+      }
+    },
+    "controls16_10000": {
+      "spec": {
+        "name": "controls16_10000",
+        "n": 10000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 16,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.014388958750259917,
+        "estimate_warm_s": 0.01422921875018801,
+        "render_first_s": 0.055381614999987505,
+        "render_warm_s": 0.03520765625125932
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 183985766,
+        "process_peak_rss_bytes": 219552153
+      }
+    },
+    "default_plot_10000": {
+      "spec": {
+        "name": "default_plot_10000",
+        "n": 10000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "default"
+      },
+      "timings": {
+        "estimate_first_s": 0.002617238751554396,
+        "estimate_warm_s": 0.00240661499901762,
+        "render_first_s": 0.06258656249883643,
+        "render_warm_s": 0.04550989499875868
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 146826854,
+        "process_peak_rss_bytes": 188920627
+      }
+    },
+    "clusters_n_default_10000": {
+      "spec": {
+        "name": "clusters_n_default_10000",
+        "n": 10000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 10000,
+        "layers": "default"
+      },
+      "timings": {
+        "estimate_first_s": 0.0498424474994863,
+        "estimate_warm_s": 0.04946510499848955,
+        "render_first_s": 0.060730988748218806,
+        "render_warm_s": 0.04539724000096612
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 148891238,
+        "process_peak_rss_bytes": 190375526
+      }
+    },
+    "base_100000": {
+      "spec": {
+        "name": "base_100000",
+        "n": 100000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.020945624999058055,
+        "estimate_warm_s": 0.019791406250533328,
+        "render_first_s": 0.1879760424981214,
+        "render_warm_s": 0.03470593749852924
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 161002291,
+        "process_peak_rss_bytes": 200422195
+      }
+    },
+    "bins100_100000": {
+      "spec": {
+        "name": "bins100_100000",
+        "n": 100000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.02203677124953174,
+        "estimate_warm_s": 0.021821927500695892,
+        "render_first_s": 0.0535788025013062,
+        "render_warm_s": 0.03659447874952093
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 160078233,
+        "process_peak_rss_bytes": 199911014
+      }
+    },
+    "clusters100_100000": {
+      "spec": {
+        "name": "clusters100_100000",
+        "n": 100000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 100,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.46297119874907366,
+        "estimate_warm_s": 0.4657825000003868,
+        "render_first_s": 0.05338239624961716,
+        "render_warm_s": 0.03418182249788515
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 172012339,
+        "process_peak_rss_bytes": 211235635
+      }
+    },
+    "clusters_n_100000": {
+      "spec": {
+        "name": "clusters_n_100000",
+        "n": 100000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 100000,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.5087225512511395,
+        "estimate_warm_s": 0.5058465625006647,
+        "render_first_s": 0.05315031250120228,
+        "render_warm_s": 0.034581406250708824
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 213850521,
+        "process_peak_rss_bytes": 241454284
+      }
+    },
+    "groups4_100000": {
+      "spec": {
+        "name": "groups4_100000",
+        "n": 100000,
+        "bins": 20,
+        "groups": 4,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.2751615625015802,
+        "estimate_warm_s": 0.2741194274994996,
+        "render_first_s": 0.11157380250097049,
+        "render_warm_s": 0.0909005724997769
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 168571699,
+        "process_peak_rss_bytes": 211117670
+      }
+    },
+    "groups16_100000": {
+      "spec": {
+        "name": "groups16_100000",
+        "n": 100000,
+        "bins": 20,
+        "groups": 16,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.2804263537495899,
+        "estimate_warm_s": 0.2813259375011512,
+        "render_first_s": 0.36068255250029324,
+        "render_warm_s": 0.33940270750008494
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 170537779,
+        "process_peak_rss_bytes": 218510131
+      }
+    },
+    "controls4_100000": {
+      "spec": {
+        "name": "controls4_100000",
+        "n": 100000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 4,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.051708802500343154,
+        "estimate_warm_s": 0.05090380250067028,
+        "render_first_s": 0.05271854124885067,
+        "render_warm_s": 0.03629333250046329
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 248433868,
+        "process_peak_rss_bytes": 285592780
+      }
+    },
+    "controls16_100000": {
+      "spec": {
+        "name": "controls16_100000",
+        "n": 100000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 16,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.1323247925006399,
+        "estimate_warm_s": 0.12814895874953436,
+        "render_first_s": 0.05370958375124246,
+        "render_warm_s": 0.03756239500035008
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 282702643,
+        "process_peak_rss_bytes": 306236620
+      }
+    },
+    "default_plot_100000": {
+      "spec": {
+        "name": "default_plot_100000",
+        "n": 100000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "default"
+      },
+      "timings": {
+        "estimate_first_s": 0.01875656249922031,
+        "estimate_warm_s": 0.01853322875149388,
+        "render_first_s": 0.059100417499848845,
+        "render_warm_s": 0.04422890625164655
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 159704678,
+        "process_peak_rss_bytes": 198731366
+      }
+    },
+    "clusters_n_default_100000": {
+      "spec": {
+        "name": "clusters_n_default_100000",
+        "n": 100000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 100000,
+        "layers": "default"
+      },
+      "timings": {
+        "estimate_first_s": 0.4993479687504987,
+        "estimate_warm_s": 0.49516187500103115,
+        "render_first_s": 0.06291380125048818,
+        "render_warm_s": 0.046333801249147655
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 206143488,
+        "process_peak_rss_bytes": 234946560
+      }
+    },
+    "base_1000000": {
+      "spec": {
+        "name": "base_1000000",
+        "n": 1000000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.21853849000081027,
+        "estimate_warm_s": 0.23106083250013398,
+        "render_first_s": 0.050116093750602886,
+        "render_warm_s": 0.03369255249936032
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 307396608,
+        "process_peak_rss_bytes": 342923673
+      }
+    },
+    "bins100_1000000": {
+      "spec": {
+        "name": "bins100_1000000",
+        "n": 1000000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.24182427125197137,
+        "estimate_warm_s": 0.2416341675007061,
+        "render_first_s": 0.05189973875076248,
+        "render_warm_s": 0.03614463499843623
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 334390886,
+        "process_peak_rss_bytes": 369858969
+      }
+    },
+    "clusters100_1000000": {
+      "spec": {
+        "name": "clusters100_1000000",
+        "n": 1000000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 100,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 4.997422760000063,
+        "estimate_warm_s": 4.829309218748676,
+        "render_first_s": 0.053690363749865355,
+        "render_warm_s": 0.04029916625086116
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 461045760,
+        "process_peak_rss_bytes": 496199270
+      }
+    },
+    "clusters_n_1000000": {
+      "spec": {
+        "name": "clusters_n_1000000",
+        "n": 1000000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 1000000,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 5.328633697499754,
+        "estimate_warm_s": 5.202288802499879,
+        "render_first_s": 0.06448687500096639,
+        "render_warm_s": 0.04026796874995853
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 697447219,
+        "process_peak_rss_bytes": 697447219
+      }
+    },
+    "groups4_1000000": {
+      "spec": {
+        "name": "groups4_1000000",
+        "n": 1000000,
+        "bins": 20,
+        "groups": 4,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 2.84964536499956,
+        "estimate_warm_s": 2.8354729174998283,
+        "render_first_s": 0.11466927000128635,
+        "render_warm_s": 0.09585775999994439
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 424810905,
+        "process_peak_rss_bytes": 462363033
+      }
+    },
+    "groups16_1000000": {
+      "spec": {
+        "name": "groups16_1000000",
+        "n": 1000000,
+        "bins": 20,
+        "groups": 16,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 2.834415990000707,
+        "estimate_warm_s": 2.831515573750494,
+        "render_first_s": 0.38247958374995505,
+        "render_warm_s": 0.3572997400010536
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 442544947,
+        "process_peak_rss_bytes": 487115980
+      }
+    },
+    "controls4_1000000": {
+      "spec": {
+        "name": "controls4_1000000",
+        "n": 1000000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 4,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 0.5904677087482924,
+        "estimate_warm_s": 0.5372772400005488,
+        "render_first_s": 0.05119572874946243,
+        "render_warm_s": 0.03609328124866806
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 717167001,
+        "process_peak_rss_bytes": 752733388
+      }
+    },
+    "controls16_1000000": {
+      "spec": {
+        "name": "controls16_1000000",
+        "n": 1000000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 16,
+        "clusters": 0,
+        "layers": "summary"
+      },
+      "timings": {
+        "estimate_first_s": 1.5499931249996735,
+        "estimate_warm_s": 1.5483664062503522,
+        "render_first_s": 0.04997947874926467,
+        "render_warm_s": 0.0342116150000038
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 1501534617,
+        "process_peak_rss_bytes": 1501534617
+      }
+    },
+    "default_plot_1000000": {
+      "spec": {
+        "name": "default_plot_1000000",
+        "n": 1000000,
+        "bins": 20,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 0,
+        "layers": "default"
+      },
+      "timings": {
+        "estimate_first_s": 0.2359060412504732,
+        "estimate_warm_s": 0.22441015624963256,
+        "render_first_s": 0.06604333374980342,
+        "render_warm_s": 0.044424062500638684
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 333683097,
+        "process_peak_rss_bytes": 370429132
+      }
+    },
+    "clusters_n_default_1000000": {
+      "spec": {
+        "name": "clusters_n_default_1000000",
+        "n": 1000000,
+        "bins": 100,
+        "groups": 0,
+        "controls": 0,
+        "clusters": 1000000,
+        "layers": "default"
+      },
+      "timings": {
+        "estimate_first_s": 5.073828228751154,
+        "estimate_warm_s": 5.085124218749115,
+        "render_first_s": 0.07325010374870544,
+        "render_warm_s": 0.047289947501667484
+      },
+      "rss_bytes": {
+        "estimate_peak_rss_bytes": 697309593,
+        "process_peak_rss_bytes": 697309593
+      }
+    }
+  },
+  "excluded": []
+}

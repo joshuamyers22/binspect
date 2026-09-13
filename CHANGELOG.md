@@ -23,6 +23,9 @@ intentional default changes.
 - Named control Series in mappings now use row positions consistently with x/y,
   preventing silent pandas index alignment. Named numeric inputs also enforce
   one-dimensional shape validation.
+- Clustered bin inference aggregates occupied bin–cluster pairs, avoiding dense
+  bin-count × cluster-count score/count arrays. CR1 arithmetic, active cluster
+  counts and one-cluster undefined intervals retain their existing contracts.
 - Results own their observations, weights, partitions and nested estimate arrays,
   preventing caller mutation from desynchronizing fits, tables and plots.
 - Diagnostic support excludes retained zero-weight rows and uses effective sample
@@ -80,6 +83,9 @@ intentional default changes.
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- A sequential, resource-guarded workload harness for 10k–1M Polars rows, separate
+  estimation/render timings and peak RSS, numerical comparison and explicit budget
+  proposal/enforcement. Baseline/runner acceptance remains pending.
 - Seven executable Polars-native synthetic examples covering linear/nonlinear means,
   heteroskedasticity, clusters, weights, discrete x and grouped controls. The gallery
   explains misleading interpretations and has a checkout launcher that retains

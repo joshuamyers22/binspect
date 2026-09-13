@@ -21,7 +21,12 @@ for dark backgrounds; these checks do not certify general accessibility.
 **D3 reproducible gallery is implemented; maintainer review/integration pending.**
 See [seven executable synthetic cases](docs/site/guide/gallery.md) and
 [D3 verification](docs/example-gallery-review.md).
-**Next implementation: P1 — workload measurement and limits.** A3 allocates
+**P1 occupied-cluster storage and workload/budget tooling are implemented;
+maintainer baseline/runner acceptance and integration remain pending.** See
+[measurement scope and limits](docs/site/guide/performance.md) and
+[P1 evidence](docs/performance-review.md). Numeric timing budgets are proposals,
+not an accepted CI gate or general capacity guarantee.
+**Next implementation: P2 — dependency configurations.** A3 allocates
 the pending incompatible changes to a proposed 0.2.0 minor release; package version
 and release authorization are unchanged. M2 review/acceptance remains open. The
 roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
@@ -420,3 +425,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | D1 — executable guide and API reference | [Guide](docs/site/index.md), [source-generated reference](docs/site/reference/estimation.md), [verification](docs/user-guide-review.md); `make docs` executes 28 Python blocks and the quickstart, then builds strictly | Implemented on `docs/executable-user-guide`, stacked on A3. Maintainer review/integration and hosting/publication pending; this development site is not a released API claim. Next implementation D2. |
 | 2026-09-12 | D2 — figure exports and baselines | [Visual limits/simulations](docs/site/guide/figure-exports.md), [four-image manifest](tests/baseline/manifest.json), [verification](docs/figure-export-review.md); 19 new export/guard checks and exact local baseline rerenders | Implemented on `test/figure-exports`, stacked on D1. Local inspection records grayscale/color-vision/background limits; dark backgrounds are unsuitable for existing presets. Maintainer visual acceptance/integration and broader accessibility/vector-viewer qualification remain open. Next implementation D3. |
 | 2026-09-12 | D3 — reproducible examples | [Executable gallery](docs/site/guide/gallery.md), [manifest](docs/site/assets/gallery/manifest.json), [verification](docs/example-gallery-review.md); seven fixed synthetic seeds, Polars tables, numerical assertions and retained figures | Implemented on `docs/reproducible-gallery`, stacked on D2. Informative/misleading interpretations and warnings are documented; maintainer review/integration remains pending. Teaching cases are not inference qualification. Next implementation P1. |
+| 2026-09-12 | P1 — occupied-cluster aggregation and workload limits | [Measurement scope](docs/site/guide/performance.md), [experiment and retained evidence](docs/performance-review.md), [harness](validation/performance.py), [budget enforcement](validation/performance_check.py) | Implemented on `perf/cluster-workloads`, stacked on D3. Dense bin-by-cluster storage replaced; guarded 10k–1M measurements and budget proposals prepared for review. Baseline/controlled-runner acceptance and integration remain open; 10M and general capacity are unqualified. Next implementation P2. |
