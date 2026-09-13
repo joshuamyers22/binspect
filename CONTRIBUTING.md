@@ -145,3 +145,13 @@ Generate disposable color/background review sheets with
 
 Open an issue before undertaking a large API or statistical-method change so effort
 is not spent on a design that may not fit the project.
+
+## Maintenance monitoring
+
+The separate [weekly/manual maintenance workflow](.github/workflows/maintenance.yml)
+compares installed code against the existing reference tests with locked/current
+dependencies and retains controlled evidence for Josh Myers's triage. Fresh-current
+checks run there; locked correctness and floor checks remain PR gates. See the
+[maintenance procedure](docs/MAINTENANCE.md) for drift classification, evidence
+retention and recovery. Supported-method numerical divergences block the next
+release until resolved or that method is explicitly withdrawn.

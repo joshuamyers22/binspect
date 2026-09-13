@@ -1,4 +1,4 @@
-.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures benchmark dependencies supply-chain build check
+.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures benchmark dependencies supply-chain maintenance build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -55,5 +55,11 @@ DEPENDENCY_PROFILE ?= minimal
 DEPENDENCY_PYTHON ?= 3.12
 dependencies:
 	uv run --frozen --all-extras python validation/dependencies.py --profile $(DEPENDENCY_PROFILE) --python $(DEPENDENCY_PYTHON) --output .work/dependencies/$(DEPENDENCY_PROFILE)-$(DEPENDENCY_PYTHON).json
+
+# Separate online monitoring; never part of the routine local check gate.
+MAINTENANCE_PROFILE ?= current
+MAINTENANCE_PYTHON ?= 3.12
+maintenance:
+	uv run --isolated --frozen --group build python validation/maintenance.py --profile $(MAINTENANCE_PROFILE) --python $(MAINTENANCE_PYTHON) --output .work/maintenance/$(MAINTENANCE_PROFILE)-$(MAINTENANCE_PYTHON)
 
 check: lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures build

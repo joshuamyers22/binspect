@@ -12,7 +12,7 @@ the proposed 0.2.0 release; the checkout still reports package version 0.1.1.
 
 ## What the checks cover
 
-The dependency CI matrix creates a fresh environment for every row, installs the
+The dependency checks create a fresh environment for every row, installs the
 package noneditably, checks dependency consistency, and runs outside the checkout
 with Python isolation. It exercises weighted and clustered estimates against
 direct calculations, numeric/categorical adjustment, grouped results, Polars
@@ -29,7 +29,13 @@ Missing-extra errors must name `binspect-regression[pandas]` or
 | `lower` | 3.10 | Exact direct runtime minimums; no pandas/binsreg |
 | `lower-pandas` | 3.10 | Exact direct runtime minimums plus pandas 2.0 |
 | `lower-dpi` | 3.10 | Exact direct runtime minimums plus binsreg 3.2.1; transitive dependencies resolve compatibly |
-| `current` | 3.13 | Fresh compatible runtime, pandas and DPI resolution |
+| `current` | 3.13 (weekly/manual maintenance) | Fresh compatible runtime, pandas and DPI resolution |
+
+The nine locked/floor configurations run on PRs. Fresh-current checks run in the
+separate weekly/manual maintenance workflow, alongside current-versus-locked
+statistical references on Python 3.12. Josh Myers owns triage; unresolved numerical
+divergences affecting supported methods block their next release. See the
+[maintenance procedure](https://github.com/joshuamyers22/binspect/blob/main/docs/MAINTENANCE.md).
 
 The floor checker verifies constraints against installed package metadata and
 rejects accidental upgrades of direct minimums. DPI's upstream plotting stack
