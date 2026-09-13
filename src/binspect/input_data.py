@@ -182,7 +182,9 @@ def control_frame(
                     [None if v is None else float(v) for v in cleaned],
                     dtype=pl.Float64,
                 )
-                if numeric and not boolean
+                # Declared numeric categories are identities, not measurements;
+                # float conversion can collapse distinct large integer labels.
+                if numeric and not boolean and name not in dict(categories)
                 else pl.Series(name, cleaned, strict=True)
             )
         if len(item) != n_obs:
