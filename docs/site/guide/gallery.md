@@ -1,7 +1,7 @@
 # Reproducible example gallery
 
 These seven synthetic examples show what binned diagnostics can reveal and what
-the same picture can hide. They describe the 0.2.1 API. Every
+the same picture can hide. They describe the 0.2.2 API. Every
 Python block on this page runs, in order, in the documentation check; each case
 has its own PCG64 seed. No external dataset, download or optional statistical
 backend is needed. The example code and generated synthetic figures use the

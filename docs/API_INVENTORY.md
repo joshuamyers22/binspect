@@ -20,7 +20,7 @@ Regenerate/recheck against runtime signatures when the public surface changes.
 
 `THEMES`, `AdjustedInferenceWarning`, `BinCountWarning`, `BinscatterCollection`, `BinscatterResult`, `BinspectError`, `BinsregError`, `BinsregResult`, `BinsregWarning`, `DiagnosticPolicy`, `InsufficientDataError`, `InvalidBinningError`, `__version__`, `binscatter`, `binsreg`, `compare`, `theme`.
 
-`__version__` currently equals `"0.2.1"`; `THEMES` is lazily loaded.
+`__version__` currently equals `"0.2.2"`; `THEMES` is lazily loaded.
 
 ```text
 binscatter(

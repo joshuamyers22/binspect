@@ -50,6 +50,15 @@ CLASSIFIERS = {
     "MIT License",
     "Python Software Foundation License",
 }
+PUBLISHER_ACTION = "pypa/gh-action-pypi-publish"
+PUBLISHER_COMPATIBILITY = {
+    # Signed v1.14.2 tag; its locked Twine 7.0.0 adds Core Metadata 2.5 support.
+    "dc37677b2e1c63e2034f94d8a5b11f265b73ba33": {
+        "release": "v1.14.2",
+        "twine": "7.0.0",
+        "max_core_metadata": "2.5",
+    }
+}
 
 
 def digest(path):
@@ -457,6 +466,32 @@ def action_pins(root):
     return sorted(set(refs))
 
 
+def publisher_compatibility(refs, metadata_versions):
+    publisher_refs = [ref for ref in refs if ref.startswith(f"{PUBLISHER_ACTION}@")]
+    if len(publisher_refs) != 1:
+        raise ValueError("Expected exactly one reviewed PyPI publisher action")
+    commit = publisher_refs[0].rsplit("@", 1)[1]
+    reviewed = PUBLISHER_COMPATIBILITY.get(commit)
+    if reviewed is None:
+        raise ValueError("PyPI publisher metadata compatibility is unreviewed")
+    maximum = tuple(map(int, reviewed["max_core_metadata"].split(".")))
+    observed = []
+    for version in metadata_versions:
+        if not isinstance(version, str) or not re.fullmatch(r"\d+\.\d+", version):
+            raise ValueError("Artifact Core Metadata version is missing or invalid")
+        parsed = tuple(map(int, version.split(".")))
+        if parsed > maximum:
+            raise ValueError("Artifact metadata exceeds reviewed publisher support")
+        observed.append(version)
+    if not observed:
+        raise ValueError("No artifact metadata versions inspected")
+    return {
+        "action": publisher_refs[0],
+        **reviewed,
+        "artifact_core_metadata": sorted(set(observed)),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -521,8 +556,11 @@ def main():
     with tempfile.TemporaryDirectory(prefix="binspect-supply-chain-") as directory:
         work = Path(directory)
 
+        action_refs = []
+
         def actions():
-            return {"status": "pass", "refs": action_pins(ROOT)}
+            action_refs.extend(action_pins(ROOT))
+            return {"status": "pass", "refs": action_refs}
 
         check("actions", actions)
 
@@ -624,17 +662,29 @@ def main():
                 raise ValueError("Expected exactly one wheel and one sdist")
             command([sys.executable, "-m", "twine", "check", *map(str, artifacts)])
             records = []
+            metadata_versions = []
             for artifact in artifacts:
                 names = extract_artifact(artifact, extracted / artifact.name)
                 version = verify_artifact_source(
                     artifact, extracted / artifact.name, names
                 )
+                metadata_name = next(
+                    name
+                    for name in names
+                    if name.endswith(".dist-info/METADATA")
+                    or (name.count("/") == 1 and name.endswith("/PKG-INFO"))
+                )
+                metadata_version = BytesParser().parsebytes(
+                    (extracted / artifact.name / metadata_name).read_bytes()
+                )["Metadata-Version"]
+                metadata_versions.append(metadata_version)
                 records.append(
                     {
                         "name": artifact.name,
                         "sha256": digest(artifact),
                         "files": len(names),
                         "version": version,
+                        "core_metadata": metadata_version,
                     }
                 )
                 if not args.artifacts:
@@ -648,6 +698,7 @@ def main():
                     n: importlib.metadata.version(n)
                     for n in ("build", "hatchling", "twine")
                 },
+                "publisher": publisher_compatibility(action_refs, metadata_versions),
             }
 
         check("artifacts", artifact_build)

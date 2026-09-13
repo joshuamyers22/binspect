@@ -7,8 +7,8 @@ result tables. Native estimation and plotting work without pandas or binsreg.
 The declared runtime minimums are NumPy 1.24, Polars 1.0, SciPy 1.10 and
 Matplotlib 3.7. The `[pandas]` extra requires pandas 2.0. The `[dpi]` extra now
 requires binsreg 3.2.1: binsreg 1.0 installed successfully but rejected the function
-adapter's confidence-interval request. This is the dependency contract for release
-0.2.0; the recovery checkout reports package version 0.2.1.
+adapter's confidence-interval request. This is the dependency contract for the 0.2
+series; the recovery checkout reports package version 0.2.2.
 
 ## What the checks cover
 

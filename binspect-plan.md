@@ -1,8 +1,8 @@
 # binspect — production project plan
 
-Updated 2026-09-13 after the v0.2.0 release run: `main` and the preserved public tag
-point to `b36392b92b0f088bae7c96fafe97640b6a2648c9`. PyPI publication did not occur;
-the recovery branch declares `0.2.1`.
+Updated 2026-09-13 after the v0.2.1 release run: the preserved public tag points to
+`62854b83e0eb0048d53ab5a7f8bafcaf9b58ba76`. PyPI publication did not occur;
+the recovery branch declares `0.2.2`.
 Historical verification records retain their review-time status; this observation
 supersedes pending-integration labels, not independent acceptance requirements.
 
@@ -34,16 +34,19 @@ and distribution/profile scope for all six accepted decisions. The acceptance do
 not change dependencies, authorize broader redistribution or waive future audits.
 
 **R2 stopped safely and patch recovery is active.** The
-[0.2.0 record](docs/releases/0.2.0-readiness.md) retains the failed run and exact
-signed pair; the [0.2.1 record](docs/releases/0.2.1-readiness.md) owns recovery. A bounded
+[0.2.0 record](docs/releases/0.2.0-readiness.md) and
+[0.2.1 record](docs/releases/0.2.1-readiness.md) retain both failed runs and exact
+signed pairs; the [0.2.2 record](docs/releases/0.2.2-readiness.md) owns recovery. A bounded
 [R2 renderer repair](docs/release-readiness-review.md) obtains the existing Python
 3.12.14 pin through uv while preserving all image/renderer guards; its local and
 CI comparisons pass at RMS 0.0. The authorized v0.2.0 workflow built, installed,
 audited and signed its exact pair, then GitHub CLI 2.98 rejected redundant mutually
 exclusive actor-identity selectors; publish was skipped. Recovery removes only the
 redundant selector while preserving exact certificate/repository/tag/commit/run policy.
-Version 0.2.1 requires regression, full CI/audit, a new immutable tag and explicit
-publication authorization before protected-environment review.
+The v0.2.1 recovery passed those gates but its pinned publisher rejected valid Core
+Metadata 2.5 before upload. Version 0.2.2 pins the signed PyPA v1.14.2 repair and
+requires regression, full CI/audit, a new immutable tag and explicit publication
+authorization before protected-environment review.
 
 C3 final assessment and qualified statistical acceptance remain open. The
 [adjusted FWL uncertainty withdrawal](docs/adjusted-inference-boundary-review.md)
