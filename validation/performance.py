@@ -184,7 +184,7 @@ def trial(spec, directory):
                 )
                 if probe.returncode == 0 and probe.stdout.strip():
                     sampled_peak = max(sampled_peak, int(probe.stdout.strip()) * 1024)
-                elif child.poll() is None and probe.returncode != 1:
+                elif child.poll() is None:
                     raise RuntimeError("RSS monitor unavailable; no unguarded trial.")
                 if sampled_peak > RSS_LIMIT:
                     reason = "rss_limit"
