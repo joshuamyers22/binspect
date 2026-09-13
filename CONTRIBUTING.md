@@ -103,7 +103,7 @@ binsreg, including degree-0 few-cluster fallback. Assessment seeds remain reserv
 
 Run `make supply-chain` for the separate online advisory/license/history/artifact
 gate. It uses isolated locked tooling and fails on unavailable evidence or
-unapproved findings. See [scope and pending license reviews](docs/SUPPLY_CHAIN.md).
+unapproved findings. See [scope and license review records](docs/SUPPLY_CHAIN.md).
 Dependency updates must regenerate `uv.lock` and rerun `make check`, affected P2
 profiles and this audit; CI rejects stale locks and retains numerical drift gates.
 

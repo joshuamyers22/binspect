@@ -1,9 +1,10 @@
 # P3 — supply-chain and secret checks
 
-- Owner: Josh Myers; implementer: Codex; maintainer acceptance pending.
+- Owner/reviewer: Josh Myers; implementer: Codex; integration pending.
 - Baseline: P2 `54b197d`, draft PR #23; 2026-09-12 local date.
 - Branch: `security/supply-chain-checks`; implementation locally verified.
-- Gate result: **fail**, solely because six license reviews remain pending.
+- Current gate result: **pass** after the six exact license scopes were accepted
+  by Josh Myers on 2026-09-13.
 
 ## Contract before iteration
 
@@ -83,18 +84,17 @@ retention. The scanner canary is generated at runtime and carries no authority.
 
 ## License disposition
 
-See [the six concrete decisions and primary sources](SUPPLY_CHAIN.md#six-pending-license-decisions)
-and [the pending registry](../validation/supply-chain-exceptions.json). Owner:
-Josh Myers; review expiry: 2026-10-13. Reviewers and approval dates are deliberately
-empty. GPL/MPL/mixed metadata is a reason to review obligations and the actual
-distribution/integration scope, not an automatic incompatibility finding. The
-project remains MIT. No dependency was removed or relicensed to evade this review.
+See [the six concrete decisions and primary sources](SUPPLY_CHAIN.md#six-approved-scoped-license-decisions)
+and [the approval registry](../validation/supply-chain-exceptions.json). Owner and
+reviewer: Josh Myers; reviewed 2026-09-13; review expiry: 2026-10-13. The approvals
+cover the documented separately installed, non-bundled PyPI scope. Changed versions,
+broader redistribution or expiry require renewed review and applicable GPL/MPL or
+file-specific notice/source obligations. The project remains MIT. No dependency was
+removed or relicensed to evade this review.
 
 ## Disposition
 
-P3 implementation is prepared for maintainer review and stacked on P2. Its
-acceptance/release gate remains blocked by the six license reviews; no exception,
-independent risk acceptance or publication authorization is supplied by the agent.
-Other local checks pass. Remote CI and repository settings remain separate
-evidence. R1 nonpublishing artifact/workflow qualification is the next
-implementation item; it cannot turn pending P3 reviews into release approval.
+P3 implementation and its scoped license review are prepared for integration. A
+fresh local online gate passes all six stages after the maintainer decision. This
+does not authorize publication or broaden the recorded scope. Exact pushed-head CI,
+repository controls and R1/R2 release-specific evidence remain separate gates.

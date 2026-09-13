@@ -1,6 +1,6 @@
 # P3 — exact-artifact license review preparation
 
-Owner: Josh Myers. Implementer: Codex. License decisions remain pending.
+Owner/reviewer: Josh Myers. Implementer: Codex. License scopes accepted 2026-09-13.
 Baseline: `af4972c`, draft #28. Branch: `docs/license-review-dossier`.
 
 ## Contract before iteration
@@ -56,6 +56,8 @@ committed scanner pin. No scanner exclusion was added.
 
 Only documentation/evidence changed. No source/workflow changed;
 the full software gate is not rerun or claimed passed for this documentation slice.
-All six registry decisions remain pending, with unchanged empty reviewer/date
-fields. The dossier gives each reviewer a concrete scope question and disposition
-choices; no license, dependency, version, repository setting or approval changed.
+The original dossier preparation left all six decisions pending. On 2026-09-13,
+Josh Myers accepted the exact separately installed, non-bundled scopes recorded in
+the registry through 2026-10-13. Broader redistribution, changed versions/artifacts
+or expiry require renewed review. No dependency, scanner exception or project
+license was changed, and this scoped acceptance is not release authorization.

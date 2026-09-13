@@ -6,73 +6,73 @@
       "package": "binsreg",
       "version": "3.2.1",
       "id": "license-review",
-      "status": "pending",
+      "status": "approved",
       "owner": "Josh Myers",
-      "reviewer": "",
-      "reviewed_at": "",
+      "reviewer": "Josh Myers",
+      "reviewed_at": "2026-09-13",
       "expires": "2026-10-13",
-      "rationale": "Optional DPI backend reports GPL-3.0-only. Review combined-use and redistribution obligations while retaining the project MIT license. No backend files are bundled in binspect distributions. Pending review does not waive the gate.",
-      "evidence": "https://pypi.org/pypi/binsreg/3.2.1/json"
+      "rationale": "Accepted for the reviewed PyPI scope: binsreg is a separately installed optional DPI backend and no backend files are bundled in binspect distributions. Retain binspect's MIT license; any redistribution of binsreg or a combined environment must preserve applicable GPL license/source obligations and requires renewed review.",
+      "evidence": "docs/LICENSE_REVIEW_DOSSIER.md#binsreg-321; docs/evidence/license-dossier-2026-09-12.json"
     },
     {
       "package": "certifi",
       "version": "2026.7.22",
       "id": "license-review",
-      "status": "pending",
+      "status": "approved",
       "owner": "Josh Myers",
-      "reviewer": "",
-      "reviewed_at": "",
+      "reviewer": "Josh Myers",
+      "reviewed_at": "2026-09-13",
       "expires": "2026-10-13",
-      "rationale": "MPL-2.0 certificate bundle is an HTTP tooling dependency; review redistribution/source notice obligations. Pending review does not waive the gate.",
-      "evidence": "https://pypi.org/pypi/certifi/2026.7.22/json"
+      "rationale": "Accepted for the reviewed PyPI scope: certifi is separately installed through docs/build/audit tooling and its covered files are not bundled in binspect distributions. Any redistribution of the certificate bundle, environment, cache or image must retain applicable MPL notice/source availability and requires renewed review.",
+      "evidence": "docs/LICENSE_REVIEW_DOSSIER.md#certifi-2026722; docs/evidence/license-dossier-2026-09-12.json"
     },
     {
       "package": "docutils",
       "version": "0.23",
       "id": "license-review",
-      "status": "pending",
+      "status": "approved",
       "owner": "Josh Myers",
-      "reviewer": "",
-      "reviewed_at": "",
+      "reviewer": "Josh Myers",
+      "reviewed_at": "2026-09-13",
       "expires": "2026-10-13",
-      "rationale": "Twine/readme-renderer build tooling has public-domain, BSD and GPL metadata; review its COPYING file and which files are redistributed. Pending review does not waive the gate.",
-      "evidence": "https://pypi.org/pypi/docutils/0.23/json"
+      "rationale": "Accepted for the reviewed PyPI scope: Docutils is separately installed through Twine/readme-renderer and no Docutils files are bundled in binspect distributions. The GPL Emacs helper is sdist-only in the inspected pair; redistributing Docutils artifacts or tooling environments must retain file-specific notices and obligations and requires renewed review.",
+      "evidence": "docs/LICENSE_REVIEW_DOSSIER.md#docutils-023; docs/evidence/license-dossier-2026-09-12.json"
     },
     {
       "package": "fqdn",
       "version": "1.5.1",
       "id": "license-review",
-      "status": "pending",
+      "status": "approved",
       "owner": "Josh Myers",
-      "reviewer": "",
-      "reviewed_at": "",
+      "reviewer": "Josh Myers",
+      "reviewed_at": "2026-09-13",
       "expires": "2026-10-13",
-      "rationale": "MPL-2.0 package is used by audit schema validation; review tooling distribution scope. Pending review does not waive the gate.",
-      "evidence": "https://pypi.org/pypi/fqdn/1.5.1/json"
+      "rationale": "Accepted for the reviewed PyPI scope: fqdn is separately installed only for audit schema validation and is not bundled in binspect distributions. Prefer the inspected wheel when retaining tooling; redistribution, especially of the notice-incomplete sdist, requires renewed source/notice review.",
+      "evidence": "docs/LICENSE_REVIEW_DOSSIER.md#fqdn-151; docs/evidence/license-dossier-2026-09-12.json"
     },
     {
       "package": "hypothesis",
       "version": "6.165.10",
       "id": "license-review",
-      "status": "pending",
+      "status": "approved",
       "owner": "Josh Myers",
-      "reviewer": "",
-      "reviewed_at": "",
+      "reviewer": "Josh Myers",
+      "reviewed_at": "2026-09-13",
       "expires": "2026-10-13",
-      "rationale": "MPL-2.0 development test dependency; review tooling distribution scope. Pending review does not waive the gate.",
-      "evidence": "https://pypi.org/pypi/hypothesis/6.165.10/json"
+      "rationale": "Accepted for the reviewed PyPI scope: Hypothesis is a separately installed development-test dependency and no Hypothesis files or test environment are bundled in binspect distributions. Any redistributed test environment must retain applicable MPL and file-specific third-party notices and requires renewed artifact review.",
+      "evidence": "docs/LICENSE_REVIEW_DOSSIER.md#hypothesis-616510; docs/evidence/license-dossier-2026-09-12.json"
     },
     {
       "package": "pathspec",
       "version": "1.1.1",
       "id": "license-review",
-      "status": "pending",
+      "status": "approved",
       "owner": "Josh Myers",
-      "reviewer": "",
-      "reviewed_at": "",
+      "reviewer": "Josh Myers",
+      "reviewed_at": "2026-09-13",
       "expires": "2026-10-13",
-      "rationale": "MPL-2.0 build/development dependency; review source notices and tooling distribution scope. Pending review does not waive the gate.",
-      "evidence": "https://pypi.org/pypi/pathspec/1.1.1/json"
+      "rationale": "Accepted for the reviewed PyPI scope: pathspec is separately installed through build/dev/docs tooling and is not bundled in binspect distributions. Any redistribution of its covered files or a tooling environment must retain applicable MPL notice/source availability and requires renewed review.",
+      "evidence": "docs/LICENSE_REVIEW_DOSSIER.md#pathspec-111; docs/evidence/license-dossier-2026-09-12.json"
     }
   ]
 }

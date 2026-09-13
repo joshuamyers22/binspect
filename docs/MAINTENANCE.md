@@ -146,6 +146,6 @@ published fixed release. Those need explicit authorization and release-specific
 operator evidence before closing the corresponding readiness item.
 
 See [R3 implementation/evidence](maintenance-recovery-review.md). Josh owns the
-remaining license reviews, actual branch/PyPI controls, publisher mapping and the
+license review expiry/scope, actual branch/PyPI controls, publisher mapping and the
 unavailable pinned CI figure renderer from R1. Recovery preparation does not waive
 those gates or authorize R2 publication.

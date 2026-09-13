@@ -109,3 +109,9 @@ on exact fix commit `efb6e34` has 34 passing jobs, including the strengthened
 artifact build and all 12 install jobs; supply-chain again fails only at licensing
 while its other five checks pass. This follow-up hardens implementation readiness
 but does not supply license, integration or release acceptance.
+
+Josh Myers subsequently accepted the six exact separately installed/non-bundled
+license scopes on 2026-09-13 through 2026-10-13. A fresh online supply-chain run
+passes all six stages, including the strengthened artifact verifier. This removes
+the P3 license blocker but does not supply candidate-specific artifact/provenance,
+publisher-control or release approval.

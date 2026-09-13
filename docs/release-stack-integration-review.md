@@ -98,3 +98,17 @@ actions, vulnerability, artifact, secret and SBOM checks pass, and only the six
 license entries fail. Main remains unprotected as of the read-only GitHub query;
 that does not justify bypassing the fail-closed license gate. Integration and all
 owner-held acceptance decisions remain pending.
+
+## 2026-09-13 maintainer license decision
+
+Josh Myers explicitly accepted all six exact license records after reviewing the
+pending list and dossier-backed scope. The registry now identifies Josh as reviewer
+on 2026-09-13 and limits each approval to separately installed dependencies that
+are not bundled in binspect wheel/sdist files, with applicable GPL/MPL/file-specific
+obligations for any broader redistribution. All six approvals expire 2026-10-13;
+changed versions, artifacts or distribution scope require renewed review.
+
+A fresh online `make supply-chain` run passes actions, all locked-version advisory
+checks, licenses, strengthened artifact identity, all secret scopes and CycloneDX
+validation. Exact pushed-head CI and main integration remain pending. This decision
+closes the license blocker only; it does not select or authorize a release.

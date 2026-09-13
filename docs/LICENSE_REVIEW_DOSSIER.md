@@ -1,8 +1,11 @@
 # Six license decisions: exact artifacts and distribution scope
 
-Prepared for Josh Myers; **all six decisions remain pending** in the
+Prepared for Josh Myers; **all six exact-version scopes were accepted by Josh
+Myers on 2026-09-13** in the
 [registry](../validation/supply-chain-exceptions.json), with review expiry
-2026-10-13. This dossier supplies evidence for those decisions, not approval.
+2026-10-13. This dossier supplies the artifact evidence and accepted scope. The
+approvals do not authorize broader dependency-environment redistribution or a
+binspect release.
 The [verification record](license-dossier-review.md) defines its bounded scope.
 
 ## What the inspected binspect artifacts distribute
@@ -37,7 +40,7 @@ Consequently, describing certifi, hypothesis or pathspec as *only internal tooli
 would miss an advertised installation path. Conversely, dependency declarations
 are not evidence that those upstream packages are embedded in binspect's archives.
 
-## Package evidence and decisions to record
+## Package evidence and accepted decisions
 
 One wheel and the source archive were hash-checked against `uv.lock` for each
 package. Five wheels are universal Python wheels. Hypothesis has 80 locked wheel
@@ -53,11 +56,10 @@ full license; package metadata says `GPL-3.0-only`. The notice is 459 bytes, not
 a bundled copy of the complete GPL. See the [versioned metadata](https://pypi.org/pypi/binsreg/3.2.1/json)
 and exact archive/member hashes in the evidence.
 
-**Decision needed:** review the advertised DPI/function integration and combined
-use, any redistribution of the backend, and the required license/source notices.
-Retaining binspect's MIT license and keeping the backend optional do not by
-themselves answer those questions. Record the accepted scope and obligations,
-or identify a scope change and the affected API/dependency qualification work.
+**Accepted 2026-09-13:** use as a separately installed optional DPI/function
+backend; no binsreg files are bundled in binspect artifacts. Binspect retains its
+MIT license. Any redistribution of binsreg or a combined environment must preserve
+applicable GPL license/source obligations and receive renewed review.
 
 ### certifi 2026.7.22
 
@@ -67,11 +69,12 @@ with a license link rather than the full MPL text. Its current binspect paths ar
 the advertised docs extra and separate build/audit groups; the inspected binspect
 archives do not carry a `certifi` package directory.
 
-**Decision needed:** distinguish generating documentation from distributing a
-documentation environment, cache, image or certificate bundle. Record the source
-and notice arrangements for any redistributed covered files. Use the actual
+**Accepted 2026-09-13:** use as a separately installed docs/build/audit dependency;
+no certifi files are bundled in binspect artifacts. Any redistribution of the
+certificate bundle, environment, cache or image must retain applicable MPL
+notice/source availability under
 [MPL sections 3.1–3.4](https://www.mozilla.org/en-US/MPL/2.0/#3-responsibilities)
-when evaluating the proposed scope.
+and receive renewed review.
 
 ### docutils 0.23
 
@@ -84,11 +87,12 @@ classifying every Docutils file as GPL or treating the source archive as the whe
 The [current upstream copying page](https://docutils.sourceforge.io/COPYING.html)
 is context; the hash-identified packaged document owns this version's evidence.
 
-**Decision needed:** identify which Docutils artifact and files, if any, are
-redistributed in the release tooling, and how their respective notices are retained.
-Twine's rendering path is distinct from distributing the source tree and its
-editor helper. Six sdist stylesheet symlinks were inventoried without extraction
-or following links; they do not affect the inspected regular license members.
+**Accepted 2026-09-13:** use as separately installed Twine/readme-renderer tooling;
+no Docutils files are bundled in binspect artifacts. The GPL Emacs helper remains
+sdist-only in the inspected pair. Redistributing Docutils artifacts or environments
+must retain the applicable file-specific terms/notices and receive renewed review.
+Six sdist stylesheet symlinks were inventoried without extraction or following
+links; they do not affect the inspected regular license members.
 
 ### fqdn 1.5.1
 
@@ -98,10 +102,10 @@ The exact sdist has no `LICENSE`, `COPYING` or `NOTICE` file; its metadata and
 license file was inserted into the archive, and no upstream approval was assumed.
 The dependency is reached through the audit group's schema-validation extra.
 
-**Decision needed:** review source/notice availability for the tooling artifact
-actually selected, including whether the incomplete sdist notice packaging needs
-upstream clarification or a reviewed installation/distribution restriction.
-Do not substitute the wheel's contents for a source-archive inspection.
+**Accepted 2026-09-13:** use only as separately installed audit tooling; no fqdn
+files are bundled in binspect artifacts. Prefer the inspected wheel when retaining
+tooling. Redistribution, especially of the notice-incomplete sdist, requires
+renewed source/notice review; do not substitute wheel contents for sdist evidence.
 
 ### hypothesis 6.165.10
 
@@ -111,10 +115,10 @@ third-party exceptions; wheel metadata declares MPL-2.0. The selected wheel is
 platform-specific. This inventory does not establish the license composition of
 every native wheel or all third-party code noted by the project.
 
-**Decision needed:** review the advertised dev extra and any distributed test
-environment, selecting the actual platform artifacts and checking relevant
-file-specific notices. Record covered-source/notice arrangements for any
-redistribution; retain the distinction between running tests and shipping tooling.
+**Accepted 2026-09-13:** use as a separately installed development-test dependency;
+no Hypothesis files or test environment are bundled in binspect artifacts. Any
+redistributed test environment must retain applicable MPL and file-specific
+third-party notices and receive renewed artifact review.
 
 ### pathspec 1.1.1
 
@@ -122,31 +126,32 @@ Both archives carry an identical 16,726-byte MPL 2.0 `LICENSE`. The locked paths
 include advertised dev/docs extras and Hatchling's build environment. A build
 dependency is not automatically embedded in the resulting binspect wheel.
 
-**Decision needed:** record which build/dev/docs environments or upstream files
-are distributed, applicable source/notice arrangements, and the review boundary
-for dependency updates. The presence of the complete license does not itself
-complete the project's distribution-scope review.
+**Accepted 2026-09-13:** use as separately installed build/dev/docs tooling; no
+pathspec files are bundled in binspect artifacts. Any redistribution of covered
+files or tooling environments must retain applicable MPL notice/source availability
+and receive renewed review.
 
 Mozilla's [FAQ](https://www.mozilla.org/en-US/MPL/2.0/FAQ/) distinguishes use from
 distribution and explains its file-based license scope. The exact license and
 selected artifacts remain the inputs to a scoped decision; this dossier makes no
 blanket compatibility finding for these packages.
 
-## Record the actual decisions
+## Recorded maintainer decision
 
-For **each** package, the reviewer should choose and explain one disposition:
+For **each** package, Josh Myers accepted the explicitly described, separately
+installed scope on 2026-09-13 through the 2026-10-13 review expiry. The accepted
+obligations are:
 
-- Accept the explicitly described scope, recording applicable obligations and
-  evidence showing how they are met.
-- Change the dependency/distribution scope, then requalify the affected artifacts,
-  advertised extras, documentation and numerical behavior before acceptance.
-- Defer for identified missing evidence or specialist review; keep the gate blocked.
+- binspect wheel/sdist files do not bundle these dependency packages;
+- upstream licenses and notices remain attached to separately installed artifacts;
+- redistribution of dependency artifacts, caches, images or complete environments
+  must meet applicable GPL/MPL/file-specific notice and source obligations; and
+- version, artifact, distribution-scope or expiry changes require renewed review.
 
-Record the actual reviewer, review date, scope, rationale, evidence and expiry in
-the existing registry when the decision is made. All approval fields remain empty
-in this change. A broad version-level exception must state which artifacts and
-environments it covers; this twelve-archive inventory does not inspect every wheel.
-No notice, dependency, scanner exclusion or project license was changed to pass CI.
+The registry records the reviewer, review date, scope, rationale, evidence and
+expiry. These are scoped approvals, not a broad finding across every wheel or
+future version; this twelve-archive inventory does not inspect every wheel. No
+notice, dependency, scanner exclusion or project license was changed to pass CI.
 
 ## Reproduce the evidence
 

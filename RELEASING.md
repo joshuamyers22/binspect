@@ -30,8 +30,9 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
    allocation still requires acceptance and release qualification.
 3. Run the checks documented in `CONTRIBUTING.md` and inspect both distributions.
    Require a fresh passing [supply-chain report](docs/SUPPLY_CHAIN.md) for their
-   exact digests. Six license reviews currently block that gate; pending registry
-   entries are not approvals. The workflow builds with locked tools, audits the
+   exact digests. Six exact license scopes were accepted on 2026-09-13; those
+   registry approvals are version/scope-limited and are not release approval. The
+   workflow builds with locked tools, audits the
    same qualified artifact pair, retains controlled evidence, and only then hands
    those distributions to the publisher. See the nonpublishing qualification path
    below; actual repository controls and Trusted Publisher acceptance remain open.

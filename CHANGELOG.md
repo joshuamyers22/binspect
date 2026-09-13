@@ -23,8 +23,9 @@ intentional default changes.
   baseline images remain intact.
 - Build/audit tooling is locked, the publisher action is pinned, and a required
   supply-chain gate checks all locked versions, licenses, available Git history,
-  actual distributions and a validated CycloneDX SBOM. Six license decisions
-  remain pending and block that gate; no release acceptance is claimed.
+  actual distributions and a validated CycloneDX SBOM. Six exact dependency-license
+  scopes were accepted by Josh Myers on 2026-09-13 with a 2026-10-13 re-review
+  expiry; this does not itself authorize a release.
 - The DPI extra now requires binsreg ≥3.2.1. The previous 1.0 minimum installed
   but rejected the function adapter's confidence-interval request. Separate CI
   jobs exercise minimal, DPI, locked, direct minimum and current dependencies,

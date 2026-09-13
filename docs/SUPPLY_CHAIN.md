@@ -1,9 +1,11 @@
 # Supply-chain checks and license review
 
-P3 adds a blocking `make supply-chain` gate. It is implemented for review, but its
-current result is **fail: six license decisions remain pending**. This is not a
-finding that these licenses are incompatible with binspect; it means this project
-has not recorded the required scope/obligation review. The project remains MIT,
+P3 adds a blocking `make supply-chain` gate. Josh Myers accepted the six exact,
+scoped license decisions on 2026-09-13; the resulting local gate passes. The
+approvals apply to the documented PyPI scope in which dependencies are installed
+separately and are not bundled in binspect distributions. They are not blanket
+compatibility findings or permission to redistribute dependency environments
+without their applicable notice/source obligations. The project remains MIT,
 Polars remains native/default, and pandas compatibility remains available.
 
 ## Run and inspect
@@ -53,28 +55,30 @@ Full-history scope is all refs available in the checkout, not deleted remote ref
 or unreachable objects. CI fetches complete history; repository settings and
 private reporting remain the separately recorded governance work.
 
-## Six pending license decisions
+## Six approved scoped license decisions
 
 [The exception registry](../validation/supply-chain-exceptions.json) records exact
-package/version, owner Josh Myers, rationale, evidence and a 2026-10-13 review
-expiry. All six entries are `pending`, with no reviewer/date invented. They do
-not waive the gate.
+package/version, owner and reviewer Josh Myers, 2026-09-13 review date, rationale,
+evidence and a 2026-10-13 review expiry. All six entries are `approved` for the
+scope below. Changed versions, expired entries or broader redistribution still
+fail or require renewed review.
 
 The [exact-artifact review dossier](LICENSE_REVIEW_DOSSIER.md) now supplies twelve
 locked upstream archive identities, packaged notice hashes, eight dependency
 profile exports and the inspected binspect distribution scope. In particular,
 dev/docs are advertised extras; Docutils' source archive contains a GPL editor
 helper absent from its wheel; fqdn's source archive omits the wheel's license file.
-These observations narrow the review questions without approving any exception.
+These observations supplied the artifact-specific basis for the scoped approvals;
+they do not support a blanket finding for other artifacts or distribution models.
 
-| Package/version | Observed terms / scope needing review |
+| Package/version | Observed terms / accepted scope |
 |---|---|
-| binsreg 3.2.1 | [GPL-3.0-only metadata](https://pypi.org/pypi/binsreg/3.2.1/json); optional DPI/function backend. Review combined-use and redistribution obligations for the advertised extra while retaining the project MIT license. |
-| certifi 2026.7.22 | MPL-2.0 certificate bundle in HTTP tooling. |
-| fqdn 1.5.1 | MPL-2.0 audit/schema-validation dependency. |
-| hypothesis 6.165.10 | MPL-2.0 development test dependency. |
-| pathspec 1.1.1 | MPL-2.0 build/development dependency. |
-| docutils 0.23 | Mixed public-domain/BSD/GPL metadata in Twine's rendering dependency. Its [COPYING document](https://docutils.sourceforge.io/COPYING.html) distinguishes file-specific exceptions, including the GPL Emacs helper. |
+| binsreg 3.2.1 | [GPL-3.0-only metadata](https://pypi.org/pypi/binsreg/3.2.1/json); accepted as a separately installed optional DPI/function backend. No backend files are bundled. Redistributed combined environments must preserve applicable GPL license/source obligations and be reviewed again. |
+| certifi 2026.7.22 | MPL-2.0 certificate bundle accepted as a separately installed docs/build/audit dependency. Redistributing its covered files, an environment, cache or image requires applicable MPL notice/source availability and renewed review. |
+| fqdn 1.5.1 | MPL-2.0 audit/schema-validation dependency accepted only as separately installed tooling. Prefer the inspected wheel; redistribution, particularly of the notice-incomplete sdist, requires renewed review. |
+| hypothesis 6.165.10 | MPL-2.0 development test dependency accepted as separately installed tooling. A redistributed test environment must retain applicable MPL and third-party notices and be reviewed again. |
+| pathspec 1.1.1 | MPL-2.0 build/development/docs dependency accepted as separately installed tooling. Redistributing covered files or environments requires applicable MPL notice/source availability and renewed review. |
+| docutils 0.23 | Mixed public-domain/BSD/GPL metadata in Twine's rendering dependency, accepted as separately installed build tooling. Its [COPYING document](https://docutils.sourceforge.io/COPYING.html) distinguishes file-specific terms; the GPL Emacs helper is sdist-only in the inspected pair. Redistributing Docutils artifacts/environments requires retaining the applicable file-specific terms and renewed review. |
 
 Mozilla describes MPL as [file-level copyleft](https://www.mozilla.org/en-US/MPL/2.0/FAQ/)
 with distribution obligations. These entries call for scope review; no dependency
@@ -91,9 +95,8 @@ rather than waiving a license finding.
 
 A vulnerability or license exception only applies when exact package/version/finding
 match, status is `approved`, owner/reviewer/rationale/evidence are populated, and
-review/expiry dates include the check date. Approval is a maintainer record, not
-a value the implementing agent supplies. Expired or pending entries block the
-gate. The current vulnerability exception list is empty.
+review/expiry dates include the check date. Approval is a maintainer record. Expired
+or pending entries block the gate. The current vulnerability exception list is empty.
 
 ## Reviewed scanner false positives
 
