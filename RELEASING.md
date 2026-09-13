@@ -26,8 +26,9 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
 1. Complete the readiness record and obtain release authorization; ensure CI passes
    on the exact `main` commit and the working tree is clean.
 2. Set the chosen release version in `__version__` and update `CHANGELOG.md`.
-   The 2026-09-13 candidate uses 0.2.0; every later release must select and qualify
-   its own version and exact commit.
+   The v0.2.0 workflow stopped before PyPI publication because GitHub CLI 2.98
+   rejected redundant actor-identity selectors. The recovery candidate uses 0.2.1;
+   never move/reuse the public v0.2.0 tag or its artifact filenames.
 3. Run the checks documented in `CONTRIBUTING.md` and inspect both distributions.
    Require a fresh passing [supply-chain report](docs/SUPPLY_CHAIN.md) for their
    exact digests. Six exact license scopes were accepted on 2026-09-13; those

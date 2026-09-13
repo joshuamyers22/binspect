@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-09-13
+
+### Fixed
+
+- Restore release provenance verification with GitHub CLI 2.98 by using its
+  mutually exclusive exact certificate-identity selector. Repository, workflow/tag
+  certificate, source/signer commit, trigger, run attempt, artifact subjects and
+  GitHub-hosted runner checks remain enforced. The v0.2.0 workflow stopped before
+  PyPI publication; this patch release uses a new version and artifact filenames.
+
 ## [0.2.0] - 2026-09-13
 
 ### Release scope

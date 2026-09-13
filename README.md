@@ -7,7 +7,7 @@ the underlying observations. The bin means are the fitted values from the satura
 model `OLS(y ~ C(bin))`. Their weighted deviations from the line provide a descriptive
 linear specification diagnostic.
 
-Version 0.2.0 is **Polars-native**, with pandas input compatibility.
+Version 0.2.1 is **Polars-native**, with pandas input compatibility.
 Result tables are Polars DataFrames; use `result.to_pandas()` for an explicit
 pandas projection. NumPy/SciPy handle numerical estimation. See the
 [input and export contract](docs/INPUT_OUTPUT_CONTRACT.md) and
@@ -355,7 +355,7 @@ area or length does not equal the weighted squared gap.
 
 ## Status
 
-Package version is `0.2.0`. This minor release makes Polars tables, versioned exports,
+Package version is `0.2.1`. The 0.2 series makes Polars tables, versioned exports,
 result ownership changes and the optional function adapter available to callers. See the
 [compatibility policy](docs/COMPATIBILITY.md) for supported options and migration.
 The distribution name is `binspect-regression`; the import remains `binspect`.
