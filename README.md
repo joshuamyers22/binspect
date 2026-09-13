@@ -19,6 +19,12 @@ Run `uv sync --frozen --all-extras` and `make docs` to execute examples and buil
 the site, then `uv run --frozen --all-extras mkdocs serve` to preview it locally.
 The site is prepared for review; hosting/publication is not configured by this work.
 
+The [reproducible gallery](docs/site/guide/gallery.md) includes seven seeded Polars
+examples: linear, nonlinear, heteroskedastic, clustered, weighted, discrete x and
+grouped controls, each explaining useful and misleading interpretations. Run
+`uv run --frozen --all-extras python examples/gallery.py --output .work/gallery`
+to retain figures and a manifest of seeds, versions and source/result hashes.
+
 ![binspect](docs/hero.png)
 
 ```python
