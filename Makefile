@@ -1,4 +1,4 @@
-.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures benchmark build check
+.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures benchmark dependencies build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -45,5 +45,11 @@ figures:
 # Run separately on the recorded host; shared CI is not an accepted timing runner.
 benchmark:
 	uv run --frozen --all-extras python validation/performance.py
+
+# Fresh resolution needs network access; CI runs each configuration separately.
+DEPENDENCY_PROFILE ?= minimal
+DEPENDENCY_PYTHON ?= 3.12
+dependencies:
+	uv run --frozen --all-extras python validation/dependencies.py --profile $(DEPENDENCY_PROFILE) --python $(DEPENDENCY_PYTHON) --output .work/dependencies/$(DEPENDENCY_PROFILE)-$(DEPENDENCY_PYTHON).json
 
 check: lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures build

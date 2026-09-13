@@ -156,7 +156,7 @@ validation = [
 
 [package.metadata]
 requires-dist = [
-    { name = "binsreg", marker = "extra == 'dpi'", specifier = ">=1.0" },
+    { name = "binsreg", marker = "extra == 'dpi'", specifier = ">=3.2.1" },
     { name = "build", marker = "extra == 'dev'" },
     { name = "hypothesis", marker = "extra == 'dev'" },
     { name = "import-linter", marker = "extra == 'dev'" },

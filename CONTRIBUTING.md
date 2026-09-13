@@ -28,6 +28,12 @@ Polars input, categorical/weighted/clustered estimation, grouped controls, expor
 and plots. Pandas compatibility is tested in the all-extras environment. Native
 tabular code must not import pandas; convert only at the optional boundary.
 
+Run `make dependencies DEPENDENCY_PROFILE=lower-pandas DEPENDENCY_PYTHON=3.10`
+for an isolated dependency check. See the [profile matrix](docs/site/guide/dependencies.md)
+for minimal/DPI/locked/floor/current configurations and Python scope. These jobs
+require index access and run separately from `make check`; output records contain
+the actual installed versions and source/configuration hashes.
+
 Run `make benchmark` separately for the sequential 10k/100k/1M workload grid.
 It needs permission to read child-process RSS and enforces a 2 GiB/120-second
 trial ceiling. Read [measurement boundaries and limits](docs/site/guide/performance.md)

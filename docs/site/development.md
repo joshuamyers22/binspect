@@ -62,14 +62,15 @@ development coverage simulations and distribution builds. Diagnostic coverage
 failures remain visible; passing arithmetic/examples does not grant broader
 inference validity. Reserved assessment seeds are not documentation examples.
 
-CI is configured for Python 3.10–3.13 on Linux/macOS. Manifest lower bounds admit
-other dependency combinations, but P2 qualification remains open. The
+CI is configured for Python 3.10–3.13 on Linux/macOS. P2 adds separate
+[dependency configurations](guide/dependencies.md), including exact direct floors
+and current compatible resolution. Other admitted combinations remain unqualified. The
 [D2 export review](guide/figure-exports.md) adds four guarded PNG baselines and
 structural PDF/SVG checks, with explicit background and simulation limits. The D3
 gallery covers seven seeded teaching cases; review/integration remains pending.
 [P1 workload measurements](guide/performance.md) cover the synthetic 10k–1M grid
 and replace dense clustered-bin storage. Maintainer baseline/runner acceptance
-remains pending; P2 dependency configurations are next. No general capacity or
+remains pending; P3 supply-chain and secret checks are next. No general capacity or
 accessibility qualification is implied.
 
 | Repository reference | Purpose |
