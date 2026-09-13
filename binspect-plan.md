@@ -1,16 +1,15 @@
 # binspect — production project plan
 
 Updated 2026-09-13 from a remote check: `main` is
-`184bb451341e04e815be4b1e97ee668b78d3d5fd`, after the release-hardening follow-up.
-PR #30 integrated the #24–#29 stack after the previously recorded #6–#23 work.
-The selected release branch declares `0.2.0`; publication is not yet complete.
+`f9d0e08a37492b72022ceada56957418976771e3`, after merged release PR #32.
+Main declares `0.2.0`; publication is not yet complete.
 Historical verification records retain their review-time status; this observation
 supersedes pending-integration labels, not independent acceptance requirements.
 
 The [release-stack integration review](docs/release-stack-integration-review.md)
-records the main-based reconciliation, artifact-integrity correction, scoped
-license acceptance and all-green exact-head CI. The merge is not a release-candidate
-selection or publication approval; the remaining acceptance gates stay open.
+records the earlier main-based reconciliation, artifact-integrity correction and
+scoped license acceptance. PR #32 head `5d74040` and main `f9d0e08` each passed all
+35 jobs; manual maintenance run `34785343032` passed all three locked/current profiles.
 
 Polars-native preparation/default tables with pandas inputs and explicit conversion
 are the user's accepted direction through [ADR-0002](docs/decisions/0002-polars-native-dataframes.md).
@@ -22,27 +21,31 @@ See the integrated [ownership evidence](docs/result-ownership-review.md),
 [dependency scope](docs/site/guide/dependencies.md). Visual, policy, statistical and
 performance-budget acceptance remain explicit review gates; site hosting is not configured.
 
-P3, R1 and R3 are integrated through PR #30.
+P3, R1 and R3 are integrated through PR #30; the 0.2.0 preparation is integrated
+through PR #32.
 [Six exact license scopes](docs/SUPPLY_CHAIN.md) were accepted by Josh Myers on
 2026-09-13 through 2026-10-13, and the fresh local P3 gate passes. R1 has passing actual
-artifact handoff/installation evidence; R3 has passing local reference/recovery
-exercises but awaits acceptance, schedule activation and actual operator evidence.
-Actual branch/PyPI controls and Trusted Publisher identity remain open.
+artifact handoff/installation evidence; R3 has passing local and GitHub reference
+exercises but awaits its first scheduled run and actual operator evidence. Main
+remains unprotected and private vulnerability reporting disabled. Josh confirmed the
+exact PyPI Trusted Publisher identity on 2026-09-13.
 The [license dossier](docs/LICENSE_REVIEW_DOSSIER.md) supplies exact archive notices
 and distribution/profile scope for all six accepted decisions. The acceptance does
 not change dependencies, authorize broader redistribution or waive future audits.
 
-**R2 candidate qualification is active; publication is not yet qualified.** The
+**R2 publication is authorized subject to fail-closed workflow gates.** The
 [0.2.0 readiness record](docs/releases/0.2.0-readiness.md) consolidates exact
 identities, missing approvals and owned next actions. A bounded
 [R2 renderer repair](docs/release-readiness-review.md) obtains the existing Python
 3.12.14 pin through uv while preserving all image/renderer guards; its local and
-CI comparisons pass at RMS 0.0. Josh Myers selected version 0.2.0 and instructed
-publication on 2026-09-13; the exact candidate commit, remaining decisions and
-candidate-specific qualification are still required before the public release.
+CI comparisons pass at RMS 0.0. On 2026-09-13 Josh selected version 0.2.0, confirmed
+the exact publisher mapping and authorized this immutable alpha release despite the
+explicitly retained owner-held gaps. The approval-record-only merge must pass
+exact-head CI before it becomes the tag target.
 The next R2 slice adds [release-only authenticated provenance](docs/release-provenance-review.md)
 and independent prepublication verification while preserving R1's read-only path.
-Actual signed candidate evidence and maintainer acceptance remain pending.
+Actual signed candidate evidence and the protected-environment review remain pending
+and are produced only by the release workflow.
 
 C3 final assessment and qualified statistical acceptance remain open. The
 [adjusted FWL uncertainty withdrawal](docs/adjusted-inference-boundary-review.md)
