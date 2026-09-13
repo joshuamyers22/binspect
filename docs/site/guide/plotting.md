@@ -74,6 +74,7 @@ The separate binsreg result plot accepts only optional `ax`, uses caller styles
 and returns that Axes. It marks dots and intervals at their own fitted centers.
 See [plotting API](../reference/plotting.md) for signatures.
 
-Figure examples are rendering smoke checks. Grayscale/color-vision, PDF/SVG and
-pinned-image qualification belong to D2 and remain open; these examples make no
-accessibility or pixel-stability guarantee.
+The [export guide and visual review](figure-exports.md) records local PNG/PDF/SVG
+checks, four pinned raster baselines and grayscale/color-vision simulations.
+Existing presets lose labels/context on dark backgrounds. These checks do not
+certify accessibility or every vector reader; maintainer visual acceptance remains open.

@@ -23,6 +23,7 @@ nav:
       - Choosing bins: guide/binning.md
       - Comparing groups: guide/groups.md
       - Composing plots: guide/plotting.md
+      - Exported figures and visual limits: guide/figure-exports.md
       - Tables and evidence: guide/exports.md
   - API reference:
       - Estimation: reference/estimation.md

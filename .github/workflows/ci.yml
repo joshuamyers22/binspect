@@ -13,6 +13,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  figures:
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          # The baseline guards CPython 3.12, locked packages, FreeType and fonts.
+          # Let setup-python select an available patch within that contract.
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          enable-cache: true
+      - name: Install locked renderer
+        run: uv sync --frozen --all-extras
+      - name: Compare reviewed images with renderer and font guards
+        run: make figures
+
   documentation:
     runs-on: ubuntu-latest
     timeout-minutes: 10

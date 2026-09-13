@@ -55,9 +55,11 @@ failures remain visible; passing arithmetic/examples does not grant broader
 inference validity. Reserved assessment seeds are not documentation examples.
 
 CI is configured for Python 3.10–3.13 on Linux/macOS. Manifest lower bounds admit
-other dependency combinations, but P2 qualification remains open. D2 will add
-exported-figure/accessibility evidence and D3 the broader example gallery. No
-performance ceiling, pixel stability or accessibility qualification is implied.
+other dependency combinations, but P2 qualification remains open. The
+[D2 export review](guide/figure-exports.md) adds four guarded PNG baselines and
+structural PDF/SVG checks, with explicit background and simulation limits. D3
+remains the broader example gallery. No performance ceiling or general
+accessibility qualification is implied.
 
 | Repository reference | Purpose |
 |---|---|

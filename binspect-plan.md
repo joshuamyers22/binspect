@@ -14,7 +14,11 @@ pandas-first proposal through [ADR-0002](docs/decisions/0002-polars-native-dataf
 **D1 guide/reference and CI checks are implemented; review and site publication
 pending.** See the [guide](docs/site/index.md), [build configuration](mkdocs.yml)
 and [D1 evidence](docs/user-guide-review.md). Hosting is not configured by D1.
-**Next implementation: D2 — exported-figure verification.** A3 allocates
+**D2 export checks and four rendering baselines are implemented; maintainer visual
+acceptance/integration pending.** See [the visual limits guide](docs/site/guide/figure-exports.md)
+and [D2 evidence](docs/figure-export-review.md). Existing presets are unqualified
+for dark backgrounds; these checks do not certify general accessibility.
+**Next implementation: D3 — reproducible example gallery.** A3 allocates
 the pending incompatible changes to a proposed 0.2.0 minor release; package version
 and release authorization are unchanged. M2 review/acceptance remains open. The
 roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
@@ -411,3 +415,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | A2 — Polars-native inputs/tables and export contracts | [Contract and migration](docs/INPUT_OUTPUT_CONTRACT.md), [implementation evidence](docs/export-input-contract-review.md); final `make check`: 402 unit tests, 74 integrations/references, 94.56% coverage, native installation without pandas, all development coverage gates and builds pass | User-directed Polars defaults with optional pandas compatibility; positional inputs, sample/design metadata and deterministic evidence exports implemented on `feat/export-input-contracts`, stacked on A1. Maintainer review/integration pending; unreleased. Next A3. |
 | 2026-09-12 | A3 — compatibility policy | [Policy/migrations](docs/COMPATIBILITY.md), [runtime API inventory](docs/API_INVENTORY.md), [verification](docs/compatibility-policy-review.md); 197 existing contract/plot tests and four migration examples pass | Documentation implemented on `docs/compatibility-policy`, stacked on A2. Proposed 0.2.0 allocation; maintainer policy acceptance/integration and release gates remain open. No source/default/version change in A3. Next implementation D1. |
 | 2026-09-12 | D1 — executable guide and API reference | [Guide](docs/site/index.md), [source-generated reference](docs/site/reference/estimation.md), [verification](docs/user-guide-review.md); `make docs` executes 28 Python blocks and the quickstart, then builds strictly | Implemented on `docs/executable-user-guide`, stacked on A3. Maintainer review/integration and hosting/publication pending; this development site is not a released API claim. Next implementation D2. |
+| 2026-09-12 | D2 — figure exports and baselines | [Visual limits/simulations](docs/site/guide/figure-exports.md), [four-image manifest](tests/baseline/manifest.json), [verification](docs/figure-export-review.md); 19 new export/guard checks and exact local baseline rerenders | Implemented on `test/figure-exports`, stacked on D1. Local inspection records grayscale/color-vision/background limits; dark backgrounds are unsuitable for existing presets. Maintainer visual acceptance/integration and broader accessibility/vector-viewer qualification remain open. Next implementation D3. |
