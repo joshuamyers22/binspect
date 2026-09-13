@@ -1,4 +1,4 @@
-.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures benchmark dependencies build check
+.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg docs figures benchmark dependencies supply-chain build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -33,7 +33,11 @@ coverage-binsreg:
 	uv run --frozen --extra dev --extra validation --extra dpi python validation/binsreg_coverage.py --phase development --output .work/binsreg-coverage-development.json
 
 build:
-	uv build
+	uv run --frozen --group build python -m build --no-isolation
+
+# Advisory services and official scanner downloads require network access.
+supply-chain:
+	uv run --isolated --frozen --all-extras --all-groups python validation/supply_chain.py
 
 docs:
 	uv run --frozen --all-extras python validation/documentation.py

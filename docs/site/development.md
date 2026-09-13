@@ -70,7 +70,9 @@ structural PDF/SVG checks, with explicit background and simulation limits. The D
 gallery covers seven seeded teaching cases; review/integration remains pending.
 [P1 workload measurements](guide/performance.md) cover the synthetic 10k–1M grid
 and replace dense clustered-bin storage. Maintainer baseline/runner acceptance
-remains pending; P3 supply-chain and secret checks are next. No general capacity or
+remains pending. P3 adds a blocking online supply-chain gate; six license reviews
+remain pending. See the [audit scope and decisions](https://github.com/joshuamyers22/binspect/blob/main/docs/SUPPLY_CHAIN.md).
+R1 artifact/workflow qualification is next. No general capacity or
 accessibility qualification is implied.
 
 | Repository reference | Purpose |

@@ -18,6 +18,10 @@ examples, schema/deprecation rules and the distinction between corrections and
 intentional default changes.
 
 ### Fixed
+- Build/audit tooling is locked, the publisher action is pinned, and a required
+  supply-chain gate checks all locked versions, licenses, available Git history,
+  actual distributions and a validated CycloneDX SBOM. Six license decisions
+  remain pending and block that gate; no release acceptance is claimed.
 - The DPI extra now requires binsreg ≥3.2.1. The previous 1.0 minimum installed
   but rejected the function adapter's confidence-interval request. Separate CI
   jobs exercise minimal, DPI, locked, direct minimum and current dependencies,

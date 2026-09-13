@@ -29,6 +29,12 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
    The current value is 0.1.1 with no development suffix; the proposed 0.2.0
    allocation still requires acceptance and release qualification.
 3. Run the checks documented in `CONTRIBUTING.md` and inspect both distributions.
+   Require a fresh passing [supply-chain report](docs/SUPPLY_CHAIN.md) for their
+   exact digests. Six license reviews currently block that gate; pending registry
+   entries are not approvals. The workflow builds with locked tools, audits the
+   existing `dist/` files, retains controlled evidence, and only then hands those
+   distributions to the publisher. R1 still must qualify the nonpublishing handoff
+   and actual repository/Trusted Publisher controls.
 4. Commit the release changes and push `main`.
 5. Create a GitHub release whose tag exactly matches `v{__version__}`.
 6. Approve the protected `pypi` environment deployment when prompted.

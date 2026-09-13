@@ -12,19 +12,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
-      - name: Install build tools
-        run: python -m pip install build twine
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: "0.12.5"
+      - name: Install locked build and audit tools
+        run: uv sync --frozen --all-extras --all-groups
       - name: Verify release tag matches package version
         run: |
           package_version=$(python -c "import pathlib, re; text = pathlib.Path('src/binspect/__init__.py').read_text(); print(re.search(r'^__version__ = \"([^\"]+)\"', text, re.MULTILINE).group(1))")
           test "${GITHUB_REF_NAME}" = "v${package_version}"
       - name: Build distributions
-        run: python -m build
+        run: uv run --frozen --all-extras --all-groups python -m build --no-isolation
       - name: Check package metadata
-        run: python -m twine check dist/*
+        run: uv run --frozen --all-extras --all-groups python -m twine check dist/*
+      - name: Audit the exact distributions before handoff
+        run: uv run --frozen --all-extras --all-groups python validation/supply_chain.py --artifacts dist
+      - name: Retain supply-chain evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: supply-chain-evidence
+          path: |
+            .work/supply-chain/result.json
+            .work/supply-chain/licenses.json
+            .work/supply-chain/sbom.cdx.json
+          if-no-files-found: error
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: python-package-distributions
@@ -45,4 +62,4 @@ jobs:
           name: python-package-distributions
           path: dist/
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0

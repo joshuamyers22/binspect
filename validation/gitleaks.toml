@@ -1,0 +1,24 @@
+title = "Binspect secret scanning"
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Verified historical source SHA-256; see validation/secret-fingerprints.json"
+condition = "AND"
+regexTarget = 'line'
+paths = ['''(^|/)docs/dependency\-results\.json$''']
+regexes = ['''"src/binspect/api\.py": "ddf10c1d055edd8330191f8dbaa13670603c745b78e390ae844e7d8d8c4b84c0"''']
+
+[[allowlists]]
+description = "Verified historical source SHA-256; see validation/secret-fingerprints.json"
+condition = "AND"
+regexTarget = 'line'
+paths = ['''(^|/)docs/dependency\-results\.json$''']
+regexes = ['''"src/binspect/binsreg_api\.py": "f64e3dc4860d21add8703940f9793cc84c2816de6ffe80005d8e117366619759"''']
+
+[[allowlists]]
+description = "Verified historical source SHA-256; see validation/secret-fingerprints.json"
+condition = "AND"
+regexTarget = 'line'
+paths = ['''(^|/)docs/evidence/binsreg\-adapter\-development\-2026\-09\-12\.json$''']
+regexes = ['''"src/binspect/binsreg_api\.py": "5b0f33b9cfee605d30552dea3efa6deb2948fb61ec5c262c857a782c3105b4ca"''']

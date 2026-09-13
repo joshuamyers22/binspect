@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "vulnerabilities": [],
+  "licenses": [
+    {
+      "package": "binsreg",
+      "version": "3.2.1",
+      "id": "license-review",
+      "status": "pending",
+      "owner": "Josh Myers",
+      "reviewer": "",
+      "reviewed_at": "",
+      "expires": "2026-10-13",
+      "rationale": "Optional DPI backend reports GPL-3.0-only. Review combined-use and redistribution obligations while retaining the project MIT license. No backend files are bundled in binspect distributions. Pending review does not waive the gate.",
+      "evidence": "https://pypi.org/pypi/binsreg/3.2.1/json"
+    },
+    {
+      "package": "certifi",
+      "version": "2026.7.22",
+      "id": "license-review",
+      "status": "pending",
+      "owner": "Josh Myers",
+      "reviewer": "",
+      "reviewed_at": "",
+      "expires": "2026-10-13",
+      "rationale": "MPL-2.0 certificate bundle is an HTTP tooling dependency; review redistribution/source notice obligations. Pending review does not waive the gate.",
+      "evidence": "https://pypi.org/pypi/certifi/2026.7.22/json"
+    },
+    {
+      "package": "docutils",
+      "version": "0.23",
+      "id": "license-review",
+      "status": "pending",
+      "owner": "Josh Myers",
+      "reviewer": "",
+      "reviewed_at": "",
+      "expires": "2026-10-13",
+      "rationale": "Twine/readme-renderer build tooling has public-domain, BSD and GPL metadata; review its COPYING file and which files are redistributed. Pending review does not waive the gate.",
+      "evidence": "https://pypi.org/pypi/docutils/0.23/json"
+    },
+    {
+      "package": "fqdn",
+      "version": "1.5.1",
+      "id": "license-review",
+      "status": "pending",
+      "owner": "Josh Myers",
+      "reviewer": "",
+      "reviewed_at": "",
+      "expires": "2026-10-13",
+      "rationale": "MPL-2.0 package is used by audit schema validation; review tooling distribution scope. Pending review does not waive the gate.",
+      "evidence": "https://pypi.org/pypi/fqdn/1.5.1/json"
+    },
+    {
+      "package": "hypothesis",
+      "version": "6.165.10",
+      "id": "license-review",
+      "status": "pending",
+      "owner": "Josh Myers",
+      "reviewer": "",
+      "reviewed_at": "",
+      "expires": "2026-10-13",
+      "rationale": "MPL-2.0 development test dependency; review tooling distribution scope. Pending review does not waive the gate.",
+      "evidence": "https://pypi.org/pypi/hypothesis/6.165.10/json"
+    },
+    {
+      "package": "pathspec",
+      "version": "1.1.1",
+      "id": "license-review",
+      "status": "pending",
+      "owner": "Josh Myers",
+      "reviewer": "",
+      "reviewed_at": "",
+      "expires": "2026-10-13",
+      "rationale": "MPL-2.0 build/development dependency; review source notices and tooling distribution scope. Pending review does not waive the gate.",
+      "evidence": "https://pypi.org/pypi/pathspec/1.1.1/json"
+    }
+  ]
+}

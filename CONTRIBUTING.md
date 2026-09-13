@@ -101,6 +101,12 @@ binsreg, including degree-0 few-cluster fallback. Assessment seeds remain reserv
 
 ## Change guidelines
 
+Run `make supply-chain` for the separate online advisory/license/history/artifact
+gate. It uses isolated locked tooling and fails on unavailable evidence or
+unapproved findings. See [scope and pending license reviews](docs/SUPPLY_CHAIN.md).
+Dependency updates must regenerate `uv.lock` and rerun `make check`, affected P2
+profiles and this audit; CI rejects stale locks and retains numerical drift gates.
+
 The [user guide](docs/site/index.md) and generated API reference build from
 `mkdocs.yml`. `make docs` executes every plain `python`/`py` fenced block in the
 site, README and input/compatibility contracts, in page order with one fresh process
