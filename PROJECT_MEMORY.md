@@ -54,8 +54,9 @@ PR #24 still targets the retained, already merged P2 branch. The
 #24–#29 stack on current main in `review/release-stack-integration`, preserving
 main's large-integer category fix and both regressions. Draft #30 targets main;
 all 639 local tests pass after the artifact-integrity follow-up, and the fresh local
-supply-chain run fails only for the six pending licenses. The pushed-head CI result
-for that follow-up remains to be observed.
+supply-chain run fails only for the six pending licenses. CI run 34781858587 on
+follow-up commit `efb6e34` has 34 passing jobs and the same sole license-gate
+failure; its strengthened artifact check passes.
 It is not merged into main.
 P3's six license decisions and actual GitHub/PyPI controls
 remain open. R3 schedule activation and actual operator recovery remain unverified.

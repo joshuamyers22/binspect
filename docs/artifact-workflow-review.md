@@ -104,5 +104,8 @@ reference tests (639 total), 94.65% coverage, type/import contracts, all develop
 simulations, executable/strict documentation, four RMS-0.0 figure comparisons and
 builds. A fresh online supply-chain run passes action, vulnerability, artifact,
 secret and SBOM checks; it still fails only on the six owner-held pending license
-decisions. This follow-up hardens implementation readiness but does not supply
-license, integration or release acceptance.
+decisions. [CI run 34781858587](https://github.com/joshuamyers22/binspect/actions/runs/34781858587)
+on exact fix commit `efb6e34` has 34 passing jobs, including the strengthened
+artifact build and all 12 install jobs; supply-chain again fails only at licensing
+while its other five checks pass. This follow-up hardens implementation readiness
+but does not supply license, integration or release acceptance.

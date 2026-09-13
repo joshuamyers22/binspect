@@ -91,6 +91,10 @@ passes with 565 unit tests, 34 DPI integrations and 40 references (639 total),
 94.65% coverage, all type/import, native, simulation, documentation, figure and
 build gates. A new online `make supply-chain` run passes actions, vulnerabilities,
 artifacts, secrets and SBOM checks and fails only for the unchanged six pending
-license decisions. Main remains unprotected as of the read-only GitHub query; that
-does not justify bypassing the fail-closed license gate. Integration and all
+license decisions. [CI run 34781858587](https://github.com/joshuamyers22/binspect/actions/runs/34781858587)
+on exact fix commit `efb6e34` completes with 34 passing jobs. The
+strengthened artifact check and all 12 clean-install jobs pass; supply-chain's
+actions, vulnerability, artifact, secret and SBOM checks pass, and only the six
+license entries fail. Main remains unprotected as of the read-only GitHub query;
+that does not justify bypassing the fail-closed license gate. Integration and all
 owner-held acceptance decisions remain pending.
