@@ -12,8 +12,8 @@ the proposed 0.2.0 release; the checkout still reports package version 0.1.1.
 
 ## What the checks cover
 
-The dependency checks create a fresh environment for every row, installs the
-package noneditably, checks dependency consistency, and runs outside the checkout
+The dependency checks create a fresh environment for every row, install the
+package noneditably, check dependency consistency, and run outside the checkout
 with Python isolation. It exercises weighted and clustered estimates against
 direct calculations, numeric/categorical adjustment, grouped results, Polars
 tables, explicit pandas conversion, JSON/ownership, and headless PNG rendering.

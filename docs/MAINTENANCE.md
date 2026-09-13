@@ -29,7 +29,7 @@ does not open issues, assign collaborators or send messages automatically. If Jo
 is unavailable, publication waits until an explicitly designated maintainer accepts
 responsibility. There is no implicit backup or automatic release authority.
 
-Each run retains `result.json` and `stages.jsonl` for 90 days: source/test/lock hashes,
+The workflow requests 90-day retention for `result.json` and `stages.jsonl`: source/test/lock hashes,
 wheel identity, actual dependency versions, test counts, failed test identifiers,
 stage exit codes and timings. Raw subprocess output, traceback payloads, environment
 variables and caller data are excluded. Missing/truncated reports, skipped or missing
@@ -55,8 +55,8 @@ suspected exposure; the unverified private-reporting route remains an open contr
 
 GitHub schedules execute the default branch and may be delayed or disabled after
 inactivity. This draft branch has no active scheduled deployment. After integration,
-Josh verifies the workflow is enabled, manually runs it, checks both profiles and
-retention, then records the first scheduled run. See [GitHub's schedule semantics](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+Josh verifies the workflow is enabled, manually runs it, checks all three configurations and
+actual retention, then records the first scheduled run. See [GitHub's schedule semantics](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
 
 Local reproduction (online resolution; output contains controlled evidence):
 
