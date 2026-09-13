@@ -82,6 +82,15 @@ access; unavailable services were never reported as passes. Raw secret reports
 remain temporary and are projected to rule/file/line/commit metadata before
 retention. The scanner canary is generated at runtime and carries no authority.
 
+The v0.2.1 release exposed a compatibility gap outside the original P3 snapshot:
+Hatchling 1.32.0 emitted valid Core Metadata 2.5, but publisher v1.13.0's bundled
+metadata reader rejected it before upload. The fixed release pins the official
+signed v1.14.2 tag's commit
+`dc37677b2e1c63e2034f94d8a5b11f265b73ba33`; that release locks Twine 7.0.0 and
+explicitly adds Metadata 2.5 upload support. The gate now binds artifact metadata
+versions to this reviewed publisher capability, so either a newer metadata format
+or a changed publisher pin requires renewed compatibility review.
+
 ## License disposition
 
 See [the six concrete decisions and primary sources](SUPPLY_CHAIN.md#six-approved-scoped-license-decisions)

@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-09-13
+
+### Fixed
+
+- Restore Metadata 2.5 publication by updating the full-SHA-pinned PyPI publisher
+  to its signed v1.14.2 release, which uses Twine 7.0.0. The supply-chain gate now
+  rejects an unreviewed publisher/artifact metadata combination. The v0.2.1
+  workflow passed build, installation, audit and provenance gates but stopped in
+  metadata validation before upload; this patch uses new artifact filenames.
+
 ## [0.2.1] - 2026-09-13
 
 ### Fixed

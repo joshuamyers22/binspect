@@ -1,6 +1,6 @@
 # Development and releases
 
-The guide describes version 0.2.1 behavior. The 0.2 series contains Polars
+The guide describes version 0.2.2 behavior. The 0.2 series contains Polars
 return types, ownership and other contract changes that affect existing callers.
 The documentation site is built and checked separately from the package and is not
 deployed by the package release workflow.

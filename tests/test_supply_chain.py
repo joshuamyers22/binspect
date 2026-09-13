@@ -134,6 +134,42 @@ def test_mutable_action_cannot_pass(tmp_path):
     assert supply.action_pins(tmp_path) == ["owner/action@" + "a" * 40]
 
 
+def test_release_publisher_supports_artifact_core_metadata():
+    refs = supply.action_pins(Path(__file__).resolve().parents[1])
+    reviewed = supply.publisher_compatibility(refs, ["2.5", "2.5"])
+    assert reviewed == {
+        "action": "pypa/gh-action-pypi-publish@"
+        "dc37677b2e1c63e2034f94d8a5b11f265b73ba33",
+        "release": "v1.14.2",
+        "twine": "7.0.0",
+        "max_core_metadata": "2.5",
+        "artifact_core_metadata": ["2.5"],
+    }
+
+
+@pytest.mark.parametrize(
+    ("refs", "metadata"),
+    [
+        (
+            ["pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e"],
+            ["2.5"],
+        ),
+        (
+            ["pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33"],
+            ["2.6"],
+        ),
+        ([], ["2.5"]),
+        (
+            ["pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33"],
+            [],
+        ),
+    ],
+)
+def test_unreviewed_publisher_metadata_combinations_fail(refs, metadata):
+    with pytest.raises(ValueError):
+        supply.publisher_compatibility(refs, metadata)
+
+
 def test_secret_projection_drops_match_and_identity(monkeypatch, tmp_path):
     report = tmp_path / "raw.json"
     report.write_text(

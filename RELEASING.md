@@ -27,8 +27,9 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
    on the exact `main` commit and the working tree is clean.
 2. Set the chosen release version in `__version__` and update `CHANGELOG.md`.
    The v0.2.0 workflow stopped before PyPI publication because GitHub CLI 2.98
-   rejected redundant actor-identity selectors. The recovery candidate uses 0.2.1;
-   never move/reuse the public v0.2.0 tag or its artifact filenames.
+   rejected redundant actor-identity selectors. The v0.2.1 recovery then stopped
+   before upload because publisher v1.13.0 rejected valid Core Metadata 2.5.
+   Recovery uses 0.2.2; never move/reuse either public tag or its artifact filenames.
 3. Run the checks documented in `CONTRIBUTING.md` and inspect both distributions.
    Require a fresh passing [supply-chain report](docs/SUPPLY_CHAIN.md) for their
    exact digests. Six exact license scopes were accepted on 2026-09-13; those
