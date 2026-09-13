@@ -30,7 +30,7 @@ dependencies = [
 
 [project.optional-dependencies]
 pandas = ["pandas>=2.0"]
-dpi = ["binsreg>=1.0"]
+dpi = ["binsreg>=3.2.1"]
 validation = ["statsmodels==0.15.0"]
 dev = [
   "pandas>=2.0",

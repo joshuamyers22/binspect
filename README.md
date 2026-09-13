@@ -382,8 +382,11 @@ python -m pip install -e .
 Run that command from the checked-out repository for native Polars use. Install
 `.[pandas]` for explicit pandas projections or `.[dpi]` for optional binsreg methods.
 To run every README/guide example, use `uv sync --frozen --all-extras` and `make docs`.
-Python ≥3.10 is required; dependency qualification is described in the compatibility
-policy. NumPy/SciPy, Polars and Matplotlib are required; pandas is optional for native use.
+Python ≥3.10 is required; isolated minimum/current checks and the Python 3.10–3.13
+scope are described in [dependency configurations](docs/site/guide/dependencies.md).
+The DPI extra requires binsreg ≥3.2.1. Dependency qualification is described in
+the compatibility policy. NumPy/SciPy, Polars and Matplotlib are required; pandas
+is optional for native use.
 
 Install the published package with `python -m pip install binspect-regression` and
 continue to write `import binspect`. Published 0.1.1 does not include all unreleased

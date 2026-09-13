@@ -296,11 +296,15 @@ issues = function.metadata["issues"]  # inspect actual method and support warnin
 
 The current manifest requires Python ≥3.10, NumPy ≥1.24, Polars ≥1.0, SciPy ≥1.10
 and Matplotlib ≥3.7. Pandas ≥2.0 is optional via `[pandas]`; `[dpi]` installs binsreg
-≥1.0 with its upstream pandas dependency. Those lower bounds are installation
+≥3.2.1 with its upstream pandas dependency. The previous binsreg 1.0 floor rejects
+the function adapter's `ci=True` argument; P2 corrects that bound without changing
+locked package versions. Those lower bounds are installation
 constraints, not evidence that every admitted combination is qualified. CI is
 configured for Python 3.10–3.13 on Linux/macOS; a configured matrix is not a claim
-that this branch passed on each platform. P2 lower-bound/current dependency
-qualification remains open. This policy adds no maximum-input-size or speed claim.
+that this branch passed on each platform. P2 adds isolated minimum/current checks;
+see the [configuration scope](site/guide/dependencies.md) and
+[actual evidence](dependency-review.md). Maintainer qualification/integration
+remains pending. This policy adds no maximum-input-size or speed claim.
 
 The [A2 evidence](export-input-contract-review.md) records the tested lock and
 minimal installation without pandas. The adapter's reference backend is binsreg

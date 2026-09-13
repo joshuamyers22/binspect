@@ -19,6 +19,7 @@ nav:
   - User guide:
       - Reproducible example gallery: guide/gallery.md
       - Workload measurements and limits: guide/performance.md
+      - Dependency configurations: guide/dependencies.md
       - Interpreting diagnostics: guide/interpretation.md
       - Adjusting for controls: guide/adjustment.md
       - Weights, clusters and missingness: guide/weights.md

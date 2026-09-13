@@ -26,7 +26,11 @@ maintainer baseline/runner acceptance and integration remain pending.** See
 [measurement scope and limits](docs/site/guide/performance.md) and
 [P1 evidence](docs/performance-review.md). Numeric timing budgets are proposals,
 not an accepted CI gate or general capacity guarantee.
-**Next implementation: P2 — dependency configurations.** A3 allocates
+**P2 isolated dependency configurations are implemented; maintainer review and
+integration remain pending.** See [configuration scope](docs/site/guide/dependencies.md)
+and [minimum/current evidence](docs/dependency-review.md). Binsreg's minimum is
+corrected to 3.2.1; Polars defaults, pandas compatibility and Python 3.10–3.13 scope
+are retained. **Next implementation: P3 — supply-chain and secret checks.** A3 allocates
 the pending incompatible changes to a proposed 0.2.0 minor release; package version
 and release authorization are unchanged. M2 review/acceptance remains open. The
 roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
@@ -426,3 +430,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | D2 — figure exports and baselines | [Visual limits/simulations](docs/site/guide/figure-exports.md), [four-image manifest](tests/baseline/manifest.json), [verification](docs/figure-export-review.md); 19 new export/guard checks and exact local baseline rerenders | Implemented on `test/figure-exports`, stacked on D1. Local inspection records grayscale/color-vision/background limits; dark backgrounds are unsuitable for existing presets. Maintainer visual acceptance/integration and broader accessibility/vector-viewer qualification remain open. Next implementation D3. |
 | 2026-09-12 | D3 — reproducible examples | [Executable gallery](docs/site/guide/gallery.md), [manifest](docs/site/assets/gallery/manifest.json), [verification](docs/example-gallery-review.md); seven fixed synthetic seeds, Polars tables, numerical assertions and retained figures | Implemented on `docs/reproducible-gallery`, stacked on D2. Informative/misleading interpretations and warnings are documented; maintainer review/integration remains pending. Teaching cases are not inference qualification. Next implementation P1. |
 | 2026-09-12 | P1 — occupied-cluster aggregation and workload limits | [Measurement scope](docs/site/guide/performance.md), [experiment and retained evidence](docs/performance-review.md), [harness](validation/performance.py), [budget enforcement](validation/performance_check.py) | Implemented on `perf/cluster-workloads`, stacked on D3. Dense bin-by-cluster storage replaced; guarded 10k–1M measurements and budget proposals prepared for review. Baseline/controlled-runner acceptance and integration remain open; 10M and general capacity are unqualified. Next implementation P2. |
+| 2026-09-12 | P2 — dependency configurations | [Configuration guide](docs/site/guide/dependencies.md), [isolated installed-code checks](validation/dependencies.py), [actual evidence](docs/dependency-review.md) | Implemented on `test/dependency-configurations`, stacked on P1. Ten CI configurations cover minimal, DPI, locked development, direct floors and fresh current dependencies; binsreg minimum corrected to 3.2.1 after a real adapter failure. Python 3.10–3.13 retained. Maintainer review/integration and remote CI remain separate gates. Next implementation P3. |
