@@ -82,6 +82,59 @@ OIDC permission. Release audits the same qualified pair and verifies the manifes
 again immediately before the publisher. A failed license gate still blocks it.
 See [R1 evidence and outstanding controls](docs/artifact-workflow-review.md).
 
+## Signed release provenance
+
+After the release build, installation matrix and audit succeed, a separate
+`provenance` job verifies the same artifact-ID handoff and uses the full-SHA-pinned
+[`actions/attest` action](https://github.com/actions/attest/tree/1e69f48acb82d1966a394da916b4c1698aa569d6)
+to sign both distribution digests. Only that job receives `attestations: write`
+and signing OIDC permissions. It does not enter the `pypi` environment. The R1
+build/installation workflow remains read-only. This is provenance issued after
+qualification within the release run, not an isolated-builder or SLSA level claim.
+
+The job retains `attestation.json` and a controlled verification summary as the
+`release-provenance` Actions artifact (requested retention: 90 days); the signing
+action also registers the attestation with GitHub. The publisher downloads by the
+returned immutable artifact ID and reruns [the verifier](validation/provenance.py)
+against the signed bundle and both distributions. It never trusts the downloaded
+summary as proof. The existing independently supplied manifest hash is still
+required. Attestation files are kept outside the publisher's distribution folder.
+
+[GitHub CLI verification](https://cli.github.com/manual/gh_attestation_verify)
+checks signatures, artifact digests, GitHub OIDC issuer, repository, exact workflow
+certificate identity, source/signer commit and tag ref, and rejects self-hosted
+runners. Additional policy checks the authenticated certificate's release trigger
+and run-attempt URI, the exact two subjects, and matching workflow/source/run
+claims. Parsing arbitrary bundle JSON does not authenticate it. No result is
+emitted until both artifacts and a final integrity recheck pass. Missing tooling,
+network/trust-service errors and unsupported output schemas block publication.
+The controlled report records the runner's actual `gh` version; it is supplied by
+the GitHub-hosted runner, not a frozen Python dependency.
+
+To reverify retained evidence from the exact candidate checkout, supply identities
+from the independently reviewed release record, not from the downloaded summary:
+
+```bash
+python validation/provenance.py --bundle .work/artifact-bundle \
+  --manifest-sha256 <reviewed-manifest-sha256> \
+  --attestation .work/provenance/attestation.json \
+  --source <reviewed-40-character-commit> --ref refs/tags/<reviewed-tag> \
+  --run-id <reviewed-run-id> --attempt <reviewed-attempt>
+```
+
+Preserve the signed bundle, manifest, distributions, matching SBOM/audit and
+controlled result in the approved release evidence store before Actions retention
+expires. Signed bundle verification can still need trust-root network access;
+this command does not claim fully offline operation. A publish-only rerun has a
+new attempt and deliberately rejects earlier-attempt signatures. Reconcile index
+state through the recovery procedure before authorizing a new full release run;
+never weaken the attempt check to retry a potentially partial publication.
+
+This automation has fixture-based rejection tests; actual candidate signing and
+verification remain a release gate. See [scope and evidence](docs/release-provenance-review.md).
+Neither a valid signature nor workflow execution establishes statistical, license,
+maintainer or publisher-configuration acceptance.
+
 ## Failed publication and recovery
 
 Stop automatic retries when index state is ambiguous. Follow the

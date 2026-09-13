@@ -56,6 +56,11 @@ and a verified figure interpreter provisioning repair on `chore/release-readines
 (draft #27). Local and CI image comparisons pass; pending licenses still fail CI.
 No release candidate/approval is selected. Next actions are the owned acceptance,
 integration and exact-candidate qualification gates in that record; publication is blocked.
+The [provenance slice](docs/release-provenance-review.md) on
+`security/release-provenance` adds release-only signing and fresh verification of
+both files, exact certificate/source/workflow identity and run attempt. R1 stays
+read-only. Actual candidate signing/verification is still unqualified; a publish-only
+rerun intentionally rejects signatures from an earlier attempt.
 M2 maintainer acceptance remains open.
 Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
 proposed baseline decisions and governance/security/release gates remain open;
