@@ -29,6 +29,8 @@ intentional default changes.
   but rejected the function adapter's confidence-interval request. Separate CI
   jobs exercise minimal, DPI, locked, direct minimum and current dependencies,
   preserving native Polars tables and explicit pandas conversion.
+- Declared integer categorical controls preserve exact labels above `2**53`,
+  preventing float conversion from merging categories and changing adjusted fits.
 - Named control Series in mappings now use row positions consistently with x/y,
   preventing silent pandas index alignment. Named numeric inputs also enforce
   one-dimensional shape validation.

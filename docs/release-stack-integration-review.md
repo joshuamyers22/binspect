@@ -26,4 +26,19 @@ At the ceiling record actual remaining work rather than fabricating acceptance.
 Main has the declared-integer-category fix and two regression cases absent from
 the stack. Without integration, categories `2**53` and `2**53 + 1` can collapse
 during float conversion. Main also carries its prior stack review and documentation
-changes that must be reconciled, not silently discarded. Verification pending.
+changes that must be reconciled, not silently discarded.
+
+Both main regression cases fail against a detached checkout of stack `8830649`:
+the expected alternating dummy column becomes all ones. The combined branch
+preserves main's source correction and complete regression file byte-for-byte.
+No new statistical tolerance or synthetic seed was introduced.
+
+Five conflicted files were reconciled. The CI workflow and two renderer documents
+retain the stack's verified uv-managed 3.12.14 path; main's alternate patch-selection
+repair is superseded by that tested setup. The automatically merged contributor
+guide is aligned with it. Memory/plan retain current pending gates and the later
+stack work while incorporating main's A1–P2 review dispositions. Main's historical
+`pr-stack-review.md` and categorical changelog entry are preserved.
+
+Targeted and full combined-tree verification pending. No GitHub PR has been merged,
+no previous draft changed or closed, and no release, setting or approval changed.
