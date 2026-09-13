@@ -81,3 +81,11 @@ rehearsal has read-only repository permissions, no publishing job, environment o
 OIDC permission. Release audits the same qualified pair and verifies the manifest
 again immediately before the publisher. A failed license gate still blocks it.
 See [R1 evidence and outstanding controls](docs/artifact-workflow-review.md).
+
+## Failed publication and recovery
+
+Stop automatic retries when index state is ambiguous. Follow the
+[maintenance and recovery procedure](docs/MAINTENANCE.md) to reconcile the original
+artifact hashes, handle partial uploads, review a yank/fixed release and verify
+consumer reinstalls. Never replace published bytes or reuse a deleted filename.
+The read-only checker and synthetic exercise grant no publishing authority.
