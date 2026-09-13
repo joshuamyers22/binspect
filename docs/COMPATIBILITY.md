@@ -186,10 +186,14 @@ rng = np.random.default_rng(321)
 n = 600
 x = rng.normal(size=n)
 z = rng.normal(size=n)
-frame = pd.DataFrame({
-    "x": x, "y": 0.7 * x + z + rng.normal(size=n), "z": z,
-    "group": np.where(np.arange(n) % 2, "A", "B"),
-})
+frame = pd.DataFrame(
+    {
+        "x": x,
+        "y": 0.7 * x + z + rng.normal(size=n),
+        "z": z,
+        "group": np.where(np.arange(n) % 2, "A", "B"),
+    }
+)
 result = binspect.binscatter(frame, x="x", y="y", bins=6)
 # Before: result.table.loc[result.table["n"] > 30, "y_mean"]
 native = result.table.filter(pl.col("n") > 30).select("y_mean")
@@ -215,7 +219,12 @@ indexed_z = pd.Series(z, index=np.arange(n)[::-1])
 aligned = pd.DataFrame({"x": indexed_x, "z": indexed_z}).reindex(indexed_x.index)
 aligned["y"] = frame["y"]
 adjusted = binspect.binscatter(
-    aligned, x="x", y="y", controls="z", bins=6, ci=None,
+    aligned,
+    x="x",
+    y="y",
+    controls="z",
+    bins=6,
+    ci=None,
 )
 assert adjusted.adjusted and adjusted.estimates.ci_level is None
 assert np.isnan(adjusted.estimates.se).all()
@@ -224,8 +233,14 @@ assert np.isnan(adjusted.estimates.se).all()
 # include controls, weights or clusters. Slope uncertainty remains available.
 
 groups = binspect.compare(
-    frame, x="x", y="y", group="group", controls="z",
-    bins=6, common_bins=False, ci=None,
+    frame,
+    x="x",
+    y="y",
+    group="group",
+    controls="z",
+    bins=6,
+    common_bins=False,
+    ci=None,
 )
 assert isinstance(groups.to_pandas("summary", include_pooled=True), pd.DataFrame)
 # Independent group bin IDs are local. For shared original-coordinate bins:
