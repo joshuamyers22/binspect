@@ -37,6 +37,11 @@ the existing library stack remains the working baseline pending that disposition
 | PyPI environment | Required reviewer `joshuamyers22`; prevent-self-review false; no branch/tag deployment policy. | Approval exists, but self-review is allowed and ref restrictions are absent. R1 verifies desired policy. |
 | PyPI Trusted Publisher | Not inspected at PyPI. | GitHub OIDC YAML/environment alone does not verify publisher mapping or successful publication; R1/R2. |
 
+R1 rechecked branch protection, rulesets, Actions policy, private vulnerability
+reporting and the PyPI environment on 2026-09-12 local time (2026-09-13 UTC);
+those observations remain unchanged. PyPI owner-side publisher mapping was not
+available for inspection. See [the R1 record](artifact-workflow-review.md).
+
 No account-plan limitation was returned for this public repository. Do not copy
 the production-template repository's historical private-repository limitation
 as evidence about binspect.

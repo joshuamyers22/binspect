@@ -32,9 +32,9 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
    Require a fresh passing [supply-chain report](docs/SUPPLY_CHAIN.md) for their
    exact digests. Six license reviews currently block that gate; pending registry
    entries are not approvals. The workflow builds with locked tools, audits the
-   existing `dist/` files, retains controlled evidence, and only then hands those
-   distributions to the publisher. R1 still must qualify the nonpublishing handoff
-   and actual repository/Trusted Publisher controls.
+   same qualified artifact pair, retains controlled evidence, and only then hands
+   those distributions to the publisher. See the nonpublishing qualification path
+   below; actual repository controls and Trusted Publisher acceptance remain open.
 4. Commit the release changes and push `main`.
 5. Create a GitHub release whose tag exactly matches `v{__version__}`.
 6. Approve the protected `pypi` environment deployment when prompted.
@@ -45,3 +45,39 @@ Its trigger is a **published GitHub release**; pushing a tag alone does not publ
 the package. Documentation builds are a separate CI job and do not deploy a site.
 Site publication requires configured hosting, a strict passing build and explicit
 maintainer authorization; D1 adds no deployment credentials or publishing workflow.
+
+## Nonpublishing artifact qualification
+
+CI calls [the reusable artifact workflow](.github/workflows/artifacts.yml); release
+preparation calls that same workflow with the expected release tag. A clean
+committed checkout produces one wheel/sdist pair using frozen build-group tools
+and `--no-isolation`, checks metadata and source contents, then uploads a manifest
+and distributions. Consumers download by artifact ID and verify an independently
+passed manifest SHA-256, source revision, lock, journey and each file's size/hash.
+Missing, changed, extra or linked artifacts fail before installation. The manifest
+is integrity evidence; it is not authenticated publisher provenance.
+
+The consumer matrix exercises both artifacts on Linux/macOS Python 3.10–3.13 with
+runtime-only dependencies, plus pandas and DPI profiles on Python 3.12. Each
+artifact gets a fresh environment outside checkout. Sdist builds use a separate
+build environment with hash-locked requirements and `--no-isolation`; the resulting
+wheel is inspected against source and installed without dependency resolution.
+The seeded installed-code journey checks estimation, Polars tables, JSON/evidence,
+plots, optional pandas conversion and DPI. Native installs assert pandas is absent.
+
+To reproduce locally from a clean commit, choose an unused bundle directory:
+
+```bash
+uv run --isolated --frozen --group build python validation/artifacts.py build \
+  --bundle .work/artifact-bundle
+# Copy the printed manifest_sha256 value; keep it independent of the download.
+uv run --isolated --frozen --group build python validation/artifacts.py install \
+  --bundle .work/artifact-bundle --manifest-sha256 <recorded-sha256> \
+  --python 3.12 --profile native --output .work/artifact-native.json
+```
+
+Repeat installs with `--profile pandas` and `--profile dpi` as applicable. The
+rehearsal has read-only repository permissions, no publishing job, environment or
+OIDC permission. Release audits the same qualified pair and verifies the manifest
+again immediately before the publisher. A failed license gate still blocks it.
+See [R1 evidence and outstanding controls](docs/artifact-workflow-review.md).
