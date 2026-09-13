@@ -1,6 +1,6 @@
 # R2 — prepare the release stack against current main
 
-Owner: Josh Myers. Implementer: Codex. Integration/release acceptance pending.
+Owner: Josh Myers. Implementer: Codex. Integration complete; release acceptance pending.
 Baseline stack: `8830649` (draft #29). Main: `2a6a486` (merged through #23).
 Branch: `review/release-stack-integration`.
 
@@ -112,3 +112,12 @@ A fresh online `make supply-chain` run passes actions, all locked-version adviso
 checks, licenses, strengthened artifact identity, all secret scopes and CycloneDX
 validation. Exact pushed-head CI and main integration remain pending. This decision
 closes the license blocker only; it does not select or authorize a release.
+
+## 2026-09-13 integration completion
+
+Exact head `30d079317776d13a210638b1486ff50506935b94` passed all 35 jobs in
+[CI run 34783516923](https://github.com/joshuamyers22/binspect/actions/runs/34783516923),
+including supply-chain and all 12 clean artifact installations. PR #30 was then
+merged into `main` as merge commit `6d1169b516287933cb604f977a314bcc95e24e08`.
+This completes stack integration only; candidate selection, release-specific
+qualification, remaining owner-held acceptance, settings and publication stay open.

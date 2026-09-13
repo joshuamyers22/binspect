@@ -38,42 +38,26 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `supply-chain-gate` | P3 adds an isolated online gate for all locked versions, license metadata, full available history/tracked/artifact secret scans and validated artifact-linked CycloneDX. Build/audit tools and workflow actions are pinned. Artifact checks tie wheel/sdist project metadata to the manifest/license and require every tracked sdist file and byte with no extras. Josh Myers accepted the six exact separately installed/non-bundled license scopes on 2026-09-13 through 2026-10-13; changed versions, redistribution scope or expiry require renewed review. The fresh local gate passes. Three historical source-hash scanner false positives have exact value/path exclusions verified against historical source. | [Scope/decisions](docs/SUPPLY_CHAIN.md), [license dossier](docs/LICENSE_REVIEW_DOSSIER.md), [regressions](tests/test_supply_chain.py), [exception registry](validation/supply-chain-exceptions.json) | 2026-09-13 |
 | `artifact-qualification` | R1 shares one locked build and verified artifact-ID handoff between CI and release; 12 local and 24 CI wheel/sdist installs pass, including native Polars and optional pandas/DPI. Qualification builds require clean commits. R2 draft #27 restores the earlier unavailable figure job. The main-based follow-up closes full-sdist and project-metadata identity gaps; fresh artifacts and the 639-test local full gate pass. The accepted six-version license scope makes the fresh local supply-chain gate pass. Main/PyPI controls and Trusted Publisher acceptance remain open; no publication. | [Contract/evidence](docs/artifact-workflow-review.md), [workflow](.github/workflows/artifacts.yml), [regressions](tests/test_supply_chain.py) | 2026-09-13 |
 | `maintenance-recovery` | R3 prepares weekly/manual locked/current references and installed journeys; fresh-current P2 monitoring moves out of PRs while nine locked/floor configurations remain. 222 references, three journeys and ten synthetic recovery cases pass. The read-only recovery checker rejects ambiguous/malformed index data and never overwrites published artifacts. Schedule activation/retention and real operator recovery remain unverified; owner Josh Myers, acceptance pending. | [Procedure](docs/MAINTENANCE.md), [evidence](docs/maintenance-recovery-review.md), [runner](validation/maintenance.py), [recovery](validation/recovery.py) | 2026-09-12 |
-| `release-readiness` | R2 prepares an unapproved 0.2.0 checklist and repairs the figure job using pinned uv-managed Python 3.12.14; unchanged local/CI baselines pass at RMS 0.0. Main is observed at `2a6a486` through merged #23; the release stack remains in draft #30. PyPI still reports 0.1.1 with hashes different from development builds. The six exact license scopes are accepted through 2026-10-13; candidate selection, other approvals, actual controls and release-specific provenance/install evidence remain open. No publication is authorized. | [Readiness gates](docs/releases/0.2.0-readiness.md), [verification](docs/release-readiness-review.md) | 2026-09-13 |
+| `release-readiness` | R2 prepares an unapproved 0.2.0 checklist and repairs the figure job using pinned uv-managed Python 3.12.14; unchanged local/CI baselines pass at RMS 0.0. PR #30 integrated the #24–#29 release-hardening stack into main at `6d1169b`; all 35 exact-head checks passed. PyPI still reports 0.1.1 with hashes different from development builds. The six exact license scopes are accepted through 2026-10-13; candidate selection, other approvals, actual controls and release-specific provenance/install evidence remain open. No publication is authorized. | [Readiness gates](docs/releases/0.2.0-readiness.md), [integration verification](docs/release-stack-integration-review.md) | 2026-09-13 |
 | `license-artifact-scope` | Twelve locked upstream archives and eight profile exports are inventoried. Dev/docs are advertised extras. Docutils' GPL Emacs helper is source-only in the inspected pair; fqdn's sdist omits its wheel's license file. Hypothesis inspection covers one of 80 wheels. Josh Myers accepted the exact separately installed/non-bundled scopes on 2026-09-13 through 2026-10-13; redistribution or changed artifacts require renewed review. | [Dossier](docs/LICENSE_REVIEW_DOSSIER.md), [registry](validation/supply-chain-exceptions.json), [evidence](docs/evidence/license-dossier-2026-09-12.json) | 2026-09-13 |
 
 ## Open work
 
-The [plan](binspect-plan.md) owns ordering and task status. The R2 read-only
-remote check observes PRs #6–#23 merged into `main`, now `2a6a486`. C1–C4, the
-binsreg adapter, A1–A3, D1–D3 and P1–P2 implementations are integrated. This does
-not invent independent statistical, license, visual or performance-budget acceptance.
-P3/R1/R3 remain draft PRs #24–#26 on `security/supply-chain-checks`,
-`test/artifact-workflow-qualification` and `chore/maintenance-recovery`.
-PR #24 still targets the retained, already merged P2 branch. The
-[integration review](docs/release-stack-integration-review.md) prepares the full
-#24–#29 stack on current main in `review/release-stack-integration`, preserving
-main's large-integer category fix and both regressions. Draft #30 targets main;
-all 639 local tests pass after the artifact-integrity follow-up. CI run 34781858587
-on follow-up commit `efb6e34` has 34 passing jobs and the then-pending license-gate
-failure; its strengthened artifact check passes. Josh's subsequent six-version
-license acceptance makes the fresh local supply-chain gate pass; pushed-head CI
-remains to be observed.
-It is not merged into main.
-Actual GitHub/PyPI controls remain open. R3 schedule activation and actual operator
-recovery remain unverified.
-R2 now has a concrete [0.2.0 readiness record](docs/releases/0.2.0-readiness.md)
-and a verified figure interpreter provisioning repair on `chore/release-readiness`
-(draft #27). Local and CI image comparisons pass; its recorded pre-acceptance CI
-failed only for the then-pending licenses.
-No release candidate/approval is selected. Next actions are the owned acceptance,
-integration and exact-candidate qualification gates in that record; publication is blocked.
-The [provenance slice](docs/release-provenance-review.md), draft #28 on
-`security/release-provenance`, adds release-only signing and fresh verification of
-both files, exact certificate/source/workflow identity and run attempt. R1 stays
-read-only. Actual candidate signing/verification is still unqualified; a publish-only
-rerun intentionally rejects signatures from an earlier attempt. Its 630 local tests
-pass; recorded pre-acceptance CI failed only for the then-pending licenses. The
-separate local secret audit was unverified after a timeout; CI's secret scan passed.
+The [plan](binspect-plan.md) owns ordering and task status. PR #30 merged the full
+#24–#29 release-hardening stack into `main` at `6d1169b`, preserving main's
+large-integer category fix and both regressions. Its exact head `30d0793` passed all
+35 CI jobs, including supply-chain and 12 clean artifact installs; the local full
+gate passed 639 tests. This integrates P3/R1/R3 and R2 readiness/provenance tooling
+but does not invent independent statistical, visual, compatibility-policy,
+performance-budget or release acceptance.
+
+Actual GitHub/PyPI controls and Trusted Publisher identity remain open. R3 schedule
+activation and actual operator recovery remain unverified. No release candidate or
+publication approval is selected. The next actions are the owned acceptance and
+exact-candidate qualification gates in the [0.2.0 readiness record](docs/releases/0.2.0-readiness.md).
+Release provenance automation is integrated, but actual candidate signing and
+verification remain unqualified; a publish-only rerun intentionally rejects
+signatures from an earlier attempt.
 M2 maintainer acceptance remains open.
 Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
 proposed baseline decisions and governance/security/release gates remain open;

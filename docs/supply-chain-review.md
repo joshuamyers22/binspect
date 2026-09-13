@@ -1,6 +1,6 @@
 # P3 — supply-chain and secret checks
 
-- Owner/reviewer: Josh Myers; implementer: Codex; integration pending.
+- Owner/reviewer: Josh Myers; implementer: Codex; integrated through PR #30.
 - Baseline: P2 `54b197d`, draft PR #23; 2026-09-12 local date.
 - Branch: `security/supply-chain-checks`; implementation locally verified.
 - Current gate result: **pass** after the six exact license scopes were accepted
@@ -94,7 +94,7 @@ removed or relicensed to evade this review.
 
 ## Disposition
 
-P3 implementation and its scoped license review are prepared for integration. A
-fresh local online gate passes all six stages after the maintainer decision. This
-does not authorize publication or broaden the recorded scope. Exact pushed-head CI,
-repository controls and R1/R2 release-specific evidence remain separate gates.
+P3 implementation and its scoped license review are integrated through PR #30. A
+fresh local online gate and exact-head CI run 34783516923 pass all six stages after
+the maintainer decision. This does not authorize publication or broaden the recorded
+scope. Repository controls and R1/R2 release-specific evidence remain separate gates.
