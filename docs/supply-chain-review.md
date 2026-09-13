@@ -54,8 +54,10 @@ statistical conventions and assessment seeds remain reserved.
 ## Retained evidence and reproduction
 
 Run `make supply-chain` as described in [the scope/runbook](SUPPLY_CHAIN.md).
-The committed evidence snapshot contains a controlled report, all package license
-metadata, and the compressed CycloneDX graph for the actual inspected wheel/sdist.
+The committed evidence snapshot contains a [controlled report](evidence/supply-chain-2026-09-12.json),
+[all package license metadata](evidence/supply-chain-licenses-2026-09-12.json),
+and the [compressed CycloneDX graph](evidence/supply-chain-sbom-2026-09-12.cdx.json.gz)
+for the actual inspected wheel/sdist built from implementation commit `358c38a`.
 Decompress the `.cdx.json.gz` file to inspect normal CycloneDX JSON; its uncompressed
 SHA-256 must match the report. These are development artifacts, not a published
 release. The source revision identifies the implementation commit; a later

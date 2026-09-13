@@ -1,0 +1,1859 @@
+[
+  {
+    "package": "arrow",
+    "version": "1.4.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/arrow/1.4.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "ast-serialize",
+    "version": "0.8.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/ast-serialize/0.8.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "attrs",
+    "version": "26.1.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/attrs/26.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "babel",
+    "version": "2.18.0",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+    "source": "https://pypi.org/pypi/babel/2.18.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "backports-tarfile",
+    "version": "1.2.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/backports-tarfile/1.2.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "backrefs",
+    "version": "8.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/backrefs/8.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "binsreg",
+    "version": "3.2.1",
+    "id": "license-review",
+    "expression": "GPL-3.0-only",
+    "classifiers": [],
+    "license_text_sha256": "ffbc986889d4c74bc2e9762bab85e3ece0881871ed782117a2e9bff6d0a497c6",
+    "source": "https://pypi.org/pypi/binsreg/3.2.1/json",
+    "metadata_screen": "review",
+    "artifact_evidence": null
+  },
+  {
+    "package": "boolean-py",
+    "version": "5.0",
+    "id": "license-review",
+    "expression": "BSD-2-Clause",
+    "classifiers": [],
+    "license_text_sha256": "248dd895a2f89e28813b4c8c0a7d21806a35699102e4f6e32f47784b82730428",
+    "source": "https://pypi.org/pypi/boolean-py/5.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "build",
+    "version": "1.6.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/build/1.6.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "cachecontrol",
+    "version": "0.14.4",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/cachecontrol/0.14.4/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "certifi",
+    "version": "2026.7.22",
+    "id": "license-review",
+    "expression": "MPL-2.0",
+    "classifiers": [
+      "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+    ],
+    "license_text_sha256": "09962c1dc23fac80a0e5a88b2eb7051b74a6443a568ca2a045a4ec2fb82aeee5",
+    "source": "https://pypi.org/pypi/certifi/2026.7.22/json",
+    "metadata_screen": "review",
+    "artifact_evidence": null
+  },
+  {
+    "package": "cffi",
+    "version": "2.1.1",
+    "id": "license-review",
+    "expression": "MIT-0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/cffi/2.1.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "cfgv",
+    "version": "3.5.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/cfgv/3.5.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "charset-normalizer",
+    "version": "3.5.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/charset-normalizer/3.5.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "click",
+    "version": "8.5.0",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/click/8.5.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "colorama",
+    "version": "0.4.6",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/colorama/0.4.6/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "contourpy",
+    "version": "1.3.2",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "ff9c6efe67196028eabc503c37ef989abf491e77ccb098e82e460bb55486fcec",
+    "source": "https://pypi.org/pypi/contourpy/1.3.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "contourpy",
+    "version": "1.3.3",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "ff9c6efe67196028eabc503c37ef989abf491e77ccb098e82e460bb55486fcec",
+    "source": "https://pypi.org/pypi/contourpy/1.3.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "coverage",
+    "version": "7.16.0",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+    "source": "https://pypi.org/pypi/coverage/7.16.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "cryptography",
+    "version": "50.0.1",
+    "id": "license-review",
+    "expression": "Apache-2.0 OR BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/cryptography/50.0.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "cycler",
+    "version": "0.12.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "cb7372e1f27c787510db83fea48ded461cb8f0e0c154017f0b1927371ab06df1",
+    "source": "https://pypi.org/pypi/cycler/0.12.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "cyclonedx-python-lib",
+    "version": "11.12.0",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+    "source": "https://pypi.org/pypi/cyclonedx-python-lib/11.12.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "defusedxml",
+    "version": "0.7.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Python Software Foundation License"
+    ],
+    "license_text_sha256": "0c2f49e924f843224c80690cefd02e03d44fcf8e4e21cb3a8af5ba0b4e0990e0",
+    "source": "https://pypi.org/pypi/defusedxml/0.7.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "distlib",
+    "version": "0.4.3",
+    "id": "license-review",
+    "expression": "PSF-2.0",
+    "classifiers": [
+      "License :: OSI Approved :: Python Software Foundation License"
+    ],
+    "license_text_sha256": "606b04e71db9ca7a05d4fcb08cc69001946922a9b909de4932413ea640da9486",
+    "source": "https://pypi.org/pypi/distlib/0.4.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "docutils",
+    "version": "0.23",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License",
+      "License :: OSI Approved :: GNU General Public License (GPL)",
+      "License :: Public Domain"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/docutils/0.23/json",
+    "metadata_screen": "review",
+    "artifact_evidence": null
+  },
+  {
+    "package": "exceptiongroup",
+    "version": "1.3.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/exceptiongroup/1.3.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "filelock",
+    "version": "3.32.4",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/filelock/3.32.4/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "fonttools",
+    "version": "4.63.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/fonttools/4.63.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "formulaic",
+    "version": "1.2.2",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/formulaic/1.2.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "fqdn",
+    "version": "1.5.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+    ],
+    "license_text_sha256": "b8c6b234a68e22faca19cd6589d573386dc909463bd17459f22a731f596e2b0f",
+    "source": "https://pypi.org/pypi/fqdn/1.5.1/json",
+    "metadata_screen": "review",
+    "artifact_evidence": null
+  },
+  {
+    "package": "ghp-import",
+    "version": "2.1.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "8abaac38411f199b1e71efd166c3218c95be016c8a2d672de0c6c168de02d5c1",
+    "source": "https://pypi.org/pypi/ghp-import/2.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "griffelib",
+    "version": "2.2.0",
+    "id": "license-review",
+    "expression": "ISC",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/griffelib/2.2.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "grimp",
+    "version": "3.16",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "126240e440118e9332930272f3bd418587aef01f9d96e8e67e76475384dcadb8",
+    "source": "https://pypi.org/pypi/grimp/3.16/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "hatchling",
+    "version": "1.32.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/hatchling/1.32.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "hypothesis",
+    "version": "6.165.10",
+    "id": "license-review",
+    "expression": "MPL-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/hypothesis/6.165.10/json",
+    "metadata_screen": "review",
+    "artifact_evidence": null
+  },
+  {
+    "package": "id",
+    "version": "1.6.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/id/1.6.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "identify",
+    "version": "2.6.19",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/identify/2.6.19/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "idna",
+    "version": "3.19",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/idna/3.19/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "import-linter",
+    "version": "2.14",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "126240e440118e9332930272f3bd418587aef01f9d96e8e67e76475384dcadb8",
+    "source": "https://pypi.org/pypi/import-linter/2.14/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "importlib-metadata",
+    "version": "9.0.1",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/importlib-metadata/9.0.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "iniconfig",
+    "version": "2.3.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/iniconfig/2.3.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "interface-meta",
+    "version": "2.0.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/interface-meta/2.0.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "isoduration",
+    "version": "20.11.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: ISC License (ISCL)"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/isoduration/20.11.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jaraco-classes",
+    "version": "3.4.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/jaraco-classes/3.4.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jaraco-context",
+    "version": "6.1.2",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/jaraco-context/6.1.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jaraco-functools",
+    "version": "4.6.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/jaraco-functools/4.6.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jeepney",
+    "version": "0.9.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/jeepney/0.9.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jinja2",
+    "version": "3.1.6",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/jinja2/3.1.6/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jsonpointer",
+    "version": "3.1.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "773f7b510caed97c75d44ea8e59e62a082458224206c63ef0240a61e3fce257a",
+    "source": "https://pypi.org/pypi/jsonpointer/3.1.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jsonschema",
+    "version": "4.26.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/jsonschema/4.26.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "jsonschema-specifications",
+    "version": "2025.9.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/jsonschema-specifications/2025.9.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "keyring",
+    "version": "25.7.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/keyring/25.7.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "kiwisolver",
+    "version": "1.5.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "19d83466d386270c9bf7f7c4b642cc1ab1058e0f460889ee67477d0464ec046a",
+    "source": "https://pypi.org/pypi/kiwisolver/1.5.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "lark",
+    "version": "1.3.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/lark/1.3.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "librt",
+    "version": "0.15.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/librt/0.15.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "license-expression",
+    "version": "30.4.4",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+    "source": "https://pypi.org/pypi/license-expression/30.4.4/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "lxml",
+    "version": "6.1.3",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+    "source": "https://pypi.org/pypi/lxml/6.1.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "markdown",
+    "version": "3.10.3",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/markdown/3.10.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "markdown-it-py",
+    "version": "4.2.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/markdown-it-py/4.2.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "markupsafe",
+    "version": "3.0.3",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/markupsafe/3.0.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "matplotlib",
+    "version": "3.10.9",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Python Software Foundation License"
+    ],
+    "license_text_sha256": "964295c1668927670a042d6de397d75dee853d33da08c0e0623071f56c912f91",
+    "source": "https://pypi.org/pypi/matplotlib/3.10.9/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "matplotlib",
+    "version": "3.11.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Python Software Foundation License"
+    ],
+    "license_text_sha256": "0f0751bd95a7c5f9e9199193e22e79b3e1de08d5c444aabec225a4b8313735cd",
+    "source": "https://pypi.org/pypi/matplotlib/3.11.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mdurl",
+    "version": "0.1.2",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mdurl/0.1.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mergedeep",
+    "version": "1.3.4",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mergedeep/1.3.4/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mizani",
+    "version": "0.14.4",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "63bfdf515d6d7fc4f5e91edd7084d20fa61c4fa68c2187fa39dd799a7c8a0cbf",
+    "source": "https://pypi.org/pypi/mizani/0.14.4/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mkdocs",
+    "version": "1.6.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mkdocs/1.6.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mkdocs-autorefs",
+    "version": "1.4.4",
+    "id": "license-review",
+    "expression": "ISC",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mkdocs-autorefs/1.4.4/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mkdocs-get-deps",
+    "version": "0.2.2",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mkdocs-get-deps/0.2.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mkdocs-material",
+    "version": "9.7.7",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mkdocs-material/9.7.7/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mkdocs-material-extensions",
+    "version": "1.3.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mkdocs-material-extensions/1.3.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mkdocstrings",
+    "version": "1.0.6",
+    "id": "license-review",
+    "expression": "ISC",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mkdocstrings/1.0.6/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mkdocstrings-python",
+    "version": "2.0.7",
+    "id": "license-review",
+    "expression": "ISC",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mkdocstrings-python/2.0.7/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "more-itertools",
+    "version": "11.1.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/more-itertools/11.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "msgpack",
+    "version": "1.2.2",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/msgpack/1.2.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mypy",
+    "version": "2.3.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mypy/2.3.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "mypy-extensions",
+    "version": "1.1.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/mypy-extensions/1.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": {
+      "package": "mypy-extensions",
+      "version": "1.1.0",
+      "expression": "MIT",
+      "artifact_url": "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-1.1.0-py3-none-any.whl",
+      "artifact_sha256": "1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505",
+      "member": "mypy_extensions-1.1.0.dist-info/licenses/LICENSE",
+      "license_sha256": "a50450da1d53cd777b80ced77c58ff96abe0ccd879706bd142c3ec20e245f0b4",
+      "rationale": "PyPI omits license fields; this exact wheel carries the MIT license."
+    }
+  },
+  {
+    "package": "narwhals",
+    "version": "2.25.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/narwhals/2.25.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "nh3",
+    "version": "0.3.7",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/nh3/0.3.7/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "nodeenv",
+    "version": "1.10.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "49d9777da612e1f4e9269fa9f93ea324a66f9dcc7722ad812de124ef3f266d93",
+    "source": "https://pypi.org/pypi/nodeenv/1.10.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "numpy",
+    "version": "2.2.6",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "cce2226368428472ef560fec51ebd5443101d45766ccef5ddf950463b9a6707d",
+    "source": "https://pypi.org/pypi/numpy/2.2.6/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "numpy",
+    "version": "2.4.6",
+    "id": "license-review",
+    "expression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/numpy/2.4.6/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "numpy",
+    "version": "2.5.2",
+    "id": "license-review",
+    "expression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/numpy/2.5.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "packageurl-python",
+    "version": "0.17.6",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/packageurl-python/0.17.6/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "packaging",
+    "version": "26.3",
+    "id": "license-review",
+    "expression": "Apache-2.0 OR BSD-2-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/packaging/26.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "paginate",
+    "version": "0.5.7",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/paginate/0.5.7/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pandas",
+    "version": "2.3.3",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "5cac59cd53fb6248d37581fb28ea48625f102d289396a051705e8a43a5b4d87b",
+    "source": "https://pypi.org/pypi/pandas/2.3.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pandas",
+    "version": "3.0.5",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "f266aac3e66a6bd12605d104cc13712d2c7fcfa7b65a4d13eb82bb413cb227f6",
+    "source": "https://pypi.org/pypi/pandas/3.0.5/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pandas-stubs",
+    "version": "2.3.3.260113",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+    "source": "https://pypi.org/pypi/pandas-stubs/2.3.3.260113/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pandas-stubs",
+    "version": "3.0.5.260730",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pandas-stubs/3.0.5.260730/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pathspec",
+    "version": "1.1.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pathspec/1.1.1/json",
+    "metadata_screen": "review",
+    "artifact_evidence": null
+  },
+  {
+    "package": "patsy",
+    "version": "1.0.2",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "d7f5d0c836a8ad8eeb889fd2be7e129248e656d2010f9596a1c63f9bc86bcc00",
+    "source": "https://pypi.org/pypi/patsy/1.0.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pillow",
+    "version": "12.3.0",
+    "id": "license-review",
+    "expression": "MIT-CMU",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pillow/12.3.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pip",
+    "version": "26.2.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pip/26.2.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pip-api",
+    "version": "0.0.35",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "fa57940e681d37012eb1b88225cb6dcc4ce00fda79bbcf1aed42bc9ea9f642c0",
+    "source": "https://pypi.org/pypi/pip-api/0.0.35/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pip-audit",
+    "version": "2.10.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pip-audit/2.10.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pip-requirements-parser",
+    "version": "32.0.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/pip-requirements-parser/32.0.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "platformdirs",
+    "version": "4.11.5",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/platformdirs/4.11.5/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "plotnine",
+    "version": "0.15.3",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "725f4b95b1ad4c6ad01cdf887ffc1b800b1fec228c12f58f323ddbea26c9aaf5",
+    "source": "https://pypi.org/pypi/plotnine/0.15.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "plotnine",
+    "version": "0.15.8",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "725f4b95b1ad4c6ad01cdf887ffc1b800b1fec228c12f58f323ddbea26c9aaf5",
+    "source": "https://pypi.org/pypi/plotnine/0.15.8/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pluggy",
+    "version": "1.6.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/pluggy/1.6.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "polars",
+    "version": "1.44.2",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e2d65fa670688b985a6480f161a7b4b3fa6dff86ff7f8d7d62e55ecb2caa3c3c",
+    "source": "https://pypi.org/pypi/polars/1.44.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "polars-runtime-32",
+    "version": "1.44.2",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/polars-runtime-32/1.44.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pre-commit",
+    "version": "4.6.2",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/pre-commit/4.6.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "py-serializable",
+    "version": "2.1.0",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+    "source": "https://pypi.org/pypi/py-serializable/2.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pycparser",
+    "version": "3.0",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pycparser/3.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pygments",
+    "version": "2.21.0",
+    "id": "license-review",
+    "expression": "BSD-2-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pygments/2.21.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pymdown-extensions",
+    "version": "11.0.2",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pymdown-extensions/11.0.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pyparsing",
+    "version": "3.3.2",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pyparsing/3.3.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pypdf",
+    "version": "6.18.1",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pypdf/6.18.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pyproject-hooks",
+    "version": "1.2.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pyproject-hooks/1.2.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pytest",
+    "version": "9.1.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pytest/9.1.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pytest-cov",
+    "version": "7.1.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pytest-cov/7.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pytest-mpl",
+    "version": "0.19.0",
+    "id": "license-review",
+    "expression": "BSD-2-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pytest-mpl/0.19.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "python-dateutil",
+    "version": "2.9.0.post0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License",
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "199628ddb098f90709bb2dc43f816a5a40fe31690de0e25d0f4d6455fe6bc609",
+    "source": "https://pypi.org/pypi/python-dateutil/2.9.0.post0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "python-discovery",
+    "version": "1.6.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "9b3569b7e95baa53c4ef3f0e411d84139f7b6733876e0ecfc741525ac78edbb9",
+    "source": "https://pypi.org/pypi/python-discovery/1.6.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pytz",
+    "version": "2026.3.post1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/pytz/2026.3.post1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pywin32-ctypes",
+    "version": "0.2.3",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+    "source": "https://pypi.org/pypi/pywin32-ctypes/0.2.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pyyaml",
+    "version": "6.0.3",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/pyyaml/6.0.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "pyyaml-env-tag",
+    "version": "1.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/pyyaml-env-tag/1.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "readme-renderer",
+    "version": "46.0",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/readme-renderer/46.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "referencing",
+    "version": "0.37.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/referencing/0.37.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "requests",
+    "version": "2.34.2",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+    "source": "https://pypi.org/pypi/requests/2.34.2/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "requests-toolbelt",
+    "version": "1.0.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "cf989ea142f203f532233fa944ee1d8d5acfe6f6875e4d611f515ee108ba26df",
+    "source": "https://pypi.org/pypi/requests-toolbelt/1.0.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "rfc3339-validator",
+    "version": "0.1.4",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "dda6e5f49978b2355b302632860f2c0b8a7eeeb36426dcced89530e24477663e",
+    "source": "https://pypi.org/pypi/rfc3339-validator/0.1.4/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "rfc3986",
+    "version": "2.0.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "cf989ea142f203f532233fa944ee1d8d5acfe6f6875e4d611f515ee108ba26df",
+    "source": "https://pypi.org/pypi/rfc3986/2.0.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "rfc3986-validator",
+    "version": "0.1.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "dda6e5f49978b2355b302632860f2c0b8a7eeeb36426dcced89530e24477663e",
+    "source": "https://pypi.org/pypi/rfc3986-validator/0.1.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "rfc3987-syntax",
+    "version": "1.1.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/rfc3987-syntax/1.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "rich",
+    "version": "15.0.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/rich/15.0.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "rpds-py",
+    "version": "0.30.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/rpds-py/0.30.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "rpds-py",
+    "version": "2026.6.3",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/rpds-py/2026.6.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "ruff",
+    "version": "0.16.5",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/ruff/0.16.5/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "scipy",
+    "version": "1.15.3",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "77533cc10994ae19ce0be3fde08cecaba259c7e8f3bac0a8365afe64e6d43e80",
+    "source": "https://pypi.org/pypi/scipy/1.15.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "scipy",
+    "version": "1.17.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "9721740853ba56a7e5a77185608c83b808a92f6730d7c108006fca0a9f71d1a3",
+    "source": "https://pypi.org/pypi/scipy/1.17.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "scipy",
+    "version": "1.18.1",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "b63d03a68fb79b74e34eac12de35a9f347861eafd7526ac3192d13e53f57e086",
+    "source": "https://pypi.org/pypi/scipy/1.18.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "secretstorage",
+    "version": "3.5.0",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/secretstorage/3.5.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "six",
+    "version": "1.17.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/six/1.17.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "sortedcontainers",
+    "version": "2.4.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "cf989ea142f203f532233fa944ee1d8d5acfe6f6875e4d611f515ee108ba26df",
+    "source": "https://pypi.org/pypi/sortedcontainers/2.4.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "statsmodels",
+    "version": "0.15.0",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/statsmodels/0.15.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "tomli",
+    "version": "2.4.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/tomli/2.4.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "tomli-w",
+    "version": "1.2.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/tomli-w/1.2.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "tomlkit",
+    "version": "0.15.1",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+    "source": "https://pypi.org/pypi/tomlkit/0.15.1/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "trove-classifiers",
+    "version": "2026.6.1.19",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/trove-classifiers/2026.6.1.19/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "twine",
+    "version": "7.0.0",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/twine/7.0.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "types-pytz",
+    "version": "2026.3.1.20260727",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/types-pytz/2026.3.1.20260727/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "typing-extensions",
+    "version": "4.16.0",
+    "id": "license-review",
+    "expression": "PSF-2.0",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/typing-extensions/4.16.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "tzdata",
+    "version": "2026.3",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [],
+    "license_text_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+    "source": "https://pypi.org/pypi/tzdata/2026.3/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "uri-template",
+    "version": "1.3.0",
+    "id": "license-review",
+    "expression": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "abb2896dc3c2a9402f901b88d5035cf0a83d5cf7c17e73642cdf562b0b9d3bc5",
+    "source": "https://pypi.org/pypi/uri-template/1.3.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "urllib3",
+    "version": "2.7.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/urllib3/2.7.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "virtualenv",
+    "version": "21.7.7",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [
+      "License :: OSI Approved :: MIT License"
+    ],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/virtualenv/21.7.7/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "watchdog",
+    "version": "6.0.0",
+    "id": "license-review",
+    "expression": "Apache-2.0",
+    "classifiers": [
+      "License :: OSI Approved :: Apache Software License"
+    ],
+    "license_text_sha256": "2af71558e438db0b73a20beab92dc278a94e1bbe974c00c1a33e3ab62d53a608",
+    "source": "https://pypi.org/pypi/watchdog/6.0.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "webcolors",
+    "version": "25.10.0",
+    "id": "license-review",
+    "expression": "BSD-3-Clause",
+    "classifiers": [
+      "License :: OSI Approved :: BSD License"
+    ],
+    "license_text_sha256": "118dbcd2d5c9f9b296a9ede9fcc469c5840f7b98ad2c88461055bf2ceda38037",
+    "source": "https://pypi.org/pypi/webcolors/25.10.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "wrapt",
+    "version": "2.3.0",
+    "id": "license-review",
+    "expression": "BSD-2-Clause",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/wrapt/2.3.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  },
+  {
+    "package": "zipp",
+    "version": "4.1.0",
+    "id": "license-review",
+    "expression": "MIT",
+    "classifiers": [],
+    "license_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source": "https://pypi.org/pypi/zipp/4.1.0/json",
+    "metadata_screen": "pass",
+    "artifact_evidence": null
+  }
+]
