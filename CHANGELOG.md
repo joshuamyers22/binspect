@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Release allocation
+
+Proposed next version: **0.2.0**, pending maintainer acceptance and release gates.
+Polars default tables, result mutation restrictions, changed verdicts and rejected
+inference combinations affect existing callers and will not ship as a 0.1.2 patch.
+Compatible fixes are included in the same minor release. Package version remains
+0.1.1 and no release is published by this allocation. See the
+[compatibility policy and per-change allocation](docs/COMPATIBILITY.md) for migration
+examples, schema/deprecation rules and the distinction between corrections and
+intentional default changes.
+
 ### Fixed
 - Declared integer categorical controls preserve exact labels above `2**53`,
   preventing float conversion from merging categories and changing adjusted fits.
@@ -66,6 +77,10 @@ All notable changes to this project are documented here. The format follows
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- A proposed compatibility policy, supported estimation/plotting option matrix,
+  runtime-inspected public API inventory and executable migration examples. The
+  policy preserves caller Axes identity and scoped themes and distinguishes API
+  availability from statistical/dependency qualification.
 - Versioned strict-JSON result schemas, deterministic `to_json()`, input exclusion
   counts, encoded control/design identity and tagged group labels. `to_evidence()`
   accepts caller-owned plan/input/lock/code references and a separate optional

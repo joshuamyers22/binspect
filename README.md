@@ -10,7 +10,8 @@ linear specification diagnostic.
 The development version is **Polars-native**, with pandas input compatibility.
 Result tables are Polars DataFrames; use `result.to_pandas()` for an explicit
 pandas projection. NumPy/SciPy handle numerical estimation. These changes are
-unreleased; see the [input and export contract](docs/INPUT_OUTPUT_CONTRACT.md).
+unreleased; see the [input and export contract](docs/INPUT_OUTPUT_CONTRACT.md) and
+[compatibility policy and migration examples](docs/COMPATIBILITY.md).
 
 ![binspect](docs/hero.png)
 
@@ -109,10 +110,10 @@ clustered = binspect.binscatter(
 )
 ```
 
-This applies CR1 cluster-robust standard errors to both the fitted slope and bin
-means. Bin-mean intervals use a t reference distribution based on the number of
-clusters represented in each bin. Bins containing fewer than two positive-weight
-clusters have undefined intervals.
+This applies CR1 cluster-robust standard errors to the fitted slope and, without
+controls, bin means. Bin-mean intervals use a t reference distribution based on
+the number of clusters represented in each bin. Bins containing fewer than two
+positive-weight clusters have undefined intervals.
 
 Few or highly uneven clusters can produce severe undercoverage even when CR1
 arithmetic is correct. In a controlled development case with three clusters sized
@@ -263,15 +264,17 @@ distribution of the exogenous variable as separate layers.
 | `bins` | Bin means — the saturated-model fitted values | on |
 | `ci` | Confidence bar per bin mean | on |
 | `fit` | OLS line through the underlying data | on |
-| `deviation` | Shading between bin means and the line — the lack of fit | on |
+| `deviation` | Signed departures between bin means and the line; not squared gap or area | on |
 | `rug` | x-density, so quantile bins can't hide their own imbalance | on |
-| `sd_line` | Slope σy/σx — the OLS line is this flattened by `r` | off |
+| `sd_line` | Signed SD reference; OLS slope equals SD slope times `abs(r)` | off |
 | `smooth` | Local-linear smoother through the bin means | off |
 | `raw` | Underlying observations at low alpha | off |
 
-Three themes are included: `notebook` (default), `paper` (thin, serif, grayscale-safe),
-and `deck` (larger marks and type). Themes are colorblind-safe and scoped; importing
-`binspect` does not modify global `rcParams`.
+Three themes are included: `notebook` (default), `paper` (thin, serif), and `deck`
+(larger marks and type). Themes are scoped; importing `binspect` does not modify
+global `rcParams`. Grayscale/color-vision and exported-figure qualification remain
+in plan task D2. See the [public plotting inventory](docs/API_INVENTORY.md) for
+layer options, draw order and return types.
 
 Use `bs.audit()` for a composed diagnostic figure with the unchanged binscatter in
 the central panel, marginal histograms, and OLS residuals against fitted values.
@@ -322,8 +325,10 @@ area or length does not equal the weighted squared gap.
 ## Status
 
 Package version is `0.1.1`; Polars tables and versioned exports are unreleased.
-The API may continue to evolve during the `0.x`
-series. The distribution name is `binspect-regression`; the import remains `binspect`.
+The proposed next release is `0.2.0` because these changes affect existing callers;
+maintainer review and release gates remain open. See the
+[compatibility policy](docs/COMPATIBILITY.md) for supported options and migration.
+The distribution name is `binspect-regression`; the import remains `binspect`.
 
 **Not yet implemented:** uniform confidence bands and quantile regression.
 Without controls, weights or clusters, bin standard errors are `sd/√n` and assume
