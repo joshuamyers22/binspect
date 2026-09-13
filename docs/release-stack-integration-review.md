@@ -40,5 +40,37 @@ guide is aligned with it. Memory/plan retain current pending gates and the later
 stack work while incorporating main's A1–P2 review dispositions. Main's historical
 `pr-stack-review.md` and categorical changelog entry are preserved.
 
-Targeted and full combined-tree verification pending. No GitHub PR has been merged,
-no previous draft changed or closed, and no release, setting or approval changed.
+The local integration commit is `a1940587ecf13c258c8ff482f3f68cf4ad11817b`, with
+parents `83d28ae` (stack plus this verification contract) and `2a6a486` (main).
+All 77 existing main source/test/baseline files, excluding the intentionally
+updated baseline README, match main exactly. The stack's validation scripts,
+workflows, manifest and lock match `8830649`. Runtime source has no diff from main.
+
+All 35 Polars contract tests pass on the combined branch. Required `make check`
+passes: 558 unit + 34 DPI + 40 reference tests (632), 94.65% coverage, strict mypy
+(38 source files), four import contracts, native Polars without pandas, unchanged
+development simulations, 38 docs blocks plus quickstart, strict site, four image
+comparisons at RMS 0.0 and wheel/sdist build. Reserved assessments remain unrun.
+The detached preintegration checkout was removed after the reproduction; controlled
+outcomes remain recorded here rather than retaining raw failure logs.
+
+[Draft PR #30](https://github.com/joshuamyers22/binspect/pull/30) targets `main`.
+[CI run 34735451959](https://github.com/joshuamyers22/binspect/actions/runs/34735451959)
+at integration head `a194058` completes with 34 passing jobs. Supply-chain alone
+fails, exclusively for the same six pending license decisions; its vulnerability,
+action, artifact, secret and SBOM checks pass. The recorded audit source hash for
+the category boundary matches this combined tree. The CI checkout is a PR merge
+revision; the [controlled evidence](evidence/release-stack-integration-2026-09-12.json)
+records both identities and the exact inspected development artifact hashes.
+
+This branch is prepared for maintainer integration review. It has no runtime-source
+diff from current main and introduces the pending release-tooling stack through
+one main-based draft. Earlier PRs #24–#29 retain their original branches/bases and
+review history. A later documentation/evidence commit is distinct from the
+verified integration head and receives separate documentation/evidence checks.
+Final checks pass for 189 local Markdown links, Ruff/formatting, whitespace and
+the retained evidence directory's pinned Gitleaks scan. The scanner's cached
+archive and executable match the committed pin; no exclusion was added.
+No GitHub PR has been merged, no previous draft changed or closed, and no release,
+setting or approval changed. License, statistical, policy, performance, visual,
+operator and exact-release gates remain open.

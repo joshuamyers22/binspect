@@ -52,7 +52,9 @@ P3/R1/R3 remain draft PRs #24–#26 on `security/supply-chain-checks`,
 PR #24 still targets the retained, already merged P2 branch. The
 [integration review](docs/release-stack-integration-review.md) prepares the full
 #24–#29 stack on current main in `review/release-stack-integration`, preserving
-main's large-integer category fix and both regressions. It is not merged into main.
+main's large-integer category fix and both regressions. Draft #30 targets main;
+all 632 local tests pass, and verified CI fails only for the six pending licenses.
+It is not merged into main.
 P3's six license decisions and actual GitHub/PyPI controls
 remain open. R3 schedule activation and actual operator recovery remain unverified.
 R2 now has a concrete [0.2.0 readiness record](docs/releases/0.2.0-readiness.md)
