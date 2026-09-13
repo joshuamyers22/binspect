@@ -173,18 +173,20 @@ def estimate_bins(
         active = w > 0
         n_cluster_values = int(uniques.size)
         composite = assignment[active] * n_cluster_values + codes[active]
+        # Only occupied (bin, cluster) pairs need score storage. Factorizing the
+        # composite IDs bounds bincount output by active rows, not bins*clusters.
+        # Original row order within each score is preserved by bincount.
+        occupied, pair_codes = np.unique(composite, return_inverse=True)
         scores = np.bincount(
-            composite,
+            pair_codes,
             weights=w[active] * (y[active] - y_mean[assignment[active]]),
-            minlength=n_bins * n_cluster_values,
-        ).reshape(n_bins, n_cluster_values)
-        represented = np.bincount(
-            composite, minlength=n_bins * n_cluster_values
-        ).reshape(n_bins, n_cluster_values)
-        n_clusters = np.count_nonzero(represented, axis=1).astype(np.int64)
+        )
+        pair_bins = occupied // n_cluster_values
+        n_clusters = np.bincount(pair_bins, minlength=n_bins).astype(np.int64)
+        score_squares = np.bincount(pair_bins, weights=scores**2, minlength=n_bins)
         with np.errstate(invalid="ignore", divide="ignore"):
             correction = n_clusters / (n_clusters - 1.0)
-            variance_mean = correction * np.sum(scores**2, axis=1) / sum_w**2
+            variance_mean = correction * score_squares / sum_w**2
         se = np.where(n_clusters > 1, np.sqrt(variance_mean), np.nan)
         interval_df = np.maximum(n_clusters - 1, 1)
         se_type = "cluster"

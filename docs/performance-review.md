@@ -57,6 +57,11 @@ the bounded alternative; do not increase the cap to make it pass. Numeric timing
 RSS regression budgets must be derived from retained repeated measurements and
 remain proposed until a maintainer accepts the baseline and controlled runner.
 Implement comparison/enforcement without fabricating that acceptance.
+Before candidate measurements, fix the proposal rule at 1.25 times each timing's
+maximum trial and 1.20 times each RSS maximum. These are review candidates, not
+statistical confidence limits or accepted support promises; excluded/capped cases
+receive no budget. Enforcement must reject pending acceptance, changed environments,
+missing/incomplete cases, and time/memory overruns.
 
 ## Evidence ledger
 
