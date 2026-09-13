@@ -10,6 +10,15 @@ from pathlib import Path
 
 
 def reconcile(manifest, index, *, known_defect=False):
+    if (
+        not isinstance(manifest, dict)
+        or not isinstance(manifest.get("artifacts"), list)
+        or not isinstance(manifest.get("version"), str)
+        or not isinstance(index, dict)
+        or not isinstance(index.get("info"), dict)
+        or not isinstance(index.get("urls"), list)
+    ):
+        raise ValueError("Complete manifest and release-index objects are required")
     version = manifest["version"]
     expected_names = {
         f"binspect_regression-{version}-py3-none-any.whl",

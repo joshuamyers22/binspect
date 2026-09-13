@@ -175,3 +175,11 @@ def test_resolution_outage_replaces_stale_pass_with_owned_unverified_record(
     assert result["stages"][0]["returncode"] == 2
     assert "private" not in (tmp_path / "result.json").read_text()
     assert "private" not in (tmp_path / "stages.jsonl").read_text()
+
+
+@pytest.mark.parametrize("files", [{}, "", None, False])
+def test_malformed_file_collection_is_not_an_empty_release(publication, files):
+    manifest, index = publication
+    index["urls"] = files
+    with pytest.raises(ValueError, match="Complete"):
+        recovery.reconcile(manifest, index)
