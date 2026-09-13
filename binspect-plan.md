@@ -33,8 +33,11 @@ corrected to 3.2.1; Polars defaults, pandas compatibility and Python 3.10–3.13
 are retained. **P3 supply-chain tooling is implemented; its gate remains blocked
 by six pending license reviews.** See [scope and decisions](docs/SUPPLY_CHAIN.md)
 and [actual verification](docs/supply-chain-review.md). No exception approval or
-release qualification is implied. **Next implementation: R1 — artifact/workflow
-qualification without publishing.** A3 allocates
+release qualification is implied. **R1 artifact/workflow implementation and
+nonpublishing handoff tests are complete; maintainer acceptance and control gaps
+remain open.** See [R1 evidence](docs/artifact-workflow-review.md): all 24 CI artifact
+installs pass, while overall CI fails for pending licenses and unavailable pinned
+figure Python. **Next implementation: R3 — maintenance/recovery preparation.** A3 allocates
 the pending incompatible changes to a proposed 0.2.0 minor release; package version
 and release authorization are unchanged. M2 review/acceptance remains open. The
 roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
@@ -436,3 +439,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | P1 — occupied-cluster aggregation and workload limits | [Measurement scope](docs/site/guide/performance.md), [experiment and retained evidence](docs/performance-review.md), [harness](validation/performance.py), [budget enforcement](validation/performance_check.py) | Implemented on `perf/cluster-workloads`, stacked on D3. Dense bin-by-cluster storage replaced; guarded 10k–1M measurements and budget proposals prepared for review. Baseline/controlled-runner acceptance and integration remain open; 10M and general capacity are unqualified. Next implementation P2. |
 | 2026-09-12 | P2 — dependency configurations | [Configuration guide](docs/site/guide/dependencies.md), [isolated installed-code checks](validation/dependencies.py), [actual evidence](docs/dependency-review.md) | Implemented on `test/dependency-configurations`, stacked on P1. Ten CI configurations cover minimal, DPI, locked development, direct floors and fresh current dependencies; binsreg minimum corrected to 3.2.1 after a real adapter failure. Python 3.10–3.13 retained. Maintainer review/integration and remote CI remain separate gates. Next implementation P3. |
 | 2026-09-12 | P3 — supply-chain and secret checks | [Scope/pending decisions](docs/SUPPLY_CHAIN.md), [blocking gate](validation/supply_chain.py), [verification](docs/supply-chain-review.md) | Implemented on `security/supply-chain-checks`, stacked on P2. All locked versions are audited; build/audit tools and action refs are pinned; history/working/artifact secret scans and validated artifact-linked CycloneDX evidence are added. Six pending license reviews block the gate and P3 acceptance. Maintainer review/integration and remote controls remain open. R1 nonpublishing qualification is the next implementation item. |
+| 2026-09-12 | R1 — artifact/workflow qualification | [Implementation and retained evidence](docs/artifact-workflow-review.md); [draft PR #25](https://github.com/joshuamyers22/binspect/pull/25); local full gate passes, 12 local and 24 CI clean artifact installs pass | Implemented on `test/artifact-workflow-qualification`, stacked on P3. Shared nonpublishing build/download/install path verified; Polars defaults and optional pandas conversion retained. Overall CI fails for six pending license reviews and unavailable pinned figure Python. Actual main/PyPI controls and Trusted Publisher mapping still need acceptance; no publication. Next implementation R3. |

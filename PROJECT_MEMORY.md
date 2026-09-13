@@ -36,6 +36,7 @@ No caller data, private logs, secrets, or hidden reasoning belong here.
 | `workload-limits` | P1 replaces dense bin-by-cluster score/count storage with occupied-pair aggregation, preserving CR1. The separate benchmark measures 10k–1M Polars rows with 2 GiB/120-second child guards and proposed host-specific budgets; pending acceptance cannot pass budget enforcement. Existing default rugs cap at 2,000 marks. Control matrices remain dense; 10M/general capacity are unqualified. | [Scope](docs/site/guide/performance.md), [evidence](docs/performance-review.md), [storage regressions](tests/test_cluster_storage.py), [budget checker](validation/performance_check.py) | 2026-09-12 |
 | `dependency-configurations` | P2 tests ten fresh installed configurations: minimal Python 3.10–3.13, DPI, locked all extras, runtime/pandas/DPI direct floors and current compatible packages. Binsreg 1.0 rejects the adapter CI request; minimum is now 3.2.1 with locked versions unchanged. Standalone pandas 2.0 passes; DPI resolves newer pandas transitively. Native/default tables remain Polars. Matrix journeys are not full inference or all-version qualification. | [Scope](docs/site/guide/dependencies.md), [evidence](docs/dependency-review.md), [floor regressions](tests/test_dependency_floors.py), [CI](.github/workflows/ci.yml) | 2026-09-12 |
 | `supply-chain-gate` | P3 adds an isolated online gate for all locked versions, license metadata, full available history/tracked/artifact secret scans and validated artifact-linked CycloneDX. Build/audit tools and workflow actions are pinned. Six license reviews (binsreg, certifi, docutils, fqdn, hypothesis, pathspec) remain pending and block the gate; no waiver/release acceptance is supplied. Three historical source-hash scanner false positives have exact value/path exclusions verified against historical source. | [Scope/decisions](docs/SUPPLY_CHAIN.md), [verification](docs/supply-chain-review.md), [regressions](tests/test_supply_chain.py), [exception registry](validation/supply-chain-exceptions.json) | 2026-09-12 |
+| `artifact-qualification` | R1 shares one locked build and verified artifact-ID handoff between CI and release; 12 local and 24 CI wheel/sdist installs pass, including native Polars and optional pandas/DPI. Qualification builds require clean commits. Overall CI fails for pending licenses and unavailable Python 3.12.14 arm64 in the figure job; local full gate passes. Main/PyPI controls and Trusted Publisher acceptance remain open; no publication. | [Contract/evidence](docs/artifact-workflow-review.md), [workflow](.github/workflows/artifacts.yml), [regressions](tests/test_artifacts.py) | 2026-09-12 |
 
 ## Open work
 
@@ -60,8 +61,10 @@ and integration remain pending. P2 dependency configurations and the binsreg min
 correction are implemented on `test/dependency-configurations`, stacked on P1;
 maintainer review/integration remains pending. P3 supply-chain tooling is implemented
 on `security/supply-chain-checks`, stacked on P2; six license reviews block its
-gate/acceptance, and maintainer review/integration remains pending. Next implementation:
-R1 artifact/workflow qualification without publishing.
+gate/acceptance, and maintainer review/integration remains pending. R1 shared artifact
+qualification is implemented on `test/artifact-workflow-qualification`, stacked on P3;
+all artifact installs pass, but actual controls, Trusted Publisher mapping and the
+remote figure runner remain open. Next implementation: R3 maintenance/recovery.
 M2 maintainer acceptance remains open.
 Few-cluster coverage remains unsupported. C3 qualified acceptance/final assessment,
 proposed baseline decisions and governance/security/release gates remain open;
