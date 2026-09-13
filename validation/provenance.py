@@ -99,8 +99,6 @@ def verify(bundle, manifest_sha256, attestation, *, source, ref, run_id, attempt
                 str(attestation.resolve()),
                 "--repo",
                 REPOSITORY,
-                "--signer-workflow",
-                f"{REPOSITORY}/{WORKFLOW}",
                 "--cert-identity",
                 f"https://github.com/{REPOSITORY}/{WORKFLOW}@{ref}",
                 "--source-digest",

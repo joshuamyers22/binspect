@@ -136,7 +136,6 @@ def test_both_artifacts_require_crypto_identity_and_rechecked_integrity(release)
         assert kwargs["timeout"] == 180
         for flag, value in {
             "--repo": "joshuamyers22/binspect",
-            "--signer-workflow": "joshuamyers22/binspect/.github/workflows/release.yml",
             "--cert-identity": f"https://github.com/joshuamyers22/binspect/.github/workflows/release.yml@{REF}",
             "--source-digest": SOURCE,
             "--signer-digest": SOURCE,
@@ -146,6 +145,12 @@ def test_both_artifacts_require_crypto_identity_and_rechecked_integrity(release)
             "--bundle": str(release["args"]["attestation"]),
         }.items():
             assert args[args.index(flag) + 1] == value
+        # gh 2.98 makes these actor-identity selectors mutually exclusive. The
+        # exact certificate SAN is stricter than the workflow-path selector and
+        # is combined with the repository, source/signer digests and tag ref.
+        assert "--signer-workflow" not in args
+        assert "--signer-repo" not in args
+        assert "--cert-identity-regex" not in args
         assert "--deny-self-hosted-runners" in args
 
 

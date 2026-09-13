@@ -1,7 +1,7 @@
 # Public API inventory
 
 Snapshot prepared from A2 `9a6db9f`, inspected on 2026-09-12 for A3 and rechecked
-for 0.2.0. This is the current callable/attribute inventory.
+for the 0.2 series. This is the current callable/attribute inventory.
 See [compatibility, supported combinations and migrations](COMPATIBILITY.md) and
 [table/JSON meanings](INPUT_OUTPUT_CONTRACT.md). Implementation sources are
 [top-level exports](../src/binspect/__init__.py), [types](../src/binspect/types.py),
@@ -20,7 +20,7 @@ Regenerate/recheck against runtime signatures when the public surface changes.
 
 `THEMES`, `AdjustedInferenceWarning`, `BinCountWarning`, `BinscatterCollection`, `BinscatterResult`, `BinspectError`, `BinsregError`, `BinsregResult`, `BinsregWarning`, `DiagnosticPolicy`, `InsufficientDataError`, `InvalidBinningError`, `__version__`, `binscatter`, `binsreg`, `compare`, `theme`.
 
-`__version__` currently equals `"0.2.0"`; `THEMES` is lazily loaded.
+`__version__` currently equals `"0.2.1"`; `THEMES` is lazily loaded.
 
 ```text
 binscatter(

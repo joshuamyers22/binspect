@@ -1,8 +1,8 @@
 # binspect — production project plan
 
-Updated 2026-09-13 from a remote check: `main` is
-`f9d0e08a37492b72022ceada56957418976771e3`, after merged release PR #32.
-Main declares `0.2.0`; publication is not yet complete.
+Updated 2026-09-13 after the v0.2.0 release run: `main` and the preserved public tag
+point to `b36392b92b0f088bae7c96fafe97640b6a2648c9`. PyPI publication did not occur;
+the recovery branch declares `0.2.1`.
 Historical verification records retain their review-time status; this observation
 supersedes pending-integration labels, not independent acceptance requirements.
 
@@ -33,19 +33,17 @@ The [license dossier](docs/LICENSE_REVIEW_DOSSIER.md) supplies exact archive not
 and distribution/profile scope for all six accepted decisions. The acceptance does
 not change dependencies, authorize broader redistribution or waive future audits.
 
-**R2 publication is authorized subject to fail-closed workflow gates.** The
-[0.2.0 readiness record](docs/releases/0.2.0-readiness.md) consolidates exact
-identities, missing approvals and owned next actions. A bounded
+**R2 stopped safely and patch recovery is active.** The
+[0.2.0 record](docs/releases/0.2.0-readiness.md) retains the failed run and exact
+signed pair; the [0.2.1 record](docs/releases/0.2.1-readiness.md) owns recovery. A bounded
 [R2 renderer repair](docs/release-readiness-review.md) obtains the existing Python
 3.12.14 pin through uv while preserving all image/renderer guards; its local and
-CI comparisons pass at RMS 0.0. On 2026-09-13 Josh selected version 0.2.0, confirmed
-the exact publisher mapping and authorized this immutable alpha release despite the
-explicitly retained owner-held gaps. The approval-record-only merge must pass
-exact-head CI before it becomes the tag target.
-The next R2 slice adds [release-only authenticated provenance](docs/release-provenance-review.md)
-and independent prepublication verification while preserving R1's read-only path.
-Actual signed candidate evidence and the protected-environment review remain pending
-and are produced only by the release workflow.
+CI comparisons pass at RMS 0.0. The authorized v0.2.0 workflow built, installed,
+audited and signed its exact pair, then GitHub CLI 2.98 rejected redundant mutually
+exclusive actor-identity selectors; publish was skipped. Recovery removes only the
+redundant selector while preserving exact certificate/repository/tag/commit/run policy.
+Version 0.2.1 requires regression, full CI/audit, a new immutable tag and explicit
+publication authorization before protected-environment review.
 
 C3 final assessment and qualified statistical acceptance remain open. The
 [adjusted FWL uncertainty withdrawal](docs/adjusted-inference-boundary-review.md)
