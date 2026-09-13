@@ -1,0 +1,613 @@
+{
+  "ci": {
+    "audit": {
+      "checks": {
+        "actions": "pass",
+        "artifacts": "pass",
+        "licenses": "fail",
+        "sbom": "pass",
+        "secrets": "pass",
+        "vulnerabilities": "pass"
+      },
+      "pending_licenses": [
+        {
+          "package": "binsreg",
+          "version": "3.2.1"
+        },
+        {
+          "package": "certifi",
+          "version": "2026.7.22"
+        },
+        {
+          "package": "docutils",
+          "version": "0.23"
+        },
+        {
+          "package": "fqdn",
+          "version": "1.5.1"
+        },
+        {
+          "package": "hypothesis",
+          "version": "6.165.10"
+        },
+        {
+          "package": "pathspec",
+          "version": "1.1.1"
+        }
+      ]
+    },
+    "conclusion": "failure",
+    "databaseId": 34733407408,
+    "headSha": "ddec636e69d247067d134919381c7683a381b1bf",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "databaseId": 103660331536,
+        "name": "dependencies (lower, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331556,
+        "name": "documentation",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331567,
+        "name": "inference-validation",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331590,
+        "name": "figures",
+        "status": "completed"
+      },
+      {
+        "conclusion": "failure",
+        "databaseId": 103660331591,
+        "name": "supply-chain",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331605,
+        "name": "dependencies (minimal, Python 3.11)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331608,
+        "name": "dpi-integration",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331611,
+        "name": "dependencies (minimal, Python 3.13)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331622,
+        "name": "test (ubuntu-latest, 3.13)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331640,
+        "name": "artifacts / build",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331642,
+        "name": "test (ubuntu-latest, 3.11)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331646,
+        "name": "test (macos-latest, 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331648,
+        "name": "test (ubuntu-latest, 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331649,
+        "name": "test (ubuntu-latest, 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331652,
+        "name": "dependencies (minimal, Python 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331659,
+        "name": "dependencies (minimal, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331665,
+        "name": "test (macos-latest, 3.13)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331668,
+        "name": "test (macos-latest, 3.11)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331702,
+        "name": "dependencies (lower-dpi, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331705,
+        "name": "test (macos-latest, 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331718,
+        "name": "dependencies (dpi, Python 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331757,
+        "name": "dependencies (locked, Python 3.12)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660331758,
+        "name": "dependencies (lower-pandas, Python 3.10)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386256,
+        "name": "artifacts / install (macos-latest, 3.13, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386264,
+        "name": "artifacts / install (ubuntu-latest, 3.12, pandas)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386266,
+        "name": "artifacts / install (ubuntu-latest, 3.12, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386272,
+        "name": "artifacts / install (macos-latest, 3.12, pandas)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386274,
+        "name": "artifacts / install (macos-latest, 3.11, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386277,
+        "name": "artifacts / install (ubuntu-latest, 3.10, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386286,
+        "name": "artifacts / install (ubuntu-latest, 3.12, dpi)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386294,
+        "name": "artifacts / install (macos-latest, 3.12, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386295,
+        "name": "artifacts / install (ubuntu-latest, 3.13, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386296,
+        "name": "artifacts / install (ubuntu-latest, 3.11, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386308,
+        "name": "artifacts / install (macos-latest, 3.10, native)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "databaseId": 103660386318,
+        "name": "artifacts / install (macos-latest, 3.12, dpi)",
+        "status": "completed"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/joshuamyers22/binspect/actions/runs/34733407408"
+  },
+  "declared_package_version": "0.1.1",
+  "external_mutations": "draft PR only; no release, merge, tag, publish, yank or settings changes",
+  "github": {
+    "actions": {
+      "allowed_actions": "all",
+      "enabled": true,
+      "sha_pinning_required": false
+    },
+    "main": "2a6a486174c00475fcb5fda31a0fe802789245dc",
+    "main_comparison_at_baseline": {
+      "ahead_by": 7,
+      "behind_by": 22,
+      "merge_base_commit": "54b197d5ee8e90e1f3af0dabceca9d7984cdd491",
+      "status": "diverged"
+    },
+    "merged_prs": [
+      {
+        "mergeCommit": {
+          "oid": "2a6a486174c00475fcb5fda31a0fe802789245dc"
+        },
+        "mergedAt": "2026-09-13T01:23:33Z",
+        "number": 23,
+        "title": "test: verify dependency configurations and correct DPI minimum",
+        "url": "https://github.com/joshuamyers22/binspect/pull/23"
+      },
+      {
+        "mergeCommit": {
+          "oid": "f8b1a9b87748522ae025445472627dc389c9ebc5"
+        },
+        "mergedAt": "2026-09-13T01:21:45Z",
+        "number": 22,
+        "title": "perf: bound clustered-bin storage and measure workloads",
+        "url": "https://github.com/joshuamyers22/binspect/pull/22"
+      },
+      {
+        "mergeCommit": {
+          "oid": "e8b29bcaa8f2910a5bb3940f456444ec6e60c9a0"
+        },
+        "mergedAt": "2026-09-13T01:21:41Z",
+        "number": 21,
+        "title": "docs: add reproducible Polars example gallery",
+        "url": "https://github.com/joshuamyers22/binspect/pull/21"
+      },
+      {
+        "mergeCommit": {
+          "oid": "613dbea21ea3a3f863f5fe4f0ba618aedc2b7842"
+        },
+        "mergedAt": "2026-09-13T01:21:08Z",
+        "number": 20,
+        "title": "test: verify figure exports and add rendering baselines",
+        "url": "https://github.com/joshuamyers22/binspect/pull/20"
+      },
+      {
+        "mergeCommit": {
+          "oid": "7715ee2781e13e9ef4a2669ee1fa8cb7996cfb94"
+        },
+        "mergedAt": "2026-09-13T01:20:19Z",
+        "number": 19,
+        "title": "docs: add executable user guide and generated API reference",
+        "url": "https://github.com/joshuamyers22/binspect/pull/19"
+      },
+      {
+        "mergeCommit": {
+          "oid": "74a31c1e652f2f8f30c0383f16bf6e7f48f10d59"
+        },
+        "mergedAt": "2026-09-13T01:20:04Z",
+        "number": 18,
+        "title": "docs: define compatibility policy and migration paths",
+        "url": "https://github.com/joshuamyers22/binspect/pull/18"
+      },
+      {
+        "mergeCommit": {
+          "oid": "907de2a1397cade12379faf2503e9795d599a1ba"
+        },
+        "mergedAt": "2026-09-13T01:17:28Z",
+        "number": 17,
+        "title": "feat: Polars-native dataframes with pandas compatibility and A2 exports",
+        "url": "https://github.com/joshuamyers22/binspect/pull/17"
+      },
+      {
+        "mergeCommit": {
+          "oid": "a83a91c13d9d2bc753fd080348974211d26bc36e"
+        },
+        "mergedAt": "2026-09-13T01:09:08Z",
+        "number": 16,
+        "title": "fix: protect stored results from mutation (A1)",
+        "url": "https://github.com/joshuamyers22/binspect/pull/16"
+      },
+      {
+        "mergeCommit": {
+          "oid": "25bf68c3b8b1ca7548d1b64d1c2c726f291400bd"
+        },
+        "mergedAt": "2026-09-12T21:25:37Z",
+        "number": 15,
+        "title": "Record merged stack and next implementation item",
+        "url": "https://github.com/joshuamyers22/binspect/pull/15"
+      }
+    ],
+    "private_vulnerability_reporting": {
+      "enabled": false
+    },
+    "protection": {
+      "http_status": 404,
+      "message": "Branch not protected"
+    },
+    "pypi_environment": {
+      "deployment_branch_policy": null,
+      "name": "pypi",
+      "protection_rules": [
+        {
+          "prevent_self_review": false,
+          "reviewers": [
+            {
+              "login": "joshuamyers22",
+              "type": "User"
+            }
+          ],
+          "type": "required_reviewers"
+        }
+      ]
+    },
+    "remaining_prs": [
+      {
+        "baseRefName": "test/artifact-workflow-qualification",
+        "headRefName": "chore/maintenance-recovery",
+        "headRefOid": "fc826db72d0390d1c340409e92a7aedf72b0073d",
+        "isDraft": true,
+        "number": 26,
+        "url": "https://github.com/joshuamyers22/binspect/pull/26"
+      },
+      {
+        "baseRefName": "security/supply-chain-checks",
+        "headRefName": "test/artifact-workflow-qualification",
+        "headRefOid": "16e4b284880ab375469ba00d4cbfd579c659959b",
+        "isDraft": true,
+        "number": 25,
+        "url": "https://github.com/joshuamyers22/binspect/pull/25"
+      },
+      {
+        "baseRefName": "test/dependency-configurations",
+        "headRefName": "security/supply-chain-checks",
+        "headRefOid": "2863e6dc9c8f5a3de4d2646c49886038dcc99800",
+        "isDraft": true,
+        "number": 24,
+        "url": "https://github.com/joshuamyers22/binspect/pull/24"
+      }
+    ],
+    "rulesets": [],
+    "trusted_publisher_mapping": "unverified; owner-side PyPI inspection required"
+  },
+  "implementation_commit": "ddec636e69d247067d134919381c7683a381b1bf",
+  "license_decisions": [
+    {
+      "expires": "2026-10-13",
+      "owner": "Josh Myers",
+      "package": "binsreg",
+      "status": "pending",
+      "version": "3.2.1"
+    },
+    {
+      "expires": "2026-10-13",
+      "owner": "Josh Myers",
+      "package": "certifi",
+      "status": "pending",
+      "version": "2026.7.22"
+    },
+    {
+      "expires": "2026-10-13",
+      "owner": "Josh Myers",
+      "package": "docutils",
+      "status": "pending",
+      "version": "0.23"
+    },
+    {
+      "expires": "2026-10-13",
+      "owner": "Josh Myers",
+      "package": "fqdn",
+      "status": "pending",
+      "version": "1.5.1"
+    },
+    {
+      "expires": "2026-10-13",
+      "owner": "Josh Myers",
+      "package": "hypothesis",
+      "status": "pending",
+      "version": "6.165.10"
+    },
+    {
+      "expires": "2026-10-13",
+      "owner": "Josh Myers",
+      "package": "pathspec",
+      "status": "pending",
+      "version": "1.1.1"
+    }
+  ],
+  "local_quality_gate": {
+    "build": "pass",
+    "coverage_percent": 94.65,
+    "development_simulations": "all pass; reserved assessments unrun",
+    "documentation_blocks": 38,
+    "dpi_tests": 34,
+    "figures_rms": {
+      "audit": 0.0,
+      "default": 0.0,
+      "deviation": 0.0,
+      "paper": 0.0
+    },
+    "import_contracts": 4,
+    "mypy_source_files": 38,
+    "quickstart": "pass",
+    "reference_tests": 40,
+    "status": "pass",
+    "strict_docs": "pass",
+    "unit_tests": 526
+  },
+  "observed_local_date": "2026-09-12",
+  "open_gates": [
+    "maintainer policy/ADR acceptance",
+    "qualified statistical review and final assessment",
+    "visual and performance-budget/runner acceptance",
+    "remaining stack integration and candidate selection",
+    "actual repository/reporting/PyPI controls",
+    "six license reviews",
+    "maintenance activation and operator recovery",
+    "0.2.0 artifacts/exact-commit CI/audit/provenance",
+    "explicit publication authorization and published-install verification"
+  ],
+  "proposed_version": "0.2.0",
+  "pypi": {
+    "latest_files": [
+      {
+        "filename": "binspect_regression-0.1.1-py3-none-any.whl",
+        "sha256": "42702c3657d495c0553eae1b20b659ba1eb78feff92b9006de9112aee5f517f7",
+        "yanked": false
+      },
+      {
+        "filename": "binspect_regression-0.1.1.tar.gz",
+        "sha256": "5c3055f9f89d5531506fb14b5e0e20ddc0a4a335bf363fd48b54a9ead90aebbc",
+        "yanked": false
+      }
+    ],
+    "latest_version": "0.1.1",
+    "observed_at": "2026-09-13T02:34:21.374750+00:00",
+    "project": "binspect-regression",
+    "proposed_version": {
+      "http_status": 404,
+      "interpretation": "No release response; not proof filenames have never been used."
+    }
+  },
+  "readiness": "not ready for publication",
+  "renderer": {
+    "baseline_changes": false,
+    "baseline_files": [
+      {
+        "name": "audit.png",
+        "sha256": "d97747a559ee9dbc2e8254c477e08aba13efeaeb4012baf286f91f354044e44b"
+      },
+      {
+        "name": "default.png",
+        "sha256": "a7293e736d557565497cc568f61d60ab2b9bcb7599d22a1bec593262d662493f"
+      },
+      {
+        "name": "deviation.png",
+        "sha256": "acc9fcb7023f452b55aed018f734f46e15128076149c2405969e084a6761cd51"
+      },
+      {
+        "name": "paper.png",
+        "sha256": "d1101be8802c0aea6b58622deeccd583d8b227397fc1e56320dc59a78730915f"
+      }
+    ],
+    "baseline_manifest_sha256": "fa4a6f4b04e84f408933721865932c7d28b6a0def3947e460bdb40ec3cd48fed",
+    "ci_result": {
+      "limit": 0.5,
+      "rms": {
+        "audit": 0.0,
+        "default": 0.0,
+        "deviation": 0.0,
+        "paper": 0.0
+      }
+    },
+    "local_environment": {
+      "python": "3.12.14",
+      "renderer": {
+        "fonts_sha256": {
+          "DejaVu Sans": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+          "DejaVu Serif": "107244956e9962b9e96faccdc551825e0ae0898ae13737133e1b921a2fd35ffa"
+        },
+        "freetype": "2.14.3",
+        "implementation": "CPython",
+        "python": [
+          "3",
+          "12"
+        ],
+        "rc": {
+          "backend": "Agg",
+          "figure.dpi": 100,
+          "font.family": "DejaVu Sans",
+          "font.sans-serif": [
+            "DejaVu Sans"
+          ],
+          "font.serif": [
+            "DejaVu Serif"
+          ],
+          "pdf.fonttype": 42,
+          "savefig.dpi": 100,
+          "svg.fonttype": "none",
+          "svg.hashsalt": "binspect-d2",
+          "text.usetex": false
+        },
+        "versions": {
+          "matplotlib": "3.11.1",
+          "numpy": "2.5.2",
+          "pillow": "12.3.0",
+          "scipy": "1.18.1"
+        }
+      }
+    },
+    "local_result": {
+      "limit": 0.5,
+      "rms": {
+        "audit": 0.0,
+        "default": 0.0,
+        "deviation": 0.0,
+        "paper": 0.0
+      }
+    },
+    "managed_download": [
+      {
+        "arch": "aarch64",
+        "implementation": "cpython",
+        "key": "cpython-3.12.14-macos-aarch64-none",
+        "libc": "none",
+        "os": "macos",
+        "path": null,
+        "symlink": null,
+        "url": "https://releases.astral.sh/github/python-build-standalone/releases/download/20260814/cpython-3.12.14%2B20260814-aarch64-apple-darwin-install_only_stripped.tar.gz",
+        "variant": "default",
+        "version": "3.12.14",
+        "version_parts": {
+          "major": 3,
+          "minor": 12,
+          "patch": 14
+        }
+      }
+    ],
+    "official_manifest_source": "https://github.com/actions/python-versions/blob/main/versions-manifest.json",
+    "setup_python_3_12_14_macos_arm64_builds": []
+  },
+  "retained_evidence_scan": {
+    "new_exclusions": false,
+    "scanner": "Gitleaks 8.30.1",
+    "status": "pass"
+  },
+  "reviewer_approval": null,
+  "schema_version": 1,
+  "selected_release_commit": null
+}

@@ -18,6 +18,9 @@ examples, schema/deprecation rules and the distinction between corrections and
 intentional default changes.
 
 ### Fixed
+- The figure CI job obtains pinned Python 3.12.14 through uv-managed Python,
+  restoring baseline comparisons on macOS. Renderer/font/library guards and
+  baseline images remain intact.
 - Build/audit tooling is locked, the publisher action is pinned, and a required
   supply-chain gate checks all locked versions, licenses, available Git history,
   actual distributions and a validated CycloneDX SBOM. Six license decisions
@@ -89,6 +92,11 @@ intentional default changes.
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- A shared nonpublishing artifact workflow builds one locked wheel/sdist pair,
+  verifies its handoff and runs clean installed journeys across Linux/macOS.
+- Weekly/manual locked/current reference monitoring, controlled triage evidence,
+  and a read-only recovery checker for partial, conflicting or yanked releases.
+  Fresh-current monitoring runs separately from routine PR checks.
 - A sequential, resource-guarded workload harness for 10k–1M Polars rows, separate
   estimation/render timings and peak RSS, numerical comparison and explicit budget
   proposal/enforcement. Baseline/runner acceptance remains pending.

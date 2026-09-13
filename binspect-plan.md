@@ -1,56 +1,36 @@
 # binspect — production project plan
 
-Updated 2026-09-12 after the user-authorized merge of PRs #6–#14 into `main`
-at `e206e0c`; package version remains `0.1.1` (no new release).
+Updated 2026-09-12 from a read-only remote check: `main` is
+`2a6a486174c00475fcb5fda31a0fe802789245dc`, through merged PR #23. PRs #15–#23
+have integrated A1–A3, D1–D3 and P1–P2 after the previously recorded #6–#14 stack.
+Package version remains `0.1.1`; proposed incompatible changes remain unreleased.
+Historical verification records retain their review-time status; this observation
+supersedes pending-integration labels, not independent acceptance requirements.
 
-**A1, A2 and A3 are implemented; maintainer review/integration pending.** See the
-[ownership evidence](docs/result-ownership-review.md) and
-[Polars-native input/export contract](docs/INPUT_OUTPUT_CONTRACT.md), plus the
-proposed [compatibility policy](docs/COMPATIBILITY.md) and
-[A3 verification](docs/compatibility-policy-review.md).
-During A2 the user directed Polars-native preparation and default result tables,
-with pandas inputs and explicit pandas conversions retained; this supersedes the
-pandas-first proposal through [ADR-0002](docs/decisions/0002-polars-native-dataframes.md).
-**D1 guide/reference and CI checks are implemented; review and site publication
-pending.** See the [guide](docs/site/index.md), [build configuration](mkdocs.yml)
-and [D1 evidence](docs/user-guide-review.md). Hosting is not configured by D1.
-**D2 export checks and four rendering baselines are implemented; maintainer visual
-acceptance/integration pending.** See [the visual limits guide](docs/site/guide/figure-exports.md)
-and [D2 evidence](docs/figure-export-review.md). Existing presets are unqualified
-for dark backgrounds; these checks do not certify general accessibility.
-**D3 reproducible gallery is implemented; maintainer review/integration pending.**
-See [seven executable synthetic cases](docs/site/guide/gallery.md) and
-[D3 verification](docs/example-gallery-review.md).
-**P1 occupied-cluster storage and workload/budget tooling are implemented;
-maintainer baseline/runner acceptance and integration remain pending.** See
-[measurement scope and limits](docs/site/guide/performance.md) and
-[P1 evidence](docs/performance-review.md). Numeric timing budgets are proposals,
-not an accepted CI gate or general capacity guarantee.
-**P2 isolated dependency configurations are implemented; maintainer review and
-integration remain pending.** See [configuration scope](docs/site/guide/dependencies.md)
-and [minimum/current evidence](docs/dependency-review.md). Binsreg's minimum is
-corrected to 3.2.1; Polars defaults, pandas compatibility and Python 3.10–3.13 scope
-are retained. **P3 supply-chain tooling is implemented; its gate remains blocked
-by six pending license reviews.** See [scope and decisions](docs/SUPPLY_CHAIN.md)
-and [actual verification](docs/supply-chain-review.md). No exception approval or
-release qualification is implied. **R1 artifact/workflow implementation and
-nonpublishing handoff tests are complete; maintainer acceptance and control gaps
-remain open.** See [R1 evidence](docs/artifact-workflow-review.md): all 24 CI artifact
-installs pass, while overall CI fails for pending licenses and unavailable pinned
-figure Python. **R3 maintenance/recovery tooling and local exercises are implemented; policy
-acceptance, integration and schedule activation remain pending.** See
-[R3 evidence](docs/maintenance-recovery-review.md). **Next phase: R2 readiness/evidence
-review; publication remains blocked by outstanding acceptance and qualification.** A3 allocates
-the pending incompatible changes to a proposed 0.2.0 minor release; package version
-and release authorization are unchanged. M2 review/acceptance remains open. The
-roadmap, repository baseline, C1 DPI correction, C2 interval/adjustment guards,
-C3 inference boundaries and coverage evidence, C4 diagnostic policy, and optional
-binsreg adapter are integrated. The [binsreg PR #14](https://github.com/joshuamyers22/binspect/pull/14)
-completed the dependency stack using merge commits, preserving evidence revisions.
-All PR heads had passing checks before integration. The integrated tree matches
-that verified adapter head; its review incorporates the roadmap formatting fix.
-Historical verification records below retain their original review-time status;
-this integration record supersedes their pending-merge labels.
+Polars-native preparation/default tables with pandas inputs and explicit conversion
+are the user's accepted direction through [ADR-0002](docs/decisions/0002-polars-native-dataframes.md).
+See the integrated [ownership evidence](docs/result-ownership-review.md),
+[input/export contract](docs/INPUT_OUTPUT_CONTRACT.md),
+[compatibility policy](docs/COMPATIBILITY.md), [guide](docs/site/index.md),
+[figure scope](docs/site/guide/figure-exports.md), [gallery](docs/site/guide/gallery.md),
+[performance evidence](docs/performance-review.md) and
+[dependency scope](docs/site/guide/dependencies.md). Visual, policy, statistical and
+performance-budget acceptance remain explicit review gates; site hosting is not configured.
+
+P3, R1 and R3 are implemented on draft PRs #24–#26 and remain unintegrated.
+[Six pending license reviews](docs/SUPPLY_CHAIN.md) block P3. R1 has passing actual
+artifact handoff/installation evidence; R3 has passing local reference/recovery
+exercises but awaits acceptance, schedule activation and actual operator evidence.
+Actual branch/PyPI controls and Trusted Publisher identity remain open.
+
+**R2 readiness preparation is complete; publication is not qualified.** The
+[proposed 0.2.0 readiness record](docs/releases/0.2.0-readiness.md) consolidates exact
+identities, missing approvals and owned next actions. A bounded
+[R2 renderer repair](docs/release-readiness-review.md) obtains the existing Python
+3.12.14 pin through uv while preserving all image/renderer guards; its local and
+CI comparisons pass at RMS 0.0. No candidate
+version/commit or release approval is selected. Next actions are the owner reviews
+and candidate-specific qualification in that record, not automatic publication.
 
 C3 final assessment and qualified statistical acceptance remain open. The
 [adjusted FWL uncertainty withdrawal](docs/adjusted-inference-boundary-review.md)
@@ -444,3 +424,4 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | P3 — supply-chain and secret checks | [Scope/pending decisions](docs/SUPPLY_CHAIN.md), [blocking gate](validation/supply_chain.py), [verification](docs/supply-chain-review.md) | Implemented on `security/supply-chain-checks`, stacked on P2. All locked versions are audited; build/audit tools and action refs are pinned; history/working/artifact secret scans and validated artifact-linked CycloneDX evidence are added. Six pending license reviews block the gate and P3 acceptance. Maintainer review/integration and remote controls remain open. R1 nonpublishing qualification is the next implementation item. |
 | 2026-09-12 | R1 — artifact/workflow qualification | [Implementation and retained evidence](docs/artifact-workflow-review.md); [draft PR #25](https://github.com/joshuamyers22/binspect/pull/25); local full gate passes, 12 local and 24 CI clean artifact installs pass | Implemented on `test/artifact-workflow-qualification`, stacked on P3. Shared nonpublishing build/download/install path verified; Polars defaults and optional pandas conversion retained. Overall CI fails for six pending license reviews and unavailable pinned figure Python. Actual main/PyPI controls and Trusted Publisher mapping still need acceptance; no publication. Next implementation R3. |
 | 2026-09-12 | R3 — maintenance and recovery | [Procedure](docs/MAINTENANCE.md), [retained evidence](docs/maintenance-recovery-review.md); [draft PR #26](https://github.com/joshuamyers22/binspect/pull/26) | Implemented on `chore/maintenance-recovery`, stacked on R1. 222 locked/current reference cases, three installed journeys, ten simulated recovery scenarios and the full local 600-test gate pass. Fresh-current monitoring moves to weekly/manual runs; locked/floor PR gates remain. Maintainer acceptance, default-branch schedule activation and actual PyPI operator recovery evidence remain open. P3/R1 gaps still block R2 publication. |
+| 2026-09-12 | R2 — readiness preparation and figure provisioning repair | [Concrete readiness record](docs/releases/0.2.0-readiness.md), [verification](docs/release-readiness-review.md); [draft PR #27](https://github.com/joshuamyers22/binspect/pull/27) | Local 600-test full gate passes; uv-managed Python 3.12.14 restores the macOS CI figure job with unchanged baselines and RMS 0.0. All CI jobs pass except six pending license reviews. Read-only checks confirm main now includes #15–#23; #24–#26 remain drafts. R2 publication remains blocked by owned acceptance, controls, integration and exact-candidate artifact/provenance gates. No candidate/version/tag/release selected or published. |

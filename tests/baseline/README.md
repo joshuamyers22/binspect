@@ -8,7 +8,8 @@ than replacing them. Initial local inspection is recorded in the
 `manifest.json` records Matplotlib/NumPy/SciPy/Pillow/FreeType versions, CPython
 3.12, bundled font hashes, rc settings, PNG hashes, the generating host and lock
 hash. Rendering inputs must match; host metadata is recorded, not a claim of
-cross-platform equivalence. CI pins macos-15 and Python 3.12.14. Local rendering
+cross-platform equivalence. CI pins macos-15 and uv-managed Python 3.12.14; setup-python does not provide
+that macOS patch build. Local rendering
 used macOS 15.1 arm64 with the same specified libraries/fonts. Other hosts need
 their own passing comparison/evidence before a qualification claim.
 
