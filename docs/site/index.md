@@ -5,11 +5,10 @@ tables and figures help describe departures from linearity; they do not establis
 causality or certify a model. Polars is the native table engine, pandas inputs
 remain supported, and pandas output requires an explicit conversion.
 
-!!! note "Development documentation"
-    This guide describes the unreleased checkout. The package still reports
-    **0.1.1**, while Polars tables, versioned exports and the function adapter are
-    proposed for **0.2.0**. A published 0.1.1 installation does not provide this
-    whole interface. Review and release qualification remain open.
+!!! note "Version 0.2.0 documentation"
+    This guide describes the **0.2.0** source and API: Polars-native tables,
+    versioned exports and the optional function adapter. Historical 0.1.1
+    installations do not provide this whole interface.
 
 ## Install this checkout
 

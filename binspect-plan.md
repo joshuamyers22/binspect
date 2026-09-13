@@ -1,9 +1,9 @@
 # binspect — production project plan
 
 Updated 2026-09-13 from a remote check: `main` is
-`6d1169b516287933cb604f977a314bcc95e24e08`, through merged PR #30. PR #30
-integrated the #24–#29 release-hardening stack after the previously recorded #6–#23 work.
-Package version remains `0.1.1`; proposed incompatible changes remain unreleased.
+`184bb451341e04e815be4b1e97ee668b78d3d5fd`, after the release-hardening follow-up.
+PR #30 integrated the #24–#29 stack after the previously recorded #6–#23 work.
+The selected release branch declares `0.2.0`; publication is not yet complete.
 Historical verification records retain their review-time status; this observation
 supersedes pending-integration labels, not independent acceptance requirements.
 
@@ -32,14 +32,14 @@ The [license dossier](docs/LICENSE_REVIEW_DOSSIER.md) supplies exact archive not
 and distribution/profile scope for all six accepted decisions. The acceptance does
 not change dependencies, authorize broader redistribution or waive future audits.
 
-**R2 readiness preparation is complete; publication is not qualified.** The
-[proposed 0.2.0 readiness record](docs/releases/0.2.0-readiness.md) consolidates exact
+**R2 candidate qualification is active; publication is not yet qualified.** The
+[0.2.0 readiness record](docs/releases/0.2.0-readiness.md) consolidates exact
 identities, missing approvals and owned next actions. A bounded
 [R2 renderer repair](docs/release-readiness-review.md) obtains the existing Python
 3.12.14 pin through uv while preserving all image/renderer guards; its local and
-CI comparisons pass at RMS 0.0. No candidate
-version/commit or release approval is selected. Next actions are the owner reviews
-and candidate-specific qualification in that record, not automatic publication.
+CI comparisons pass at RMS 0.0. Josh Myers selected version 0.2.0 and instructed
+publication on 2026-09-13; the exact candidate commit, remaining decisions and
+candidate-specific qualification are still required before the public release.
 The next R2 slice adds [release-only authenticated provenance](docs/release-provenance-review.md)
 and independent prepublication verification while preserving R1's read-only path.
 Actual signed candidate evidence and maintainer acceptance remain pending.

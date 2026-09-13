@@ -1,8 +1,7 @@
 # Compatibility and migration policy
 
-This proposed A3 policy describes the unreleased checkout based on A2 `9a6db9f`.
-Maintainer acceptance and release qualification are pending. The package still
-reports **0.1.1**; the changes below are allocated to **0.2.0**, not a 0.1.2 patch.
+This policy describes release 0.2.0, based on the A2 implementation at `9a6db9f`.
+The changes below are allocated to **0.2.0**, not a 0.1.2 patch.
 Use this guide with the [actual API inventory](API_INVENTORY.md),
 [input/table/export contract](INPUT_OUTPUT_CONTRACT.md) and
 [changelog](../CHANGELOG.md). Verification is recorded in [the A3 review](compatibility-policy-review.md).
@@ -53,7 +52,7 @@ combination immediately, with the reason, evidence and alternative documented.
 An urgent patch withdrawal needs explicit maintainer review and release notes;
 that exception does not permit unrelated default/type changes in a patch.
 
-| Pending change since 0.1.1 | Compatibility impact | Release allocation |
+| Change since 0.1.1 | Compatibility impact | Release allocation |
 |---|---|---|
 | Polars required/default tables; pandas optional with explicit conversion | Return types and installation requirements change | 0.2.0 minor |
 | Owned read-only arrays and immutable group mapping | Callers mutating stored arrays must copy/re-estimate | 0.2.0 minor |
@@ -64,10 +63,10 @@ that exception does not permit unrelated default/type changes in a patch.
 | Versioned JSON/evidence, sample/design metadata, separate binsreg function adapter | Additive API, schema and method capabilities | 0.2.0 minor |
 | Deferred Matplotlib initialization, corrected installation hint and documentation | Compatible fixes eligible for a patch independently | Included in 0.2.0; no separate patch proposed |
 
-The allocation is a release proposal, not a version bump or approval to publish.
-Follow [release readiness](../checklists/RELEASE_READINESS.md) and
-[maintainer release instructions](../RELEASING.md). C3 statistical acceptance,
-dependency qualification and other release gates remain open.
+The allocation is implemented by the 0.2.0 version bump; publication still follows
+[release readiness](../checklists/RELEASE_READINESS.md) and
+[maintainer release instructions](../RELEASING.md). The release does not claim
+broader statistical coverage or dependency qualification than documented below.
 
 JSON schema versions are independent of package versions. V1 permits new optional
 fields; consumers should ignore unknown fields. Removal, renaming, type/meaning
@@ -169,7 +168,7 @@ warning class or runtime compatibility check is introduced by this policy.
 
 ## Migration examples from 0.1.1
 
-Run these sequentially in the unreleased checkout with the `[pandas]` extra.
+Run these sequentially with version 0.2.0 and the `[pandas]` extra.
 Synthetic inputs avoid retaining caller data. The optional function example also
 needs `[dpi]`. These are application examples, not statistical assessment seeds.
 

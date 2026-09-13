@@ -1,10 +1,10 @@
 # Input, table and evidence-export contracts
 
-This is the unreleased A2 contract. The user-directed dataframe decision is in
+This is the 0.2.0 dataframe/input/export contract. The user-directed dataframe decision is in
 [ADR-0002](decisions/0002-polars-native-dataframes.md); implementation evidence is
 in [the A2 review](export-input-contract-review.md). Numerical conventions remain
 those in the [statistical analysis plan](STATISTICAL_ANALYSIS_PLAN.md).
-The [compatibility policy](COMPATIBILITY.md) records the proposed 0.2.0 allocation,
+The [compatibility policy](COMPATIBILITY.md) records the 0.2.0 allocation,
 supported option combinations and migration examples; the
 [API inventory](API_INVENTORY.md) lists current signatures and attributes.
 

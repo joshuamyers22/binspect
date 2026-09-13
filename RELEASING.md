@@ -26,8 +26,8 @@ See [governance](docs/GOVERNANCE.md) for observations and proposed R1 controls.
 1. Complete the readiness record and obtain release authorization; ensure CI passes
    on the exact `main` commit and the working tree is clean.
 2. Set the chosen release version in `__version__` and update `CHANGELOG.md`.
-   The current value is 0.1.1 with no development suffix; the proposed 0.2.0
-   allocation still requires acceptance and release qualification.
+   The 2026-09-13 candidate uses 0.2.0; every later release must select and qualify
+   its own version and exact commit.
 3. Run the checks documented in `CONTRIBUTING.md` and inspect both distributions.
    Require a fresh passing [supply-chain report](docs/SUPPLY_CHAIN.md) for their
    exact digests. Six exact license scopes were accepted on 2026-09-13; those
