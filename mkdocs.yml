@@ -1,0 +1,65 @@
+site_name: binspect
+site_description: Polars-native binned diagnostics with explicit statistical limits
+repo_url: https://github.com/joshuamyers22/binspect
+repo_name: joshuamyers22/binspect
+docs_dir: docs/site
+site_dir: site
+edit_uri: edit/main/docs/site/
+strict: true
+
+theme:
+  name: material
+  font: false
+  features:
+    - navigation.sections
+    - content.code.copy
+
+nav:
+  - Start here: index.md
+  - User guide:
+      - Interpreting diagnostics: guide/interpretation.md
+      - Adjusting for controls: guide/adjustment.md
+      - Weights, clusters and missingness: guide/weights.md
+      - Choosing bins: guide/binning.md
+      - Comparing groups: guide/groups.md
+      - Composing plots: guide/plotting.md
+      - Tables and evidence: guide/exports.md
+  - API reference:
+      - Estimation: reference/estimation.md
+      - Results: reference/results.md
+      - Plotting: reference/plotting.md
+  - Development and releases: development.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            show_source: false
+            show_root_heading: true
+            show_if_no_docstring: true
+            show_signature_annotations: true
+            separate_signature: true
+            members_order: source
+            inherited_members: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+    absolute_links: warn
+  links:
+    not_found: warn
+    anchors: warn
+    absolute_links: warn
+    unrecognized_links: warn

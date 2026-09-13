@@ -189,7 +189,7 @@ def sd_line_layer(
     """The SD line, always at least as steep as the fit.
 
     Drawn dashed and neutral so the plot still distinguishes it in greyscale. The
-    visible gap between the two lines is the shrinkage factor ``r``.
+    fit slope equals ``abs(r)`` times the signed SD slope, including negative r.
     """
     th = _theme(theme)
     xs = _span(result, span)
@@ -217,8 +217,8 @@ def ci_layer(
     These are intervals for the *mean*, not the spread of the observations. The
     within-bin SD lives in ``result.table['y_sd']`` and is deliberately not drawn by
     default: at typical bin sizes it dwarfs everything else and flattens the plot.
-    Fitted-control and partition-selection uncertainty are omitted; adjusted-bin
-    nominal population coverage is unvalidated. See ``result.inference``.
+    Partition-selection uncertainty is omitted. With controls, bin uncertainty
+    is withheld and this layer draws nothing. See ``result.inference``.
     """
     th = _theme(theme)
     e = result.estimates

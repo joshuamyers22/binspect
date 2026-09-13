@@ -1,6 +1,7 @@
 """Quickstart: audit a linear model that is quietly wrong.
 
-Run with ``python examples/quickstart.py``. Writes ``docs/hero.png``.
+Run with ``python examples/quickstart.py``. Writes ``.work/quickstart.png``;
+use ``--output PATH`` to choose a different destination explicitly.
 
 The DGP here is deliberately mild: a saturating relationship that a linear model
 fits with a respectable R-squared, so nothing in the regression output looks amiss.
@@ -9,6 +10,7 @@ The binscatter is what makes the problem visible.
 
 from __future__ import annotations
 
+import argparse
 import pathlib
 
 import matplotlib.pyplot as plt
@@ -18,6 +20,11 @@ import binspect
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--output", type=pathlib.Path, default=pathlib.Path(".work/quickstart.png")
+    )
+    args = parser.parse_args()
     rng = np.random.default_rng(11)
     n = 25_000
 
@@ -49,9 +56,10 @@ def main() -> None:
     ax.set_xlabel("x")
     ax.set_ylabel("y")
 
-    out = pathlib.Path(__file__).resolve().parent.parent / "docs" / "hero.png"
-    out.parent.mkdir(exist_ok=True)
+    out = args.output
+    out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out, dpi=140, bbox_inches="tight")
+    plt.close(fig)
     print(f"\nwrote {out}")
 
 

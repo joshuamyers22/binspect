@@ -152,7 +152,7 @@ def theme(name: str | Theme, **overrides: Any) -> Iterator[Theme]:
     --------
     >>> import binspect
     >>> with binspect.theme("paper"):          # doctest: +SKIP
-    ...     result.plot()
+    ...     result.plot(theme="paper")
 
     Notes
     -----

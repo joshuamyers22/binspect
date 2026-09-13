@@ -46,6 +46,9 @@ intentional default changes.
 - The missing-DPI-dependency message now names `binspect-regression[dpi]`.
 
 ### Changed
+- The standalone quickstart writes `.work/quickstart.png` by default instead of
+  overwriting the tracked hero image. Use `--output docs/hero.png` explicitly to
+  regenerate that asset.
 - Polars is the native dataframe dependency and default result-table type for
   single/grouped results and the binsreg adapter. Pandas inputs remain supported;
   use `result.to_pandas()` (or a named table) for explicit pandas projections.
@@ -77,6 +80,10 @@ intentional default changes.
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- A MkDocs Material user guide and source-generated API reference, plus a required
+  `make docs`/CI documentation gate that executes README, guide and contract examples
+  and the quickstart before a strict link/anchor build. Site output is local only;
+  hosting and publication remain pending.
 - A proposed compatibility policy, supported estimation/plotting option matrix,
   runtime-inspected public API inventory and executable migration examples. The
   policy preserves caller Axes identity and scoped themes and distinguishes API

@@ -1,4 +1,4 @@
-.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg build check
+.PHONY: sync lint type test native integration reference coverage coverage-expanded coverage-binsreg docs build check
 
 sync:
 	uv sync --frozen --all-extras
@@ -35,4 +35,8 @@ coverage-binsreg:
 build:
 	uv build
 
-check: lint type test native integration reference coverage coverage-expanded coverage-binsreg build
+docs:
+	uv run --frozen --all-extras python validation/documentation.py
+	uv run --frozen --all-extras mkdocs build --strict
+
+check: lint type test native integration reference coverage coverage-expanded coverage-binsreg docs build

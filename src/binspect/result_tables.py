@@ -1,4 +1,4 @@
-"""Pandas table projections for binscatter results."""
+"""Polars table projections for binscatter results."""
 
 from __future__ import annotations
 

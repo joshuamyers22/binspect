@@ -11,16 +11,18 @@ For security-sensitive changes, update the [threat model](docs/THREAT_MODEL.md).
 
 ## Development setup
 
-Use Python 3.10 or newer in an isolated environment:
+Use Python 3.10 or newer in an isolated environment. For the exact CI dependency
+versions and all documentation examples, use:
 
 ```bash
-python -m venv .venv
-.venv/bin/python -m pip install -e ".[dev,dpi,validation]"
+uv sync --frozen --all-extras
+make check
 ```
 
-For the exact CI dependency versions, use `uv sync --frozen --all-extras`.
 `make check` runs the complete local quality gate, including DPI integration,
 locked Statsmodels references and prespecified development coverage simulations.
+For an unlocked editable environment, the equivalent extras are
+`python -m pip install -e ".[dev,dpi,validation,docs]"`; that does not reproduce the lock.
 It also runs `make native` in an isolated installation without pandas, exercising
 Polars input, categorical/weighted/clustered estimation, grouped controls, exports
 and plots. Pandas compatibility is tested in the all-extras environment. Native
@@ -38,6 +40,7 @@ Before opening a pull request, run the same checks as CI:
 .venv/bin/python validation/coverage.py --phase development
 .venv/bin/python validation/expanded_coverage.py --phase development
 .venv/bin/python validation/binsreg_coverage.py --phase development
+make docs
 .venv/bin/python -m build
 ```
 
@@ -81,6 +84,20 @@ adjusted, weighted, clustered, filtered and categorical inputs against direct
 binsreg, including degree-0 few-cluster fallback. Assessment seeds remain reserved.
 
 ## Change guidelines
+
+The [user guide](docs/site/index.md) and generated API reference build from
+`mkdocs.yml`. `make docs` executes every plain `python`/`py` fenced block in the
+site, README and input/compatibility contracts, in page order with one fresh process
+and temporary working directory per page. Keep examples self-contained on each
+page and use synthetic data; do not add a silent skip marker. It also runs the
+standalone quickstart with an explicit temporary image path and builds MkDocs
+strictly, including local links, anchors and navigation. External links are not
+fetched. Docstring illustrations in generated reference pages are not part of the
+executable-guide suite. The dedicated CI `documentation` job runs the same target.
+
+Preview with `uv run --frozen --all-extras mkdocs serve`. Generated `site/` output
+is ignored. This build does not configure hosting or publish a site; maintainer
+publication approval and configured hosting remain separate requirements.
 
 - Add a regression test for every bug fix and identity tests for statistical claims.
 - Keep orchestration in `api.py`, calculations in `core`, and drawing in `viz`.

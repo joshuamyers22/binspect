@@ -9,7 +9,7 @@ dist/
 build/
 *.egg-info/
 .venv/
-site/
+/site/
 tests/baseline/*.png.new
 .DS_Store
 .import_linter_cache/
