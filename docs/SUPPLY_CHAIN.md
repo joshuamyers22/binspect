@@ -60,6 +60,13 @@ package/version, owner Josh Myers, rationale, evidence and a 2026-10-13 review
 expiry. All six entries are `pending`, with no reviewer/date invented. They do
 not waive the gate.
 
+The [exact-artifact review dossier](LICENSE_REVIEW_DOSSIER.md) now supplies twelve
+locked upstream archive identities, packaged notice hashes, eight dependency
+profile exports and the inspected binspect distribution scope. In particular,
+dev/docs are advertised extras; Docutils' source archive contains a GPL editor
+helper absent from its wheel; fqdn's source archive omits the wheel's license file.
+These observations narrow the review questions without approving any exception.
+
 | Package/version | Observed terms / scope needing review |
 |---|---|
 | binsreg 3.2.1 | [GPL-3.0-only metadata](https://pypi.org/pypi/binsreg/3.2.1/json); optional DPI/function backend. Review combined-use and redistribution obligations for the advertised extra while retaining the project MIT license. |

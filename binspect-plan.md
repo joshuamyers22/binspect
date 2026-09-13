@@ -22,6 +22,9 @@ P3, R1 and R3 are implemented on draft PRs #24–#26 and remain unintegrated.
 artifact handoff/installation evidence; R3 has passing local reference/recovery
 exercises but awaits acceptance, schedule activation and actual operator evidence.
 Actual branch/PyPI controls and Trusted Publisher identity remain open.
+The [license dossier](docs/LICENSE_REVIEW_DOSSIER.md) now supplies exact archive
+notices and distribution/profile scope for all six decisions; acceptance remains
+pending. It does not change dependencies or waive the audit.
 
 **R2 readiness preparation is complete; publication is not qualified.** The
 [proposed 0.2.0 readiness record](docs/releases/0.2.0-readiness.md) consolidates exact
