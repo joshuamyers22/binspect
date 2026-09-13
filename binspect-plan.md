@@ -31,6 +31,9 @@ identities, missing approvals and owned next actions. A bounded
 CI comparisons pass at RMS 0.0. No candidate
 version/commit or release approval is selected. Next actions are the owner reviews
 and candidate-specific qualification in that record, not automatic publication.
+The next R2 slice adds [release-only authenticated provenance](docs/release-provenance-review.md)
+and independent prepublication verification while preserving R1's read-only path.
+Actual signed candidate evidence and maintainer acceptance remain pending.
 
 C3 final assessment and qualified statistical acceptance remain open. The
 [adjusted FWL uncertainty withdrawal](docs/adjusted-inference-boundary-review.md)

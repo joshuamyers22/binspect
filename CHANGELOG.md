@@ -92,6 +92,9 @@ intentional default changes.
   upstream selector. Other bin rules remain available with these options.
 
 ### Added
+- Release-only signed provenance and independent prepublication verification of
+  both distributions, exact source/workflow/tag and authenticated run attempt.
+  Candidate signing evidence and release approval remain required.
 - A shared nonpublishing artifact workflow builds one locked wheel/sdist pair,
   verifies its handoff and runs clean installed journeys across Linux/macOS.
 - Weekly/manual locked/current reference monitoring, controlled triage evidence,

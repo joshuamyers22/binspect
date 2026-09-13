@@ -1,0 +1,309 @@
+{
+  "ci": {
+    "audit_checks": {
+      "actions": {
+        "status": "pass"
+      },
+      "artifacts": {
+        "status": "pass"
+      },
+      "licenses": {
+        "status": "fail"
+      },
+      "sbom": {
+        "status": "pass"
+      },
+      "secrets": {
+        "status": "pass"
+      },
+      "vulnerabilities": {
+        "status": "pass"
+      }
+    },
+    "audit_report_sha256": "871c1fd6a048d41b202d2131d9153b83f4090e502de732bc10c21a212efa5175",
+    "checkout_revision": "45151b923903f12d92d0abaaa3c7407f520cc313",
+    "conclusion": "failure",
+    "head_revision": "a0a758fedc022ecc2acc6d973801886e2c34a1b9",
+    "jobs": [
+      {
+        "conclusion": "success",
+        "name": "figures"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (lower-pandas, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / build"
+      },
+      {
+        "conclusion": "failure",
+        "name": "supply-chain"
+      },
+      {
+        "conclusion": "success",
+        "name": "dpi-integration"
+      },
+      {
+        "conclusion": "success",
+        "name": "inference-validation"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "documentation"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.11)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.11)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (ubuntu-latest, 3.13)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.13)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (lower, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (locked, Python 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (lower-dpi, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "test (macos-latest, 3.11)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.10)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (minimal, Python 3.13)"
+      },
+      {
+        "conclusion": "success",
+        "name": "dependencies (dpi, Python 3.12)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.10, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.12, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.13, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.12, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.11, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.13, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.12, pandas)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.12, pandas)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.12, dpi)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (macos-latest, 3.10, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.11, native)"
+      },
+      {
+        "conclusion": "success",
+        "name": "artifacts / install (ubuntu-latest, 3.12, dpi)"
+      }
+    ],
+    "pending_licenses": [
+      {
+        "package": "binsreg",
+        "version": "3.2.1"
+      },
+      {
+        "package": "certifi",
+        "version": "2026.7.22"
+      },
+      {
+        "package": "docutils",
+        "version": "0.23"
+      },
+      {
+        "package": "fqdn",
+        "version": "1.5.1"
+      },
+      {
+        "package": "hypothesis",
+        "version": "6.165.10"
+      },
+      {
+        "package": "pathspec",
+        "version": "1.1.1"
+      }
+    ],
+    "run_id": 34734345196,
+    "status": "completed",
+    "url": "https://github.com/joshuamyers22/binspect/actions/runs/34734345196"
+  },
+  "implementation_revision": "a0a758fedc022ecc2acc6d973801886e2c34a1b9",
+  "inputs": [
+    {
+      "path": "validation/provenance.py",
+      "sha256": "994a51da5f732a39b937af595dc3c61e1870fd5d596212b18826284a8edc2317"
+    },
+    {
+      "path": "tests/test_provenance.py",
+      "sha256": "04a733fd2c6dd037383ca991b445f4a9f30c9d80099759c2a6d0666188a73934"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "sha256": "cda6d2fd3dd8511ff37f0e6fd3bf2ff77ba4ddcbb7bd86af8f3ef7187f1a9acf"
+    },
+    {
+      "path": ".github/workflows/artifacts.yml",
+      "sha256": "01391564ee3080d2f7db9875bbc230c218c4b04b630197debdb8228dfbd3cdde"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "60cb5990b92833832ce44891b648f4eed0ef5cd06a6c8df50d00a18c6d88afee"
+    }
+  ],
+  "limitations": [
+    "No binspect artifact signed or published; release-only jobs unexercised.",
+    "Synthetic policy tests do not establish cryptographic qualification.",
+    "Local secret scan unverified after ReadTimeout; separate CI secret scan passed.",
+    "Six license reviews and other release approvals remain pending.",
+    "Signing after qualification in the release workflow is not an isolated-builder or SLSA level claim.",
+    "Evidence-only follow-up commits are distinct from the verified implementation head."
+  ],
+  "local_checks": {
+    "build": "pass",
+    "coverage_percent": 94.65,
+    "development_simulations": "pass",
+    "documentation_blocks": 38,
+    "dpi_tests": 34,
+    "figure_rms": {
+      "audit": 0.0,
+      "default": 0.0,
+      "deviation": 0.0,
+      "paper": 0.0
+    },
+    "import_contracts": 4,
+    "local_markdown_links": 157,
+    "make_check": "pass",
+    "mypy_files": 38,
+    "native_without_pandas": "pass",
+    "quickstart": "pass",
+    "reference_tests": 40,
+    "reserved_assessments": "unrun",
+    "strict_site": "pass",
+    "targeted_tests": 51,
+    "total_tests": 630,
+    "unit_tests": 556,
+    "workflow_structure": "pass"
+  },
+  "local_supply_chain": {
+    "checks": {
+      "actions": {
+        "status": "pass"
+      },
+      "artifacts": {
+        "status": "pass"
+      },
+      "licenses": {
+        "status": "fail"
+      },
+      "sbom": {
+        "status": "pass"
+      },
+      "secrets": {
+        "error_type": "ReadTimeout",
+        "status": "unverified"
+      },
+      "vulnerabilities": {
+        "status": "pass"
+      }
+    },
+    "report_sha256": "188a919c8ca580ec3b7522b452346e41cf95e006473779a66c4f5b15ce23532f",
+    "status": "fail"
+  },
+  "pull_request": "https://github.com/joshuamyers22/binspect/pull/28",
+  "recorded_at": "2026-09-13T03:06:10.949859+00:00",
+  "schema_version": 1,
+  "signing_action": {
+    "executed": false,
+    "repository": "actions/attest",
+    "revision": "1e69f48acb82d1966a394da916b4c1698aa569d6",
+    "shipped_script_sha256": "b85710663c9a3855712a250fde7a580adaf6b323f62858016e86f3e9e1f19692",
+    "version": "v4.2.2"
+  },
+  "upstream_verifier_probe": {
+    "artifact_sha256": "ae57936def59bc4c75edd3a837d89bcefc6d3a5e31d55a6fa7a71624f92c3c3b",
+    "binspect_candidate_evidence": false,
+    "bundle_sha256": "4f8c096e38a0eee242574ab100d16701928605409225e59784a3636f742bb27e",
+    "certificate": {
+      "buildTrigger": "workflow_dispatch",
+      "runInvocationURI": "https://github.com/actions/attest-demo/actions/runs/8788389601/attempts/1",
+      "runnerEnvironment": "github-hosted",
+      "sourceRepositoryDigest": "a6c23b9806c593664f68637c8f9d45dfcf98b2db",
+      "sourceRepositoryRef": "refs/heads/main",
+      "sourceRepositoryURI": "https://github.com/actions/attest-demo",
+      "subjectAlternativeName": "https://github.com/actions/attest-demo/.github/workflows/build-python.yml@refs/heads/main"
+    },
+    "fixture_source": "https://github.com/cli/cli/tree/v2.98.0/pkg/cmd/attestation/test/data",
+    "installed_or_executed": false,
+    "status": "pass",
+    "verifier": "gh version 2.98.0 (2026-08-20)"
+  }
+}
