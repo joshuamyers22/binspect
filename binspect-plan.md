@@ -1,8 +1,9 @@
 # binspect — production project plan
 
-Updated 2026-09-13 after the v0.2.1 release run: the preserved public tag points to
-`62854b83e0eb0048d53ab5a7f8bafcaf9b58ba76`. PyPI publication did not occur;
-the recovery branch declares `0.2.2`.
+Updated 2026-09-13 after the v0.2.2 release: the immutable tag points to
+`49cd7c2135992986ba356f7829c9b8f17b88c4a2`, release run `34789980329`
+completed successfully, and PyPI serves the qualified wheel and sdist. The
+post-release evidence merged to main as `f684420dfed300e14ca5f3faf1e722421704526b`.
 Historical verification records retain their review-time status; this observation
 supersedes pending-integration labels, not independent acceptance requirements.
 
@@ -33,10 +34,10 @@ The [license dossier](docs/LICENSE_REVIEW_DOSSIER.md) supplies exact archive not
 and distribution/profile scope for all six accepted decisions. The acceptance does
 not change dependencies, authorize broader redistribution or waive future audits.
 
-**R2 stopped safely and patch recovery is active.** The
+**R2 completed for v0.2.2 after two safely preserved failed attempts.** The
 [0.2.0 record](docs/releases/0.2.0-readiness.md) and
 [0.2.1 record](docs/releases/0.2.1-readiness.md) retain both failed runs and exact
-signed pairs; the [0.2.2 record](docs/releases/0.2.2-readiness.md) owns recovery. A bounded
+signed pairs; the [0.2.2 record](docs/releases/0.2.2-readiness.md) owns the outcome. A bounded
 [R2 renderer repair](docs/release-readiness-review.md) obtains the existing Python
 3.12.14 pin through uv while preserving all image/renderer guards; its local and
 CI comparisons pass at RMS 0.0. The authorized v0.2.0 workflow built, installed,
@@ -45,8 +46,9 @@ exclusive actor-identity selectors; publish was skipped. Recovery removes only t
 redundant selector while preserving exact certificate/repository/tag/commit/run policy.
 The v0.2.1 recovery passed those gates but its pinned publisher rejected valid Core
 Metadata 2.5 before upload. Version 0.2.2 pins the signed PyPA v1.14.2 repair and
-requires regression, full CI/audit, a new immutable tag and explicit publication
-authorization before protected-environment review.
+completed regression, full CI/audit, immutable tagging, explicit publication
+authorization, protected-environment review, Trusted Publishing, public-index byte
+reconciliation, provenance checks and a fresh installed-package journey.
 
 C3 final assessment and qualified statistical acceptance remain open. The
 [adjusted FWL uncertainty withdrawal](docs/adjusted-inference-boundary-review.md)
@@ -310,6 +312,37 @@ and may start during M0; supply-chain findings must be triaged when discovered.
 | P2 | Verify dependency configurations | Test minimal runtime installation without binsreg, the DPI extra, locked development dependencies, declared lower bounds, and current compatible dependencies in separate jobs. Ensure optional-import failures point at the right distribution. Review Python support explicitly; add a version only when its matrix passes. |
 | P3 | Add supply-chain and secret checks | Audit locked runtime/build/dev/docs/optional dependencies for vulnerabilities and license compatibility; record package/version, owner, expiry, and rationale for any reviewed exception. Generate and inspect a CycloneDX SBOM that covers the actual released artifacts and dependencies. Scan tracked history and built artifacts for secrets with controlled/redacted findings. Pin every third-party action, including the current mutable PyPI publisher reference, to a reviewed full SHA. Make dependency updates regenerate the lock and rerun numerical drift checks. Add an honest `make supply-chain` or equivalent gate to CI and release qualification; unavailable audit services are unverified, not passed. |
 
+#### Recurring P3 license-renewal task
+
+Complete a fresh scoped review before the current six decisions expire on
+2026-10-13, and immediately when a covered package version/artifact or distribution
+scope changes. Expiry-only renewal still requires current evidence; it is not a
+date-only registry edit.
+
+1. Classify the proposed scope as separately installed/non-bundled use or broader
+   redistribution of dependency artifacts, caches, images or complete environments.
+2. Verify the lock hash and exact package/version set. Download the selected
+   wheel/sdist files, compare SHA-256 identities with the lock and evidence, and
+   inspect regular license/notice members without executing build hooks, extracting
+   unsafe links or substituting one artifact's notices for another's.
+3. Regenerate the frozen dependency-profile exports and inspect the exact binspect
+   candidate wheel/sdist metadata and contents for unexpected bundled dependency
+   files. Changed dependency inputs also require `make check` and affected P2
+   profiles; every review requires a fresh `make supply-chain` result.
+4. Prepare one decision per affected package with exact version/artifacts, permitted
+   distribution scope, applicable notice/source obligations, owner, reviewer,
+   rationale, evidence, review date and proposed expiry. Broader GPL/MPL or
+   file-specific redistribution questions require qualified legal review when the
+   maintainer cannot establish the obligations confidently.
+5. Keep each registry entry pending or expired until Josh Myers explicitly accepts
+   it. Only then update `validation/supply-chain-exceptions.json`, the license
+   dossier and dated evidence through a normal PR. An agent cannot extend approval,
+   infer acceptance from CI, or treat license renewal as release authorization.
+
+An expired, pending, version-mismatched or scope-mismatched decision blocks the
+supply-chain gate and any affected release. The reproducible artifact-inspection
+procedure remains in [the license dossier](docs/LICENSE_REVIEW_DOSSIER.md#reproduce-the-evidence).
+
 Avoid promising conversion speedups or zero-copy processing without end-to-end
 measurements through conversion, estimation, and rendering.
 
@@ -443,3 +476,5 @@ API reference, and executable tests describe released behavior.
 | 2026-09-12 | R2 — readiness preparation and figure provisioning repair | [Concrete readiness record](docs/releases/0.2.0-readiness.md), [verification](docs/release-readiness-review.md); [draft PR #27](https://github.com/joshuamyers22/binspect/pull/27) | Local 600-test full gate passes; uv-managed Python 3.12.14 restores the macOS CI figure job with unchanged baselines and RMS 0.0. All CI jobs pass except six pending license reviews. Read-only checks confirm main now includes #15–#23; #24–#26 remain drafts. R2 publication remains blocked by owned acceptance, controls, integration and exact-candidate artifact/provenance gates. No candidate/version/tag/release selected or published. |
 | 2026-09-13 | P3 license scope acceptance and distribution-integrity follow-up | [Accepted scope](docs/SUPPLY_CHAIN.md), [artifact dossier](docs/LICENSE_REVIEW_DOSSIER.md), [integration review](docs/release-stack-integration-review.md) | Josh Myers accepted six exact separately installed/non-bundled dependency scopes through 2026-10-13. The strengthened checker rejects sdist manifest/byte and project-metadata divergence. The 639-test full gate and fresh online supply-chain gate pass locally; exact pushed-head CI and main integration remain next. No release is authorized. |
 | 2026-09-13 | Release-hardening stack integration | [Merged PR #30](https://github.com/joshuamyers22/binspect/pull/30), [integration review](docs/release-stack-integration-review.md), [exact-head CI](https://github.com/joshuamyers22/binspect/actions/runs/34783516923) | All 35 jobs pass on exact head `30d0793`, including supply-chain and 12 artifact installations. PR #30 merged #24–#29 into main as `6d1169b`. Candidate selection, owner-held acceptance, actual controls, maintenance activation/recovery and release-specific provenance remain open; no release was published. |
+| 2026-09-13 | R2 — v0.2.2 publication and reconciliation | [Release outcome](docs/releases/0.2.2-readiness.md), [GitHub release](https://github.com/joshuamyers22/binspect/releases/tag/v0.2.2), [release run](https://github.com/joshuamyers22/binspect/actions/runs/34789980329), [post-release PR #36](https://github.com/joshuamyers22/binspect/pull/36) | Authorized v0.2.2 published successfully. Its non-yanked PyPI wheel/sdist match the qualified pair byte-for-byte, both public provenance records identify the Trusted Publisher, and a fresh Python 3.12 installation passed. Post-release evidence and exact final-main CI are complete. |
+| Due 2026-10-13 | P3 — renew six scoped license decisions | [Current scope and expiry](docs/LICENSE_REVIEW_DOSSIER.md), [blocking policy](docs/SUPPLY_CHAIN.md#six-approved-scoped-license-decisions) | Open recurring task. Refresh exact artifacts, profile/distribution scope, license/notice evidence and live supply-chain results; obtain explicit per-package maintainer acceptance before changing registry review/expiry fields. Run immediately for any earlier version, artifact or redistribution-scope change. |
