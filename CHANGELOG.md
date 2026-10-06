@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+- Test the locked development environment with Polars 2.0.0; retain the existing runtime dependency floor.
+
 ## [0.2.2] - 2026-09-13
 
 ### Fixed
